@@ -1,0 +1,20 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import { AdminAuthProvider } from './modules/admin/context/AdminAuthContext'
+import './index.css'
+import App from './App.jsx'
+
+import { LanguageProvider } from './contexts/LanguageContext'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <BrowserRouter>
+      <AdminAuthProvider>
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
+      </AdminAuthProvider>
+    </BrowserRouter>
+  </StrictMode>,
+)
