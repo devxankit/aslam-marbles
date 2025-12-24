@@ -10,6 +10,7 @@ const NaturalIndianStonesPage = (props) => {
       subtitle="The Soul of Indian Craftsmanship"
       description="Experience the versatile applications of authentic Indian stones, from intricate carvings and mosaics to structural monoliths and architectural wall panels."
       defaultHeroImage={naturalStoneCarving}
+      galleryLayout="uniform-5"
       {...props}
     />
   )

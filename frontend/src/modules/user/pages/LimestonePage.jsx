@@ -10,6 +10,7 @@ const LimestonePage = (props) => {
       subtitle="Elegant Natural Stone for Timeless Beauty"
       description="Discover our stunning range of limestone varieties, perfect for creating elegant and sophisticated spaces with natural elegance and durability."
       defaultHeroImage={floweryGoldMarble}
+      galleryLayout="uniform-5"
       {...props}
     />
   )

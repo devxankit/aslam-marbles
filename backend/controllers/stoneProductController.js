@@ -29,6 +29,36 @@ const uploadBase64ToCloudinary = async (base64String, folder) => {
 // @route   GET /api/stone-products/categories
 // @access  Public
 const getCategories = asyncHandler(async (req, res) => {
+    // Ensure default packaging categories exist
+    const packagingIds = ['packaging-slab', 'packaging-tiles', 'packaging-artifacts', 'packaging-other'];
+    const existingPackaging = await StoneCategory.find({ id: { $in: packagingIds } });
+
+    if (existingPackaging.length < 4) {
+        const defaults = [
+            { id: 'packaging-slab', name: 'Slab Packaging', title: 'SLAB PACKAGING', origin: 'Internal' },
+            { id: 'packaging-tiles', name: 'Tiles Packaging', title: 'TILES PACKAGING', origin: 'Internal' },
+            { id: 'packaging-artifacts', name: 'Artifacts Packaging', title: 'ARTIFACTS PACKAGING', origin: 'Internal' },
+            { id: 'packaging-other', name: 'Other Packaging', title: 'OTHER PACKAGING', origin: 'Internal' }
+        ];
+
+        for (const def of defaults) {
+            const exists = existingPackaging.find(c => c.id === def.id);
+            if (!exists) {
+                await StoneCategory.create({
+                    id: def.id,
+                    name: def.name,
+                    heroSection: {
+                        image: { url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop', alt: def.name },
+                        title: def.title,
+                        subtitle: 'Ensuring Safety Every Step of the Way',
+                        description: 'Premium protection for your precious stones.'
+                    },
+                    origin: def.origin
+                });
+            }
+        }
+    }
+
     const categories = await StoneCategory.find({}).sort({ name: 1 });
     res.json(categories);
 });

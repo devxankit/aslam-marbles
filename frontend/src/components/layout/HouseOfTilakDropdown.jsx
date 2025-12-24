@@ -9,7 +9,7 @@ const HouseOfTilakDropdown = () => {
     { name: 'Experience Centre', path: '/experience-centre', id: 'experience-centre' },
     { name: 'The Team', path: '/the-team', id: 'the-team' },
     { name: 'Careers', path: '/careers', id: 'careers' },
-    { name: 'OUR ARTIST', path: '/artisans-of-tilak', id: 'artisans-of-tilak' },
+    { name: 'Our Artist', path: '/artisans-of-tilak', id: 'artisans-of-tilak' },
     { name: 'Our Clients', path: '/our-clients', id: 'our-clients' }
   ], [])
 
@@ -79,8 +79,8 @@ const HouseOfTilakDropdown = () => {
           const ImageContent = (
             <div className="group cursor-pointer flex-shrink-0 flex flex-col">
               <div className="relative overflow-hidden rounded-lg bg-gray-100 w-28 h-[260px] md:w-32 md:h-[260px] lg:w-36 lg:h-[260px] shadow-md hover:shadow-lg transition-shadow">
-                <img 
-                  src={item.image} 
+                <img
+                  src={item.image}
                   alt={item.name}
                   className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
                 />

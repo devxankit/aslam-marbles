@@ -27,6 +27,7 @@ const IndividualProductDetailPage = ({
   const [showShareDropdown, setShowShareDropdown] = useState(false)
   const [showTechnicalSpecs, setShowTechnicalSpecs] = useState(false)
   const [showShipping, setShowShipping] = useState(false)
+  const [showContactModal, setShowContactModal] = useState(false)
   const sizeDropdownRef = useRef(null)
   const shareDropdownRef = useRef(null)
 
@@ -85,7 +86,7 @@ const IndividualProductDetailPage = ({
 
   const handleBuyNow = () => {
     if (!product) return
-    
+
     // Navigate to checkout page with product data
     navigate('/checkout', {
       state: {
@@ -124,9 +125,8 @@ const IndividualProductDetailPage = ({
                   <button
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}
-                    className={`aspect-square rounded-lg overflow-hidden border-2 ${
-                      selectedImageIndex === index ? 'border-[#8B7355]' : 'border-gray-200'
-                    }`}
+                    className={`aspect-square rounded-lg overflow-hidden border-2 ${selectedImageIndex === index ? 'border-[#8B7355]' : 'border-gray-200'
+                      }`}
                   >
                     <img src={img} alt={`${product.name} ${index + 1}`} className="w-full h-full object-cover" />
                   </button>
@@ -219,11 +219,10 @@ const IndividualProductDetailPage = ({
               </button>
               <button
                 onClick={handleAddToLikes}
-                className={`px-6 py-3 border-2 rounded-lg font-semibold transition-colors ${
-                  productIsLiked
-                    ? 'bg-[#8B7355] text-white border-[#8B7355]'
-                    : 'border-[#8B7355] text-[#8B7355] hover:bg-[#8B7355] hover:text-white'
-                }`}
+                className={`px-6 py-3 border-2 rounded-lg font-semibold transition-colors ${productIsLiked
+                  ? 'bg-[#8B7355] text-white border-[#8B7355]'
+                  : 'border-[#8B7355] text-[#8B7355] hover:bg-[#8B7355] hover:text-white'
+                  }`}
               >
                 ♥
               </button>
@@ -275,9 +274,103 @@ const IndividualProductDetailPage = ({
                 </div>
               )}
             </div>
+
+            {/* Connect Button */}
+            <button
+              onClick={() => setShowContactModal(true)}
+              className="w-full mt-6 bg-[#8B7355] text-white py-4 rounded-lg text-lg font-bold tracking-wide hover:bg-[#725E45] transition-all shadow-lg hover:shadow-xl uppercase transform hover:-translate-y-1"
+            >
+              Connect for more details
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Contact Details Modal */}
+      {showContactModal && (
+        <div
+          className="fixed inset-0 z-[1000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 animate-fadeIn"
+          onClick={() => setShowContactModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl w-full max-w-4xl overflow-hidden shadow-2xl transform transition-all scale-100"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="bg-[#8B7355] px-6 py-4 flex justify-between items-center">
+              <h2 className="text-xl md:text-2xl font-serif text-white tracking-wider uppercase">Contact Us</h2>
+              <button
+                onClick={() => setShowContactModal(false)}
+                className="text-white hover:text-gray-200 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-8 md:p-12">
+              <div className="text-center mb-10">
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">Get in Touch</h3>
+                <p className="text-gray-500">We'd love to hear from you. Reach out to us for any queries.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                {/* Location */}
+                <div className="flex flex-col items-center text-center group">
+                  <div className="w-16 h-16 bg-[#fffbf0] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-[#8B7355]/20">
+                    <svg className="w-8 h-8 text-[#8B7355]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-800 mb-2">Location</h4>
+                  <p className="text-gray-600 leading-relaxed text-sm">
+                    Borawar Byepass Road<br />Makrana, Rajasthan, India
+                  </p>
+                </div>
+
+                {/* Email */}
+                <div className="flex flex-col items-center text-center group">
+                  <div className="w-16 h-16 bg-[#fffbf0] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-[#8B7355]/20">
+                    <svg className="w-8 h-8 text-[#8B7355]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-800 mb-2">Email</h4>
+                  <a href="mailto:aslammarble40@gmail.com" className="text-gray-600 hover:text-[#8B7355] transition-colors text-sm font-medium">
+                    aslammarble40@gmail.com
+                  </a>
+                </div>
+
+                {/* Call */}
+                <div className="flex flex-col items-center text-center group">
+                  <div className="w-16 h-16 bg-[#fffbf0] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-[#8B7355]/20">
+                    <svg className="w-8 h-8 text-[#8B7355]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-800 mb-2">Call Us</h4>
+                  <a href="tel:+917877639699" className="text-gray-600 hover:text-[#8B7355] transition-colors text-sm font-medium">
+                    +91 7877639699
+                  </a>
+                </div>
+              </div>
+
+              {/* Action Button within Modal */}
+              <div className="mt-12 text-center">
+                <a
+                  href="tel:+917877639699"
+                  className="inline-block px-8 py-3 bg-[#8B7355] text-white rounded-full font-bold hover:bg-[#725E45] transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                >
+                  Call Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
       <FloatingButtons />

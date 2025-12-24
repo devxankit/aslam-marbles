@@ -36,7 +36,7 @@ import { fetchCommunalTemplesData } from '../../../utils/communalTemplesUtils'
 const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
   const navigate = useNavigate()
   const [formStep, setFormStep] = useState(1)
-  const [showExpertForm, setShowExpertForm] = useState(true)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const { refs, visibleSections } = useIntersectionObserver(0.3)
   const [pageData, setPageData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -58,15 +58,8 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
     loadData()
   }, [])
 
-  const scrollToForm = useCallback(() => {
-    const formContainer = document.getElementById('expert-form-container')
-    if (formContainer) {
-      const containerPosition = formContainer.getBoundingClientRect().top + window.pageYOffset
-      window.scrollTo({
-        top: containerPosition - 100,
-        behavior: 'smooth'
-      })
-    }
+  const toggleSidebar = useCallback(() => {
+    setIsSidebarOpen(prev => !prev)
   }, [])
 
   const [formData, setFormData] = useState({
@@ -119,194 +112,14 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
         {/* Gradient Overlay for Text Visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/0 to-black/0"></div>
 
-        {/* Talk to Expert Box - Fixed Position Over Image */}
-        <div className="absolute top-1/2 right-10 transform -translate-y-1/2 w-[350px] bg-white/95 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden z-20">
-          {/* Header */}
-          <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-[#8B7355]/10">
-            <h3 className="text-lg font-bold text-[#8B7355] uppercase tracking-wide">Talk to Our Expert</h3>
-            <span className="text-xs font-semibold px-2 py-1 bg-[#8B7355] text-white rounded-full">{formStep}/2</span>
-          </div>
-
-          {/* Form Content */}
-          <div className="p-6">
-            {formStep === 1 ? (
-              <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setFormStep(2); }}>
-                <div className="flex gap-4 mb-2">
-                  <label className="flex items-center gap-2 cursor-pointer group">
-                    <div className={`w - 4 h - 4 rounded - full border flex items - center justify - center ${formData.type === 'DOMESTIC' ? 'border-[#8B7355]' : 'border-gray-300'} `}>
-                      {formData.type === 'DOMESTIC' && <div className="w-2 h-2 rounded-full bg-[#8B7355]" />}
-                    </div>
-                    <input
-                      type="radio"
-                      name="type"
-                      value="DOMESTIC"
-                      checked={formData.type === 'DOMESTIC'}
-                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                      className="hidden"
-                    />
-                    <span className={`text - xs font - bold tracking - wider ${formData.type === 'DOMESTIC' ? 'text-[#8B7355]' : 'text-gray-500'} `}>DOMESTIC</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer group">
-                    <div className={`w - 4 h - 4 rounded - full border flex items - center justify - center ${formData.type === 'INTERNATIONAL' ? 'border-[#8B7355]' : 'border-gray-300'} `}>
-                      {formData.type === 'INTERNATIONAL' && <div className="w-2 h-2 rounded-full bg-[#8B7355]" />}
-                    </div>
-                    <input
-                      type="radio"
-                      name="type"
-                      value="INTERNATIONAL"
-                      checked={formData.type === 'INTERNATIONAL'}
-                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                      className="hidden"
-                    />
-                    <span className={`text - xs font - bold tracking - wider ${formData.type === 'INTERNATIONAL' ? 'text-[#8B7355]' : 'text-gray-500'} `}>INTERNATIONAL</span>
-                  </label>
-                </div>
-
-                <div className="space-y-3">
-                  <input
-                    type="text"
-                    placeholder="Full Name *"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-1 focus:ring-[#8B7355] transition-all"
-                    required
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email Address *"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-1 focus:ring-[#8B7355] transition-all"
-                    required
-                  />
-                  <div className="flex bg-gray-50 border border-gray-200 rounded-lg overflow-hidden focus-within:border-[#8B7355] focus-within:ring-1 focus-within:ring-[#8B7355] transition-all">
-                    <div className="flex items-center px-3 bg-gray-100 border-r border-gray-200">
-                      <span className="text-sm">🇮🇳 +91</span>
-                    </div>
-                    <input
-                      type="tel"
-                      placeholder="Phone number *"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="flex-1 px-4 py-3 text-sm bg-transparent focus:outline-none"
-                      required
-                    />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="City *"
-                    value={formData.city}
-                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-1 focus:ring-[#8B7355] transition-all"
-                    required
-                  />
-                </div>
-
-                <div className="pt-2">
-                  <p className="text-xs font-bold text-gray-700 mb-2 uppercase tracking-wide">Tell us about yourself *</p>
-                  <div className="space-y-2">
-                    <label className="flex items-start gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded-lg transition-colors">
-                      <div className={`mt - 0.5 w - 4 h - 4 rounded - full border flex items - center justify - center flex - shrink - 0 ${formData.aboutYourself === 'homeowner' ? 'border-[#8B7355]' : 'border-gray-300'} `}>
-                        {formData.aboutYourself === 'homeowner' && <div className="w-2 h-2 rounded-full bg-[#8B7355]" />}
-                      </div>
-                      <input
-                        type="radio"
-                        name="aboutYourself"
-                        value="homeowner"
-                        checked={formData.aboutYourself === 'homeowner'}
-                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
-                        className="hidden"
-                        required
-                      />
-                      <span className="text-xs text-gray-600 leading-snug">I am a homeowner looking for a communal temple</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded-lg transition-colors">
-                      <div className={`mt - 0.5 w - 4 h - 4 rounded - full border flex items - center justify - center flex - shrink - 0 ${formData.aboutYourself === 'designer' ? 'border-[#8B7355]' : 'border-gray-300'} `}>
-                        {formData.aboutYourself === 'designer' && <div className="w-2 h-2 rounded-full bg-[#8B7355]" />}
-                      </div>
-                      <input
-                        type="radio"
-                        name="aboutYourself"
-                        value="designer"
-                        checked={formData.aboutYourself === 'designer'}
-                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
-                        className="hidden"
-                        required
-                      />
-                      <span className="text-xs text-gray-600 leading-snug">I am an interior designer/consultant seeking solutions</span>
-                    </label>
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-[#8B7355] text-white py-3 rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-[#7A6548] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-2"
-                >
-                  Next Step →
-                </button>
-              </form>
-            ) : (
-              <form className="space-y-4" onSubmit={handleSubmit}>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-2 uppercase tracking-wide">What are you looking for? *</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {['Small Temple', 'Medium Temple', 'Large Temple', 'Custom Design'].map((opt) => (
-                        <label key={opt} className={`cursor - pointer text - center py - 2 px - 1 rounded - md border text - xs font - medium transition - all ${formData.lookingFor === opt ? 'bg-[#8B7355]/10 border-[#8B7355] text-[#8B7355]' : 'border-gray-200 text-gray-600 hover:border-gray-300'} `}>
-                          <input
-                            type="radio"
-                            name="lookingFor"
-                            value={opt}
-                            checked={formData.lookingFor === opt}
-                            onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
-                            className="hidden"
-                          />
-                          {opt}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-2 uppercase tracking-wide">Budget Range *</label>
-                    <select
-                      value={formData.budget}
-                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      className="w-full px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#8B7355]"
-                      required
-                    >
-                      <option value="">Select Budget</option>
-                      {BUDGET_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
-                    </select>
-                  </div>
-
-                  <textarea
-                    placeholder="Tell us more about your requirements..."
-                    value={formData.additionalInfo}
-                    onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
-                    rows={3}
-                    className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#8B7355] resize-none"
-                  />
-                </div>
-
-                <div className="flex gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setFormStep(1)}
-                    className="px-6 py-3 border border-gray-300 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 bg-[#8B7355] text-white py-3 rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-[#7A6548] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                  >
-                    Submit Request
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
+        {/* Hero Content Overlay */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 bg-black/10">
+          <h1 className="text-4xl md:text-6xl font-serif text-white italic drop-shadow-2xl mb-4">
+            {pageData?.heroSection?.title || "Crafting Sacred Communal Spaces"}
+          </h1>
+          <p className="text-white/90 text-lg md:text-xl font-medium max-w-3xl drop-shadow-lg">
+            {pageData?.heroSection?.subtitle || "Exquisite marble temples built with devotion and architectural excellence for communities worldwide."}
+          </p>
         </div>
       </div>
 
@@ -455,7 +268,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
           {/* Start Your Project Button */}
           <div className="flex justify-center mt-6 md:mt-8 mb-8 md:mb-10">
             <button
-              onClick={scrollToForm}
+              onClick={() => setIsSidebarOpen(true)}
               className="px-6 py-3 md:px-8 md:py-4 text-white text-sm md:text-base font-bold uppercase tracking-wide transition-colors shadow-lg hover:opacity-90"
               style={{ backgroundColor: THEME_COLORS.primary }}
             >
@@ -858,9 +671,254 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
         </div>
       </section>
 
+      <TrustedBySection />
       <Footer />
       <FloatingButtons />
+
+      {/* Talk to Expert Sidebar */}
+      {/* Backdrop */}
+      {
+        isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] transition-opacity duration-500 animate-fadeIn"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )
+      }
+
+      {/* Sidebar Content */}
+      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[101] shadow-[0_0_50px_rgba(0,0,0,0.2)] transform transition-transform duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div className="px-6 py-5 border-b border-gray-100 flex justify-between items-center bg-[#8B7355]/10">
+            <div>
+              <h3 className="text-lg font-bold text-[#8B7355] uppercase tracking-wide">Talk to Our Expert</h3>
+              <p className="text-[10px] text-[#8B7355]/70 font-bold uppercase tracking-widest mt-0.5">Customized Temple Solutions</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-semibold px-2 py-1 bg-[#8B7355] text-white rounded-full">{formStep}/2</span>
+              <button
+                onClick={() => setIsSidebarOpen(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-all duration-300 transform hover:rotate-90"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Form Content */}
+          <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
+            {formStep === 1 ? (
+              <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); setFormStep(2); }}>
+                <div className="flex gap-4 mb-2">
+                  <label className="flex items-center gap-2 cursor-pointer group">
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all ${formData.type === 'DOMESTIC' ? 'border-[#8B7355] bg-[#8B7355]/5' : 'border-gray-300'} group-hover:border-[#8B7355]`}>
+                      {formData.type === 'DOMESTIC' && <div className="w-2 h-2 rounded-full bg-[#8B7355] animate-scaleIn" />}
+                    </div>
+                    <input
+                      type="radio"
+                      name="type"
+                      value="DOMESTIC"
+                      checked={formData.type === 'DOMESTIC'}
+                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                      className="hidden"
+                    />
+                    <span className={`text-xs font-bold tracking-wider transition-colors ${formData.type === 'DOMESTIC' ? 'text-[#8B7355]' : 'text-gray-500'} group-hover:text-[#8B7355]`}>DOMESTIC</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer group">
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all ${formData.type === 'INTERNATIONAL' ? 'border-[#8B7355] bg-[#8B7355]/5' : 'border-gray-300'} group-hover:border-[#8B7355]`}>
+                      {formData.type === 'INTERNATIONAL' && <div className="w-2 h-2 rounded-full bg-[#8B7355] animate-scaleIn" />}
+                    </div>
+                    <input
+                      type="radio"
+                      name="type"
+                      value="INTERNATIONAL"
+                      checked={formData.type === 'INTERNATIONAL'}
+                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                      className="hidden"
+                    />
+                    <span className={`text-xs font-bold tracking-wider transition-colors ${formData.type === 'INTERNATIONAL' ? 'text-[#8B7355]' : 'text-gray-500'} group-hover:text-[#8B7355]`}>INTERNATIONAL</span>
+                  </label>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="relative group">
+                    <input
+                      type="text"
+                      placeholder="Full Name *"
+                      value={formData.fullName}
+                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      className="w-full px-4 py-3.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#8B7355] focus:bg-white focus:ring-1 focus:ring-[#8B7355] transition-all"
+                      required
+                    />
+                  </div>
+                  <div className="relative group">
+                    <input
+                      type="email"
+                      placeholder="Email Address *"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#8B7355] focus:bg-white focus:ring-1 focus:ring-[#8B7355] transition-all"
+                      required
+                    />
+                  </div>
+                  <div className="flex bg-gray-50 border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#8B7355] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#8B7355] transition-all">
+                    <div className="flex items-center px-4 bg-gray-100/50 border-r border-gray-200">
+                      <span className="text-sm font-medium">🇮🇳 +91</span>
+                    </div>
+                    <input
+                      type="tel"
+                      placeholder="Phone number *"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="flex-1 px-4 py-3.5 text-sm bg-transparent focus:outline-none"
+                      required
+                    />
+                  </div>
+                  <div className="relative group">
+                    <input
+                      type="text"
+                      placeholder="City *"
+                      value={formData.city}
+                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                      className="w-full px-4 py-3.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#8B7355] focus:bg-white focus:ring-1 focus:ring-[#8B7355] transition-all"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-gray-50">
+                  <p className="text-xs font-black text-gray-400 mb-4 uppercase tracking-[0.2em] shadow-sm inline-block">Tell us about yourself *</p>
+                  <div className="space-y-3">
+                    <label className="flex items-start gap-4 cursor-pointer p-3 border border-gray-100 rounded-xl hover:bg-gray-50 hover:border-[#8B7355]/30 transition-all group">
+                      <div className={`mt-0.5 w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${formData.aboutYourself === 'homeowner' ? 'border-[#8B7355] bg-[#8B7355]' : 'border-gray-300 bg-white'}`}>
+                        {formData.aboutYourself === 'homeowner' && <div className="w-2 h-2 rounded-full bg-white shadow-sm" />}
+                      </div>
+                      <input
+                        type="radio"
+                        name="aboutYourself"
+                        value="homeowner"
+                        checked={formData.aboutYourself === 'homeowner'}
+                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
+                        className="hidden"
+                        required
+                      />
+                      <span className="text-xs md:text-sm font-medium text-gray-600 leading-snug group-hover:text-gray-900 transition-colors">I am a homeowner looking for a communal temple</span>
+                    </label>
+                    <label className="flex items-start gap-4 cursor-pointer p-3 border border-gray-100 rounded-xl hover:bg-gray-50 hover:border-[#8B7355]/30 transition-all group">
+                      <div className={`mt-0.5 w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${formData.aboutYourself === 'designer' ? 'border-[#8B7355] bg-[#8B7355]' : 'border-gray-300 bg-white'}`}>
+                        {formData.aboutYourself === 'designer' && <div className="w-2 h-2 rounded-full bg-white shadow-sm" />}
+                      </div>
+                      <input
+                        type="radio"
+                        name="aboutYourself"
+                        value="designer"
+                        checked={formData.aboutYourself === 'designer'}
+                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
+                        className="hidden"
+                        required
+                      />
+                      <span className="text-xs md:text-sm font-medium text-gray-600 leading-snug group-hover:text-gray-900 transition-colors">I am an interior designer/consultant seeking solutions</span>
+                    </label>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-[#8B7355] text-white py-4 rounded-xl text-sm font-bold uppercase tracking-[0.2em] hover:bg-[#7A6548] transition-all duration-300 shadow-xl hover:shadow-[#8B7355]/20 transform hover:-translate-y-1 mt-6"
+                >
+                  Next Step →
+                </button>
+              </form>
+            ) : (
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-xs font-black text-gray-400 mb-4 uppercase tracking-[0.2em]">What are you looking for? *</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {['Small Temple', 'Medium Temple', 'Large Temple', 'Custom Design'].map((opt) => (
+                        <label key={opt} className={`cursor-pointer text-center py-3 px-2 rounded-xl border text-xs font-bold transition-all duration-300 ${formData.lookingFor === opt ? 'bg-[#8B7355] border-[#8B7355] text-white shadow-lg shadow-[#8B7355]/20 scale-[1.02]' : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'} `}>
+                          <input
+                            type="radio"
+                            name="lookingFor"
+                            value={opt}
+                            checked={formData.lookingFor === opt}
+                            onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
+                            className="hidden"
+                          />
+                          {opt}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-black text-gray-400 mb-4 uppercase tracking-[0.2em]">Budget Range *</label>
+                    <select
+                      value={formData.budget}
+                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                      className="w-full px-4 py-3.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#8B7355] outline-none transition-all appearance-none font-medium text-gray-700"
+                      required
+                    >
+                      <option value="">Select Budget</option>
+                      {BUDGET_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-black text-gray-400 mb-4 uppercase tracking-[0.2em]">Requirement Details</label>
+                    <textarea
+                      placeholder="Tell us more about your requirements..."
+                      value={formData.additionalInfo}
+                      onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
+                      rows={5}
+                      className="w-full px-4 py-4 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#8B7355] focus:bg-white resize-none transition-all shadow-inner"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-4 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setFormStep(1)}
+                    className="flex-1 py-4 border-2 border-gray-100 rounded-xl text-xs font-bold text-gray-400 hover:text-[#8B7355] hover:border-[#8B7355] transition-all duration-300 uppercase tracking-widest"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-[2] bg-[#8B7355] text-white py-4 rounded-xl text-sm font-bold uppercase tracking-[0.2em] hover:bg-[#7A6548] transition-all duration-300 shadow-xl hover:shadow-[#8B7355]/20 transform hover:-translate-y-1"
+                  >
+                    Submit Request
+                  </button>
+                </div>
+              </form>
+            )}
+
+            <div className="mt-12 p-6 bg-gray-50 rounded-2xl border border-gray-100 italic text-center">
+              <p className="text-sm text-gray-500 leading-relaxed">
+                "Our experts will analyze your requirements and get back to you with a curated proposal within 24-48 hours."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  )
+}
+
+function TrustedBySection() {
+  return (
+    <section className="w-full py-12 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4">
+        <p className="text-center text-gray-400 uppercase tracking-[0.3em] font-bold text-xs mb-8">Trusted By Leading Organizations</p>
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-40 grayscale">
+          {/* Add logos here if needed */}
+        </div>
+      </div>
+    </section>
   )
 }
 

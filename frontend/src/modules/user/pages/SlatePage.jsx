@@ -10,6 +10,7 @@ const SlatePage = (props) => {
       subtitle="Natural Elegance for Timeless Spaces"
       description="Discover our exquisite collection of slate stones, perfect for creating stunning natural surfaces with unique textures and colors."
       defaultHeroImage={slateHeroImage}
+      galleryLayout="uniform-5"
       {...props}
     />
   )

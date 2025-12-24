@@ -32,25 +32,32 @@ const HomeImagesSection = () => {
   const visitStoreImage = navItems.find(item => (item.id || item.key) === 'visit-store')
 
   return (
-    <section className="w-full bg-white py-8 md:py-12">
+    <section className="w-full bg-white py-8 md:py-16">
       <div className="w-full mx-auto">
         {visitStoreImage && (
           <div className="relative w-full">
-            <div className="relative w-full overflow-hidden" style={{ aspectRatio: '3/1', height: '60vh', maxHeight: '650px' }}>
-              <img
-                src={visitStoreImage.image}
-                alt={visitStoreImage.name}
-                className="w-full h-full object-cover object-center"
-                style={{ objectPosition: 'center center' }}
-              />
-              {visitStoreImage.hasButton && (
-                <button
-                  onClick={handleVisitStoreClick}
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#8B7355] text-white px-6 py-3 md:px-8 md:py-4 text-sm md:text-base lg:text-lg font-semibold uppercase tracking-wide rounded hover:bg-[#6B5A42] transition-all duration-300 shadow-lg hover:shadow-xl z-10"
-                >
-                  {visitStoreImage.name}
-                </button>
-              )}
+            <div
+              className="relative w-full overflow-hidden shadow-2xl"
+              style={{ minHeight: '200px' }}
+            >
+              <picture>
+                <img
+                  src={visitStoreImage.image}
+                  alt={visitStoreImage.name}
+                  className="w-full h-40 sm:h-[50vh] md:h-[60vh] lg:h-[70vh] object-cover object-center transform transition-transform duration-[2s] hover:scale-105"
+                />
+              </picture>
+
+              <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-center p-2 text-center">
+                {visitStoreImage.hasButton && (
+                  <button
+                    onClick={handleVisitStoreClick}
+                    className="group relative bg-[#8B7355] text-white px-4 md:px-12 py-2.5 md:py-5 text-[10px] md:text-lg font-bold uppercase tracking-[0.15em] rounded-full hover:bg-white hover:text-[#8B7355] transition-all duration-500 shadow-xl z-10 active:scale-95"
+                  >
+                    <span className="relative z-10">{visitStoreImage.name}</span>
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}

@@ -10,6 +10,7 @@ const CobbleStonesPage = (props) => {
       subtitle="Heritage Craftsmanship for Modern Pathways"
       description="Our premium cobbles are hand-finished to provide a rustic yet elegant touch to driveways, pedestrian paths, and historic-style landscaping."
       defaultHeroImage={cobbleStonesHeroImage}
+      galleryLayout="uniform-5"
       {...props}
     />
   )

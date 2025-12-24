@@ -34,7 +34,7 @@ export const homeImages = [
   },
   {
     id: 'artisans-of-tilak',
-    name: 'OUR ARTIST',
+    name: 'Our Artist',
     image: artisansOfTilakImg,
     path: '/artisans-of-tilak'
   },

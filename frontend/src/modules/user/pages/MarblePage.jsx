@@ -10,6 +10,7 @@ const MarblePage = (props) => {
       subtitle="Luxury and Elegance in Every Slab"
       description="Explore our premium collection of marble varieties, showcasing timeless beauty and sophistication for your architectural and design needs."
       defaultHeroImage={marbleHeroImg}
+      galleryLayout="uniform-5"
       {...props}
     />
   )

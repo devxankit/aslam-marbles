@@ -54,38 +54,32 @@ const DreamTempleSection = ({ onOpenPricing }) => {
                     <div className="w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-12">
+                <div className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-1 sm:gap-4 md:gap-8 mb-12">
                     {temples.map((temple) => (
                         <div
                             key={temple.id}
                             className="group cursor-pointer bg-white border-2 border-gray-200 rounded-xl overflow-hidden hover:border-[#8B7355] transition-all duration-500 hover:shadow-2xl transform hover:-translate-y-2"
                         >
                             {/* Image Container */}
-                            <div className="relative w-full h-64 md:h-72 lg:h-80 overflow-hidden bg-gray-100">
+                            <div className="relative w-full h-24 xs:h-32 sm:h-48 md:h-72 lg:h-80 overflow-hidden bg-gray-100">
                                 <img
                                     src={temple.image}
                                     alt={temple.description}
                                     className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-125"
                                 />
-                                {/* Gradient Overlay on Hover */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                {/* Price Badge */}
-                                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg transform translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
-                                    <span className="text-sm font-bold" style={{ color: '#8B7355' }}>INR {temple.price}</span>
-                                </div>
                             </div>
 
                             {/* Info Container */}
-                            <div className="p-5 md:p-6 bg-white">
-                                <div className="mb-2">
-                                    <p className="text-xs md:text-sm font-medium text-gray-500 mb-2 uppercase tracking-wide">
-                                        Starting at
+                            <div className="p-1 md:p-6 bg-white text-center">
+                                <div className="mb-0.5">
+                                    <p className="text-[7px] md:text-sm font-medium text-gray-400 mb-0.5 uppercase tracking-tighter">
+                                        Starts at
                                     </p>
-                                    <p className="text-lg md:text-xl font-bold text-black mb-2 group-hover:text-[#8B7355] transition-colors duration-300">
-                                        INR {temple.price}
+                                    <p className="text-[9px] sm:text-lg md:text-xl font-bold text-black group-hover:text-[#8B7355] transition-colors duration-300">
+                                        ₹{temple.price}
                                     </p>
-                                    <p className="text-base md:text-lg font-semibold text-gray-800">
-                                        {temple.description}
+                                    <p className="text-[8px] sm:text-base md:text-lg font-semibold text-gray-800 leading-[1.1] truncate">
+                                        {temple.size}
                                     </p>
                                 </div>
                             </div>

@@ -10,6 +10,7 @@ const BasaltPage = (props) => {
             subtitle="Volcanic Elegance for Modern Design"
             description="Known for its durability and rich dark tones, Basalt is a volcanic rock that adds a sophisticated, contemporary touch to any paving or cladding project."
             defaultHeroImage={basaltHeroImage}
+            galleryLayout="uniform-5"
             {...props}
         />
     )

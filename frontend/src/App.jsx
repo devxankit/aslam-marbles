@@ -67,6 +67,9 @@ import IndividualProductDetailPage from './modules/user/pages/IndividualProductD
 import ModernArtPage from './modules/user/pages/ModernArtPage'
 import ImportedPage from './modules/user/pages/ImportedPage'
 import PackagingPage from './modules/user/pages/PackagingPage'
+import PackagingCategoryPage from './modules/user/pages/PackagingCategoryPage'
+import LiveInventoryPage from './modules/user/pages/LiveInventoryPage'
+import LiveInventoryManagementPage from './modules/admin/pages/LiveInventoryManagementPage'
 
 import LimitedEditionPage from './modules/user/pages/LimitedEditionPage'
 import CheckoutPage from './modules/user/pages/CheckoutPage'
@@ -944,6 +947,45 @@ function App() {
             />
           } />
 
+          <Route path="/art/packaging/:categoryId" element={
+            <PackagingCategoryPage
+              onShowSidebar={() => setShowSidebar(true)}
+              onShowProjects={() => setShowProjectsModal(true)}
+              onShowCreations={() => setShowOurCreations(true)}
+              onShowProducts={() => setShowOurProducts(true)}
+              onShowServices={() => setShowOurServices(true)}
+              onShowHowItWorks={() => setShowModal(true)}
+              onShowLocation={() => { }}
+              onShowBooking={() => { }}
+            />
+          } />
+
+          <Route path="/art/packaging/:categoryId/:productId" element={
+            <StoneProductDetailPage
+              onShowSidebar={() => setShowSidebar(true)}
+              onShowProjects={() => setShowProjectsModal(true)}
+              onShowCreations={() => setShowOurCreations(true)}
+              onShowProducts={() => setShowOurProducts(true)}
+              onShowServices={() => setShowOurServices(true)}
+              onShowHowItWorks={() => setShowModal(true)}
+              onShowLocation={() => { }}
+              onShowBooking={() => { }}
+            />
+          } />
+
+          <Route path="/services/live-inventory" element={
+            <LiveInventoryPage
+              onShowSidebar={() => setShowSidebar(true)}
+              onShowProjects={() => setShowProjectsModal(true)}
+              onShowCreations={() => setShowOurCreations(true)}
+              onShowProducts={() => setShowOurProducts(true)}
+              onShowServices={() => setShowOurServices(true)}
+              onShowHowItWorks={() => setShowModal(true)}
+              onShowLocation={() => { }}
+              onShowBooking={() => { setShowBookingModal(true) }}
+            />
+          } />
+
           <Route path="/tsa-design-hub" element={
             <TSADesignHubPage
               onShowSidebar={() => setShowSidebar(true)}
@@ -1253,6 +1295,11 @@ function App() {
           <Route path="/admin/projects/international" element={
             <ProtectedRoute>
               <InternationalProjectsManagementPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/aslam-house/live-inventory" element={
+            <ProtectedRoute>
+              <LiveInventoryManagementPage />
             </ProtectedRoute>
           } />
           <Route path="/admin/pages/aslam-house" element={

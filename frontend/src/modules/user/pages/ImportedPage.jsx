@@ -10,6 +10,7 @@ const ImportedPage = (props) => {
             subtitle="Exquisite Stones from Around the World"
             description="Discover our premium selection of imported stones, sourced from the finest quarries globally."
             defaultHeroImage={heroImg}
+            galleryLayout="uniform-5"
             {...props}
         />
     )

@@ -10,6 +10,7 @@ const PebbleStonesPage = (props) => {
       subtitle="Natural Accents for Refined Spaces"
       description="Discover the textural beauty of our pebble collection, ranging from polished river stones to natural sandstone pebbles, perfect for landscaping and accent features."
       defaultHeroImage={pebbleStonesHeroImage}
+      galleryLayout="uniform-5"
       {...props}
     />
   )

@@ -10,6 +10,7 @@ const SandstonePage = (props) => {
       subtitle="Timeless Elegance Carved in Earth"
       description="Experience the raw beauty and unparalleled durability of our premium Sandstone collection. Perfect for architectural masterpieces that stand the test of time."
       defaultHeroImage={sandstoneHeroImg}
+      galleryLayout="uniform-5"
       {...props}
     />
   )

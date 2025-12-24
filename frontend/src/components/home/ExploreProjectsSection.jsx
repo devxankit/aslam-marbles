@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 // Communal imports
 import communalImg1 from '../../assets/communal/1733300550903.jpeg'
 import communalImg2 from '../../assets/communal/wmremove-transformed.jpeg'
@@ -26,150 +26,58 @@ import internationalImg5 from '../../assets/international/edc914ef-1943-4164-9e4
 
 const ExploreProjectsSection = () => {
   const [activeCategory, setActiveCategory] = useState('communal')
-  const scrollRef = useRef(null)
 
   const projectCategories = {
-    communal: [
-      communalImg1,
-      communalImg2,
-      communalImg3,
-      communalImg4,
-      communalImg5,
-      communalImg6
-    ],
-    residential: [
-      residentialImg1,
-      residentialImg2,
-      residentialImg3,
-      residentialImg4,
-      residentialImg5,
-      residentialImg6,
-      residentialImg7,
-      residentialImg8
-    ],
-    international: [
-      internationalImg1,
-      internationalImg2,
-      internationalImg3,
-      internationalImg4,
-      internationalImg5
-    ]
-  }
-
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const scrollAmount = 400
-      if (direction === 'left') {
-        scrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' })
-      } else {
-        scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
-      }
-    }
+    communal: [communalImg1, communalImg2, communalImg3, communalImg4, communalImg5, communalImg6],
+    residential: [residentialImg1, residentialImg2, residentialImg3, residentialImg4, residentialImg5, residentialImg6, residentialImg7, residentialImg8],
+    international: [internationalImg1, internationalImg2, internationalImg3, internationalImg4, internationalImg5]
   }
 
   return (
-    <>
-      <style>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
-      <section className="w-full py-12 md:py-16 lg:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        {/* Heading */}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center mb-8 md:mb-12">
-          EXPLORE OUR PROJECTS
-        </h2>
-
-        {/* Category Buttons */}
-        <div className="flex justify-center gap-4 mb-8 md:mb-12 flex-wrap">
-          <button
-            onClick={() => setActiveCategory('communal')}
-            className={`px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold transition-all duration-300 ${
-              activeCategory === 'communal'
-                ? 'bg-[#8B7355] text-white'
-                : 'bg-white text-[#8B7355] border-2 border-[#8B7355] hover:bg-[#8B7355]/10'
-            }`}
-          >
-            Communal
-          </button>
-          <button
-            onClick={() => setActiveCategory('residential')}
-            className={`px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold transition-all duration-300 ${
-              activeCategory === 'residential'
-                ? 'bg-[#8B7355] text-white'
-                : 'bg-white text-[#8B7355] border-2 border-[#8B7355] hover:bg-[#8B7355]/10'
-            }`}
-          >
-            Residential
-          </button>
-          <button
-            onClick={() => setActiveCategory('international')}
-            className={`px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold transition-all duration-300 ${
-              activeCategory === 'international'
-                ? 'bg-[#8B7355] text-white'
-                : 'bg-white text-[#8B7355] border-2 border-[#8B7355] hover:bg-[#8B7355]/10'
-            }`}
-          >
-            International
-          </button>
+    <section className="w-full py-8 md:py-16 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-2 md:px-8">
+        {/* Compact Heading */}
+        <div className="text-center mb-6 md:mb-12">
+          <h2 className="text-xl md:text-5xl font-serif text-[#8B7355] italic mb-3 uppercase tracking-tight md:tracking-wider">
+            Explore Our Projects
+          </h2>
+          <div className="w-12 md:w-20 h-0.5 mx-auto bg-[#8B7355]/30"></div>
         </div>
 
-        {/* Images Horizontal Scroll with Arrows */}
-        <div className="relative">
-          {/* Left Arrow */}
-          <button
-            onClick={() => scroll('left')}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 bg-[#8B7355] text-white rounded-full flex items-center justify-center shadow-lg hover:bg-[#A08A6F] transition-colors"
-            aria-label="Scroll left"
-          >
-            <svg className="w-6 h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
+        {/* Compact Category Buttons */}
+        <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-12">
+          {['communal', 'residential', 'international'].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-3 md:px-8 py-2 md:py-4 text-[10px] md:text-lg font-bold uppercase tracking-widest transition-all rounded-sm ${activeCategory === cat
+                ? 'bg-[#8B7355] text-white shadow-lg'
+                : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
 
-          {/* Right Arrow */}
-          <button
-            onClick={() => scroll('right')}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 bg-[#8B7355] text-white rounded-full flex items-center justify-center shadow-lg hover:bg-[#A08A6F] transition-colors"
-            aria-label="Scroll right"
-          >
-            <svg className="w-6 h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-
-          {/* Horizontal Scrollable Images */}
-          <div
-            ref={scrollRef}
-            className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide px-14 md:px-16 py-4"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none'
-            }}
-          >
-            {projectCategories[activeCategory].map((image, index) => (
-              <div
-                key={index}
-                className="group relative overflow-hidden bg-gray-100 flex-shrink-0 w-64 h-64 md:w-80 md:h-80"
-              >
-                <img
-                  src={image}
-                  alt={`${activeCategory} project ${index + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
-              </div>
-            ))}
-          </div>
+        {/* Compact 3-Column Grid for All Screens */}
+        <div className="grid grid-cols-3 md:grid-cols-3 gap-1 md:gap-6">
+          {projectCategories[activeCategory].slice(0, 6).map((image, index) => (
+            <div
+              key={index}
+              className="relative aspect-square overflow-hidden rounded-md md:rounded-2xl bg-gray-100 group shadow-sm"
+            >
+              <img
+                src={image}
+                alt={`${activeCategory} project ${index + 1}`}
+                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all"></div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
-    </>
   )
 }
 

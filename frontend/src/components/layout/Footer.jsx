@@ -6,225 +6,165 @@ const Footer = () => {
   return (
     <footer className="w-full bg-gradient-to-b from-black via-gray-900 to-black text-white mt-auto">
       {/* Upper Section */}
-      <div className="w-full px-4 md:px-8 lg:px-12 py-6 md:py-8 bg-gradient-to-b from-gray-900 to-black">
+      <div className="w-full px-4 md:px-8 lg:px-12 py-8 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12">
             {/* Leftmost Column - Logo and Contact */}
-            <div className="lg:col-span-1">
-              <div className="mb-6 flex justify-start -ml-8 md:-ml-12 lg:-ml-16 xl:-ml-20">
+            <div className="col-span-2 lg:col-span-1">
+              <div className="mb-4 flex justify-start -ml-4 md:-ml-12 lg:-ml-16">
                 <Logo />
               </div>
-              <h3 className="text-lg md:text-xl font-bold uppercase mb-4 text-[#8B7355]">{COMPANY_INFO.name}</h3>
+              <h3 className="text-base md:text-xl font-bold uppercase mb-4 text-[#8B7355]">{COMPANY_INFO.name}</h3>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 mt-1 text-[#8B7355] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
+                  <svg className="w-4 h-4 mt-1 text-[#8B7355] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                   </svg>
-                  <p className="text-sm md:text-base leading-relaxed text-gray-300">
+                  <p className="text-xs md:text-base leading-relaxed text-gray-300">
                     {COMPANY_INFO.address}
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <svg className="w-5 h-5 text-[#8B7355] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                  <svg className="w-4 h-4 text-[#8B7355] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
-                  <a href={`mailto:${COMPANY_INFO.email}`} className="text-sm md:text-base text-gray-300 hover:text-[#8B7355] transition-colors">
+                  <a href={`mailto:${COMPANY_INFO.email}`} className="text-xs md:text-base text-gray-300 hover:text-[#8B7355] transition-colors truncate">
                     {COMPANY_INFO.email}
                   </a>
                 </div>
                 <div className="flex items-center gap-3">
-                  <svg className="w-5 h-5 text-[#8B7355] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                  <svg className="w-4 h-4 text-[#8B7355] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
-                  <a href={`tel:${COMPANY_INFO.phone}`} className="text-sm md:text-base text-gray-300 hover:text-[#8B7355] transition-colors">
+                  <a href={`tel:${COMPANY_INFO.phone}`} className="text-xs md:text-base text-gray-300 hover:text-[#8B7355] transition-colors">
                     {COMPANY_INFO.phone}
                   </a>
                 </div>
               </div>
             </div>
 
-            {/* ASLAM MARBLE SUPPLIERS Column */}
+            {/* QUICK LINKS Column */}
             <div>
-              <h3 className="text-lg md:text-xl font-bold uppercase mb-5 text-[#8B7355] border-b border-[#8B7355]/30 pb-2">{COMPANY_INFO.name}</h3>
-              <ul className="space-y-3">
-                {FOOTER_LINKS.houseOfTilak.map((link, index) => (
+              <h3 className="text-sm md:text-xl font-bold uppercase mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-2">QUICK LINKS</h3>
+              <ul className="space-y-2">
+                {FOOTER_LINKS.quickLinks.slice(0, 5).map((link, index) => (
                   <li key={index}>
-                    {link.href.startsWith('/') ? (
-                      <Link to={link.href} className="text-sm md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
-                        <span className="w-1.5 h-1.5 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        <span>{link.label}</span>
-                      </Link>
-                    ) : (
-                      <a href={link.href} className="text-sm md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
-                        <span className="w-1.5 h-1.5 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        <span>{link.label}</span>
-                      </a>
-                    )}
+                    <Link to={link.href} className="text-[10px] md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
+                      <span className="w-1 h-1 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100"></span>
+                      <span>{link.label}</span>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* QUICK LINKS Column */}
+            {/* SERVICES Column */}
             <div>
-              <h3 className="text-lg md:text-xl font-bold uppercase mb-5 text-[#8B7355] border-b border-[#8B7355]/30 pb-2">QUICK LINKS</h3>
-              <ul className="space-y-3">
-                {FOOTER_LINKS.quickLinks.map((link, index) => (
+              <h3 className="text-sm md:text-xl font-bold uppercase mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-2">SERVICES</h3>
+              <ul className="space-y-2">
+                {FOOTER_LINKS.houseOfTilak.slice(0, 5).map((link, index) => (
                   <li key={index}>
-                    {link.href.startsWith('/') ? (
-                      <Link to={link.href} className="text-sm md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
-                        <span className="w-1.5 h-1.5 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        <span>{link.label}</span>
-                      </Link>
-                    ) : (
-                      <a href={link.href} className="text-sm md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
-                        <span className="w-1.5 h-1.5 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        <span>{link.label}</span>
-                      </a>
-                    )}
+                    <Link to={link.href} className="text-[10px] md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
+                      <span className="w-1 h-1 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100"></span>
+                      <span>{link.label}</span>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* LEGAL Column */}
-            <div>
-              <h3 className="text-lg md:text-xl font-bold uppercase mb-5 text-[#8B7355] border-b border-[#8B7355]/30 pb-2">LEGAL</h3>
-              <ul className="space-y-3">
-                {FOOTER_LINKS.legal.map((link, index) => (
+            <div className="hidden lg:block">
+              <h3 className="text-sm md:text-xl font-bold uppercase mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-2">LEGAL</h3>
+              <ul className="space-y-2">
+                {FOOTER_LINKS.legal.slice(0, 5).map((link, index) => (
                   <li key={index}>
-                    {link.href.startsWith('/') ? (
-                      <Link to={link.href} className="text-sm md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
-                        <span className="w-1.5 h-1.5 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        <span>{link.label}</span>
-                      </Link>
-                    ) : (
-                      <a href={link.href} className="text-sm md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
-                        <span className="w-1.5 h-1.5 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        <span>{link.label}</span>
-                      </a>
-                    )}
+                    <Link to={link.href} className="text-xs md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
+                      <span className="w-1 h-1 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100"></span>
+                      <span>{link.label}</span>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* NEED HELP Column with Social Media */}
-            <div>
-              <div className="mb-5">
-                <h3 className="text-lg md:text-xl font-bold uppercase mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-2">NEED HELP</h3>
-                <div className="flex items-center gap-4 mb-4">
-                  {/* Instagram */}
-                  <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-110 group">
-                    <svg className="w-5 h-5 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                  </a>
-                  {/* Facebook */}
-                  <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all duration-300 hover:scale-110 group">
-                    <svg className="w-5 h-5 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
-                  </a>
-                  {/* X (Twitter) */}
-                  <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-black transition-all duration-300 hover:scale-110 group">
-                    <svg className="w-5 h-5 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                  </a>
-                  {/* LinkedIn */}
-                  <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-700 transition-all duration-300 hover:scale-110 group">
-                    <svg className="w-5 h-5 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </a>
-                  {/* YouTube */}
-                  <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-all duration-300 hover:scale-110 group">
-                    <svg className="w-5 h-5 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                  </a>
-                </div>
+            {/* SOCIALS Column */}
+            <div className="col-span-2 lg:col-span-1 border-t border-gray-800 lg:border-none pt-6 lg:pt-0">
+              <h3 className="text-sm md:text-xl font-bold uppercase mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-2">CONNECT</h3>
+              <div className="flex items-center gap-3">
+                {/* Social Icons - Very compact */}
+                <a href="https://www.facebook.com/share/1BvePFux9x/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#8B7355] transition-all">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>
+                </a>
+                <a href="https://www.instagram.com/aslammarblesuppliers1?igsh=MWRhbmtpZjJleHR5aA==" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#8B7355] transition-all">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/aslam-marble-suppliers-180ab4a7?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#8B7355] transition-all">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                </a>
+                <a href="https://x.com/mohamme8519925?t=2kQUrmca_0xHJYO3mKPNIg&s=08" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#8B7355] transition-all">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                </a>
               </div>
-              <ul className="space-y-3">
-                {FOOTER_LINKS.needHelp.map((link, index) => (
-                  <li key={index}>
-                    <a href={link.href} className="text-sm md:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-2 group">
-                      <span className="w-1.5 h-1.5 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                      <span>{link.label}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Lower Section */}
-      <div className="w-full px-4 md:px-8 lg:px-12 py-4 md:py-6 border-t border-gray-800 bg-gray-900/50">
+      {/* Lower Section - Ultra Compact Locations */}
+      <div className="w-full px-2 md:px-8 lg:px-12 py-6 border-t border-gray-800 bg-black/40">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
             {/* LOCATIONS Section */}
-            <div className="bg-gray-800/30 p-6 rounded-lg border border-[#8B7355]/20">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-[#8B7355]/20 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-[#8B7355]" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
-                  </svg>
-                </div>
-                <h3 className="text-lg md:text-xl font-bold uppercase text-[#8B7355]">LOCATIONS</h3>
+            <div className="bg-gray-800/20 p-4 rounded-lg border border-gray-700/30">
+              <div className="flex items-center gap-2 mb-3">
+                <svg className="w-4 h-4 text-[#8B7355]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                </svg>
+                <h3 className="text-xs md:text-sm font-bold uppercase text-[#8B7355]">LOCATIONS</h3>
               </div>
               <div className="space-y-4">
                 <div>
-                  <p className="text-sm md:text-base mb-3 font-semibold text-gray-200">Marble Temple Across India:</p>
-                  <div className="text-xs md:text-sm text-gray-400 flex flex-wrap gap-2">
-                    {INDIAN_CITIES.map((city, index) => {
-                      const citySlug = city.toLowerCase().replace(/\s+/g, '-')
-                      return (
-                        <Link
-                          key={index}
-                          to={`/location/${citySlug}`}
-                          className="px-2 py-1 bg-gray-700/50 rounded hover:bg-[#8B7355]/20 hover:text-[#8B7355] transition-colors cursor-pointer inline-block"
-                        >
-                          {city}
-                        </Link>
-                      )
-                    })}
+                  <p className="text-[10px] md:text-sm mb-2 font-semibold text-gray-400">Across India:</p>
+                  <div className="text-[9px] md:text-sm text-gray-500 flex flex-wrap gap-1 md:gap-2">
+                    {INDIAN_CITIES.map((city, index) => (
+                      <Link
+                        key={index}
+                        to={`/location/${city.toLowerCase().replace(/\s+/g, '-')}`}
+                        className="px-1.5 py-0.5 bg-gray-900/50 rounded hover:text-[#8B7355] transition-colors"
+                      >
+                        {city}
+                      </Link>
+                    ))}
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm md:text-base mb-3 font-semibold text-gray-200">Marble Temple Across The Globe:</p>
-                  <div className="text-xs md:text-sm text-gray-400 flex flex-wrap gap-2">
-                    {INTERNATIONAL_CITIES.map((city, index) => {
-                      const citySlug = city.toLowerCase().replace(/\s+/g, '-')
-                      return (
-                        <Link
-                          key={index}
-                          to={`/location/${citySlug}`}
-                          className="px-2 py-1 bg-gray-700/50 rounded hover:bg-[#8B7355]/20 hover:text-[#8B7355] transition-colors cursor-pointer inline-block"
-                        >
-                          {city}
-                        </Link>
-                      )
-                    })}
+                  <p className="text-[10px] md:text-sm mb-2 font-semibold text-gray-400">Globe:</p>
+                  <div className="text-[9px] md:text-sm text-gray-500 flex flex-wrap gap-1 md:gap-2">
+                    {INTERNATIONAL_CITIES.map((city, index) => (
+                      <Link
+                        key={index}
+                        to={`/location/${city.toLowerCase().replace(/\s+/g, '-')}`}
+                        className="px-1.5 py-0.5 bg-gray-900/50 rounded hover:text-[#8B7355] transition-colors"
+                      >
+                        {city}
+                      </Link>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
 
             {/* INTERESTS Section */}
-            <div className="bg-gray-800/30 p-6 rounded-lg border border-[#8B7355]/20">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-[#8B7355]/20 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-[#8B7355]" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16c-1.777 0-3.374-.61-4.668-1.973z" clipRule="evenodd"/>
-                  </svg>
-                </div>
-                <h3 className="text-lg md:text-xl font-bold uppercase text-[#8B7355]">INTERESTS</h3>
+            <div className="bg-gray-800/20 p-4 rounded-lg border border-gray-700/30 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-[#8B7355]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16c-1.777 0-3.374-.61-4.668-1.973z" clipRule="evenodd" />
+                </svg>
+                <h3 className="text-xs md:text-sm font-bold uppercase text-[#8B7355]">INTERESTS</h3>
               </div>
-              <a href="#" className="inline-block px-4 py-2 bg-[#8B7355]/20 text-[#8B7355] rounded-lg hover:bg-[#8B7355] hover:text-white transition-all duration-300 font-medium">
+              <a href="#" className="px-3 py-1 bg-[#8B7355]/20 text-[#8B7355] rounded text-[10px] md:text-sm font-semibold hover:bg-[#8B7355] hover:text-white transition-all">
                 Jain Temple
               </a>
             </div>
@@ -242,7 +182,7 @@ const Footer = () => {
             <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400">
               <span>Made with</span>
               <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
+                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
               </svg>
               <span>in India</span>
             </div>

@@ -10,6 +10,7 @@ const ModernArtPage = (props) => {
             subtitle="Contemporary Expressions in Stone"
             description="Explore our collection of modern abstract art and contemporary stone sculptures."
             defaultHeroImage={heroImg}
+            galleryLayout="uniform-5"
             {...props}
         />
     )

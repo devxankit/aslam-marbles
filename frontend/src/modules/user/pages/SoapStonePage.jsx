@@ -10,6 +10,7 @@ const SoapStonePage = (props) => {
             subtitle="Smooth Texture, Timeless Appeal"
             description="Renowned for its soft feel and heat resistance, Soap Stone allows for intricate carving and is a favorite for sculptures, countertops, and woodstoves."
             defaultHeroImage={soapStoneHeroImage}
+            galleryLayout="uniform-5"
             {...props}
         />
     )

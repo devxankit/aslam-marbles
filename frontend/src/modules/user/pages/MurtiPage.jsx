@@ -18,6 +18,7 @@ import { saraswatiProducts } from '../../../data/saraswatiProducts'
 import { shivParvatiProducts } from '../../../data/shivParvatiProducts'
 import { furnitureData, homeDecorData, allFurnitureCategories, allHomeDecorCategories } from '../../../data/categoryImages'
 import { Link } from 'react-router-dom'
+import homeDecorHeading from '../../../assets/ourcreation/home decore/heading.png'
 
 const MurtiPage = ({
   onShowSidebar,
@@ -171,7 +172,7 @@ const MurtiPage = ({
           </p>
           <button
             onClick={() => {
-              const shopSection = document.getElementById('categories-hierarchy-section')
+              const shopSection = document.getElementById('shop-murtis-section')
               if (shopSection) {
                 shopSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
               }
@@ -184,63 +185,62 @@ const MurtiPage = ({
         </div>
       </div>
 
-      {/* Categories Hierarchy Section - Matching User Image */}
-      <section id="categories-hierarchy-section" className="w-full py-16 px-4 md:px-6 lg:px-8 bg-white border-b border-gray-100">
+      {/* Shop Murtis Section - Buttons & Cards style */}
+      <div id="shop-murtis-section" className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-            {hierarchy.map((group) => (
-              <div key={group._id} className="space-y-6">
-                <h3 className="text-xl font-bold text-gray-900 uppercase tracking-widest border-b-2 border-[#8B7355] pb-3 inline-block">
-                  {group.name}
-                </h3>
-                <ul className="space-y-1.5">
-                  {group.categories.map((category) => (
-                    <li key={category._id}>
-                      <Link
-                        to={`/murti/${category.id}`}
-                        className="text-gray-600 hover:text-[#8B7355] transition-all duration-300 text-base font-medium flex items-center group"
-                      >
-                        <span className="w-0 group-hover:w-2 h-[1px] bg-[#8B7355] mr-0 group-hover:mr-2 transition-all"></span>
-                        {category.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Shop Murtis Section - Visual Grid */}
-      <div id="shop-murtis-section" className="w-full py-16 px-4 md:px-6 lg:px-8 bg-gray-50/50">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center mb-12 font-bold decoration-[#8B7355]/20 underline-offset-8 underline">
-            Visual Showcase
+          {/* Heading */}
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-6 md:mb-8 font-bold">
+            Shop Murtis
           </h1>
 
-          <div className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory">
+          {/* Category Navigation Buttons */}
+          <div className="flex flex-nowrap items-center gap-4 md:gap-6 lg:gap-8 mb-4 overflow-x-auto scrollbar-hide px-4 md:justify-center">
             {hierarchy.flatMap(g => g.categories).map((category) => (
-              <div
+              <button
                 key={category._id}
                 onClick={() => handleCategoryClick(category)}
-                className="flex-shrink-0 group cursor-pointer relative snap-center"
+                onMouseEnter={() => {
+                  const element = document.getElementById(`murti-card-${category._id}`)
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+                  }
+                }}
+                className="relative text-base md:text-lg lg:text-xl font-semibold transition-all duration-300 pb-3 px-2 text-black hover:text-[#8B7355] whitespace-nowrap flex-shrink-0"
               >
-                <div className="relative w-48 h-72 md:w-56 md:h-80 lg:w-64 lg:h-96 overflow-hidden rounded-2xl shadow-xl transition-all duration-500 group-hover:shadow-[#8B7355]/20">
-                  <img
-                    src={category.heroSection?.image?.url || 'https://via.placeholder.com/300x500'}
-                    alt={category.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
-                    <p className="text-white text-lg font-bold uppercase tracking-widest mb-1">
-                      {category.name}
-                    </p>
-                    <div className="w-8 h-1 bg-[#8B7355] transition-all duration-300 group-hover:w-16"></div>
+                {category.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Divider Line */}
+          <div className="w-full h-[1px] bg-gray-300 mt-0 mb-8"></div>
+
+          {/* Category Cards (Horizontal Scroll) */}
+          <div className="w-full py-6 md:py-8">
+            <div className="flex gap-4 md:gap-6 lg:gap-8 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
+              {hierarchy.flatMap(g => g.categories).map((category) => (
+                <div
+                  key={category._id}
+                  id={`murti-card-${category._id}`}
+                  onClick={() => handleCategoryClick(category)}
+                  className="flex-shrink-0 group cursor-pointer relative snap-center"
+                >
+                  <div className="relative w-32 h-48 md:w-40 md:h-60 lg:w-48 lg:h-72 overflow-hidden border border-gray-300 hover:border-[#8B7355] transition-all duration-300 rounded-lg">
+                    <img
+                      src={category.heroSection?.image?.url || 'https://via.placeholder.com/300x500'}
+                      alt={category.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    {/* Category Name Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 transition-opacity duration-300 flex items-end">
+                      <p className="text-white text-xs md:text-sm font-semibold p-2 w-full text-center uppercase tracking-wider">
+                        {category.name}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

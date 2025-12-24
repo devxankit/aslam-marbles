@@ -18,7 +18,8 @@ const StoneCategoryTemplate = ({
     onShowServices,
     onShowHowItWorks,
     onShowLocation,
-    onShowBooking
+    onShowBooking,
+    galleryLayout
 }) => {
     const [products, setProducts] = useState([])
     const [categoryData, setCategoryData] = useState(null)
@@ -109,6 +110,8 @@ const StoneCategoryTemplate = ({
                     images={galleryImages}
                     stoneType={categoryId} // used for navigation path
                     origin="India"
+                    layout={galleryLayout}
+                    basePath={categoryId.startsWith('packaging-') ? '/art/packaging' : '/products'}
                 />
             ) : (
                 <div className="py-24 text-center text-gray-500">

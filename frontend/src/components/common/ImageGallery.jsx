@@ -12,11 +12,15 @@ const ImageGallery = ({
   description,
   images,
   stoneType,
-  origin = 'North India'
+  origin = 'North India',
+  layout = 'bento', // 'bento' | 'uniform-5'
+  basePath = '/products'
 }) => {
   const navigate = useNavigate()
   const sectionRef = useRef(null)
   const headerRef = useRef(null)
+
+  const isUniform = layout === 'uniform-5';
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -78,7 +82,7 @@ const ImageGallery = ({
         }
       }
       sessionStorage.setItem(`stoneProduct_${type}_${item.id}`, JSON.stringify(productData))
-      navigate(`/products/${type}/${item.id}`)
+      navigate(`${basePath}/${type}/${item.id}`)
     }
   }
 
@@ -102,18 +106,26 @@ const ImageGallery = ({
         </div>
       </section>
 
-      {/* Bento Gallery Grid */}
+      {/* Gallery Grid */}
       <div className="pb-24 px-4 md:px-8 lg:px-12">
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 auto-rows-[280px] md:auto-rows-[340px]">
+          <div className={isUniform
+            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 auto-rows-[300px]"
+            : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 auto-rows-[280px] md:auto-rows-[340px]"
+          }>
             {images.map((item, index) => {
-              // Bento Logic
-              let gridClass = "stone-card relative group cursor-pointer bg-white rounded-[2.5rem] overflow-hidden transition-all duration-700 hover:shadow-[0_20px_50px_rgba(139,115,85,0.15)] ring-1 ring-gray-100 hover:ring-[#8B7355]/30"
+              // Base classes
+              let gridClass = isUniform
+                ? "stone-card relative group cursor-pointer bg-white rounded-none overflow-hidden transition-all duration-700 hover:shadow-lg ring-1 ring-gray-200"
+                : "stone-card relative group cursor-pointer bg-white rounded-[2.5rem] overflow-hidden transition-all duration-700 hover:shadow-[0_20px_50px_rgba(139,115,85,0.15)] ring-1 ring-gray-100 hover:ring-[#8B7355]/30"
 
-              if (index === 0) gridClass += " md:col-span-2 md:row-span-2"
-              else if (index === 3) gridClass += " lg:col-span-2"
-              else if (index === 8) gridClass += " md:row-span-2"
-              else if (index === 15) gridClass += " md:col-span-2"
+              if (!isUniform) {
+                // Bento Logic only if not uniform
+                if (index === 0) gridClass += " md:col-span-2 md:row-span-2"
+                else if (index === 3) gridClass += " lg:col-span-2"
+                else if (index === 8) gridClass += " md:row-span-2"
+                else if (index === 15) gridClass += " md:col-span-2"
+              }
 
               return (
                 <div
@@ -131,8 +143,15 @@ const ImageGallery = ({
                     />
                   </div>
 
-                  {/* Content Overlay - Solid White for max clarity */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5 bg-white border-t border-gray-100 transform translate-y-1 transition-transform duration-500 group-hover:translate-y-0">
+                  {/* Numbering Overlay for Uniform Layout */}
+                  {isUniform && (
+                    <div className="absolute top-0 left-0 bg-[#8B7355] text-white font-serif italic px-3 py-1 text-lg z-10">
+                      {String(index + 1).padStart(2, '0')}
+                    </div>
+                  )}
+
+                  {/* Content Overlay */}
+                  <div className={`absolute bottom-0 left-0 right-0 p-5 bg-white border-t border-gray-100 transform transition-transform duration-500 ${isUniform ? 'translate-y-0 group-hover:bg-[#fafafa]' : 'translate-y-1 group-hover:translate-y-0'}`}>
                     <div className="flex flex-col gap-1">
                       <span className="text-black font-black text-[10px] tracking-[0.2em] uppercase leading-none mb-1">
                         Origin: {item.origin || origin}
@@ -140,19 +159,23 @@ const ImageGallery = ({
                       <h3 className="text-gray-900 font-serif text-lg md:text-xl italic leading-tight">
                         {item.name}
                       </h3>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="h-[1px] w-5 bg-[#8B7355]"></span>
-                        <span className="text-[#8B7355] text-[9px] font-bold uppercase tracking-[0.2em]">
-                          View Details
-                        </span>
-                      </div>
+                      {!isUniform && (
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="h-[1px] w-5 bg-[#8B7355]"></span>
+                          <span className="text-[#8B7355] text-[9px] font-bold uppercase tracking-[0.2em]">
+                            View Details
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
-                  {/* Aesthetic Accent */}
-                  <div className="absolute top-6 right-6 w-8 h-8 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                    <div className="w-full h-full border-t border-r border-[#8B7355]"></div>
-                  </div>
+                  {/* Aesthetic Accent (Only for Bento) */}
+                  {!isUniform && (
+                    <div className="absolute top-6 right-6 w-8 h-8 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                      <div className="w-full h-full border-t border-r border-[#8B7355]"></div>
+                    </div>
+                  )}
                 </div>
               )
             })}

@@ -109,8 +109,9 @@ const AdminSidebar = ({ isOpen, onClose }) => {
             { title: 'Experience Centre', path: '/admin/aslam-house/experience-centre' },
             { title: 'The Team', path: '/admin/aslam-house/the-team' },
             { title: 'Careers', path: '/admin/aslam-house/careers' },
-            { title: 'OUR ARTIST', path: '/admin/aslam-house/our-artist' },
+            { title: 'Our Artist', path: '/admin/aslam-house/our-artist' },
             { title: 'Our Clients', path: '/admin/aslam-house/our-clients' },
+            { title: 'Live Inventory', path: '/admin/aslam-house/live-inventory' },
             { title: 'Manage Hover', path: '/admin/pages/aslam-house' },
           ]
         },

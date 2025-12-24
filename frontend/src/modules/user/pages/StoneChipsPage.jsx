@@ -10,6 +10,7 @@ const StoneChipsPage = (props) => {
       subtitle="Versatile Textures for Landscape Design"
       description="Our premium selection of crushed stone chips offers a variety of colors and sizes for garden paths, decorative mulch, and architectural surface treatments."
       defaultHeroImage={stoneChipsHeroImage}
+      galleryLayout="uniform-5"
       {...props}
     />
   )
