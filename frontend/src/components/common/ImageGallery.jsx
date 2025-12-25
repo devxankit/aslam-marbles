@@ -110,7 +110,7 @@ const ImageGallery = ({
       <div className="pb-24 px-4 md:px-8 lg:px-12">
         <div className="max-w-[1600px] mx-auto">
           <div className={isUniform
-            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 auto-rows-[300px]"
+            ? "grid grid-cols-5 gap-1 md:gap-2 auto-rows-[120px] md:auto-rows-[180px]"
             : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 auto-rows-[280px] md:auto-rows-[340px]"
           }>
             {images.map((item, index) => {
@@ -140,29 +140,30 @@ const ImageGallery = ({
                       alt={item.name}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover transition-transform duration-1000 ease-in-out group-hover:scale-110"
+                      style={{ minHeight: '100%', objectFit: 'cover' }}
                     />
                   </div>
 
                   {/* Numbering Overlay for Uniform Layout */}
                   {isUniform && (
-                    <div className="absolute top-0 left-0 bg-[#8B7355] text-white font-serif italic px-3 py-1 text-lg z-10">
+                    <div className="absolute top-0 left-0 bg-[#8B7355] text-white font-serif italic px-1 py-0.5 text-[8px] md:text-lg md:px-3 md:py-1 z-10 leading-none">
                       {String(index + 1).padStart(2, '0')}
                     </div>
                   )}
 
                   {/* Content Overlay */}
-                  <div className={`absolute bottom-0 left-0 right-0 p-5 bg-white border-t border-gray-100 transform transition-transform duration-500 ${isUniform ? 'translate-y-0 group-hover:bg-[#fafafa]' : 'translate-y-1 group-hover:translate-y-0'}`}>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-black font-black text-[10px] tracking-[0.2em] uppercase leading-none mb-1">
+                  <div className={`absolute bottom-0 left-0 right-0 p-1 md:p-3 bg-white border-t border-gray-100 transform transition-transform duration-500 ${isUniform ? 'translate-y-0 group-hover:bg-[#fafafa]' : 'translate-y-1 group-hover:translate-y-0'}`}>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-black font-black text-[6px] md:text-[9px] tracking-[0.2em] uppercase leading-none mb-0.5">
                         Origin: {item.origin || origin}
                       </span>
-                      <h3 className="text-gray-900 font-serif text-lg md:text-xl italic leading-tight">
+                      <h3 className="text-gray-900 font-serif text-[8px] md:text-base italic leading-tight truncate">
                         {item.name}
                       </h3>
                       {!isUniform && (
-                        <div className="flex items-center gap-2 mt-2">
-                          <span className="h-[1px] w-5 bg-[#8B7355]"></span>
-                          <span className="text-[#8B7355] text-[9px] font-bold uppercase tracking-[0.2em]">
+                        <div className="flex items-center gap-1 mt-1">
+                          <span className="h-[1px] w-4 bg-[#8B7355]"></span>
+                          <span className="text-[#8B7355] text-[8px] font-bold uppercase tracking-[0.2em]">
                             View Details
                           </span>
                         </div>

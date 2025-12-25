@@ -6,14 +6,14 @@ const ContentPagesManagementPage = () => {
   const [pages, setPages] = useState([
     { id: 1, name: 'About Us', slug: 'about-us', path: '/about-us' },
     { id: 2, name: 'Experience Centre', slug: 'experience-centre', path: '/experience-centre' },
-    { id: 3, name: 'AMS International Page', slug: 'tsa-international', path: '/services/tsa-international' },
+    { id: 3, name: 'AMS International Page', slug: 'ams-international', path: '/services/ams-international' },
     { id: 4, name: 'Why Choose Us', slug: 'why-choose-us', path: '/why-choose-us' },
     { id: 5, name: 'FAQ Page', slug: 'faq', path: '/faq' },
     { id: 6, name: 'Terms & Conditions', slug: 'terms', path: '/terms' },
     { id: 7, name: 'Privacy Policy', slug: 'privacy', path: '/privacy' },
     { id: 8, name: 'Careers', slug: 'careers', path: '/careers' },
     { id: 9, name: 'The Team', slug: 'the-team', path: '/the-team' },
-    { id: 10, name: 'OUR ARTIST', slug: 'artisans-of-tilak', path: '/artisans-of-tilak' },
+    { id: 10, name: 'OUR ARTIST', slug: 'artist', path: '/artist' },
     { id: 11, name: 'Our Clients', slug: 'our-clients', path: '/our-clients' },
     { id: 12, name: 'Pooja Room', slug: 'pooja-room', path: '/ourcreations/pooja-room' },
     { id: 13, name: 'Dream Temple', slug: 'dream-temple', path: '/ourcreations/dream-temple' },
@@ -44,7 +44,7 @@ const ContentPagesManagementPage = () => {
     if (pathname === '/admin/aslam-house/careers') {
       targetSlug = 'careers'
     } else if (pathname === '/admin/aslam-house/our-artist') {
-      targetSlug = 'artisans-of-tilak'
+      targetSlug = 'artist'
     } else if (pathname === '/admin/aslam-house/our-clients') {
       targetSlug = 'our-clients'
     }
@@ -100,6 +100,8 @@ const ContentPagesManagementPage = () => {
                             window.location.href = '/admin/category/communal-temples'
                           } else if (page.slug === 'jain-temples') {
                             window.location.href = '/admin/category/jain-temples'
+                          } else if (page.slug === 'artist') {
+                            window.location.href = '/admin/aslam-house/our-artist'
                           } else {
                             setSelectedPage(page)
                             setShowEditModal(true)

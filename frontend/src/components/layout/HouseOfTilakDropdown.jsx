@@ -9,7 +9,7 @@ const HouseOfTilakDropdown = () => {
     { name: 'Experience Centre', path: '/experience-centre', id: 'experience-centre' },
     { name: 'The Team', path: '/the-team', id: 'the-team' },
     { name: 'Careers', path: '/careers', id: 'careers' },
-    { name: 'Our Artist', path: '/artisans-of-tilak', id: 'artisans-of-tilak' },
+    { name: 'Our Artist', path: '/artist', id: 'artist' },
     { name: 'Our Clients', path: '/our-clients', id: 'our-clients' }
   ], [])
 

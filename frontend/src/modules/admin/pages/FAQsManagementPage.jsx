@@ -8,7 +8,7 @@ const pageOptions = [
   { key: 'how-it-works', name: 'How It Works' },
   { key: 'murti', name: 'Murti' },
   { key: 'dream-temple', name: 'Dream Temple' },
-  { key: 'tsa-international', name: 'TSA International' },
+  { key: 'ams-international', name: 'AMS International' },
   { key: 'location', name: 'Location' },
   { key: 'general', name: 'General' }
 ]

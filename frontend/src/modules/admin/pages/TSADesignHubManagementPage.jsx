@@ -15,7 +15,7 @@ const TSADesignHubManagementPage = () => {
     const fetchData = async () => {
         try {
             setLoading(true)
-            const res = await axios.get('http://localhost:5000/api/tsa-design-hub')
+            const res = await axios.get('http://localhost:5000/api/ams-design-hub')
             setData(res.data)
             setLoading(false)
         } catch (err) {

@@ -68,8 +68,7 @@ import ModernArtPage from './modules/user/pages/ModernArtPage'
 import ImportedPage from './modules/user/pages/ImportedPage'
 import PackagingPage from './modules/user/pages/PackagingPage'
 import PackagingCategoryPage from './modules/user/pages/PackagingCategoryPage'
-import LiveInventoryPage from './modules/user/pages/LiveInventoryPage'
-import LiveInventoryManagementPage from './modules/admin/pages/LiveInventoryManagementPage'
+
 
 import LimitedEditionPage from './modules/user/pages/LimitedEditionPage'
 import CheckoutPage from './modules/user/pages/CheckoutPage'
@@ -306,7 +305,7 @@ function App() {
             />
           } />
 
-          <Route path="/artisans-of-tilak" element={
+          <Route path="/artist" element={
             <ArtisansOfTilakPage
               onShowSidebar={() => setShowSidebar(true)}
               onShowProjects={() => setShowProjectsModal(true)}
@@ -973,20 +972,11 @@ function App() {
             />
           } />
 
-          <Route path="/services/live-inventory" element={
-            <LiveInventoryPage
-              onShowSidebar={() => setShowSidebar(true)}
-              onShowProjects={() => setShowProjectsModal(true)}
-              onShowCreations={() => setShowOurCreations(true)}
-              onShowProducts={() => setShowOurProducts(true)}
-              onShowServices={() => setShowOurServices(true)}
-              onShowHowItWorks={() => setShowModal(true)}
-              onShowLocation={() => { }}
-              onShowBooking={() => { setShowBookingModal(true) }}
-            />
-          } />
 
-          <Route path="/tsa-design-hub" element={
+
+
+
+          <Route path="/services/ams-design-hub" element={
             <TSADesignHubPage
               onShowSidebar={() => setShowSidebar(true)}
               onShowProjects={() => setShowProjectsModal(true)}
@@ -999,8 +989,8 @@ function App() {
             />
           } />
 
-          <Route path="/services/tsa-design-hub" element={
-            <TSADesignHubPage
+          <Route path="/services/ams-international" element={
+            <TSAInternationalPage
               onShowSidebar={() => setShowSidebar(true)}
               onShowProjects={() => setShowProjectsModal(true)}
               onShowCreations={() => setShowOurCreations(true)}
@@ -1012,30 +1002,6 @@ function App() {
             />
           } />
 
-          <Route path="/services/tsa-international" element={
-            <TSAInternationalPage
-              onShowSidebar={() => setShowSidebar(true)}
-              onShowProjects={() => setShowProjectsModal(true)}
-              onShowCreations={() => setShowOurCreations(true)}
-              onShowProducts={() => setShowOurProducts(true)}
-              onShowServices={() => setShowOurServices(true)}
-              onShowHowItWorks={() => setShowModal(true)}
-              onShowLocation={() => { }}
-              onShowBooking={() => { }}
-            />
-          } />
-          <Route path="/tsa-international" element={
-            <TSAInternationalPage
-              onShowSidebar={() => setShowSidebar(true)}
-              onShowProjects={() => setShowProjectsModal(true)}
-              onShowCreations={() => setShowOurCreations(true)}
-              onShowProducts={() => setShowOurProducts(true)}
-              onShowServices={() => setShowOurServices(true)}
-              onShowHowItWorks={() => setShowModal(true)}
-              onShowLocation={() => { }}
-              onShowBooking={() => { }}
-            />
-          } />
 
           <Route path="/murti" element={
             <MurtiPage
@@ -1297,11 +1263,7 @@ function App() {
               <InternationalProjectsManagementPage />
             </ProtectedRoute>
           } />
-          <Route path="/admin/aslam-house/live-inventory" element={
-            <ProtectedRoute>
-              <LiveInventoryManagementPage />
-            </ProtectedRoute>
-          } />
+
           <Route path="/admin/pages/aslam-house" element={
             <ProtectedRoute>
               <AslamHousePage />

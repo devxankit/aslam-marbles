@@ -33,10 +33,10 @@ export const homeImages = [
     path: '/careers'
   },
   {
-    id: 'artisans-of-tilak',
+    id: 'artist',
     name: 'Our Artist',
     image: artisansOfTilakImg,
-    path: '/artisans-of-tilak'
+    path: '/artist'
   },
   {
     id: 'the-team',

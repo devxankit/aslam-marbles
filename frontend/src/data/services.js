@@ -4,16 +4,16 @@ import liveInventoryImg from '../assets/services/live inventory/inventory1.png'
 
 export const services = [
   {
-    id: 'tsa-international',
+    id: 'ams-international',
     name: 'AMS International',
     image: tsaInternationalImg,
-    path: '/services/tsa-international'
+    path: '/services/ams-international'
   },
   {
-    id: 'tsa-design-hub',
+    id: 'ams-design-hub',
     name: 'AMS Design Hub',
     image: tsaDesignHubImg,
-    path: '/services/tsa-design-hub'
+    path: '/services/ams-design-hub'
   },
   {
     id: 'live-inventory',

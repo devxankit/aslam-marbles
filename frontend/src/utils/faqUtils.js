@@ -26,7 +26,7 @@ export const fetchFAQs = async (pageKey, location = null) => {
 
 export const fetchAllFAQs = async () => {
   try {
-    const pageKeys = ['how-it-works', 'murti', 'dream-temple', 'tsa-international'];
+    const pageKeys = ['how-it-works', 'murti', 'dream-temple', 'ams-international'];
     const allPromises = pageKeys.map((pageKey) => fetchFAQs(pageKey));
 
     // Fetch location FAQs for all Indian locations (same list as in backend seeder)

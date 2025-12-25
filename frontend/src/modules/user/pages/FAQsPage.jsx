@@ -36,7 +36,7 @@ const FAQsPage = ({
     { key: 'how-it-works', name: 'How It Works' },
     { key: 'murti', name: 'Murti' },
     { key: 'dream-temple', name: 'Dream Temple' },
-    { key: 'tsa-international', name: 'TSA International' },
+    { key: 'ams-international', name: 'AMS International' },
     { key: 'location', name: 'Location' }
   ]
 
@@ -202,9 +202,8 @@ const FAQsPage = ({
                         </span>
                         <div className="flex-1">
                           <span
-                            className={`text-sm md:text-base font-medium flex-1 block ${
-                              expandedFaq === key ? 'text-[#8B7355]' : 'text-gray-800'
-                            }`}
+                            className={`text-sm md:text-base font-medium flex-1 block ${expandedFaq === key ? 'text-[#8B7355]' : 'text-gray-800'
+                              }`}
                           >
                             {faq.question}
                           </span>

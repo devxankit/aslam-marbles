@@ -496,7 +496,7 @@ const Header = ({
                             <Link to="/experience-centre" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Experience Centre</Link>
                             <Link to="/the-team" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">The Team</Link>
                             <Link to="/careers" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Careers</Link>
-                            <Link to="/artisans-of-tilak" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Our Artist</Link>
+                            <Link to="/artist" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Our Artist</Link>
                             <Link to="/our-clients" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Our Clients</Link>
                           </div>
                         )}
@@ -605,8 +605,8 @@ const Header = ({
                         </button>
                         {mobileExpandedMenu === 'our-services' && (
                           <div className="bg-gray-50 px-4 py-2">
-                            <Link to="/services/tsa-international" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">AMS International</Link>
-                            <Link to="/services/tsa-design-hub" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">AMS Design Hub</Link>
+                            <Link to="/services/ams-international" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">AMS International</Link>
+                            <Link to="/services/ams-design-hub" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">AMS Design Hub</Link>
                           </div>
                         )}
                       </div>

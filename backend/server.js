@@ -99,12 +99,12 @@ app.use('/api/v1/translate', translationRoutes);
 app.use('/api/communal-temples', communalTemplesRoutes);
 app.use('/api/jain-temples', jainTemplesRoutes);
 app.use('/api/stone-products', require('./routes/stoneProductRoutes'));
-app.use('/api/tsa-design-hub', require('./routes/tsaDesignHubRoutes'));
+app.use('/api/ams-design-hub', require('./routes/tsaDesignHubRoutes'));
 app.use('/api/murtis', require('./routes/murtiRoutes'));
 app.use('/api/home-decor', require('./routes/homeDecorRoutes'));
 app.use('/api/locations', require('./routes/locationRoutes'));
 app.use('/api/home-page', require('./routes/homePageRoutes'));
-app.use('/api/tsa-international', require('./routes/tsaInternationalRoutes'));
+app.use('/api/ams-international', require('./routes/tsaInternationalRoutes'));
 app.use('/api/trusted-by', require('./routes/trustedByRoutes'));
 app.use('/api/live-inventory', require('./routes/liveInventoryRoutes'));
 

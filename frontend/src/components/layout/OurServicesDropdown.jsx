@@ -17,8 +17,8 @@ const OurServicesDropdown = () => {
         ...item,
         id: item.key || item.id,
         name: item.name,
-        path: (item.name === 'AMS International' ? '/services/tsa-international' :
-          item.name === 'AMS Design Hub' ? '/services/tsa-design-hub' :
+        path: (item.name === 'AMS International' ? '/services/ams-international' :
+          item.name === 'AMS Design Hub' ? '/services/ams-design-hub' :
             item.path) || '#',
         image: buildImageUrl(item.imagePath || item.image),
         displayOrder: item.displayOrder ?? 0

@@ -55,7 +55,7 @@ const ExpertFormOverlay = () => {
                   name="type"
                   value="DOMESTIC"
                   checked={formData.type === 'DOMESTIC'}
-                  onChange={(e) => setFormData({...formData, type: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   className="w-3 h-3 accent-amber-600"
                 />
                 <span className="text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
@@ -66,7 +66,7 @@ const ExpertFormOverlay = () => {
                   name="type"
                   value="INTERNATIONAL"
                   checked={formData.type === 'INTERNATIONAL'}
-                  onChange={(e) => setFormData({...formData, type: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   className="w-3 h-3 accent-amber-600"
                 />
                 <span className="text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
@@ -77,7 +77,7 @@ const ExpertFormOverlay = () => {
               type="text"
               placeholder="Full Name *"
               value={formData.fullName}
-              onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
               className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
               required
             />
@@ -86,7 +86,7 @@ const ExpertFormOverlay = () => {
               type="email"
               placeholder="Email Address *"
               value={formData.email}
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
               required
             />
@@ -102,7 +102,7 @@ const ExpertFormOverlay = () => {
                   type="tel"
                   placeholder="Phone number *"
                   value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="flex-1 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-600"
                 />
               </div>
@@ -112,7 +112,7 @@ const ExpertFormOverlay = () => {
               type="text"
               placeholder="City *"
               value={formData.city}
-              onChange={(e) => setFormData({...formData, city: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
               className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
               required
             />
@@ -126,7 +126,7 @@ const ExpertFormOverlay = () => {
                     name="aboutYourself"
                     value="homeowner"
                     checked={formData.aboutYourself === 'homeowner'}
-                    onChange={(e) => setFormData({...formData, aboutYourself: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
                     className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                     required
                   />
@@ -138,7 +138,7 @@ const ExpertFormOverlay = () => {
                     name="aboutYourself"
                     value="designer"
                     checked={formData.aboutYourself === 'designer'}
-                    onChange={(e) => setFormData({...formData, aboutYourself: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
                     className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                     required
                   />
@@ -168,7 +168,7 @@ const ExpertFormOverlay = () => {
                     name="lookingFor"
                     value="singular"
                     checked={formData.lookingFor === 'singular'}
-                    onChange={(e) => setFormData({...formData, lookingFor: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
                     className="w-3 h-3 accent-amber-600"
                     required
                   />
@@ -180,7 +180,7 @@ const ExpertFormOverlay = () => {
                     name="lookingFor"
                     value="complete"
                     checked={formData.lookingFor === 'complete'}
-                    onChange={(e) => setFormData({...formData, lookingFor: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
                     className="w-3 h-3 accent-amber-600"
                     required
                   />
@@ -199,7 +199,7 @@ const ExpertFormOverlay = () => {
                       name="budget"
                       value={budget}
                       checked={formData.budget === budget}
-                      onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                       className="w-3 h-3 accent-amber-600"
                       required
                     />
@@ -219,7 +219,7 @@ const ExpertFormOverlay = () => {
                       name="timeline"
                       value={timeline}
                       checked={formData.timeline === timeline}
-                      onChange={(e) => setFormData({...formData, timeline: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
                       className="w-3 h-3 accent-amber-600"
                       required
                     />
@@ -232,7 +232,7 @@ const ExpertFormOverlay = () => {
             <textarea
               placeholder="Please share a bit more about your needs"
               value={formData.additionalInfo}
-              onChange={(e) => setFormData({...formData, additionalInfo: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
               rows={3}
               className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600 resize-none"
             />
@@ -243,7 +243,7 @@ const ExpertFormOverlay = () => {
                 id="designReferences"
                 accept="image/*,.pdf"
                 multiple
-                onChange={(e) => setFormData({...formData, designReferences: e.target.files})}
+                onChange={(e) => setFormData({ ...formData, designReferences: e.target.files })}
                 className="hidden"
               />
               <label

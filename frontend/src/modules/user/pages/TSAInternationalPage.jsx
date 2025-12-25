@@ -43,7 +43,7 @@ const TSAInternationalPage = ({
     const loadFAQs = async () => {
       try {
         setLoadingFAQs(true)
-        const data = await fetchFAQs('tsa-international')
+        const data = await fetchFAQs('ams-international')
         setFaqs(data || [])
       } catch (error) {
         console.error('Error loading FAQs:', error)

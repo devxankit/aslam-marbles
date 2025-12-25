@@ -13,7 +13,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
       location.pathname.includes('slug=experience-centre') ||
       location.pathname.includes('slug=the-team') ||
       location.pathname.includes('slug=careers') ||
-      location.pathname.includes('slug=artisans-of-tilak') ||
+      location.pathname.includes('slug=artist') ||
       location.pathname.includes('slug=our-clients') ||
       location.pathname.startsWith('/admin/pages/aslam-house') ||
       location.pathname.startsWith('/admin/aslam-house'),
@@ -111,7 +111,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
             { title: 'Careers', path: '/admin/aslam-house/careers' },
             { title: 'Our Artist', path: '/admin/aslam-house/our-artist' },
             { title: 'Our Clients', path: '/admin/aslam-house/our-clients' },
-            { title: 'Live Inventory', path: '/admin/aslam-house/live-inventory' },
+
             { title: 'Manage Hover', path: '/admin/pages/aslam-house' },
           ]
         },

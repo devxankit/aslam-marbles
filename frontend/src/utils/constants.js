@@ -14,7 +14,7 @@ export const FOOTER_LINKS = {
     { label: 'About Us', href: '/about-us' },
     { label: 'Experience Centre', href: '/experience-centre' },
     { label: 'The Team', href: '/the-team' },
-    { label: 'Collaborations', href: '/artisans-of-tilak' },
+    { label: 'Collaborations', href: '/artist' },
     { label: 'Our Clients', href: '/our-clients' },
     { label: 'Careers', href: '/careers' }
   ],
@@ -23,7 +23,7 @@ export const FOOTER_LINKS = {
     { label: 'Pooja Room', href: '/pooja-room' },
     { label: 'Dream Temples', href: '/dream-temple' },
     { label: 'Communal Temples', href: '/communal-temples' },
-    { label: 'AMS International', href: '/services/tsa-international' },
+    { label: 'AMS International', href: '/services/ams-international' },
     { label: 'Book appointment', href: '/book-appointment' }
   ],
   legal: [
