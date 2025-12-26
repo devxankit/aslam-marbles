@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { BUDGET_OPTIONS, TIMELINE_OPTIONS } from '../../utils/constants'
 
-const ExpertFormOverlay = () => {
+const ExpertFormOverlay = ({ className }) => {
   const [formStep, setFormStep] = useState(1)
   const [formData, setFormData] = useState({
     type: 'DOMESTIC',
@@ -37,8 +37,10 @@ const ExpertFormOverlay = () => {
     })
   }
 
+  const defaultClasses = "absolute right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 w-[85%] sm:w-[320px] md:w-[340px] max-w-[calc(100%-32px)] bg-white rounded-xl md:rounded-2xl shadow-2xl z-20 flex flex-col backdrop-blur-sm bg-white/95"
+
   return (
-    <div id="expert-form-container" className="absolute right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 w-[85%] sm:w-[320px] md:w-[340px] max-w-[calc(100%-32px)] bg-white rounded-xl md:rounded-2xl shadow-2xl z-20 flex flex-col backdrop-blur-sm bg-white/95">
+    <div id="expert-form-container" className={className || defaultClasses}>
       {/* Header */}
       <div className="flex items-center justify-between p-3 md:p-4 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0 rounded-t-xl md:rounded-t-2xl">
         <h3 className="text-base md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>

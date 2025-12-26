@@ -4,10 +4,16 @@ const HeroSectionWithForm = ({
   heroImage,
   title,
   subtitle,
-  description
+  description,
+  enableMobileModal = false,
+  onMobileButtonClick,
+  disableGradient = false
 }) => {
   return (
-    <div className="relative w-full overflow-hidden" style={{ height: '75vh', minHeight: '600px' }}>
+    <div
+      className={`relative w-full overflow-hidden ${enableMobileModal ? 'h-[40vh] min-h-[300px] md:h-[75vh] md:min-h-[600px]' : ''}`}
+      style={!enableMobileModal ? { height: '75vh', minHeight: '600px' } : {}}
+    >
       {/* Background Image */}
       <img
         src={heroImage}
@@ -18,7 +24,9 @@ const HeroSectionWithForm = ({
       />
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent"></div>
+      {!disableGradient && (
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent"></div>
+      )}
 
       {/* Hero Text Overlay - Left Side */}
       <div className="absolute top-16 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-xl md:max-w-2xl">
@@ -33,10 +41,22 @@ const HeroSectionWithForm = ({
             {description}
           </p>
         )}
+
+        {/* Mobile "Talk to Our Expert" Button */}
+        {enableMobileModal && (
+          <button
+            onClick={onMobileButtonClick}
+            className="md:hidden mt-4 px-5 py-2 text-xs bg-[#8B7355] text-white font-bold uppercase tracking-wider rounded shadow-lg hover:bg-[#725E45] transition-colors"
+          >
+            Talk to Our Expert
+          </button>
+        )}
       </div>
 
       {/* Form Overlay */}
-      <ExpertFormOverlay />
+      <div className={enableMobileModal ? "hidden md:block" : ""}>
+        <ExpertFormOverlay />
+      </div>
     </div>
   )
 }

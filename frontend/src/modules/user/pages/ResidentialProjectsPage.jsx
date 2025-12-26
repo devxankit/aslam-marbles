@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
-import ProjectDrawer from '../../../components/common/ProjectDrawer'
-import Header from '../../../components/layout/Header'
-import Footer from '../../../components/layout/Footer'
-import FloatingButtons from '../../../components/common/FloatingButtons'
-import { BUDGET_OPTIONS, TIMELINE_OPTIONS } from '../../../utils/constants'
-import { fetchResidentialProjectsData } from '../../../utils/residentialProjectsUtils'
+import { useState, useEffect } from 'react';
+import ProjectDrawer from '../../../components/common/ProjectDrawer';
+import Header from '../../../components/layout/Header';
+import Footer from '../../../components/layout/Footer';
+import FloatingButtons from '../../../components/common/FloatingButtons';
+import { fetchResidentialProjectsData } from '../../../utils/residentialProjectsUtils';
+import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay';
 
 const ResidentialProjectsPage = ({
   onShowSidebar,
@@ -13,68 +13,32 @@ const ResidentialProjectsPage = ({
   onShowServices,
   onShowHowItWorks,
   onShowLocation,
-  onShowBooking
+  onShowBooking,
 }) => {
-  const [formStep, setFormStep] = useState(1)
-  const [residentialData, setResidentialData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [formData, setFormData] = useState({
-    type: 'DOMESTIC',
-    fullName: '',
-    email: '',
-    phone: '',
-    city: '',
-    aboutYourself: '',
-    lookingFor: '',
-    budget: '',
-    timeline: '',
-    additionalInfo: '',
-    designReferences: null
-  })
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Form submitted:', formData)
-    alert('Thank you! Your form has been submitted.')
-    setFormStep(1)
-    setFormData({
-      type: 'DOMESTIC',
-      fullName: '',
-      email: '',
-      phone: '',
-      city: '',
-      aboutYourself: '',
-      lookingFor: '',
-      budget: '',
-      timeline: '',
-      additionalInfo: '',
-      designReferences: null
-    })
-  }
+  const [showMobileForm, setShowMobileForm] = useState(false);
+  const [residentialData, setResidentialData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        setLoading(true)
-        const data = await fetchResidentialProjectsData()
-        if (data) {
-          setResidentialData(data)
-        }
+        setLoading(true);
+        const data = await fetchResidentialProjectsData();
+        if (data) setResidentialData(data);
       } catch (error) {
-        console.error('Error loading residential projects data:', error)
+        console.error('Error loading residential projects data:', error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    loadData()
-  }, [])
+    };
+    loadData();
+  }, []);
 
-  const residentialImages = residentialData?.galleryImages || []
+  const residentialImages = residentialData?.galleryImages || [];
 
-  const [selectedProject, setSelectedProject] = useState(null)
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-
-  const handleImageClick = (image, index) => {
+  const handleImageClick = (image) => {
     setSelectedProject({
       image: image.url,
       title: image.title,
@@ -82,10 +46,10 @@ const ResidentialProjectsPage = ({
       location: image.location,
       address: image.address,
       client: image.client,
-      duration: image.duration
-    })
-    setIsDrawerOpen(true)
-  }
+      duration: image.duration,
+    });
+    setIsDrawerOpen(true);
+  };
 
   return (
     <div className="w-full min-h-screen bg-white">
@@ -101,7 +65,7 @@ const ResidentialProjectsPage = ({
       />
 
       {/* Hero Image Container with Form Overlay */}
-      <div className="relative w-full overflow-hidden h-[50vh] min-h-[550px] md:h-[60vh] md:min-h-[500px] lg:h-[75vh] lg:min-h-[600px]">
+      <div className="relative w-full overflow-hidden h-[40vh] min-h-[300px] md:h-[60vh] md:min-h-[500px] lg:h-[75vh] lg:min-h-[600px]">
         {/* Background Image */}
         {loading ? (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -120,9 +84,6 @@ const ResidentialProjectsPage = ({
           </div>
         )}
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent"></div>
-
         {/* Hero Text Overlay - Left Side */}
         <div className="absolute top-10 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-[60%] md:max-w-2xl">
           <h1 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 md:mb-4 leading-tight uppercase tracking-wide drop-shadow-lg">
@@ -132,276 +93,30 @@ const ResidentialProjectsPage = ({
             {residentialData?.subtitle || 'Creating Sacred Spaces in Your Home'}
           </p>
           <p className="text-[10px] md:text-sm text-white/90 font-light leading-relaxed drop-shadow-md hidden sm:block">
-            {residentialData?.description || 'Crafting beautiful residential pooja rooms and mandirs that bring divine energy into your home through exquisite design and timeless craftsmanship.'}
+            {residentialData?.description || 'Crafting beautiful residential pooja rooms and mandirs that bring divine energy into homes through exquisite design.'}
           </p>
+          <button
+            onClick={() => setShowMobileForm(true)}
+            className="md:hidden mt-4 bg-[#8B7355] text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wide shadow-lg border border-[#8B7355]/50 animate-pulse hover:animate-none"
+          >
+            Talk to Our Expert
+          </button>
         </div>
 
-        {/* Form Container - Overlay on Right Side, Fits Image Height */}
-        <div id="expert-form-container" className="absolute right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 w-[85%] sm:w-[320px] md:w-[340px] max-w-[calc(100%-32px)] bg-white rounded-xl md:rounded-2xl shadow-2xl z-20 flex flex-col backdrop-blur-sm bg-white/95 scale-90 md:scale-100 origin-right">
-          {/* Header */}
-          <div className="flex items-center justify-between p-3 md:p-4 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0 rounded-t-xl md:rounded-t-2xl">
-            <h3 className="text-sm md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>
-            <span className="text-[10px] md:text-xs font-semibold px-2 py-1 rounded-full bg-[#8B7355]/10" style={{ color: '#8B7355' }}>{formStep}/2</span>
-          </div>
-
-          <div className="px-3 pt-3 pb-4 md:px-4 md:pt-4 md:pb-4 bg-white overflow-y-auto flex-1 rounded-b-xl md:rounded-b-2xl max-h-[300px] md:max-h-none">
-            {formStep === 1 ? (
-              <form className="space-y-2 md:space-y-2.5" onSubmit={(e) => { e.preventDefault(); setFormStep(2); }}>
-                <div className="flex gap-2">
-                  <label className="flex items-center gap-1.5 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="type"
-                      value="DOMESTIC"
-                      checked={formData.type === 'DOMESTIC'}
-                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                      className="w-3 h-3 accent-amber-600"
-                    />
-                    <span className="text-[10px] md:text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
-                  </label>
-                  <label className="flex items-center gap-1.5 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="type"
-                      value="INTERNATIONAL"
-                      checked={formData.type === 'INTERNATIONAL'}
-                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                      className="w-3 h-3 accent-amber-600"
-                    />
-                    <span className="text-[10px] md:text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
-                  </label>
-                </div>
-
-                <input
-                  type="text"
-                  placeholder="Full Name *"
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full px-3 py-1.5 md:py-2 text-[10px] md:text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
-                  required
-                />
-
-                <input
-                  type="email"
-                  placeholder="Email Address *"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-1.5 md:py-2 text-[10px] md:text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
-                  required
-                />
-
-                <div>
-                  <label className="block text-[10px] md:text-xs font-medium mb-1">Phone number</label>
-                  <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                    <div className="flex items-center gap-1 px-2 bg-gray-50 border-r">
-                      <span className="text-xs md:text-sm">🇮🇳</span>
-                      <span className="text-[10px] md:text-xs">+91</span>
-                    </div>
-                    <input
-                      type="tel"
-                      placeholder="Phone number *"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="flex-1 px-3 py-1.5 md:py-2 text-[10px] md:text-xs focus:outline-none focus:ring-2 focus:ring-amber-600"
-                    />
-                  </div>
-                </div>
-
-                <input
-                  type="text"
-                  placeholder="City *"
-                  value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className="w-full px-3 py-1.5 md:py-2 text-[10px] md:text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
-                  required
-                />
-
-                <div>
-                  <label className="block text-[10px] md:text-xs font-medium mb-1.5">Tell us about yourself *</label>
-                  <div className="space-y-1.5">
-                    <label className="flex items-start gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="aboutYourself"
-                        value="homeowner"
-                        checked={formData.aboutYourself === 'homeowner'}
-                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
-                        className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
-                        required
-                      />
-                      <span className="text-[10px] md:text-xs leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
-                    </label>
-                    <label className="flex items-start gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="aboutYourself"
-                        value="designer"
-                        checked={formData.aboutYourself === 'designer'}
-                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
-                        className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
-                        required
-                      />
-                      <span className="text-[10px] md:text-xs leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
-                    </label>
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full text-white py-2 md:py-2.5 rounded-lg text-xs font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                  style={{ backgroundColor: '#8B7355' }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
-                >
-                  NEXT →
-                </button>
-              </form>
-            ) : (
-              <form className="space-y-2.5" onSubmit={handleSubmit}>
-                <div>
-                  <label className="block text-xs font-bold mb-1.5">What are you looking for? *</label>
-                  <div className="space-y-1.5">
-                    <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="lookingFor"
-                        value="singular"
-                        checked={formData.lookingFor === 'singular'}
-                        onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
-                        className="w-3 h-3 accent-amber-600"
-                        required
-                      />
-                      <span className="text-xs">Singular Marble Mandir Unit</span>
-                    </label>
-                    <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="lookingFor"
-                        value="complete"
-                        checked={formData.lookingFor === 'complete'}
-                        onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
-                        className="w-3 h-3 accent-amber-600"
-                        required
-                      />
-                      <span className="text-xs">Complete Pooja Room Solution</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold mb-1.5">What is your estimated budget? *</label>
-                  <div className="space-y-1.5">
-                    {BUDGET_OPTIONS.map((budget) => (
-                      <label key={budget} className="flex items-center gap-1.5 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="budget"
-                          value={budget}
-                          checked={formData.budget === budget}
-                          onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                          className="w-3 h-3 accent-amber-600"
-                          required
-                        />
-                        <span className="text-xs">{budget}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold mb-1.5">What is your timeline for the project? *</label>
-                  <div className="space-y-1.5">
-                    {TIMELINE_OPTIONS.map((timeline) => (
-                      <label key={timeline} className="flex items-center gap-1.5 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="timeline"
-                          value={timeline}
-                          checked={formData.timeline === timeline}
-                          onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                          className="w-3 h-3 accent-amber-600"
-                          required
-                        />
-                        <span className="text-xs">{timeline}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <textarea
-                  placeholder="Please share a bit more about your needs"
-                  value={formData.additionalInfo}
-                  onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
-                  rows={3}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600 resize-none"
-                />
-
-                <div>
-                  <input
-                    type="file"
-                    id="designReferences"
-                    accept="image/*,.pdf"
-                    multiple
-                    onChange={(e) => setFormData({ ...formData, designReferences: e.target.files })}
-                    className="hidden"
-                  />
-                  <label
-                    htmlFor="designReferences"
-                    className="block w-full text-white py-2 rounded-lg text-xs text-center font-medium cursor-pointer transition-colors shadow-md"
-                    style={{ backgroundColor: '#8B7355' }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
-                  >
-                    UPLOAD DESIGN REFERENCES
-                  </label>
-                  {formData.designReferences && formData.designReferences.length > 0 && (
-                    <p className="text-xs text-gray-600 mt-1">
-                      {formData.designReferences.length} file(s) selected
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setFormStep(1)}
-                    className="flex-1 bg-white py-2 rounded-lg text-xs font-medium hover:bg-gray-50 transition-colors shadow-md border-2"
-                    style={{ color: '#8B7355', borderColor: '#8B7355' }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#f9f9f9'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'white'
-                    }}
-                  >
-                    BACK
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 text-white py-2 rounded-lg text-xs font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                    style={{ backgroundColor: '#8B7355' }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
-                  >
-                    SUBMIT
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-        </div>
+        {/* Desktop Form Overlay */}
+        <ExpertFormOverlay className="hidden md:flex absolute right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 w-[85%] sm:w-[320px] md:w-[340px] max-w-[calc(100%-32px)] bg-white rounded-xl md:rounded-2xl shadow-2xl z-20 flex-col backdrop-blur-sm bg-white/95 scale-90 md:scale-100 origin-right" />
       </div>
 
       {/* Images Gallery Section */}
-      <section className="w-full py-6 md:py-16 lg:py-20 px-2 md:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
+      <section className="w-full -mt-12 pt-0 pb-6 md:mt-0 md:py-16 lg:py-20 px-2 md:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-6 md:mb-14 lg:mb-16">
+          <div className="text-center mb-0 md:mb-14 lg:mb-16">
             <h2 className="text-xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-2 md:mb-5 tracking-wide">
               {residentialData?.sectionTitle || 'Our Residential Projects'}
             </h2>
             <p className="text-[10px] md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
-              {residentialData?.sectionDescription || 'Showcasing our beautiful residential pooja rooms and mandirs that bring divine energy into homes through exquisite design.'}
+              {residentialData?.sectionDescription || 'Showcasing our beautiful residential pooja rooms and mandirs that bring divine energy into homes.'}
             </p>
             <div className="w-12 md:w-24 h-0.5 md:h-1 mx-auto mt-3 md:mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -420,7 +135,7 @@ const ResidentialProjectsPage = ({
               {residentialImages.map((image, index) => (
                 <div
                   key={image._id || index}
-                  onClick={() => handleImageClick(image, index)}
+                  onClick={() => handleImageClick(image)}
                   className="group cursor-pointer bg-white border border-gray-200 overflow-hidden hover:border-[#8B7355] transition-all duration-500 hover:shadow-2xl rounded-sm md:rounded-none"
                 >
                   <div className="relative w-full h-36 md:h-96 overflow-hidden bg-gray-100">
@@ -433,25 +148,14 @@ const ResidentialProjectsPage = ({
                     <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 md:p-6 text-white">
                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
                         <h3 className="text-[10px] md:text-xl font-serif leading-none md:leading-tight mb-0.5 md:mb-1 truncate">
-                          {image.title || 'Modern Home Rights'},
+                          {image.title || 'Modern Home'}
                         </h3>
-                        <p className="text-[8px] md:text-lg mb-1 md:mb-0 truncate">{image.location || 'Ahmedabad, Gujarat'}</p>
-
-                        <p className="text-[8px] md:text-xs text-gray-300 mb-1 md:mb-3 font-light leading-relaxed line-clamp-1 hidden sm:block">
-                          {image.address || '...'}
-                        </p>
-
+                        <p className="text-[8px] md:text-lg mb-1 md:mb-0 truncate">{image.location || 'Location'}</p>
+                        <p className="text-[8px] md:text-xs text-gray-300 mb-1 md:mb-3 font-light leading-relaxed line-clamp-1 hidden sm:block">{image.address || ''}</p>
                         <div className="w-full h-[1px] bg-white/30 my-1 md:my-3 hidden sm:block"></div>
-
-                        <p className="text-[8px] md:text-sm font-medium tracking-wide truncate hidden sm:block">
-                          {image.client || 'Client Name'}
-                        </p>
-
+                        <p className="text-[8px] md:text-sm font-medium tracking-wide truncate hidden sm:block">{image.client || ''}</p>
                         <div className="w-full h-[1px] bg-white/30 my-1 md:my-3 hidden sm:block"></div>
-
-                        <p className="text-[8px] md:text-sm font-light hidden sm:block">
-                          {image.duration || 'Duration'}
-                        </p>
+                        <p className="text-[8px] md:text-sm font-light hidden sm:block">{image.duration || ''}</p>
                       </div>
                     </div>
                   </div>
@@ -462,16 +166,31 @@ const ResidentialProjectsPage = ({
         </div>
       </section>
 
-      <ProjectDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        project={selectedProject}
-      />
+      {/* Mobile Form Modal */}
+      {showMobileForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm md:hidden">
+          <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/50">
+              <h3 className="text-sm font-bold uppercase tracking-wide text-[#8B7355]">Talk to Expert</h3>
+              <button onClick={() => setShowMobileForm(false)} className="p-1 rounded-full hover:bg-gray-200 transition-colors" aria-label="Close modal">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4 overflow-y-auto flex-1">
+              <ExpertFormOverlay className="w-full flex flex-col max-h-[85vh]" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <ProjectDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} project={selectedProject} />
 
       <Footer />
       <FloatingButtons />
     </div>
-  )
-}
+  );
+};
 
-export default ResidentialProjectsPage
+export default ResidentialProjectsPage;
