@@ -1,10 +1,10 @@
-import logoImage from '../../assets/logo/unnamed.jpg'
+import logoImage from '../../assets/logo/unnamed-removebg-preview.png'
 
 const Logo = () => (
-  <div className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64 flex items-center justify-center mb-4">
-    <img 
-      src={logoImage} 
-      alt="Logo" 
+  <div className="w-28 h-28 md:w-36 md:h-36 flex items-center justify-center mb-0">
+    <img
+      src={logoImage}
+      alt="Logo"
       className="w-full h-full object-contain"
     />
   </div>

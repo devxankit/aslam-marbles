@@ -181,48 +181,48 @@ const TSAInternationalPage = ({
 
             {/* Right Side - Caption */}
             <div className="order-2 md:order-2">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-4 sm:mb-6 md:mb-8 leading-tight font-bold">
+              <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-3 sm:mb-6 md:mb-8 leading-tight font-bold">
                 What Sets AMS International Apart – Short Version
               </h2>
-              <div className="space-y-3 sm:space-y-4 md:space-y-5">
+              <div className="space-y-2 sm:space-y-4 md:space-y-5">
                 <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1.5 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
                     <span className="font-semibold text-[#8B7355]">Strong Connector System:</span> Durable nut-and-bolt fittings for secure global installations.
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1.5 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
                     <span className="font-semibold text-[#8B7355]">Premium Vietnam Marble:</span> High-quality stone with unmatched shine and energy.
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1.5 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
                     <span className="font-semibold text-[#8B7355]">Artistic Detailing:</span> Painting, inlay, overlay, and embossing for rich visual appeal.
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1.5 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
                     <span className="font-semibold text-[#8B7355]">Smart Storage Units:</span> Stylish base cabinets for pooja essentials.
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1.5 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
                     <span className="font-semibold text-[#8B7355]">Push-to-Open Drawers:</span> Sleek, modern, knob-less design.
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1.5 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
                     <span className="font-semibold text-[#8B7355]">Built-In Ambient Lighting:</span> Soft, divine illumination for a serene atmosphere.
                   </p>
                 </div>
               </div>
-              <div className="w-24 h-1 rounded-full mt-6" style={{ backgroundColor: '#8B7355' }}></div>
+              <div className="w-24 h-1 rounded-full mt-4 sm:mt-6" style={{ backgroundColor: '#8B7355' }}></div>
             </div>
           </div>
         </div>
@@ -246,7 +246,7 @@ const TSAInternationalPage = ({
               WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
             }}
           >
-            <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 py-4" style={{ width: 'max-content' }}>
+            <div className="flex items-center gap-6 sm:gap-10 md:gap-16 lg:gap-24 xl:gap-32 py-4" style={{ width: 'max-content' }}>
               {/* Duplicate locations for seamless loop */}
               {[...internationalLocations, ...internationalLocations, ...internationalLocations].map((location, index) => (
                 <div
@@ -254,13 +254,16 @@ const TSAInternationalPage = ({
                   className="flex-shrink-0 flex flex-col items-center group cursor-pointer"
                   onClick={() => handleLocationClick(location.name)}
                 >
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 p-2 sm:p-3 md:p-4">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 xl:w-32 xl:h-32 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 p-1 sm:p-2">
                     <img
                       src={location.image}
                       alt={location.name}
                       className="w-full h-full object-contain"
                     />
                   </div>
+                  <p className="mt-2 text-[10px] sm:text-xs md:text-sm font-bold text-[#8B7355] uppercase tracking-wider text-center">
+                    {location.name}
+                  </p>
                 </div>
               ))}
             </div>
@@ -294,48 +297,48 @@ const TSAInternationalPage = ({
           {/* Table */}
           <div className="overflow-x-auto -mx-4 md:mx-0">
             <div className="inline-block min-w-full align-middle">
-              <table className="w-full border-collapse bg-white shadow-lg min-w-[800px]">
+              <table className="w-full border-collapse bg-white shadow-lg">
                 <thead>
                   <tr className="bg-[#8B7355] text-white">
-                    <th className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[10px] xs:text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap">
+                    <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
                       Temple Width (in feet)
                     </th>
-                    <th className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[10px] xs:text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap">
+                    <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
                       Design Phase
                     </th>
-                    <th className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[10px] xs:text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap">
+                    <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
                       Production Lead Time
                     </th>
-                    <th className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[10px] xs:text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap">
+                    <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
                       Shipping Time
                     </th>
-                    <th className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[10px] xs:text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap">
+                    <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
                       Average Weight
                     </th>
-                    <th className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[10px] xs:text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap">
-                      Port Delivery Charges<br className="hidden sm:block" />(Based on October 2024)
+                    <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
+                      Port Delivery Charges <span className="block text-[8px] xs:text-[9px] sm:text-xs font-normal opacity-90 mt-0.5">(Based on October 2024)</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {shippingData[activeTab].data.map((row, index) => (
                     <tr key={index} className="hover:bg-gray-50 transition-colors">
-                      <td className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-800 font-medium whitespace-nowrap">
+                      <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-800 font-medium whitespace-normal md:whitespace-nowrap align-top">
                         {row.width}
                       </td>
-                      <td className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-700 whitespace-nowrap">
+                      <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 whitespace-normal md:whitespace-nowrap align-top">
                         {row.design}
                       </td>
-                      <td className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-700 whitespace-nowrap">
+                      <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 whitespace-normal md:whitespace-nowrap align-top">
                         {row.production}
                       </td>
-                      <td className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-700 whitespace-nowrap">
+                      <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 whitespace-normal md:whitespace-nowrap align-top">
                         {row.shipping}
                       </td>
-                      <td className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-700 whitespace-nowrap">
+                      <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 whitespace-normal md:whitespace-nowrap align-top">
                         {row.weight}
                       </td>
-                      <td className="border border-gray-300 px-2 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-700 font-semibold whitespace-nowrap">
+                      <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 font-semibold whitespace-normal md:whitespace-nowrap align-top">
                         {row.charges}
                       </td>
                     </tr>
@@ -361,51 +364,63 @@ const TSAInternationalPage = ({
       <ProcessStepsSection selectedStep={selectedProcessStep} onStepChange={setSelectedProcessStep} />
 
       {/* End to End Solutions Section (Moved) */}
-      <section className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-[#fffbf0]">
+      <section className="w-full py-6 md:py-12 px-2 md:px-6 lg:px-8 bg-[#fffbf0]">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-12">
+          <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-8 lg:gap-12">
             {/* Design */}
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
+              <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center mb-1 sm:mb-3 md:mb-4">
                 <img
                   src={designIcon}
                   alt="Design"
                   className="w-full h-full object-contain"
                 />
               </div>
+              <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
+                Design
+              </p>
             </div>
 
             {/* Production */}
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
+              <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center mb-1 sm:mb-3 md:mb-4">
                 <img
                   src={productionIcon}
                   alt="Production"
                   className="w-full h-full object-contain"
                 />
               </div>
+              <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
+                Production
+              </p>
             </div>
 
             {/* Shipping */}
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
+              <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center mb-1 sm:mb-3 md:mb-4">
                 <img
                   src={shippingIcon}
                   alt="Shipping"
                   className="w-full h-full object-contain"
                 />
               </div>
+              <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
+                Shipping
+              </p>
             </div>
 
             {/* DIY Assembly */}
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
+              <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center mb-1 sm:mb-3 md:mb-4">
                 <img
                   src={diyAssemblyIcon}
                   alt="DIY Assembly"
                   className="w-full h-full object-contain"
                 />
               </div>
+              <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
+                DIY Assembly
+              </p>
             </div>
           </div>
         </div>
@@ -512,31 +527,31 @@ const ProcessStepsSection = ({ selectedStep, onStepChange }) => {
   ]
 
   return (
-    <section className="w-full py-8 md:py-12 px-4 md:px-6 bg-white">
+    <section className="w-full py-6 md:py-12 px-3 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center tracking-wide font-bold">
+        <div className="text-center mb-6 md:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center tracking-wide font-bold">
             Our 5-Step Process
           </h2>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:gap-8">
           <div className="relative">
             {steps.map((step) => (
               <div
                 key={step.id}
-                className={`relative mb-5 cursor-pointer group ${selectedStep === step.id ? 'opacity-100' : 'opacity-70'}`}
+                className={`relative mb-2 sm:mb-5 cursor-pointer group ${selectedStep === step.id ? 'opacity-100' : 'opacity-70'}`}
                 onClick={() => onStepChange(step.id)}
               >
-                <div className="flex items-start gap-3">
-                  <div className={`flex-shrink-0 w-10 h-10 rounded-full bg-[#8B8B5C] flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 z-10`}>
-                    <span className="text-white text-sm font-bold">{step.id}</span>
+                <div className="flex items-start gap-1.5 sm:gap-3">
+                  <div className={`flex-shrink-0 w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-[#8B8B5C] flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 z-10 mt-0.5 sm:mt-0`}>
+                    <span className="text-white text-[10px] sm:text-sm font-bold">{step.id}</span>
                   </div>
 
-                  <div className={`flex-1 bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-all duration-300 ${selectedStep === step.id ? 'ring-2 ring-[#8B8B5C]' : ''}`}>
-                    <h3 className="text-sm font-bold text-gray-800 mb-2">
+                  <div className={`flex-1 bg-white rounded-lg shadow-md p-2 sm:p-4 hover:shadow-lg transition-all duration-300 ${selectedStep === step.id ? 'ring-1 sm:ring-2 ring-[#8B8B5C]' : ''}`}>
+                    <h3 className="text-[10px] sm:text-sm font-bold text-gray-800 mb-0.5 sm:mb-2 leading-tight">
                       {step.title}
                     </h3>
-                    <p className="text-xs text-gray-600 leading-relaxed">
+                    <p className="text-[9px] sm:text-xs text-gray-600 leading-tight sm:leading-relaxed">
                       {step.description}
                     </p>
                   </div>
@@ -546,16 +561,16 @@ const ProcessStepsSection = ({ selectedStep, onStepChange }) => {
           </div>
 
           <div className="bg-white">
-            <div className="bg-white rounded-lg p-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-3">
+            <div className="bg-white rounded-lg p-3 sm:p-6 border sm:border-0 border-gray-100 shadow-sm sm:shadow-none h-full">
+              <h2 className="text-sm sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">
                 {steps.find(s => s.id === selectedStep)?.title}
               </h2>
-              <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+              <p className="text-[10px] sm:text-sm text-gray-500 mb-3 sm:mb-4 leading-relaxed">
                 {steps.find(s => s.id === selectedStep)?.description}
               </p>
-              <hr className="border-gray-300 mb-5" />
-              <div className="space-y-5">
-                <p className="text-sm text-gray-500 leading-relaxed">
+              <hr className="border-gray-300 mb-3 sm:mb-5" />
+              <div className="space-y-3 sm:space-y-5">
+                <p className="text-[10px] sm:text-sm text-gray-500 leading-relaxed">
                   More details about this step will be shown here. This is a simplified version of the process steps detail view.
                 </p>
               </div>

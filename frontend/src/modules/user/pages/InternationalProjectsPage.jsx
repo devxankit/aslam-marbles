@@ -101,7 +101,7 @@ const InternationalProjectsPage = ({
       />
 
       {/* Hero Image Container with Form Overlay */}
-      <div className="relative w-full overflow-hidden" style={{ height: '75vh', minHeight: '600px' }}>
+      <div className="relative w-full overflow-hidden h-[50vh] min-h-[550px] md:h-[60vh] md:min-h-[500px] lg:h-[75vh] lg:min-h-[600px]">
         {/* Background Image */}
         {loading ? (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -124,29 +124,29 @@ const InternationalProjectsPage = ({
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent"></div>
 
         {/* Hero Text Overlay - Left Side */}
-        <div className="absolute top-16 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-xl md:max-w-2xl">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 md:mb-4 leading-tight uppercase tracking-wide drop-shadow-lg">
+        <div className="absolute top-10 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-[60%] md:max-w-2xl">
+          <h1 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 md:mb-4 leading-tight uppercase tracking-wide drop-shadow-lg">
             {internationalData?.title || 'INTERNATIONAL PROJECTS'}
           </h1>
-          <p className="text-sm md:text-base lg:text-lg text-white font-light mb-2 drop-shadow-md">
+          <p className="text-xs md:text-base lg:text-lg text-white font-light mb-1.5 md:mb-2 drop-shadow-md">
             {internationalData?.subtitle || 'Global Excellence in Stone Architecture'}
           </p>
-          <p className="text-xs md:text-sm text-white/90 font-light leading-relaxed drop-shadow-md">
+          <p className="text-[10px] md:text-sm text-white/90 font-light leading-relaxed drop-shadow-md hidden sm:block">
             {internationalData?.description || 'From India to the world, exploring our international footprint in stone architecture and temple construction.'}
           </p>
         </div>
 
         {/* Form Container - Overlay on Right Side, Fits Image Height */}
-        <div id="expert-form-container" className="absolute right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 w-[85%] sm:w-[320px] md:w-[340px] max-w-[calc(100%-32px)] bg-white rounded-xl md:rounded-2xl shadow-2xl z-20 flex flex-col backdrop-blur-sm bg-white/95">
+        <div id="expert-form-container" className="absolute right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 w-[85%] sm:w-[320px] md:w-[340px] max-w-[calc(100%-32px)] bg-white rounded-xl md:rounded-2xl shadow-2xl z-20 flex flex-col backdrop-blur-sm bg-white/95 scale-90 md:scale-100 origin-right">
           {/* Header */}
           <div className="flex items-center justify-between p-3 md:p-4 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0 rounded-t-xl md:rounded-t-2xl">
-            <h3 className="text-base md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>
-            <span className="text-xs font-semibold px-2 py-1 rounded-full bg-[#8B7355]/10" style={{ color: '#8B7355' }}>{formStep}/2</span>
+            <h3 className="text-sm md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>
+            <span className="text-[10px] md:text-xs font-semibold px-2 py-1 rounded-full bg-[#8B7355]/10" style={{ color: '#8B7355' }}>{formStep}/2</span>
           </div>
 
-          <div className="px-3 pt-3 pb-4 md:px-4 md:pt-4 md:pb-4 bg-white overflow-y-auto flex-1 rounded-b-xl md:rounded-b-2xl">
+          <div className="px-3 pt-3 pb-4 md:px-4 md:pt-4 md:pb-4 bg-white overflow-y-auto flex-1 rounded-b-xl md:rounded-b-2xl max-h-[300px] md:max-h-none">
             {formStep === 1 ? (
-              <form className="space-y-2.5" onSubmit={(e) => { e.preventDefault(); setFormStep(2); }}>
+              <form className="space-y-2 md:space-y-2.5" onSubmit={(e) => { e.preventDefault(); setFormStep(2); }}>
                 <div className="flex gap-2">
                   <label className="flex items-center gap-1.5 cursor-pointer">
                     <input
@@ -157,7 +157,7 @@ const InternationalProjectsPage = ({
                       onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-3 h-3 accent-amber-600"
                     />
-                    <span className="text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
+                    <span className="text-[10px] md:text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
                   </label>
                   <label className="flex items-center gap-1.5 cursor-pointer">
                     <input
@@ -168,7 +168,7 @@ const InternationalProjectsPage = ({
                       onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-3 h-3 accent-amber-600"
                     />
-                    <span className="text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
+                    <span className="text-[10px] md:text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
                   </label>
                 </div>
 
@@ -177,7 +177,7 @@ const InternationalProjectsPage = ({
                   placeholder="Full Name *"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  className="w-full px-3 py-1.5 md:py-2 text-[10px] md:text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
                   required
                 />
 
@@ -186,23 +186,23 @@ const InternationalProjectsPage = ({
                   placeholder="Email Address *"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  className="w-full px-3 py-1.5 md:py-2 text-[10px] md:text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
                   required
                 />
 
                 <div>
-                  <label className="block text-xs font-medium mb-1">Phone number</label>
+                  <label className="block text-[10px] md:text-xs font-medium mb-1">Phone number</label>
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                     <div className="flex items-center gap-1 px-2 bg-gray-50 border-r">
-                      <span className="text-sm">🇮🇳</span>
-                      <span className="text-xs">+91</span>
+                      <span className="text-xs md:text-sm">🇮🇳</span>
+                      <span className="text-[10px] md:text-xs">+91</span>
                     </div>
                     <input
                       type="tel"
                       placeholder="Phone number *"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="flex-1 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-600"
+                      className="flex-1 px-3 py-1.5 md:py-2 text-[10px] md:text-xs focus:outline-none focus:ring-2 focus:ring-amber-600"
                     />
                   </div>
                 </div>
@@ -212,12 +212,12 @@ const InternationalProjectsPage = ({
                   placeholder="City *"
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  className="w-full px-3 py-1.5 md:py-2 text-[10px] md:text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
                   required
                 />
 
                 <div>
-                  <label className="block text-xs font-medium mb-1.5">Tell us about yourself *</label>
+                  <label className="block text-[10px] md:text-xs font-medium mb-1.5">Tell us about yourself *</label>
                   <div className="space-y-1.5">
                     <label className="flex items-start gap-1.5 cursor-pointer">
                       <input
@@ -229,7 +229,7 @@ const InternationalProjectsPage = ({
                         className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                         required
                       />
-                      <span className="text-xs leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
+                      <span className="text-[10px] md:text-xs leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
                     </label>
                     <label className="flex items-start gap-1.5 cursor-pointer">
                       <input
@@ -241,14 +241,14 @@ const InternationalProjectsPage = ({
                         className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                         required
                       />
-                      <span className="text-xs leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
+                      <span className="text-[10px] md:text-xs leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
                     </label>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full text-white py-2.5 rounded-lg text-xs font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                  className="w-full text-white py-2 md:py-2.5 rounded-lg text-xs font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                   style={{ backgroundColor: '#8B7355' }}
                   onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                   onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
@@ -393,17 +393,17 @@ const InternationalProjectsPage = ({
       </div>
 
       {/* Images Gallery Section */}
-      <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
+      <section className="w-full py-6 md:py-16 lg:py-20 px-2 md:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-10 md:mb-14 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-4 md:mb-5 tracking-wide">
+          <div className="text-center mb-6 md:mb-14 lg:mb-16">
+            <h2 className="text-xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-2 md:mb-5 tracking-wide">
               {internationalData?.sectionTitle || 'Our Global Projects'}
             </h2>
-            <p className="text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-[10px] md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
               {internationalData?.sectionDescription || 'Showcasing our international presence and projects executed across the globe.'}
             </p>
-            <div className="w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
+            <div className="w-12 md:w-24 h-0.5 md:h-1 mx-auto mt-3 md:mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
 
           {/* Images Grid */}
@@ -416,40 +416,40 @@ const InternationalProjectsPage = ({
               <p className="text-gray-600 text-lg">No projects available at the moment.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-3 gap-2 md:gap-8">
               {internationalImages.map((image, index) => (
                 <div
                   key={image._id || index}
                   onClick={() => handleImageClick(image, index)}
-                  className="group cursor-pointer bg-white border border-gray-200 overflow-hidden hover:border-[#8B7355] transition-all duration-500 hover:shadow-2xl"
+                  className="group cursor-pointer bg-white border border-gray-200 overflow-hidden hover:border-[#8B7355] transition-all duration-500 hover:shadow-2xl rounded-sm md:rounded-none"
                 >
-                  <div className="relative w-full h-80 md:h-96 overflow-hidden bg-gray-100">
+                  <div className="relative w-full h-36 md:h-96 overflow-hidden bg-gray-100">
                     <img
                       src={image.url}
                       alt={image.alt || image.title || `International Project ${index + 1}`}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+                      className="w-full h-full !h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                     />
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-white">
+                    <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 md:p-6 text-white">
                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                        <h3 className="text-xl font-serif leading-tight mb-1">
-                          {image.title || 'International Project'}, <br />
-                          <span className="text-lg">{image.location || 'London, UK'}</span>
+                        <h3 className="text-[10px] md:text-xl font-serif leading-none md:leading-tight mb-0.5 md:mb-1 truncate">
+                          {image.title || 'International Project'},
                         </h3>
+                        <p className="text-[8px] md:text-lg mb-1 md:mb-0 truncate">{image.location || 'London, UK'}</p>
 
-                        <p className="text-xs text-gray-300 mb-3 font-light leading-relaxed">
+                        <p className="text-[8px] md:text-xs text-gray-300 mb-1 md:mb-3 font-light leading-relaxed line-clamp-1 hidden sm:block">
                           {image.address || '...'}
                         </p>
 
-                        <div className="w-full h-[1px] bg-white/30 my-3"></div>
+                        <div className="w-full h-[1px] bg-white/30 my-1 md:my-3 hidden sm:block"></div>
 
-                        <p className="text-sm font-medium tracking-wide">
+                        <p className="text-[8px] md:text-sm font-medium tracking-wide truncate hidden sm:block">
                           {image.client || 'Client Name'}
                         </p>
 
-                        <div className="w-full h-[1px] bg-white/30 my-3"></div>
+                        <div className="w-full h-[1px] bg-white/30 my-1 md:my-3 hidden sm:block"></div>
 
-                        <p className="text-sm font-light">
+                        <p className="text-[8px] md:text-sm font-light hidden sm:block">
                           {image.duration || 'Duration'}
                         </p>
                       </div>

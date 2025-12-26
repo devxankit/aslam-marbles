@@ -247,7 +247,7 @@ const Header = ({
       className={`sticky top-0 z-[200] w-full transition-all duration-300 ${headerBg}`}
     >
       {/* slightly tight vertical padding */}
-      <div className="w-full flex justify-center px-3 md:px-6 py-[2px] relative">
+      <div className="w-full flex justify-center px-2 md:px-6 py-0 lg:py-[2px] relative">
         <nav className="w-full max-w-[1500px] relative">
           {/* Hover Wrapper - Wraps buttons and dropdown */}
           <div
@@ -418,20 +418,20 @@ const Header = ({
           {/* Mobile / Tablet Navbar (< lg) */}
           <div className="flex lg:hidden flex-col">
             {/* Top row: Logo + Hamburger Menu */}
-            <div className="flex items-center justify-between py-2">
+            <div className="flex items-center justify-between py-0">
               <div className="flex-1 flex justify-center">
-                <Link to="/" className="block">
+                <Link to="/" className="block w-full text-center leading-none">
                   <img
                     src={logoImage}
                     alt="Logo"
-                    className="h-16 sm:h-20 md:h-24 object-contain"
+                    className="w-[40%] h-auto sm:w-auto sm:h-8 md:h-10 object-contain mx-auto -mt-5 -mb-7"
                   />
                 </Link>
               </div>
 
               <button
                 onClick={() => setOpen(!open)}
-                className={`ml-2 flex-shrink-0 transition-colors duration-300 p-2 ${isVideoOverlay && !isDropdownActive ? 'text-white' : 'text-black'}`}
+                className={`ml-2 flex-shrink-0 transition-colors duration-300 p-1 ${isVideoOverlay && !isDropdownActive ? 'text-white' : 'text-black'}`}
                 aria-label="Menu"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
