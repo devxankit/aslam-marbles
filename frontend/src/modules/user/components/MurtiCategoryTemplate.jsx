@@ -31,7 +31,9 @@ const MurtiCategoryTemplate = ({
     onShowServices,
     onShowHowItWorks,
     onShowLocation,
-    onShowBooking
+    onShowBooking,
+    onShowCart,
+    onShowLikes
 }) => {
     const navigate = useNavigate()
     const { addToCart, toggleLike, isLiked } = useCartAndLikes()
@@ -134,6 +136,8 @@ const MurtiCategoryTemplate = ({
                 onShowHowItWorks={onShowHowItWorks}
                 onShowLocation={onShowLocation}
                 onShowBooking={onShowBooking}
+                onShowCart={onShowCart}
+                onShowLikes={onShowLikes}
             />
 
             {/* Category Header */}
@@ -183,7 +187,7 @@ const MurtiCategoryTemplate = ({
                             <p className="text-gray-500 mt-2">New collection coming soon.</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8">
                             {products.map((product) => {
                                 // Robust image extraction
                                 const previewImage =
@@ -220,11 +224,11 @@ const MurtiCategoryTemplate = ({
                                 return (
                                     <div
                                         key={product._id || product.id}
-                                        onClick={() => navigate(`/murti/${categoryId}/${product._id || product.id}`)}
+                                        onClick={handleBuyNow}
                                         className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer group"
                                     >
                                         {/* Image Container */}
-                                        <div className="relative w-full h-64 md:h-72 lg:h-80 overflow-hidden bg-gray-100">
+                                        <div className="relative w-full aspect-[4/5] overflow-hidden bg-gray-100">
                                             {product.isPreOrder && (
                                                 <div className="absolute top-3 left-3 z-10 bg-black rounded-full px-3 py-1">
                                                     <span className="text-white text-xs font-semibold uppercase">Pre Order</span>
@@ -233,13 +237,14 @@ const MurtiCategoryTemplate = ({
                                             <img
                                                 src={previewImage}
                                                 alt={product.name}
-                                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+                                                className="w-full h-full object-cover object-top transition-transform duration-500 ease-in-out group-hover:scale-110"
                                             />
                                             {/* Hover Actions */}
                                             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                                                 <button
                                                     onClick={handleAddToCart}
                                                     className="bg-white text-gray-900 p-3 rounded-full hover:bg-[#8B7355] hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300"
+                                                    title="Add to Cart"
                                                 >
                                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -250,6 +255,19 @@ const MurtiCategoryTemplate = ({
                                                     className="bg-[#8B7355] text-white px-6 py-2 rounded-full font-bold hover:bg-white hover:text-[#8B7355] transition-all transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
                                                 >
                                                     Buy Now
+                                                </button>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        navigate(`/murti/${categoryId}/${product._id || product.id}`);
+                                                    }}
+                                                    className="bg-white text-gray-900 p-3 rounded-full hover:bg-[#8B7355] hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300"
+                                                    title="View Details"
+                                                >
+                                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                    </svg>
                                                 </button>
                                             </div>
                                         </div>

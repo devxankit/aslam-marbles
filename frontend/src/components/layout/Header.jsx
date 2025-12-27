@@ -240,6 +240,7 @@ const Header = ({
     text-[9px] md:text-[10px] lg:text-[11px] xl:text-[12px]
     tracking-wide uppercase transition group whitespace-nowrap
     ${textColor}
+    select-none focus:outline-none caret-transparent
   `;
 
   return (

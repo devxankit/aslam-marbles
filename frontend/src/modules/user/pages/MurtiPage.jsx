@@ -288,7 +288,7 @@ const MurtiPage = ({
                         onClick={() => handleCategoryClick(category)}
                         className="flex-shrink-0 cursor-pointer snap-center"
                       >
-                        <div className="relative w-48 h-64 md:w-64 md:h-80 overflow-hidden bg-gray-50 border border-gray-100 group transition-all duration-300">
+                        <div className="relative w-56 aspect-square md:w-64 md:aspect-square overflow-hidden bg-gray-50 border border-gray-100 group transition-all duration-300">
                           <img
                             src={category.heroSection?.image?.url || 'https://via.placeholder.com/300x500'}
                             alt={category.name}
@@ -334,12 +334,12 @@ const MurtiPage = ({
             <div className="w-8 h-[1px] bg-gray-300 mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {allFurnitureCategories.map((category) => {
               const coverImage = furnitureData[category]?.[0] || murtiCollections[0]?.image;
               return (
                 <div key={category} onClick={() => navigate(`/furniture/${category.toLowerCase().replace(/\s+/g, '-')}`)} className="cursor-pointer group">
-                  <div className="aspect-[4/5] overflow-hidden bg-gray-50 mb-4">
+                  <div className="aspect-square overflow-hidden bg-gray-50 mb-3 rounded-xl">
                     <img src={coverImage} alt={category} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <h4 className="text-gray-900 text-sm font-medium uppercase tracking-widest text-center">{category}</h4>
@@ -356,13 +356,13 @@ const MurtiPage = ({
             <div className="w-8 h-[1px] bg-gray-300 mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {allHomeDecorCategories.map((category) => {
               const coverImage = homeDecorData[category]?.[0] || murtiCollections[0]?.image;
               return (
                 <div key={category} onClick={() => navigate(`/home-decor/${category.toLowerCase().replace(/\s+/g, '-')}`)} className="cursor-pointer group">
-                  <div className="aspect-square overflow-hidden bg-gray-50 mb-4 rounded-full border border-gray-100 p-1">
-                    <img src={coverImage} alt={category} className="w-full h-full object-cover rounded-full opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="aspect-[4/5] overflow-hidden bg-gray-50 mb-4 rounded-xl border border-gray-100">
+                    <img src={coverImage} alt={category} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <h4 className="text-gray-900 text-[10px] font-bold uppercase tracking-widest text-center">{category}</h4>
                 </div>

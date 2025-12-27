@@ -61,6 +61,110 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
     }
   }, [])
 
+  /* Fetched Murti Hierarchy for Mobile Menu */
+  const [murtiHierarchy, setMurtiHierarchy] = useState([])
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
+  useEffect(() => {
+    const fetchHierarchy = async () => {
+      try {
+        const res = await fetch(`${API_URL}/murtis/hierarchy`)
+        const result = await res.json()
+        if (result.success) {
+          setMurtiHierarchy(result.data)
+        }
+      } catch (error) {
+        console.error('Error fetching murti hierarchy:', error)
+      }
+    }
+    fetchHierarchy()
+  }, [])
+
+  /* Home Decor Categories for Mobile Menu */
+  const homeDecorCategories = [
+    {
+      title: 'Furniture',
+      items: [
+        { name: 'Dining Tables', path: '/home-decor/dining-tables' },
+        { name: 'Center Tables', path: '/home-decor/center-tables' },
+        { name: 'Side Tables', path: '/home-decor/side-tables' },
+        { name: 'Marble chair', path: '/home-decor/marble-chair' },
+        { name: 'Pedestal Columns', path: '/home-decor/pedestal-columns' },
+        { name: 'Fire Places', path: '/home-decor/fire-places' },
+      ]
+    },
+    {
+      title: 'Games & Leisure',
+      items: [
+        { name: 'Chess Sets', path: '/home-decor/chess-sets' },
+        { name: 'Ludo', path: '/home-decor/ludo' },
+        { name: 'Tic-Tac-Toe', path: '/home-decor/tic-tac-toe' },
+      ]
+    },
+    {
+      title: 'Lighting',
+      items: [
+        { name: 'Lamps', path: '/home-decor/lamps' },
+      ]
+    },
+    {
+      title: 'Pots | Vases',
+      items: [
+        { name: 'Tulsi Gamla', path: '/home-decor/tulsi-gamla' },
+        { name: 'Pots & Vases', path: '/home-decor/pots-vases' },
+      ]
+    },
+    {
+      title: 'Sculptures',
+      items: [
+        { name: 'Indoor Sculptures', path: '/home-decor/indoor-sculptures' },
+        { name: 'Outdoor Sculptures', path: '/home-decor/outdoor-sculptures' },
+      ]
+    },
+    {
+      title: 'Tableware',
+      items: [
+        { name: 'Mortar & Pestle', path: '/home-decor/mortar-pestle' },
+        { name: 'Bowls', path: '/home-decor/bowls' },
+        { name: 'Tray', path: '/home-decor/tray' },
+        { name: 'Coasters', path: '/home-decor/coasters' },
+        { name: 'Candle Holders', path: '/home-decor/candle-holders' },
+        { name: 'Kitchen Accessories', path: '/home-decor/kitchen-accessories' },
+      ]
+    },
+    {
+      title: 'Wall Art',
+      items: [
+        { name: '3D Wall Murals', path: '/home-decor/3d-wall-murals' },
+        { name: 'Inlay Wall Art', path: '/home-decor/inlay-wall-art' },
+      ]
+    },
+    {
+      title: 'Bathroom Sets',
+      items: [
+        { name: 'Bathroom Accessories', path: '/home-decor/bathroom-accessories' },
+        { name: 'Stone Sinks', path: '/home-decor/stone-sinks' },
+      ]
+    },
+    {
+      title: 'Office & Desk',
+      items: [
+        { name: 'Bookends', path: '/home-decor/bookends' },
+        { name: 'Photo Frames', path: '/home-decor/photo-frames' },
+      ]
+    }
+  ]
+
+  /* Shop By Categories for Mobile Menu */
+  const shopByCategories = {
+    rooms: [
+      'Pooja Room', 'Living Room', 'Dinning Room', 'Powder Room', 'Foyer'
+    ],
+    occasions: [
+      'Housewarming', 'Festivals', 'Wedding', 'Religious Ceremonies', 'Memorials', 'Corporate Gifting'
+    ]
+  }
+
   return (
     <nav className="w-full bg-white border-b border-gray-200 relative z-50 shadow-sm">
       <div className="w-full flex justify-center">
@@ -98,6 +202,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                           font-medium tracking-[0.05em] uppercase
                           whitespace-nowrap
                           transition-all duration-300 ease-in-out
+                          select-none focus:outline-none caret-transparent
                           ${isActive
                               ? 'text-black font-semibold'
                               : 'text-gray-700 hover:text-[#8B7355]'
@@ -136,6 +241,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                         font-medium tracking-[0.05em] uppercase
                         whitespace-nowrap
                         transition-all duration-300 ease-in-out
+                        select-none focus:outline-none caret-transparent
                         ${isActive
                             ? 'text-black font-semibold'
                             : 'text-gray-700 hover:text-[#8B7355]'
@@ -250,13 +356,8 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
               </button>
 
               {/* Logo - Center */}
-              <Link to="/" className="flex-1 flex justify-center">
-                <img
-                  src={logoImage || '/logo.png'}
-                  alt="Logo"
-                  className="h-12 object-contain"
-                />
-              </Link>
+              {/* Logo Removed as per request */}
+              <div className="flex-1"></div>
 
               {/* Cart and Likes Icons */}
               <div className="flex items-center gap-3">
@@ -314,7 +415,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
 
             {/* Mobile Menu Dropdown */}
             {mobileMenuOpen && (
-              <div className="lg:hidden bg-white border-t border-gray-200 shadow-lg">
+              <div className="lg:hidden bg-white border-t border-gray-200 shadow-lg max-h-[80vh] overflow-y-auto">
                 <div className="flex flex-col">
                   {navItems.map((item) => {
                     const isActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/')
@@ -339,25 +440,88 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                             </svg>
                           </button>
                           {isExpanded && (
-                            <div className="bg-gray-50 px-4 py-2">
+                            <div className="bg-gray-50 px-4 py-2 max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300">
                               {item.dropdownKey === 'dream-murtis' && (
-                                <div className="flex flex-col gap-2">
-                                  <Link to="/murti/ganesha" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Ganesha</Link>
-                                  <Link to="/murti/hanuman" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Hanuman Ji</Link>
-                                  <Link to="/murti/radha-krishna" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Radha Krishna</Link>
-                                  <Link to="/murti/ram-darbar" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Ram Darbar</Link>
+                                <div className="flex flex-col gap-4 py-2">
+                                  {murtiHierarchy.length > 0 ? (
+                                    murtiHierarchy.map((group) => (
+                                      <div key={group._id}>
+                                        <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{group.name}</h4>
+                                        <div className="flex flex-col gap-2 pl-2">
+                                          {group.categories.map((category) => (
+                                            <Link
+                                              key={category._id}
+                                              to={`/murti/${category.id}`}
+                                              onClick={() => setMobileMenuOpen(false)}
+                                              className="text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded px-2 py-1"
+                                            >
+                                              {category.name}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    ))
+                                  ) : (
+                                    <div className="text-sm text-gray-400 p-2">Loading categories...</div>
+                                  )}
                                 </div>
                               )}
                               {item.dropdownKey === 'home-decor' && (
-                                <div className="flex flex-col gap-2">
-                                  <Link to="/murti#shop-home-decor" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Home Decor Items</Link>
+                                <div className="flex flex-col gap-4 py-2">
+                                  <Link to="/murti#shop-home-decor" onClick={() => setMobileMenuOpen(false)} className="font-bold text-sm text-[#8B7355] hover:underline mb-2 block">
+                                    View All Home Decor
+                                  </Link>
+                                  {homeDecorCategories.map((group, idx) => (
+                                    <div key={idx}>
+                                      <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{group.title}</h4>
+                                      <div className="flex flex-col gap-2 pl-2">
+                                        {group.items.map((subItem) => (
+                                          <Link
+                                            key={subItem.path}
+                                            to={subItem.path}
+                                            onClick={() => setMobileMenuOpen(false)}
+                                            className="text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded px-2 py-1"
+                                          >
+                                            {subItem.name}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  ))}
                                 </div>
                               )}
                               {item.dropdownKey === 'shop-by' && (
-                                <div className="flex flex-col gap-2">
-                                  <Link to="/products/sandstone" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Sandstone</Link>
-                                  <Link to="/products/marble" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Marble</Link>
-                                  <Link to="/products/granite" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Granite</Link>
+                                <div className="flex flex-col gap-4 py-2">
+                                  <div>
+                                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Rooms</h4>
+                                    <div className="flex flex-col gap-2 pl-2">
+                                      {shopByCategories.rooms.map((room) => (
+                                        <Link
+                                          key={room}
+                                          to={`/shop-by/rooms/${room.toLowerCase().replace(/\s+/g, '-')}`}
+                                          onClick={() => setMobileMenuOpen(false)}
+                                          className="text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded px-2 py-1"
+                                        >
+                                          {room}
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Occasions</h4>
+                                    <div className="flex flex-col gap-2 pl-2">
+                                      {shopByCategories.occasions.map((occasion) => (
+                                        <Link
+                                          key={occasion}
+                                          to={`/shop-by/occasions/${occasion.toLowerCase().replace(/\s+/g, '-')}`}
+                                          onClick={() => setMobileMenuOpen(false)}
+                                          className="text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded px-2 py-1"
+                                        >
+                                          {occasion}
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
                                 </div>
                               )}
 

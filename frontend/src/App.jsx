@@ -1176,6 +1176,8 @@ function App() {
               onShowHowItWorks={() => setShowModal(true)}
               onShowLocation={() => { }}
               onShowBooking={() => { }}
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
             />
           } />
 
