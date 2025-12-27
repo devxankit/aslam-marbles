@@ -519,15 +519,47 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                 </div>
 
                 {/* Info Container */}
-                <div className="p-8 bg-white text-center border-t border-gray-50">
-                  <p className="text-[#8B7355] text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Starting at {room.price}</p>
-                  <h3 className="text-xl md:text-2xl font-serif text-gray-800 italic mb-3 group-hover:text-[#8B7355] transition-colors duration-300">
+                <div className="p-6 bg-white text-center border-t border-gray-50 flex flex-col h-full">
+                  <p className="text-[#8B7355] text-[10px] font-bold uppercase tracking-[0.2em] mb-2">Starting at {room.price}</p>
+                  <h3 className="text-xl font-serif text-gray-800 italic mb-2 group-hover:text-[#8B7355] transition-colors duration-300">
                     {room.name}
                   </h3>
-                  <div className="flex items-center justify-center gap-2 text-gray-400">
+                  <div className="flex items-center justify-center gap-2 text-gray-400 mb-4">
                     <div className="w-8 h-[1px] bg-gray-200"></div>
                     <span className="text-xs font-medium tracking-wide italic">{room.size}</span>
                     <div className="w-8 h-[1px] bg-gray-200"></div>
+                  </div>
+
+                  <div className="flex gap-2 mt-auto">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate('/checkout', {
+                          state: {
+                            items: [{
+                              id: `pooja-${room.id}`,
+                              name: room.name,
+                              image: room.image,
+                              price: room.fullPrice || 1200000,
+                              quantity: 1,
+                              size: room.size
+                            }]
+                          }
+                        })
+                      }}
+                      className="flex-1 bg-[#8B7355] text-white text-xs font-bold py-2 rounded hover:opacity-90 transition-opacity"
+                    >
+                      BUY NOW
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowConsultationModal(true);
+                      }}
+                      className="flex-1 border border-[#8B7355] text-[#8B7355] text-xs font-bold py-2 rounded hover:bg-[#8B7355] hover:text-white transition-all"
+                    >
+                      DETAILS
+                    </button>
                   </div>
                 </div>
               </div>

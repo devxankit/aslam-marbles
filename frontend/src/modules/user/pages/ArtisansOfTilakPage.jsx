@@ -101,11 +101,11 @@ const ArtisansOfTilakPage = ({
       {/* Horizontal Artisan Image */}
       <section className="w-full px-4 md:px-6 lg:px-8 mb-8 md:mb-12">
         <div className="max-w-7xl mx-auto">
-          <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg">
+          <div className="w-full h-auto md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg">
             <img
               src={displayHeroImage}
               alt="Artisans"
-              className="w-full h-full object-cover"
+              className="w-full h-auto md:h-full object-cover"
             />
           </div>
         </div>

@@ -46,15 +46,19 @@ const connectDB = async (mongoUri) => {
     throw new Error('Missing MongoDB connection string (MONGODB_URI)');
   }
 
-  await mongoose.connect(mongoUri, {
-    serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
-    maxPoolSize: 10, // Maintain up to 10 socket connections
-    minPoolSize: 2 // Maintain at least 2 socket connections
-  });
+  try {
+    await mongoose.connect(mongoUri, {
+      serverSelectionTimeoutMS: 15000, // Increased timeout to 15s
+      socketTimeoutMS: 45000,
+      family: 4 // Force IPv4 to resolve partial DNS issues
+    });
 
-  console.log('✅ MongoDB connected successfully');
-  await ensureDefaultAdmin();
+    console.log('✅ MongoDB connected successfully');
+    await ensureDefaultAdmin();
+  } catch (error) {
+    console.error('❌ MongoDB Connection Error:', error.message);
+    // Don't exit process, allow retry or investigation
+  }
 };
 
 module.exports = connectDB;

@@ -42,9 +42,9 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
     if (!token) {
       // Redirect to login with return path
       navigate('/login', {
-        state: { 
-          from: '/checkout/shipping', 
-          checkoutData: { formData, checkoutItems, subtotal, shippingCost, total } 
+        state: {
+          from: '/checkout/shipping',
+          checkoutData: { formData, checkoutItems, subtotal, shippingCost, total }
         }
       })
       return
@@ -81,7 +81,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
     if (!userId) {
       alert('Please login to continue')
       navigate('/login', {
-        state: { from: '/checkout/shipping', checkoutData: { formData, checkoutItems, subtotal, shippingCost, total } }
+        state: { from: '/checkout/shipping', checkoutData: { formData, items: checkoutItems, subtotal, shippingCost, total } }
       })
       return
     }
@@ -91,7 +91,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
       alert('Please provide email or phone number')
       return
     }
-    
+
     if (!formData.address || !formData.city || !formData.state || !formData.pinCode) {
       alert('Please provide complete shipping address')
       return
@@ -116,7 +116,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
         pinCode: formData.pinCode?.trim() || '',
         country: formData.country?.trim() || 'India'
       }
-      
+
       // Remove undefined values (but keep empty strings for required fields)
       Object.keys(customerDetails).forEach(key => {
         if (customerDetails[key] === undefined) {
@@ -212,6 +212,21 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
       }
     } catch (error) {
       console.error('Payment error:', error)
+
+      // Handle Unauthorized error specifically
+      if (error.message && error.message.toLowerCase().includes('unauthorized')) {
+        alert('Your session has expired. Please login again.')
+        localStorage.removeItem('authToken')
+        localStorage.removeItem('user')
+        navigate('/login', {
+          state: {
+            from: '/checkout/shipping',
+            checkoutData: { formData, items: checkoutItems, subtotal, shippingCost, total }
+          }
+        })
+        return
+      }
+
       alert(error.message || 'Failed to initiate payment. Please try again.')
       setLoading(false)
     }
@@ -227,7 +242,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
   return (
     <div className="w-full min-h-screen bg-white">
       <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
-      
+
       <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12">
         {/* Contact and Shipping Address Card */}
         <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">

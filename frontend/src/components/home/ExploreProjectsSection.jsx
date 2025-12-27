@@ -50,9 +50,9 @@ const ExploreProjectsSection = () => {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3 md:px-8 py-2 md:py-4 text-[10px] md:text-lg font-bold uppercase tracking-widest transition-all rounded-sm ${activeCategory === cat
-                ? 'bg-[#8B7355] text-white shadow-lg'
-                : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              className={`px-3 md:px-8 py-2 md:py-4 text-[10px] md:text-sm font-bold uppercase tracking-widest transition-all rounded-sm border ${activeCategory === cat
+                ? 'bg-[#8B7355] text-white border-[#8B7355] shadow-lg'
+                : 'bg-white text-gray-800 border-gray-200 hover:bg-gray-50 hover:border-[#8B7355]/50'
                 }`}
             >
               {cat}
@@ -61,18 +61,18 @@ const ExploreProjectsSection = () => {
         </div>
 
         {/* Compact 3-Column Grid for All Screens */}
-        <div className="grid grid-cols-3 md:grid-cols-3 gap-1 md:gap-6">
+        <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6">
           {projectCategories[activeCategory].slice(0, 6).map((image, index) => (
             <div
               key={index}
-              className="relative aspect-square overflow-hidden rounded-md md:rounded-2xl bg-gray-100 group shadow-sm"
+              className="relative aspect-square overflow-hidden rounded-md md:rounded-2xl bg-white group shadow-sm border border-gray-100"
             >
               <img
                 src={image}
                 alt={`${activeCategory} project ${index + 1}`}
-                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
+                className="w-full h-full !h-full !w-full object-cover transition-transform duration-[2s] group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all"></div>
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all"></div>
             </div>
           ))}
         </div>

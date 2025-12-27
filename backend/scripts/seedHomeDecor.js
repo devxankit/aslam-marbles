@@ -17,7 +17,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const ASSETS_BASE = path.join(__dirname, '../../my-project/src/assets/ourcreation/home decore');
+const ASSETS_BASE = path.join(__dirname, '../../frontend/src/assets/ourcreation/home decore');
 
 const uploadImage = async (filePath, folder) => {
     try {

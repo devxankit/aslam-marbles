@@ -69,45 +69,78 @@ const PricingDrawer = ({ isOpen, onClose }) => {
                         </p>
                     </div>
 
-                    {/* Pricing Tiers Content (Recreating from the user description/reference) */}
+                    {/* Pricing Tiers Content */}
                     <div className="space-y-6 bg-gray-50 p-6 rounded-xl border border-gray-100">
-                        <h5 className="text-lg font-serif text-[#8B7355] italic border-b border-gray-200 pb-2 mb-4">Pricing Tiers</h5>
+                        <h5 className="text-lg font-serif text-[#8B7355] italic border-b border-gray-200 pb-2 mb-4">Our Service Plans</h5>
 
                         {/* Tier 1 */}
-                        <div className="space-y-2">
+                        <div className="space-y-4 border-b border-gray-200 pb-6 last:border-0">
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-full border-2 border-[#8B7355] flex items-center justify-center text-[#8B7355]">
                                     <div className="w-3 h-3 bg-[#8B7355] rounded-full"></div>
                                 </div>
-                                <h6 className="font-bold text-[#8B7355] text-lg">1. ELEGANT ESSENTIALS (₹2-5 LAKH)</h6>
+                                <h6 className="font-bold text-[#8B7355] text-lg uppercase">Elegant Essentials</h6>
                             </div>
-                            <p className="text-sm text-gray-600 pl-11">
-                                Perfect for compact spaces with a focus on simplicity and functionality.
-                            </p>
+                            <div className="pl-11">
+                                <p className="text-sm text-gray-600 mb-4">
+                                    Perfect for compact spaces with a focus on simplicity and functionality (Est. ₹2-5 Lakh).
+                                </p>
+                                <button
+                                    onClick={() => {
+                                        onClose();
+                                        window.location.href = '/checkout'; // Or use navigate if possible, but PricingDrawer might not have it
+                                    }}
+                                    className="px-6 py-2 bg-[#8B7355] text-white text-xs font-bold rounded-full hover:opacity-90 transition-all uppercase tracking-widest"
+                                >
+                                    Select Plan
+                                </button>
+                            </div>
                         </div>
 
                         {/* Tier 2 */}
-                        <div className="space-y-2">
+                        <div className="space-y-4 border-b border-gray-200 pb-6 last:border-0">
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rotate-45 border-2 border-[#8B7355] flex items-center justify-center text-[#8B7355]">
                                     <div className="w-3 h-3 bg-[#8B7355] transform"></div>
                                 </div>
-                                <h6 className="font-bold text-[#8B7355] text-lg">2. SIGNATURE DESIGNS (₹12-50 LAKH)</h6>
+                                <h6 className="font-bold text-[#8B7355] text-lg uppercase">Signature Designs</h6>
                             </div>
-                            <p className="text-sm text-gray-600 pl-11">
-                                Mid-sized temples featuring moderate detailing and premium materials.
-                            </p>
+                            <div className="pl-11">
+                                <p className="text-sm text-gray-600 mb-4">
+                                    Mid-sized temples featuring moderate detailing and premium materials (Est. ₹12-50 Lakh).
+                                </p>
+                                <button
+                                    onClick={() => {
+                                        onClose();
+                                        window.location.href = '/checkout';
+                                    }}
+                                    className="px-6 py-2 bg-[#8B7355] text-white text-xs font-bold rounded-full hover:opacity-90 transition-all uppercase tracking-widest"
+                                >
+                                    Select Plan
+                                </button>
+                            </div>
                         </div>
 
                         {/* Tier 3 */}
-                        <div className="space-y-2">
+                        <div className="space-y-4">
                             <div className="flex items-center gap-3">
                                 <div className="w-0 h-0 border-l-[16px] border-l-transparent border-r-[16px] border-r-transparent border-b-[28px] border-b-[#8B7355] relative top-[-4px]"></div>
-                                <h6 className="font-bold text-[#8B7355] text-lg">3. BESPOKE MASTERPIECES (₹50 LAKH+)</h6>
+                                <h6 className="font-bold text-[#8B7355] text-lg uppercase">Bespoke Masterpieces</h6>
                             </div>
-                            <p className="text-sm text-gray-600 pl-11">
-                                Grandeur redefined with intricate carvings, premium embellishments, and custom features.
-                            </p>
+                            <div className="pl-11">
+                                <p className="text-sm text-gray-600 mb-4">
+                                    Grandeur redefined with intricate carvings and custom features (Est. ₹50 Lakh+).
+                                </p>
+                                <button
+                                    onClick={() => {
+                                        onClose();
+                                        window.location.href = '/checkout';
+                                    }}
+                                    className="px-6 py-2 bg-[#8B7355] text-white text-xs font-bold rounded-full hover:opacity-90 transition-all uppercase tracking-widest"
+                                >
+                                    Select Plan
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

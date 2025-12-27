@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import DreamMurtisDropdown from './DreamMurtisDropdown'
 import HomeDecorDropdown from './HomeDecorDropdown'
 import ShopByDropdown from './ShopByDropdown'
-import LearnMoreDropdown from './LearnMoreDropdown'
+
 import { useCartAndLikes } from '../../contexts/CartAndLikesContext'
 import logoImage from '../../assets/logo/download.png'
 
@@ -12,6 +12,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
   const cartCount = getCartCount()
   const likesCount = likes.length
   const location = useLocation()
+  const navigate = useNavigate()
   const [hoveredDropdown, setHoveredDropdown] = useState(null)
   const [isFading, setIsFading] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -24,9 +25,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
     { name: 'HOME DECOR', path: '/murti#shop-home-decor', hasDropdown: true, dropdownKey: 'home-decor' },
     { name: 'SHOP BY', path: '/shop-by', hasDropdown: true, dropdownKey: 'shop-by' },
     { name: 'LIMITED EDITION', path: '/limited-edition', hasDropdown: false },
-    { name: 'ON SALE', path: '/on-sale', hasDropdown: false },
-    { name: 'GUIDES', path: '/guides', hasDropdown: false },
-    { name: 'LEARN MORE', path: '/learn-more', hasDropdown: true, dropdownKey: 'learn-more' }
+    { name: 'ON SALE', path: '/on-sale', hasDropdown: false }
   ]
 
   // Handle dropdown change with fade animation
@@ -63,12 +62,12 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
   }, [])
 
   return (
-    <nav className="w-full bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm relative">
+    <nav className="w-full bg-white border-b border-gray-200 relative z-50 shadow-sm">
       <div className="w-full flex justify-center">
         <div className="w-full max-w-[1500px] px-4 md:px-6 lg:px-8">
           {/* Hover Wrapper - Wraps buttons and dropdown */}
           <div
-            className="relative"
+            className=""
             onMouseLeave={() => {
               if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current)
@@ -207,6 +206,30 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                     </span>
                   )}
                 </button>
+
+                {/* User Profile Icon */}
+                <button
+                  onClick={() => {
+                    const token = localStorage.getItem('authToken')
+                    navigate(token ? '/profile' : '/login')
+                  }}
+                  className="relative p-2 text-black hover:text-[#8B7355] transition-colors duration-300"
+                  aria-label="User Profile"
+                >
+                  <svg
+                    className="w-5 h-5 md:w-6 md:h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
 
@@ -263,6 +286,29 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                     </span>
                   )}
                 </button>
+                {/* User Profile Icon */}
+                <button
+                  onClick={() => {
+                    const token = localStorage.getItem('authToken')
+                    navigate(token ? '/profile' : '/login')
+                  }}
+                  className="relative p-2 text-black hover:text-[#8B7355] transition-colors"
+                  aria-label="User Profile"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
 
@@ -314,12 +360,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                                   <Link to="/products/granite" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Granite</Link>
                                 </div>
                               )}
-                              {item.dropdownKey === 'learn-more' && (
-                                <div className="flex flex-col gap-2">
-                                  <Link to="/how-it-works" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">How It Works</Link>
-                                  <Link to="/blog" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Blog</Link>
-                                </div>
-                              )}
+
                             </div>
                           )}
                         </div>
@@ -342,29 +383,22 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
               </div>
             )}
 
-            {/* Shared Dropdown Container - Full Screen Width - Desktop Only */}
+            {/* Shared Dropdown Container - Absolute - Desktop Only */}
             <div
-              className={`hidden lg:block absolute bg-white shadow-2xl transition-all duration-300 ease-in-out overflow-hidden z-50 ${hoveredDropdown
+              className={`hidden lg:block absolute left-0 w-full bg-white shadow-2xl transition-all duration-300 ease-in-out overflow-hidden z-50 ${hoveredDropdown
                 ? (hoveredDropdown === 'home-decor'
-                  ? 'h-[450px] translate-y-0 pointer-events-auto'
-                  : hoveredDropdown === 'learn-more'
-                    ? 'h-[150px] translate-y-0 pointer-events-auto'
-                    : hoveredDropdown === 'dream-murtis'
-                      ? 'h-[500px] translate-y-0 pointer-events-auto'
-                      : 'h-[220px] translate-y-0 pointer-events-auto')
-                : 'h-0 -translate-y-4 pointer-events-none'
+                  ? 'h-[450px] pointer-events-auto'
+                  : hoveredDropdown === 'dream-murtis'
+                    ? 'h-[500px] pointer-events-auto'
+                    : 'h-[220px] pointer-events-auto')
+                : 'h-0 pointer-events-none'
                 }`}
               style={{
-                left: '50%',
-                transform: hoveredDropdown
-                  ? 'translateX(-50%) translateY(0)'
-                  : 'translateX(-50%) translateY(-16px)',
-                width: '100vw',
-                top: 'calc(100% - 2px)',
+                top: '100%',
                 opacity: isFading ? 0 : (hoveredDropdown ? 1 : 0),
                 transition: hoveredDropdown === 'dream-murtis'
-                  ? 'opacity 0.5s ease-in-out, transform 0.9s ease-in-out, height 0.9s ease-in-out'
-                  : 'opacity 0.3s ease-in-out, transform 0.5s ease-in-out, height 0.5s ease-in-out'
+                  ? 'opacity 0.5s ease-in-out, height 0.9s ease-in-out'
+                  : 'opacity 0.3s ease-in-out, height 0.5s ease-in-out'
               }}
             >
               {/* Dropdown Content */}
@@ -373,7 +407,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                   {hoveredDropdown === 'dream-murtis' && <DreamMurtisDropdown />}
                   {hoveredDropdown === 'home-decor' && <HomeDecorDropdown />}
                   {hoveredDropdown === 'shop-by' && <ShopByDropdown />}
-                  {hoveredDropdown === 'learn-more' && <LearnMoreDropdown />}
+
                 </>
               )}
             </div>

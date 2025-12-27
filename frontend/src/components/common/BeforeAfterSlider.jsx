@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 
 const BeforeAfterSlider = ({ beforeImage, afterImage }) => {
     const [sliderPosition, setSliderPosition] = useState(50);
@@ -20,9 +20,13 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }) => {
         const clientX = e.clientX || (e.touches && e.touches[0].clientX);
         if (!clientX) return;
 
+        // Get container dimensions
         const { left, width } = containerRef.current.getBoundingClientRect();
+
+        // Calculate position as percentage
         const position = ((clientX - left) / width) * 100;
 
+        // Clamp between 0 and 100
         setSliderPosition(Math.min(Math.max(position, 0), 100));
     };
 
@@ -40,7 +44,7 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }) => {
 
     return (
         <div
-            className="relative w-full aspect-[4/3] rounded-xl overflow-hidden cursor-ew-resize select-none shadow-2xl"
+            className="relative w-full aspect-video rounded-xl overflow-hidden cursor-ew-resize select-none shadow-2xl bg-gray-200"
             ref={containerRef}
             onMouseDown={startResizing}
             onTouchStart={startResizing}
@@ -48,23 +52,24 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }) => {
             onTouchMove={onMouseMove}
         >
             {/* After Image (Background) */}
-            <img
-                src={afterImage}
-                alt="After"
-                className="absolute top-0 left-0 w-full h-full object-cover"
-                draggable="false"
-            />
+            <div className="absolute inset-0 w-full h-full">
+                <img
+                    src={afterImage}
+                    alt="After"
+                    className="w-full h-full object-cover"
+                    draggable="false"
+                />
+            </div>
 
-            {/* Before Image (Foreground - Clipped) */}
+            {/* Before Image (Foreground - Clipped using clip-path) */}
             <div
-                className="absolute top-0 left-0 h-full overflow-hidden"
-                style={{ width: `${sliderPosition}%` }}
+                className="absolute inset-0 w-full h-full overflow-hidden"
+                style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
             >
                 <img
                     src={beforeImage}
                     alt="Before"
-                    className="absolute top-0 left-0 max-w-none h-full object-cover"
-                    style={{ width: containerRef.current ? containerRef.current.clientWidth : '100%' }}
+                    className="w-full h-full object-cover"
                     draggable="false"
                 />
             </div>
@@ -83,10 +88,10 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }) => {
             </div>
 
             {/* Labels */}
-            <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-md text-sm font-bold backdrop-blur-sm pointer-events-none">
+            <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-md text-sm font-bold backdrop-blur-sm pointer-events-none z-20">
                 BEFORE
             </div>
-            <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-md text-sm font-bold backdrop-blur-sm pointer-events-none">
+            <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-md text-sm font-bold backdrop-blur-sm pointer-events-none z-20">
                 AFTER
             </div>
         </div>

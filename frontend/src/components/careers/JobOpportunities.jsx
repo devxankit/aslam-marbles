@@ -47,7 +47,7 @@ const JobOpportunities = ({ jobs = [] }) => {
       </div>
 
       {/* Category Buttons */}
-      <div className="flex justify-center gap-4 md:gap-8 mb-12 flex-wrap">
+      <div className="flex justify-center gap-2 md:gap-8 mb-8 md:mb-12 flex-nowrap">
         {Object.keys(jobsByCategory).map((category) => (
           <button
             key={category}
@@ -65,7 +65,7 @@ const JobOpportunities = ({ jobs = [] }) => {
                 }
               }
             }}
-            className="px-6 py-2 text-sm md:text-base font-medium tracking-wider transition-all duration-300 text-gray-700 hover:text-[#8B7355] border-b-2 border-transparent hover:border-[#8B7355]"
+            className="px-3 py-1.5 md:px-6 md:py-2 text-[10px] md:text-base font-medium tracking-wider transition-all duration-300 text-gray-700 hover:text-[#8B7355] border-b-2 border-transparent hover:border-[#8B7355] whitespace-nowrap"
           >
             {categoryTitles[category]}
           </button>
@@ -73,38 +73,38 @@ const JobOpportunities = ({ jobs = [] }) => {
       </div>
 
       {/* Job Cards - All in One Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
         {jobs.filter(job => job.isActive).map((job) => (
           <div
             key={job._id}
             id={`job-card-${job._id}`}
-            className="bg-white border border-gray-200 p-6 flex flex-col justify-between transition-all duration-300"
+            className="bg-white border border-gray-200 p-4 md:p-6 flex flex-col justify-between transition-all duration-300 rounded-lg shadow-sm"
           >
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">{categoryTitles[job.category]}</p>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-wider mb-1 md:mb-2">{categoryTitles[job.category]}</p>
+              <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 md:mb-3">
                 {job.title}
               </h3>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4">
                 Experience: {job.experience}
               </p>
             </div>
 
-            <div className="flex gap-3 mt-4">
+            <div className="flex gap-2 md:gap-3 mt-2 md:mt-4">
               <a
                 href="#join-the-team"
                 onClick={(e) => {
                   e.preventDefault()
                   document.getElementById('join-the-team')?.scrollIntoView({ behavior: 'smooth' })
                 }}
-                className="flex-1 text-center px-4 py-2 text-sm font-medium transition-all duration-300 underline"
+                className="flex-1 text-center px-2 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium transition-all duration-300 underline"
                 style={{ color: '#8B7355' }}
               >
                 Apply Now
               </a>
               <button
                 onClick={() => openJobModal(job)}
-                className="flex-1 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:opacity-90"
+                className="flex-1 px-2 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-white transition-all duration-300 hover:opacity-90 rounded"
                 style={{ backgroundColor: '#8B7355' }}
               >
                 View More

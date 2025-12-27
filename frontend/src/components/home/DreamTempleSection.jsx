@@ -1,10 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import dreamTemple1 from '../../assets/locationicons/templecardimages/dreams1.jpeg'
 import dreamTemple2 from '../../assets/locationicons/templecardimages/dreams2.jpeg'
 import dreamTemple3 from '../../assets/locationicons/templecardimages/dreams3.jpeg'
 import dreamTemple4 from '../../assets/locationicons/templecardimages/dreams4.jpeg'
 
 const DreamTempleSection = ({ onOpenPricing }) => {
+    const navigate = useNavigate()
     const temples = [
         {
             id: 1,
@@ -54,34 +56,55 @@ const DreamTempleSection = ({ onOpenPricing }) => {
                     <div className="w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
                 </div>
 
-                <div className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-1 sm:gap-4 md:gap-8 mb-12">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-12">
                     {temples.map((temple) => (
                         <div
                             key={temple.id}
-                            className="group cursor-pointer bg-white border-2 border-gray-200 rounded-xl overflow-hidden hover:border-[#8B7355] transition-all duration-500 hover:shadow-2xl transform hover:-translate-y-2"
+                            className="group cursor-pointer bg-white border-2 border-gray-200 rounded-xl overflow-hidden hover:border-[#8B7355] transition-all duration-500 hover:shadow-2xl transform hover:-translate-y-2 flex flex-col"
                         >
-                            {/* Image Container */}
-                            <div className="relative w-full h-24 xs:h-32 sm:h-48 md:h-72 lg:h-80 overflow-hidden bg-gray-100">
+                            {/* Image Container - Slightly smaller height */}
+                            <div className="relative w-full aspect-[4/5] overflow-hidden bg-gray-100">
                                 <img
                                     src={temple.image}
                                     alt={temple.description}
-                                    className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-125"
+                                    className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                                 />
+                                {/* Overlay for Buy Now on Mobile or hover */}
+                                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent flex justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate('/checkout', {
+                                                state: {
+                                                    items: [{
+                                                        id: `temple-home-${temple.id}`,
+                                                        name: temple.description,
+                                                        image: temple.image,
+                                                        price: temple.fullPrice,
+                                                        quantity: 1,
+                                                        size: temple.size
+                                                    }]
+                                                }
+                                            })
+                                        }}
+                                        className="bg-white text-[#8B7355] px-6 py-2 rounded-full font-bold text-sm shadow-lg hover:scale-105 transition-transform"
+                                    >
+                                        BUY NOW
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Info Container */}
-                            <div className="p-1 md:p-6 bg-white text-center">
-                                <div className="mb-0.5">
-                                    <p className="text-[7px] md:text-sm font-medium text-gray-400 mb-0.5 uppercase tracking-tighter">
-                                        Starts at
-                                    </p>
-                                    <p className="text-[9px] sm:text-lg md:text-xl font-bold text-black group-hover:text-[#8B7355] transition-colors duration-300">
-                                        ₹{temple.price}
-                                    </p>
-                                    <p className="text-[8px] sm:text-base md:text-lg font-semibold text-gray-800 leading-[1.1] truncate">
-                                        {temple.size}
-                                    </p>
-                                </div>
+                            <div className="p-4 md:p-6 bg-white text-center flex-1 flex flex-col justify-center">
+                                <p className="text-[10px] md:text-xs font-bold text-[#8B7355] mb-1 uppercase tracking-widest leading-none">
+                                    Starts at
+                                </p>
+                                <p className="text-lg md:text-2xl font-bold text-gray-900 mb-1 leading-none">
+                                    ₹{temple.price}
+                                </p>
+                                <p className="text-sm md:text-lg font-serif italic text-gray-600 truncate">
+                                    {temple.size} Wide
+                                </p>
                             </div>
                         </div>
                     ))}

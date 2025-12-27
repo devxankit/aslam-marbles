@@ -181,7 +181,7 @@ const StoneProductDetailPage = ({
       />
 
       {/* Product Detail Section */}
-      <section className="w-full py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-8 bg-white">
+      <section className="w-full py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
           {/* Back Button */}
           <button

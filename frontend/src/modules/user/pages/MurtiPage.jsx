@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import Header from '../../../components/layout/Header'
 import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
@@ -16,6 +17,7 @@ import { vishnuLaxmiProducts } from '../../../data/vishnuLaxmiProducts'
 import { durgaProducts } from '../../../data/durgaProducts'
 import { saraswatiProducts } from '../../../data/saraswatiProducts'
 import { shivParvatiProducts } from '../../../data/shivParvatiProducts'
+import { krishnaProducts } from '../../../data/krishnaProducts'
 import { furnitureData, homeDecorData, allFurnitureCategories, allHomeDecorCategories } from '../../../data/categoryImages'
 import { Link } from 'react-router-dom'
 import homeDecorHeading from '../../../assets/ourcreation/home decore/heading.png'
@@ -24,6 +26,7 @@ const MurtiPage = ({
   onShowSidebar,
   onShowProjects,
   onShowCreations,
+  onShowProducts,
   onShowServices,
   onShowHowItWorks,
   onShowLocation,
@@ -81,7 +84,49 @@ const MurtiPage = ({
         const hierarchyResult = await hierarchyRes.json()
 
         if (pageResult.success) setPageData(pageResult.data)
-        if (hierarchyResult.success) setHierarchy(hierarchyResult.data)
+
+        const fetchedHierarchy = hierarchyResult.success ? hierarchyResult.data : []
+
+        if (fetchedHierarchy.length === 0) {
+          // Comprehensive Fallback Hierarchy
+          const fallbackHierarchy = [
+            {
+              name: 'Sacred Gods',
+              categories: [
+                { id: 'ganesha', _id: 'ganesha', name: 'Ganesha' },
+                { id: 'hanuman', _id: 'hanuman', name: 'Hanuman ji' },
+                { id: 'krishna-ji', _id: 'krishna-ji', name: 'Krishna ji' },
+                { id: 'shiva', _id: 'shiva', name: 'Shiva' },
+                { id: 'buddha', _id: 'buddha', name: 'Buddha' },
+                { id: 'sai-baba', _id: 'sai-baba', name: 'Sai Baba' },
+                { id: 'balaji', _id: 'balaji', name: 'Balaji' },
+                { id: 'nandi', _id: 'nandi', name: 'Nandi' },
+                { id: 'jain-gods', _id: 'jain-gods', name: 'Jain Gods' }
+              ]
+            },
+            {
+              name: 'Divine Goddesses',
+              categories: [
+                { id: 'durga', _id: 'durga', name: 'Durga' },
+                { id: 'laxmi', _id: 'laxmi', name: 'Laxmi' },
+                { id: 'saraswati', _id: 'saraswati', name: 'Saraswati' },
+                { id: 'radha', _id: 'radha', name: 'Radha' }
+              ]
+            },
+            {
+              name: 'Ethereal Pairs',
+              categories: [
+                { id: 'ram-darbar', _id: 'ram-darbar', name: 'Ram Darbar' },
+                { id: 'shiv-parivar', _id: 'shiv-parivar', name: 'Shiv Parivar' },
+                { id: 'radha-krishna', _id: 'radha-krishna', name: 'Radha Krishna' },
+                { id: 'vishnu-laxmi', _id: 'vishnu-laxmi', name: 'Vishnu Laxmi' }
+              ]
+            }
+          ]
+          setHierarchy(fallbackHierarchy)
+        } else {
+          setHierarchy(fetchedHierarchy)
+        }
       } catch (error) {
         console.error('Error fetching murti data:', error)
       } finally {
@@ -136,6 +181,8 @@ const MurtiPage = ({
     'Vishnu Laxmi': vishnuLaxmiProducts[0]?.images[0] || '',
     'Durga': durgaProducts[0]?.images[0] || '',
     'Saraswati': saraswatiProducts[0]?.images[0] || '',
+    'Krishna ji': krishnaProducts[0]?.images[0] || '',
+    'Krishna': krishnaProducts[0]?.images[0] || '',
     'Shiv Parivar': shivParvatiProducts[0]?.images[0] || ''
   }
 
@@ -153,108 +200,117 @@ const MurtiPage = ({
 
   return (
     <div className="w-full min-h-screen bg-white">
+
       <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
 
-      {/* Heading Image - Horizontal at Top */}
-      <div className="relative w-full overflow-hidden" style={{ height: '350px' }}>
+      {/* Hero Section - Simple & Elegant */}
+      <div className="relative w-full h-[40vh] md:h-[50vh] overflow-hidden bg-white">
         <img
           src={pageData?.heroSection?.image?.url || 'https://images.unsplash.com/photo-1544006659-f0b21f04cb1b?auto=format&fit=crop&q=80&w=2000'}
-          alt="Murtis Heading"
-          className="w-full h-full object-cover"
-          style={{ objectPosition: 'center' }}
+          alt="Divine Collection"
+          className="w-full h-full object-cover opacity-80"
         />
-        <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center z-10 px-4">
-          <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold text-white text-center mb-6 leading-tight drop-shadow-2xl max-w-5xl">
-            {pageData?.heroSection?.title || 'Welcome to Aslam Marble Suppliers'}
-          </h1>
-          <p className="text-white/90 text-lg md:text-xl font-medium mb-8 text-center drop-shadow-lg">
-            {pageData?.heroSection?.subtitle}
-          </p>
-          <button
-            onClick={() => {
-              const shopSection = document.getElementById('shop-murtis-section')
-              if (shopSection) {
-                shopSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              }
-            }}
-            className="px-8 md:px-12 py-4 text-lg font-bold text-white rounded-full transition-all duration-300 hover:opacity-90 hover:scale-105 shadow-2xl backdrop-blur-sm border border-white/30"
-            style={{ backgroundColor: '#8B7355' }}
-          >
-            Explore Collection
-          </button>
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-4 bg-white/10">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-serif text-gray-900 mb-4 tracking-tight">
+              {pageData?.heroSection?.title || 'Heritage Murti Collection'}
+            </h1>
+            <p className="text-gray-600 text-sm md:text-lg font-light tracking-widest uppercase">
+              {pageData?.heroSection?.subtitle || 'Sacred Marble Artistry'}
+            </p>
+            <div className="w-12 h-[1px] bg-gray-300 mx-auto mt-8"></div>
+          </div>
         </div>
       </div>
 
-      {/* Shop Murtis Section - Buttons & Cards style */}
-      <div id="shop-murtis-section" className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-white">
+      {/* Main Content Section */}
+      <div id="shop-murtis-section" className="w-full py-20 px-4 md:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          {/* Heading */}
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-6 md:mb-8 font-bold">
-            Shop Murtis
-          </h1>
+          {/* Sequential 'Shop' Sections */}
+          {[
+            {
+              title: 'Sacred Gods',
+              id: 'section-GODS',
+              items: ['Krishna ji', 'Natraja', 'Shiva', 'Ganesha', 'Buddha', 'Sai Baba', 'Balaji', 'Hanuman ji', 'Vishnu ji', 'Jain Gods', 'Laddu Gopal']
+            },
+            {
+              title: 'Divine Goddesses',
+              id: 'section-GODDESSES',
+              items: ['Durga', 'Kali', 'Laxmi', 'Saraswati', 'Radha']
+            },
+            {
+              title: 'Ethereal Pairs',
+              id: 'section-PAIRS',
+              items: ['Ram Darbar', 'Shiv Parivar', 'Ganesh Laxmi', 'Ganesh Laxmi Saraswati', 'Radha Krishna', 'Vishnu Laxmi', 'Jugal Jodi']
+            },
+            {
+              title: 'Sacred & Holy Elements',
+              id: 'section-HOLY-COW',
+              items: ['NANDI', 'Tulsi Gamla', 'Ghamla']
+            }
+          ].map((group) => (
+            <div key={group.title} id={group.id} className="mb-24 scroll-mt-28">
+              {/* Simple Heading */}
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-serif text-gray-900 italic font-normal mb-2">
+                  {group.title}
+                </h2>
+                <div className="w-8 h-[1px] bg-[#8B7355] mx-auto opacity-30"></div>
+              </div>
 
-          {/* Category Navigation Buttons */}
-          <div className="flex flex-nowrap items-center gap-4 md:gap-6 lg:gap-8 mb-4 overflow-x-auto scrollbar-hide px-4 md:justify-center">
-            {hierarchy.flatMap(g => g.categories).map((category) => (
-              <button
-                key={category._id}
-                onClick={() => handleCategoryClick(category)}
-                onMouseEnter={() => {
-                  const element = document.getElementById(`murti-card-${category._id}`)
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-                  }
-                }}
-                className="relative text-base md:text-lg lg:text-xl font-semibold transition-all duration-300 pb-3 px-2 text-black hover:text-[#8B7355] whitespace-nowrap flex-shrink-0"
-              >
-                {category.name}
-              </button>
-            ))}
-          </div>
+              {/* Minimal Category Grid/Links */}
+              <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 mb-12">
+                {group.items.map((itemName) => {
+                  const matchingCategory = hierarchy
+                    .flatMap(g => g.categories)
+                    .find(cat => cat.name.toLowerCase() === itemName.toLowerCase());
 
-          {/* Divider Line */}
-          <div className="w-full h-[1px] bg-gray-300 mt-0 mb-8"></div>
+                  return (
+                    <button
+                      key={itemName}
+                      onClick={() => matchingCategory && handleCategoryClick(matchingCategory)}
+                      className="text-xs font-medium text-gray-500 hover:text-gray-900 transition-colors uppercase tracking-widest"
+                    >
+                      {itemName}
+                    </button>
+                  );
+                })}
+              </div>
 
-          {/* Category Cards (Horizontal Scroll) */}
-          <div className="w-full py-6 md:py-8">
-            <div className="flex gap-4 md:gap-6 lg:gap-8 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
-              {hierarchy.flatMap(g => g.categories).map((category) => (
-                <div
-                  key={category._id}
-                  id={`murti-card-${category._id}`}
-                  onClick={() => handleCategoryClick(category)}
-                  className="flex-shrink-0 group cursor-pointer relative snap-center"
-                >
-                  <div className="relative w-32 h-48 md:w-40 md:h-60 lg:w-48 lg:h-72 overflow-hidden border border-gray-300 hover:border-[#8B7355] transition-all duration-300 rounded-lg">
-                    <img
-                      src={category.heroSection?.image?.url || 'https://via.placeholder.com/300x500'}
-                      alt={category.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    {/* Category Name Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 transition-opacity duration-300 flex items-end">
-                      <p className="text-white text-xs md:text-sm font-semibold p-2 w-full text-center uppercase tracking-wider">
-                        {category.name}
-                      </p>
-                    </div>
-                  </div>
+              {/* Simple Horizontal Card Scroll */}
+              <div className="w-full relative">
+                <div className="flex gap-8 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory px-4">
+                  {hierarchy.flatMap(g => g.categories)
+                    .filter(cat => group.items.map(name => name.toLowerCase()).includes(cat.name.toLowerCase()))
+                    .map((category) => (
+                      <div
+                        key={category._id}
+                        onClick={() => handleCategoryClick(category)}
+                        className="flex-shrink-0 cursor-pointer snap-center"
+                      >
+                        <div className="relative w-48 h-64 md:w-64 md:h-80 overflow-hidden bg-gray-50 border border-gray-100 group transition-all duration-300">
+                          <img
+                            src={category.heroSection?.image?.url || 'https://via.placeholder.com/300x500'}
+                            alt={category.name}
+                            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                          />
+                        </div>
+                        <p className="mt-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest text-center group-hover:text-gray-900 transition-colors">
+                          {category.name}
+                        </p>
+                      </div>
+                    ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Shop Home Decor Banner Section */}
-      <div id="shop-home-decor-banner" className="relative w-full overflow-hidden mb-8" style={{ height: '250px' }}>
-        <img
-          src={homeDecorHeading}
-          alt="Home Decor Heading"
-          className="w-full h-full object-cover"
-          style={{ objectPosition: 'center' }}
-        />
-        {/* Text and Button Overlay */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4">
+      {/* Simple Transition Banner */}
+      <div id="shop-home-decor-banner" className="w-full h-[300px] flex items-center justify-center bg-gray-50 border-y border-gray-100">
+        <div className="text-center px-6">
+          <h3 className="text-3xl md:text-4xl font-serif text-gray-900 mb-6">Home Decor & Accents</h3>
           <button
             onClick={() => {
               const decorSection = document.getElementById('shop-home-decor-section')
@@ -262,185 +318,119 @@ const MurtiPage = ({
                 decorSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
               }
             }}
-            className="px-6 md:px-8 lg:px-10 py-3 md:py-4 text-base md:text-lg lg:text-xl font-semibold text-white rounded-lg transition-all duration-300 hover:opacity-90 hover:scale-105 shadow-lg"
-            style={{ backgroundColor: '#8B7355' }}
+            className="px-10 py-3 border border-gray-900 text-gray-900 text-[10px] font-bold uppercase tracking-widest hover:bg-gray-900 hover:text-white transition-all duration-300"
           >
-            Shop Home Decor
+            Explore Decor
           </button>
         </div>
       </div>
 
-      {/* Shop Furniture Section */}
-      <div className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Heading */}
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-6 md:mb-8 font-bold">
-            Shop Furniture
-          </h1>
-
-          {/* Category Navigation Buttons */}
-          <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 lg:gap-8 mb-4">
-            {allFurnitureCategories.map((category) => (
-              <button
-                key={category}
-                onClick={() => navigate(`/furniture/${category.toLowerCase().replace(/\s+/g, '-')}`)}
-                className="relative text-base md:text-lg lg:text-xl font-semibold transition-all duration-300 pb-3 px-2 text-black hover:text-[#8B7355]"
-              >
-                {category}
-              </button>
-            ))}
+      {/* Simplified Sections for Furniture and Home Decor */}
+      <div className="w-full bg-white space-y-32 py-24">
+        {/* Furniture Section */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-serif text-gray-900 mb-4">Furniture</h2>
+            <div className="w-8 h-[1px] bg-gray-300 mx-auto"></div>
           </div>
 
-          {/* Divider Line */}
-          <div className="w-full h-[1px] bg-gray-300 mt-0 mb-8"></div>
-
-          {/* Category Cards (Horizontal Scroll) */}
-          <div className="w-full py-6 md:py-8">
-            <div className="flex gap-4 md:gap-6 lg:gap-8 overflow-x-auto pb-4 scrollbar-hide">
-              {allFurnitureCategories.map((category) => {
-                const coverImage = furnitureData[category]?.[0] || murtiCollections[0]?.image; // Fallback
-                return (
-                  <div
-                    key={category}
-                    onClick={() => navigate(`/furniture/${category.toLowerCase().replace(/\s+/g, '-')}`)}
-                    className="flex-shrink-0 group cursor-pointer relative"
-                  >
-                    <div className="relative w-32 h-48 md:w-40 md:h-60 lg:w-48 lg:h-72 overflow-hidden border border-gray-300 hover:border-[#8B7355] transition-all duration-300">
-                      <img
-                        src={coverImage}
-                        alt={category}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                      {/* Category Name Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                        <p className="text-white text-xs md:text-sm font-semibold p-2 w-full text-center uppercase">
-                          {category}
-                        </p>
-                      </div>
-                    </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {allFurnitureCategories.map((category) => {
+              const coverImage = furnitureData[category]?.[0] || murtiCollections[0]?.image;
+              return (
+                <div key={category} onClick={() => navigate(`/furniture/${category.toLowerCase().replace(/\s+/g, '-')}`)} className="cursor-pointer group">
+                  <div className="aspect-[4/5] overflow-hidden bg-gray-50 mb-4">
+                    <img src={coverImage} alt={category} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                )
-              })}
-            </div>
+                  <h4 className="text-gray-900 text-sm font-medium uppercase tracking-widest text-center">{category}</h4>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Home Decor Section */}
+        <div id="shop-home-decor-section" className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-serif text-gray-900 mb-4">Home Decor</h2>
+            <div className="w-8 h-[1px] bg-gray-300 mx-auto"></div>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {allHomeDecorCategories.map((category) => {
+              const coverImage = homeDecorData[category]?.[0] || murtiCollections[0]?.image;
+              return (
+                <div key={category} onClick={() => navigate(`/home-decor/${category.toLowerCase().replace(/\s+/g, '-')}`)} className="cursor-pointer group">
+                  <div className="aspect-square overflow-hidden bg-gray-50 mb-4 rounded-full border border-gray-100 p-1">
+                    <img src={coverImage} alt={category} className="w-full h-full object-cover rounded-full opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <h4 className="text-gray-900 text-[10px] font-bold uppercase tracking-widest text-center">{category}</h4>
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>
 
-      {/* Shop Home Decor Section */}
-      <div id="shop-home-decor-section" className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Heading */}
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-6 md:mb-8 font-bold">
-            Shop Home Decor
-          </h1>
-
-          {/* Category Navigation Buttons */}
-          <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 lg:gap-8 mb-4">
-            {allHomeDecorCategories.map((category) => (
-              <button
-                key={category}
-                onClick={() => navigate(`/home-decor/${category.toLowerCase().replace(/\s+/g, '-')}`)}
-                className="relative text-base md:text-lg lg:text-xl font-semibold transition-all duration-300 pb-3 px-2 text-black hover:text-[#8B7355]"
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          {/* Divider Line */}
-          <div className="w-full h-[1px] bg-gray-300 mt-0 mb-8"></div>
-
-          {/* Category Cards (Horizontal Scroll) */}
-          <div className="w-full py-6 md:py-8">
-            <div className="flex gap-4 md:gap-6 lg:gap-8 overflow-x-auto pb-4 scrollbar-hide">
-              {allHomeDecorCategories.map((category) => {
-                const coverImage = homeDecorData[category]?.[0] || murtiCollections[0]?.image; // Fallback
-                return (
-                  <div
-                    key={category}
-                    onClick={() => navigate(`/home-decor/${category.toLowerCase().replace(/\s+/g, '-')}`)}
-                    className="flex-shrink-0 group cursor-pointer relative"
-                  >
-                    <div className="relative w-32 h-48 md:w-40 md:h-60 lg:w-48 lg:h-72 overflow-hidden border border-gray-300 hover:border-[#8B7355] transition-all duration-300">
-                      <img
-                        src={coverImage}
-                        alt={category}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                      {/* Category Name Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                        <p className="text-white text-xs md:text-sm font-semibold p-2 w-full text-center uppercase">
-                          {category}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* FAQ Section */}
-      <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white">
+      {/* FAQ Section - Matched to Location Page style */}
+      <section className="w-full py-20 md:py-24 px-4 md:px-8 bg-white border-t border-gray-100">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-4 md:mb-6 font-bold">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-center text-gray-600 mb-8 md:mb-12 text-sm md:text-base">
-            Here are some of the most common questions we get asked.
-          </p>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-serif text-gray-900 mb-4">Frequently Asked Questions</h2>
+            <div className="w-12 h-[1px] bg-[#8B7355] mx-auto opacity-30"></div>
+          </div>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-4">
             {loadingFAQs ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg">Loading FAQs...</p>
+                <div className="inline-flex items-center gap-3">
+                  <div className="w-5 h-5 border-2 border-[#8B7355] border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-gray-600 text-sm md:text-base">Loading FAQs...</p>
+                </div>
               </div>
             ) : faqs.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg">No FAQs available at the moment.</p>
+                <p className="text-gray-500 text-sm md:text-base">No FAQs available at the moment.</p>
               </div>
             ) : (
               faqs.map((faq, index) => {
                 const faqId = faq._id || faq.id || index
                 const isExpanded = expandedFaq === faqId
                 return (
-                  <div key={faqId} className="bg-gray-50 rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md">
+                  <div
+                    key={faqId}
+                    className={`bg-white rounded-xl shadow-sm border overflow-hidden transition-all duration-300 ${isExpanded ? 'border-[#8B7355] shadow-md ring-1 ring-[#8B7355]/20' : 'border-gray-100 hover:shadow-md hover:border-gray-200'}`}
+                  >
                     <button
                       onClick={() => setExpandedFaq(isExpanded ? null : faqId)}
-                      className="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer"
+                      className="w-full px-5 md:px-6 py-4 md:py-5 flex items-center justify-between text-left cursor-pointer group"
                     >
-                      <div className="flex items-center gap-3 flex-1">
-                        <span className="text-base md:text-lg font-semibold text-gray-800 flex-shrink-0">
-                          Q.{index + 1}
+                      <div className="flex items-center gap-3 md:gap-4 flex-1">
+                        <span className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-sm md:text-base font-bold flex-shrink-0 transition-colors ${isExpanded ? 'bg-[#8B7355] text-white' : 'bg-[#8B7355]/10 text-[#8B7355] group-hover:bg-[#8B7355]/20'}`}>
+                          {index + 1}
                         </span>
-                        <span className={`text-sm md:text-base font-medium flex-1 ${isExpanded ? 'text-[#8B7355]' : 'text-gray-800'}`}>
+                        <span className={`text-sm md:text-base font-medium flex-1 transition-colors ${isExpanded ? 'text-[#8B7355]' : 'text-gray-800 group-hover:text-[#8B7355]'}`}>
                           {faq.question}
                         </span>
                       </div>
-                      <div className="flex-shrink-0 ml-4">
-                        {isExpanded ? (
-                          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                          </svg>
-                        ) : (
-                          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                          </svg>
-                        )}
+                      <div className={`flex-shrink-0 ml-3 w-8 h-8 rounded-full flex items-center justify-center transition-all ${isExpanded ? 'bg-[#8B7355] rotate-180' : 'bg-gray-100 group-hover:bg-[#8B7355]/10'}`}>
+                        <svg className={`w-4 h-4 transition-colors ${isExpanded ? 'text-white' : 'text-gray-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
                       </div>
                     </button>
-                    {isExpanded && faq.answer && (
-                      <div className="px-5 pb-4 pt-0">
-                        <div className="pl-8 border-l-2 border-gray-300">
-                          <div
-                            className="text-sm md:text-base text-gray-600 leading-relaxed"
-                            dangerouslySetInnerHTML={{ __html: faq.answer }}
-                          />
+                    <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                      {faq.answer && (
+                        <div className="px-5 md:px-6 pb-5 md:pb-6">
+                          <div className="pl-11 md:pl-14 border-l-2 border-[#8B7355]/30">
+                            <div
+                              className="text-sm md:text-base text-gray-600 leading-relaxed max-w-none italic"
+                              dangerouslySetInnerHTML={{ __html: faq.answer }}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 )
               })
@@ -448,33 +438,6 @@ const MurtiPage = ({
           </div>
         </div>
       </section>
-
-      {/* Circular Image Cards - Auto Scrolling */}
-      < section className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-white" >
-        <div className="max-w-7xl mx-auto">
-          <div className="relative w-full overflow-hidden">
-            <div className="flex gap-6 md:gap-8 lg:gap-10 animate-scroll-right-to-left">
-              {/* Duplicate items for seamless loop */}
-              {[...murtiCollections, ...murtiCollections].map((collection, index) => (
-                <div
-                  key={`${collection.id}-${index}`}
-                  onClick={() => handleCollectionClick(collection.id)}
-                  className="flex-shrink-0 group cursor-pointer"
-                >
-                  {/* Circular Image Card */}
-                  <div className="relative w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                    <img
-                      src={collection.image}
-                      alt={collection.name}
-                      className="w-full h-full object-cover object-center"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section >
 
       <TrustedBySection />
       <Footer />

@@ -107,7 +107,7 @@ const ImageGallery = ({
       </section>
 
       {/* Gallery Grid */}
-      <div className="pb-24 px-4 md:px-8 lg:px-12">
+      <div className="pb-24 px-4 md:px-8 lg:px-12 overflow-hidden">
         <div className="max-w-[1600px] mx-auto">
           <div className={isUniform
             ? "grid grid-cols-5 gap-1 md:gap-2 auto-rows-[120px] md:auto-rows-[180px]"

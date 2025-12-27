@@ -6,6 +6,8 @@ import FloatingButtons from '../../../components/common/FloatingButtons'
 import TrustedBySection from '../../../components/common/TrustedBySection'
 import StepSection from '../../../components/common/StepSection'
 import StepInfoItem from '../../../components/common/StepInfoItem'
+import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
+import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
 import { useIntersectionObserver } from '../../../hooks/useIntersectionObserver'
 import { THEME_COLORS } from '../../../utils/theme'
 import { BUDGET_OPTIONS, TIMELINE_OPTIONS } from '../../../utils/constants'
@@ -33,6 +35,7 @@ const HowItWorksPage = ({
   const navigate = useNavigate()
   const [expandedFaq, setExpandedFaq] = useState(null)
   const [formStep, setFormStep] = useState(1)
+  const [showMobileForm, setShowMobileForm] = useState(false)
   const [faqs, setFaqs] = useState([])
   const [loadingFAQs, setLoadingFAQs] = useState(true)
   const { refs, visibleSections } = useIntersectionObserver(0.3)
@@ -111,265 +114,39 @@ const HowItWorksPage = ({
         onShowBooking={() => navigate('/book-appointment')}
       />
 
-      {/* Background Image Container - Reduced Bottom Height */}
-      <div className="relative w-full overflow-hidden" style={{ height: '75vh', minHeight: '600px' }}>
-        {/* Background Image */}
-        <img
-          src={howItWorksBg}
-          alt="How It Works Background"
-          className="w-full h-full object-cover"
-          style={{ objectFit: 'cover', objectPosition: 'top center' }}
-        />
 
-        {/* Form Container - Overlay on Right Side, Fits Image Height */}
-        <div id="expert-form-container" className="absolute right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 w-[85%] sm:w-[320px] md:w-[340px] max-w-[calc(100%-32px)] bg-white rounded-xl md:rounded-2xl shadow-2xl z-20 flex flex-col">
-          {/* Header */}
-          <div className="flex items-center justify-between p-3 md:p-4 border-b-2 border-gray-200 bg-gradient-to-r flex-shrink-0 rounded-t-xl md:rounded-t-2xl" style={{ background: `linear-gradient(to right, ${THEME_COLORS.primary}1A, transparent)` }}>
-            <h3 className="text-base md:text-lg font-bold uppercase tracking-wide" style={{ color: THEME_COLORS.primary }}>Talk to Our Expert</h3>
-            <span className="text-xs font-semibold px-2 py-1 rounded-full" style={{ backgroundColor: `${THEME_COLORS.primary}1A`, color: THEME_COLORS.primary }}>{formStep}/2</span>
-          </div>
+      {/* Hero Section with Form */}
+      <HeroSectionWithForm
+        heroImage={howItWorksBg}
+        title="How It Works"
+        subtitle="Your Journey to a Divine Home"
+        description="Discover how we bring your dream temple to life in 5 simple steps. From design to installation, we handle everything with care and precision."
+        enableMobileModal={true}
+        disableGradient={true}
+        onMobileButtonClick={() => setShowMobileForm(true)}
+      />
 
-          <div className="px-3 pt-3 pb-4 md:px-4 md:pt-4 md:pb-4 bg-white overflow-y-auto flex-1 rounded-b-xl md:rounded-b-2xl">
-            {formStep === 1 ? (
-              <form className="space-y-2.5" onSubmit={(e) => { e.preventDefault(); setFormStep(2); }}>
-                <div className="flex gap-2">
-                  <label className="flex items-center gap-1.5 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="type"
-                      value="DOMESTIC"
-                      checked={formData.type === 'DOMESTIC'}
-                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                      className="w-3 h-3 accent-amber-600"
-                    />
-                    <span className="text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? THEME_COLORS.primary : '#333' }}>DOMESTIC</span>
-                  </label>
-                  <label className="flex items-center gap-1.5 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="type"
-                      value="INTERNATIONAL"
-                      checked={formData.type === 'INTERNATIONAL'}
-                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                      className="w-3 h-3 accent-amber-600"
-                    />
-                    <span className="text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? THEME_COLORS.primary : '#333' }}>INTERNATIONAL</span>
-                  </label>
-                </div>
-
-                <input
-                  type="text"
-                  placeholder="Full Name *"
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
-                  required
-                />
-
-                <input
-                  type="email"
-                  placeholder="Email Address *"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
-                  required
-                />
-
-                <div>
-                  <label className="block text-xs font-medium mb-1">Phone number</label>
-                  <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                    <div className="flex items-center gap-1 px-2 bg-gray-50 border-r">
-                      <span className="text-sm">🇮🇳</span>
-                      <span className="text-xs">+91</span>
-                    </div>
-                    <input
-                      type="tel"
-                      placeholder="Phone number *"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="flex-1 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-600"
-                    />
-                  </div>
-                </div>
-
-                <input
-                  type="text"
-                  placeholder="City *"
-                  value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
-                  required
-                />
-
-                <div>
-                  <label className="block text-xs font-medium mb-1.5">Tell us about yourself *</label>
-                  <div className="space-y-1.5">
-                    <label className="flex items-start gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="aboutYourself"
-                        value="homeowner"
-                        checked={formData.aboutYourself === 'homeowner'}
-                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
-                        className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
-                        required
-                      />
-                      <span className="text-xs leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
-                    </label>
-                    <label className="flex items-start gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="aboutYourself"
-                        value="designer"
-                        checked={formData.aboutYourself === 'designer'}
-                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
-                        className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
-                        required
-                      />
-                      <span className="text-xs leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
-                    </label>
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full text-white py-2.5 rounded-lg text-xs font-medium transition-colors shadow-md hover:opacity-90"
-                  style={{ backgroundColor: THEME_COLORS.primary }}
-                >
-                  NEXT
-                </button>
-              </form>
-            ) : (
-              <form className="space-y-2.5" onSubmit={handleSubmit}>
-                <div>
-                  <label className="block text-xs font-bold mb-1.5">What are you looking for? *</label>
-                  <div className="space-y-1.5">
-                    <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="lookingFor"
-                        value="singular"
-                        checked={formData.lookingFor === 'singular'}
-                        onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
-                        className="w-3 h-3 accent-amber-600"
-                        required
-                      />
-                      <span className="text-xs">Singular Marble Mandir Unit</span>
-                    </label>
-                    <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="lookingFor"
-                        value="complete"
-                        checked={formData.lookingFor === 'complete'}
-                        onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
-                        className="w-3 h-3 accent-amber-600"
-                        required
-                      />
-                      <span className="text-xs">Complete Pooja Room Solution</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold mb-1.5">What is your estimated budget? *</label>
-                  <div className="space-y-1.5">
-                    {BUDGET_OPTIONS.map((budget) => (
-                      <label key={budget} className="flex items-center gap-1.5 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="budget"
-                          value={budget}
-                          checked={formData.budget === budget}
-                          onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                          className="w-3 h-3 accent-amber-600"
-                          required
-                        />
-                        <span className="text-xs">{budget}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold mb-1.5">What is your timeline for the project? *</label>
-                  <div className="space-y-1.5">
-                    {TIMELINE_OPTIONS.map((timeline) => (
-                      <label key={timeline} className="flex items-center gap-1.5 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="timeline"
-                          value={timeline}
-                          checked={formData.timeline === timeline}
-                          onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                          className="w-3 h-3 accent-amber-600"
-                          required
-                        />
-                        <span className="text-xs">{timeline}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <textarea
-                  placeholder="Please share a bit more about your needs"
-                  value={formData.additionalInfo}
-                  onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
-                  rows={3}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600 resize-none"
-                />
-
-                <div>
-                  <input
-                    type="file"
-                    id="designReferences"
-                    accept="image/*,.pdf"
-                    multiple
-                    onChange={(e) => setFormData({ ...formData, designReferences: e.target.files })}
-                    className="hidden"
-                  />
-                  <label
-                    htmlFor="designReferences"
-                    className="block w-full text-white py-2 rounded-lg text-xs text-center font-medium cursor-pointer transition-colors shadow-md hover:opacity-90"
-                    style={{ backgroundColor: THEME_COLORS.primary }}
-                  >
-                    UPLOAD DESIGN REFERENCES
-                  </label>
-                  {formData.designReferences && formData.designReferences.length > 0 && (
-                    <p className="text-xs text-gray-600 mt-1">
-                      {formData.designReferences.length} file(s) selected
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setFormStep(1)}
-                    className="flex-1 bg-white py-2 rounded-lg text-xs font-medium hover:bg-gray-50 transition-colors shadow-md border-2"
-                    style={{ color: THEME_COLORS.primary, borderColor: THEME_COLORS.primary }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#f9f9f9'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'white'
-                    }}
-                  >
-                    BACK
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 text-white py-2 rounded-lg text-xs font-medium transition-colors shadow-md hover:opacity-90"
-                    style={{ backgroundColor: THEME_COLORS.primary }}
-                  >
-                    SUBMIT
-                  </button>
-                </div>
-              </form>
-            )}
+      {/* Mobile Form Modal */}
+      {showMobileForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn md:hidden">
+          <div
+            className="relative w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-scaleIn bg-white"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowMobileForm(false)}
+              className="absolute top-3 right-3 z-30 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100/80 text-gray-500 hover:bg-gray-200 transition-colors backdrop-blur-sm"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <div className="max-h-[85vh] overflow-y-auto">
+              <ExpertFormOverlay className="w-full flex flex-col shadow-none" />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* 5 Steps Section */}
       <div className="w-full bg-white py-8 md:py-10 px-4 md:px-6">
@@ -387,16 +164,16 @@ const HowItWorksPage = ({
           {/* 5 Steps Icons */}
           <div className="flex justify-center items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-5 mt-6 md:mt-8">
             {/* Step 1 */}
-            <div className="flex flex-col items-center text-center flex-shrink-0 w-[100px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
-              <div className="relative mb-3 rounded-full">
+            <div className="flex flex-col items-center text-center flex-shrink-0 w-[60px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
+              <div className="relative mb-2 sm:mb-3 rounded-full">
                 <img
                   src={icon1}
                   alt="Step 1 - Let's Connect"
-                  className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
+                  className="w-10 h-10 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
                 />
               </div>
-              <p className="text-[10px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
-                Let's Connect One on One
+              <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
+                Let's Connect
               </p>
             </div>
 
@@ -408,16 +185,16 @@ const HowItWorksPage = ({
             </div>
 
             {/* Step 2 */}
-            <div className="flex flex-col items-center text-center flex-shrink-0 w-[100px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
-              <div className="relative mb-3 rounded-full">
+            <div className="flex flex-col items-center text-center flex-shrink-0 w-[60px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
+              <div className="relative mb-2 sm:mb-3 rounded-full">
                 <img
                   src={icon2}
                   alt="Step 2 - Explore Catalog"
-                  className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
+                  className="w-10 h-10 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
                 />
               </div>
-              <p className="text-[10px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
-                Explore our Catalog
+              <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
+                Explore Catalog
               </p>
             </div>
 
@@ -429,16 +206,16 @@ const HowItWorksPage = ({
             </div>
 
             {/* Step 3 */}
-            <div className="flex flex-col items-center text-center flex-shrink-0 w-[100px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
-              <div className="relative mb-3 rounded-full">
+            <div className="flex flex-col items-center text-center flex-shrink-0 w-[60px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
+              <div className="relative mb-2 sm:mb-3 rounded-full">
                 <img
                   src={icon3}
                   alt="Step 3 - Place Order"
-                  className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
+                  className="w-10 h-10 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
                 />
               </div>
-              <p className="text-[10px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
-                Place The Order
+              <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
+                Place Order
               </p>
             </div>
 
@@ -450,15 +227,15 @@ const HowItWorksPage = ({
             </div>
 
             {/* Step 4 */}
-            <div className="flex flex-col items-center text-center flex-shrink-0 w-[100px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
-              <div className="relative mb-3 rounded-full">
+            <div className="flex flex-col items-center text-center flex-shrink-0 w-[60px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
+              <div className="relative mb-2 sm:mb-3 rounded-full">
                 <img
                   src={icon4}
                   alt="Step 4 - Approval"
-                  className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
+                  className="w-10 h-10 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
                 />
               </div>
-              <p className="text-[10px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
+              <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
                 Approval
               </p>
             </div>
@@ -471,16 +248,16 @@ const HowItWorksPage = ({
             </div>
 
             {/* Step 5 */}
-            <div className="flex flex-col items-center text-center flex-shrink-0 w-[100px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
-              <div className="relative mb-3 rounded-full">
+            <div className="flex flex-col items-center text-center flex-shrink-0 w-[60px] sm:w-[130px] md:w-[160px] lg:w-[180px]">
+              <div className="relative mb-2 sm:mb-3 rounded-full">
                 <img
                   src={icon5}
-                  alt="Step 5 - Delivery and Installation"
-                  className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
+                  alt="Step 5 - Delivery & Install"
+                  className="w-10 h-10 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full object-contain"
                 />
               </div>
-              <p className="text-[10px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
-                Delivery and Installation
+              <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
+                Delivery & Install
               </p>
             </div>
           </div>
@@ -748,60 +525,72 @@ const HowItWorksPage = ({
         </div>
       </div>
 
-      {/* FAQ Section */}
-      <section className="w-full py-8 md:py-10 px-4 md:px-6 bg-white">
+      <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-6 md:mb-8 text-center">
-            Frequently Asked Questions
-          </h2>
+          {/* Section Header */}
+          <div className="text-center mb-10 md:mb-14">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-4 md:mb-6 font-bold">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
+              Everything you need to know about our process and services.
+            </p>
+          </div>
 
           <div className="space-y-3">
             {loadingFAQs ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg">Loading FAQs...</p>
+                <div className="inline-flex items-center gap-3">
+                  <div className="w-5 h-5 border-2 border-[#8B7355] border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-gray-600 text-base md:text-lg">Loading FAQs...</p>
+                </div>
               </div>
             ) : faqs.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg">No FAQs available at the moment.</p>
+              <div className="text-center py-12 bg-white rounded-xl shadow-sm">
+                <svg className="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p className="text-gray-500 text-base md:text-lg">No FAQs available at the moment.</p>
               </div>
             ) : (
               faqs.map((faq, index) => {
                 const faqId = faq._id || faq.id || index
                 const isExpanded = expandedFaq === faqId
                 return (
-                  <div key={faqId} className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-[#8B7355]">
+                  <div
+                    key={faqId}
+                    className={`bg-white rounded-xl shadow-sm border overflow-hidden transition-all duration-300 ${isExpanded ? 'border-[#8B7355] shadow-md ring-1 ring-[#8B7355]/20' : 'border-gray-100 hover:shadow-md hover:border-gray-200'}`}
+                  >
                     <button
                       onClick={() => setExpandedFaq(isExpanded ? null : faqId)}
-                      className="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer"
+                      className="w-full px-5 md:px-6 py-4 md:py-5 flex items-center justify-between text-left cursor-pointer group"
                     >
-                      <div className="flex items-center gap-3 flex-1">
-                        <span className="text-base md:text-lg font-semibold text-gray-800 flex-shrink-0">{index + 1}.</span>
-                        <span className={`text-sm md:text-base font-medium flex-1 ${isExpanded ? 'text-[#8B7355]' : 'text-gray-800'}`}>
+                      <div className="flex items-center gap-3 md:gap-4 flex-1">
+                        <span className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-sm md:text-base font-bold flex-shrink-0 transition-colors ${isExpanded ? 'bg-[#8B7355] text-white' : 'bg-[#8B7355]/10 text-[#8B7355] group-hover:bg-[#8B7355]/20'}`}>
+                          {index + 1}
+                        </span>
+                        <span className={`text-sm md:text-base font-medium flex-1 transition-colors ${isExpanded ? 'text-[#8B7355]' : 'text-gray-800 group-hover:text-[#8B7355]'}`}>
                           {faq.question}
                         </span>
                       </div>
-                      <div className="flex-shrink-0 ml-4">
-                        {isExpanded ? (
-                          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                          </svg>
-                        ) : (
-                          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                          </svg>
-                        )}
+                      <div className={`flex-shrink-0 ml-3 w-8 h-8 rounded-full flex items-center justify-center transition-all ${isExpanded ? 'bg-[#8B7355] rotate-180' : 'bg-gray-100 group-hover:bg-[#8B7355]/10'}`}>
+                        <svg className={`w-4 h-4 transition-colors ${isExpanded ? 'text-white' : 'text-gray-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
                       </div>
                     </button>
-                    {isExpanded && faq.answer && (
-                      <div className="px-5 pb-4 pt-0">
-                        <div className="pl-8 border-l-2 border-gray-300">
-                          <div
-                            className="text-sm md:text-base text-gray-600 leading-relaxed"
-                            dangerouslySetInnerHTML={{ __html: faq.answer }}
-                          />
+                    <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                      {faq.answer && (
+                        <div className="px-5 md:px-6 pb-5 md:pb-6">
+                          <div className="pl-11 md:pl-14 border-l-2 border-[#8B7355]/30">
+                            <div
+                              className="text-sm md:text-base text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                              dangerouslySetInnerHTML={{ __html: faq.answer }}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 )
               })

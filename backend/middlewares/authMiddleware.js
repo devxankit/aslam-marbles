@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
 
     const token = header.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'changeme');
-    
+
     // Check cache first
     const cacheKey = decoded.id;
     const cached = userCache.get(cacheKey);
@@ -32,7 +32,7 @@ const auth = async (req, res, next) => {
 
     // Cache the user
     userCache.set(cacheKey, { user, timestamp: Date.now() });
-    
+
     // Clean old cache entries periodically
     if (userCache.size > 100) {
       const now = Date.now();
@@ -47,7 +47,10 @@ const auth = async (req, res, next) => {
     next();
   } catch (err) {
     console.error('Auth error:', err.message);
-    return res.status(401).json({ success: false, message: 'Unauthorized' });
+    return res.status(401).json({
+      success: false,
+      message: `Unauthorized: ${err.message}`
+    });
   }
 };
 

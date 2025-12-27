@@ -16,7 +16,11 @@ const CategoryListingPage = ({
     const { toggleLike, isLiked } = useCartAndLikes()
 
     // Determine type based on URL
-    const type = location.pathname.includes('/furniture') ? 'furniture' : 'decor'
+    let type = 'decor'
+    if (location.pathname.includes('/furniture')) type = 'furniture'
+    else if (location.pathname.includes('/limited-edition')) type = 'limited'
+    else if (location.pathname.includes('/on-sale')) type = 'sale'
+
     const products = getProductsByCategorySlug(categoryId, type)
 
     // Format category name for display (e.g., 'center-tables' -> 'Center Tables')
@@ -87,10 +91,31 @@ const CategoryListingPage = ({
                                             {product.name}
                                         </h3>
                                         <div className="mt-auto">
-                                            <p className="text-xl font-bold text-[#8B7355]">₹ {product.price.toLocaleString('en-IN')}</p>
-                                            <button className="mt-4 px-6 py-2 bg-white border border-[#8B7355] text-[#8B7355] font-semibold rounded hover:bg-[#8B7355] hover:text-white transition-all duration-300 w-full">
-                                                View Details
-                                            </button>
+                                            <p className="text-xl font-bold text-[#8B7355] mb-4">₹ {product.price.toLocaleString('en-IN')}</p>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        navigate(`/checkout`, {
+                                                            state: {
+                                                                items: [{
+                                                                    ...product,
+                                                                    quantity: 1
+                                                                }]
+                                                            }
+                                                        })
+                                                    }}
+                                                    className="flex-1 px-4 py-2 bg-[#8B7355] text-white font-semibold rounded hover:opacity-90 transition-all text-sm"
+                                                >
+                                                    Buy Now
+                                                </button>
+                                                <button
+                                                    onClick={() => navigate(`/${type === 'decor' ? 'home-decor' : type}/${categoryId}/${product.id}`)}
+                                                    className="flex-1 px-4 py-2 bg-white border border-[#8B7355] text-[#8B7355] font-semibold rounded hover:bg-[#8B7355] hover:text-white transition-all text-sm"
+                                                >
+                                                    Details
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

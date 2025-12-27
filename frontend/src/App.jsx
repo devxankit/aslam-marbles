@@ -29,6 +29,7 @@ import BalajiCategoryPage from './modules/user/pages/BalajiCategoryPage'
 import DreamTemplePage from './modules/user/pages/DreamTemplePage'
 import PoojaRoomPage from './modules/user/pages/PoojaRoomPage'
 import HomeDecorPage from './modules/user/pages/HomeDecorPage'
+import OnSalePage from './modules/user/pages/OnSalePage'
 import CommunalTemplesPage from './modules/user/pages/CommunalTemplesPage'
 import JainTemplesPage from './modules/user/pages/JainTemplesPage'
 import ArtisansOfTilakPage from './modules/user/pages/ArtisansOfTilakPage'
@@ -68,6 +69,7 @@ import ModernArtPage from './modules/user/pages/ModernArtPage'
 import ImportedPage from './modules/user/pages/ImportedPage'
 import PackagingPage from './modules/user/pages/PackagingPage'
 import PackagingCategoryPage from './modules/user/pages/PackagingCategoryPage'
+import MurtiCategoryTemplate from './modules/user/components/MurtiCategoryTemplate'
 
 
 import LimitedEditionPage from './modules/user/pages/LimitedEditionPage'
@@ -482,8 +484,47 @@ function App() {
             />
           } />
 
+
           <Route path="/home-decor" element={
             <HomeDecorPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+            />
+          } />
+
+          <Route path="/limited-edition" element={
+            <LimitedEditionPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+            />
+          } />
+          <Route path="/limited-edition/:categoryId" element={
+            <CategoryListingPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+            />
+          } />
+          <Route path="/limited-edition/:categoryId/:productId" element={
+            <ProductDetailPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+            />
+          } />
+
+          <Route path="/on-sale" element={
+            <OnSalePage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+            />
+          } />
+          <Route path="/on-sale/:categoryId" element={
+            <CategoryListingPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+            />
+          } />
+          <Route path="/on-sale/:categoryId/:productId" element={
+            <ProductDetailPage
               onShowCart={() => setShowCart(true)}
               onShowLikes={() => setShowLikes(true)}
             />

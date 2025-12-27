@@ -34,10 +34,10 @@ const HomePageFormPopup = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     try {
       const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-      
+
       const payload = {
         type: formData.type,
         fullName: formData.fullName,
@@ -61,13 +61,13 @@ const HomePageFormPopup = ({ onClose }) => {
       })
 
       const data = await res.json()
-      
+
       if (!res.ok || data.success === false) {
         throw new Error(data.message || 'Failed to submit consultation request')
       }
 
       alert('Thank you! Your consultation request has been submitted successfully. We will contact you soon.')
-      
+
       // Reset form
       setFormStep(1)
       setFormData({
@@ -111,278 +111,278 @@ const HomePageFormPopup = ({ onClose }) => {
       `}</style>
       <div className="fixed inset-0 z-50 flex items-center justify-center pt-8 md:pt-12">
         {/* Backdrop/Overlay - Click anywhere to close */}
-        <div 
+        <div
           className="absolute inset-0 bg-black/0 cursor-pointer"
           onClick={handleClose}
         ></div>
-        
+
         {/* Popup Content */}
-        <div 
+        <div
           className="relative w-[85%] sm:w-[420px] md:w-[460px] lg:w-[480px] max-w-[calc(100%-32px)] bg-white rounded-xl md:rounded-2xl shadow-2xl flex flex-col animate-slide-down z-10"
           style={{ maxHeight: '90vh' }}
           onClick={(e) => e.stopPropagation()}
         >
-        {/* Header with Close Button */}
-        <div className="flex items-center justify-between p-4 md:p-5 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0 rounded-t-xl md:rounded-t-2xl">
-          <h3 className="text-lg md:text-xl font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>
-          <div className="flex items-center gap-2">
-            <span className="text-xs md:text-sm font-semibold px-2.5 py-1.5 rounded-full bg-[#8B7355]/10" style={{ color: '#8B7355' }}>{formStep}/2</span>
-            <button
-              onClick={handleClose}
-              className="text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none w-6 h-6 flex items-center justify-center transition-colors"
-              aria-label="Close"
-            >
-              ×
-            </button>
-          </div>
-        </div>
-
-        <div className="px-4 pt-4 pb-5 md:px-6 md:pt-5 md:pb-6 bg-white overflow-y-auto flex-1 rounded-b-xl md:rounded-b-2xl" style={{ maxHeight: 'calc(90vh - 80px)' }}>
-          {formStep === 1 ? (
-            <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setFormStep(2); }}>
-              <div className="flex gap-3">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="type"
-                    value="DOMESTIC"
-                    checked={formData.type === 'DOMESTIC'}
-                    onChange={(e) => setFormData({...formData, type: e.target.value})}
-                    className="w-4 h-4 accent-amber-600"
-                  />
-                  <span className="text-sm font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="type"
-                    value="INTERNATIONAL"
-                    checked={formData.type === 'INTERNATIONAL'}
-                    onChange={(e) => setFormData({...formData, type: e.target.value})}
-                    className="w-4 h-4 accent-amber-600"
-                  />
-                  <span className="text-sm font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
-                </label>
-              </div>
-
-              <input
-                type="text"
-                placeholder="Full Name *"
-                value={formData.fullName}
-                onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
-                required
-              />
-
-              <input
-                type="email"
-                placeholder="Email Address *"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
-                required
-              />
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Phone number</label>
-                <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                  <div className="flex items-center gap-1.5 px-3 py-3 bg-gray-50 border-r">
-                    <span className="text-base">🇮🇳</span>
-                    <span className="text-sm">+91</span>
-                  </div>
-                  <input
-                    type="tel"
-                    placeholder="Phone number *"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className="flex-1 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
-                    required
-                  />
-                </div>
-              </div>
-
-              <input
-                type="text"
-                placeholder="City *"
-                value={formData.city}
-                onChange={(e) => setFormData({...formData, city: e.target.value})}
-                className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
-                required
-              />
-
-              <div>
-                <label className="block text-sm font-medium mb-2.5">Tell us about yourself *</label>
-                <div className="space-y-2.5">
-                  <label className="flex items-start gap-2.5 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="aboutYourself"
-                      value="homeowner"
-                      checked={formData.aboutYourself === 'homeowner'}
-                      onChange={(e) => setFormData({...formData, aboutYourself: e.target.value})}
-                      className="mt-1 w-4 h-4 accent-amber-600 flex-shrink-0"
-                      required
-                    />
-                    <span className="text-sm leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
-                  </label>
-                  <label className="flex items-start gap-2.5 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="aboutYourself"
-                      value="designer"
-                      checked={formData.aboutYourself === 'designer'}
-                      onChange={(e) => setFormData({...formData, aboutYourself: e.target.value})}
-                      className="mt-1 w-4 h-4 accent-amber-600 flex-shrink-0"
-                      required
-                    />
-                    <span className="text-sm leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
-                  </label>
-                </div>
-              </div>
-
+          {/* Header with Close Button */}
+          <div className="flex items-center justify-between p-4 md:p-5 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0 rounded-t-xl md:rounded-t-2xl">
+            <h3 className="text-lg md:text-xl font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>
+            <div className="flex items-center gap-2">
+              <span className="text-xs md:text-sm font-semibold px-2.5 py-1.5 rounded-full bg-[#8B7355]/10" style={{ color: '#8B7355' }}>{formStep}/2</span>
               <button
-                type="submit"
-                className="w-full text-white py-3 rounded-lg text-sm font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] mt-2"
-                style={{ backgroundColor: '#8B7355' }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
+                onClick={handleClose}
+                className="text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none w-6 h-6 flex items-center justify-center transition-colors"
+                aria-label="Close"
               >
-                NEXT →
+                ×
               </button>
-            </form>
-          ) : (
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <div>
-                <label className="block text-sm font-bold mb-2.5">What are you looking for? *</label>
-                <div className="space-y-2.5">
-                  <label className="flex items-center gap-2.5 cursor-pointer">
+            </div>
+          </div>
+
+          <div className="px-4 pt-4 pb-5 md:px-6 md:pt-5 md:pb-6 bg-white overflow-y-auto flex-1 rounded-b-xl md:rounded-b-2xl" style={{ maxHeight: 'calc(90vh - 80px)' }}>
+            {formStep === 1 ? (
+              <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setFormStep(2); }}>
+                <div className="flex gap-3">
+                  <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="radio"
-                      name="lookingFor"
-                      value="singular"
-                      checked={formData.lookingFor === 'singular'}
-                      onChange={(e) => setFormData({...formData, lookingFor: e.target.value})}
+                      name="type"
+                      value="DOMESTIC"
+                      checked={formData.type === 'DOMESTIC'}
+                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-4 h-4 accent-amber-600"
-                      required
                     />
-                    <span className="text-sm">Singular Marble Mandir Unit</span>
+                    <span className="text-sm font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
                   </label>
-                  <label className="flex items-center gap-2.5 cursor-pointer">
+                  <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="radio"
-                      name="lookingFor"
-                      value="complete"
-                      checked={formData.lookingFor === 'complete'}
-                      onChange={(e) => setFormData({...formData, lookingFor: e.target.value})}
+                      name="type"
+                      value="INTERNATIONAL"
+                      checked={formData.type === 'INTERNATIONAL'}
+                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-4 h-4 accent-amber-600"
-                      required
                     />
-                    <span className="text-sm">Complete Pooja Room Solution</span>
+                    <span className="text-sm font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
                   </label>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-bold mb-2.5">What is your estimated budget? *</label>
-                <div className="space-y-2.5">
-                  {BUDGET_OPTIONS.map((budget) => (
-                    <label key={budget} className="flex items-center gap-2.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="budget"
-                        value={budget}
-                        checked={formData.budget === budget}
-                        onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                        className="w-4 h-4 accent-amber-600"
-                        required
-                      />
-                      <span className="text-sm">{budget}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold mb-2.5">What is your timeline for the project? *</label>
-                <div className="space-y-2.5">
-                  {TIMELINE_OPTIONS.map((timeline) => (
-                    <label key={timeline} className="flex items-center gap-2.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="timeline"
-                        value={timeline}
-                        checked={formData.timeline === timeline}
-                        onChange={(e) => setFormData({...formData, timeline: e.target.value})}
-                        className="w-4 h-4 accent-amber-600"
-                        required
-                      />
-                      <span className="text-sm">{timeline}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <textarea
-                placeholder="Please share a bit more about your needs"
-                value={formData.additionalInfo}
-                onChange={(e) => setFormData({...formData, additionalInfo: e.target.value})}
-                rows={4}
-                className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600 resize-none"
-              />
-
-              <div>
                 <input
-                  type="file"
-                  id="designReferences"
-                  accept="image/*,.pdf"
-                  multiple
-                  onChange={(e) => setFormData({...formData, designReferences: e.target.files})}
-                  className="hidden"
+                  type="text"
+                  placeholder="Full Name *"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  required
                 />
-                <label
-                  htmlFor="designReferences"
-                  className="block w-full text-white py-3 rounded-lg text-sm text-center font-medium cursor-pointer transition-colors shadow-md"
-                  style={{ backgroundColor: '#8B7355' }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
-                >
-                  UPLOAD DESIGN REFERENCES
-                </label>
-                {formData.designReferences && formData.designReferences.length > 0 && (
-                  <p className="text-sm text-gray-600 mt-2">
-                    {formData.designReferences.length} file(s) selected
-                  </p>
-                )}
-              </div>
 
-              <div className="flex gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setFormStep(1)}
-                  className="flex-1 bg-white py-3 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors shadow-md border-2"
-                  style={{ color: '#8B7355', borderColor: '#8B7355' }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#f9f9f9'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = 'white'
-                  }}
-                >
-                  BACK
-                </button>
+                <input
+                  type="email"
+                  placeholder="Email Address *"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  required
+                />
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Phone number</label>
+                  <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <div className="flex items-center gap-1.5 px-3 py-3 bg-gray-50 border-r">
+                      <span className="text-base">🇮🇳</span>
+                      <span className="text-sm">+91</span>
+                    </div>
+                    <input
+                      type="tel"
+                      placeholder="Phone number *"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="flex-1 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="City *"
+                  value={formData.city}
+                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  required
+                />
+
+                <div>
+                  <label className="block text-sm font-medium mb-2.5">Tell us about yourself *</label>
+                  <div className="space-y-2.5">
+                    <label className="flex items-start gap-2.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="aboutYourself"
+                        value="homeowner"
+                        checked={formData.aboutYourself === 'homeowner'}
+                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
+                        className="mt-1 w-4 h-4 accent-amber-600 flex-shrink-0"
+                        required
+                      />
+                      <span className="text-sm leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
+                    </label>
+                    <label className="flex items-start gap-2.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="aboutYourself"
+                        value="designer"
+                        checked={formData.aboutYourself === 'designer'}
+                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
+                        className="mt-1 w-4 h-4 accent-amber-600 flex-shrink-0"
+                        required
+                      />
+                      <span className="text-sm leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
+                    </label>
+                  </div>
+                </div>
+
                 <button
                   type="submit"
-                  className="flex-1 text-white py-3 rounded-lg text-sm font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                  className="w-full text-white py-3 rounded-lg text-sm font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] mt-2"
                   style={{ backgroundColor: '#8B7355' }}
                   onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                   onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
                 >
-                  SUBMIT
+                  NEXT →
                 </button>
-              </div>
-            </form>
-          )}
-        </div>
+              </form>
+            ) : (
+              <form className="space-y-4" onSubmit={handleSubmit}>
+                <div>
+                  <label className="block text-sm font-bold mb-2.5">What are you looking for? *</label>
+                  <div className="space-y-2.5">
+                    <label className="flex items-center gap-2.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="lookingFor"
+                        value="singular"
+                        checked={formData.lookingFor === 'singular'}
+                        onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
+                        className="w-4 h-4 accent-amber-600"
+                        required
+                      />
+                      <span className="text-sm">Singular Marble Mandir Unit</span>
+                    </label>
+                    <label className="flex items-center gap-2.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="lookingFor"
+                        value="complete"
+                        checked={formData.lookingFor === 'complete'}
+                        onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
+                        className="w-4 h-4 accent-amber-600"
+                        required
+                      />
+                      <span className="text-sm">Complete Pooja Room Solution</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold mb-2.5">What is your estimated budget? *</label>
+                  <div className="space-y-2.5">
+                    {BUDGET_OPTIONS.map((budget) => (
+                      <label key={budget} className="flex items-center gap-2.5 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="budget"
+                          value={budget}
+                          checked={formData.budget === budget}
+                          onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                          className="w-4 h-4 accent-amber-600"
+                          required
+                        />
+                        <span className="text-sm">{budget}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold mb-2.5">What is your timeline for the project? *</label>
+                  <div className="space-y-2.5">
+                    {TIMELINE_OPTIONS.map((timeline) => (
+                      <label key={timeline} className="flex items-center gap-2.5 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="timeline"
+                          value={timeline}
+                          checked={formData.timeline === timeline}
+                          onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                          className="w-4 h-4 accent-amber-600"
+                          required
+                        />
+                        <span className="text-sm">{timeline}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <textarea
+                  placeholder="Please share a bit more about your needs"
+                  value={formData.additionalInfo}
+                  onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
+                  rows={4}
+                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600 resize-none"
+                />
+
+                <div>
+                  <input
+                    type="file"
+                    id="designReferences"
+                    accept="image/*,.pdf"
+                    multiple
+                    onChange={(e) => setFormData({ ...formData, designReferences: e.target.files })}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="designReferences"
+                    className="block w-full text-white py-3 rounded-lg text-sm text-center font-medium cursor-pointer transition-colors shadow-md"
+                    style={{ backgroundColor: '#8B7355' }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
+                  >
+                    UPLOAD DESIGN REFERENCES
+                  </label>
+                  {formData.designReferences && formData.designReferences.length > 0 && (
+                    <p className="text-sm text-gray-600 mt-2">
+                      {formData.designReferences.length} file(s) selected
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setFormStep(1)}
+                    className="flex-1 bg-white py-3 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors shadow-md border-2"
+                    style={{ color: '#8B7355', borderColor: '#8B7355' }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#f9f9f9'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = 'white'
+                    }}
+                  >
+                    BACK
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 text-white py-3 rounded-lg text-sm font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                    style={{ backgroundColor: '#8B7355' }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </>

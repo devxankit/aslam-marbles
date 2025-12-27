@@ -8,7 +8,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const { cart, getCartTotal, clearCart } = useCartAndLikes()
-  
+
   // Form state
   const [formData, setFormData] = useState({
     email: '',
@@ -58,7 +58,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
 
   const handleContinueToShipping = (e) => {
     e.preventDefault()
-    
+
     // Basic validation
     if (!formData.email && !formData.phone) {
       alert('Please enter email or phone number')
@@ -75,7 +75,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
         formData,
         items: checkoutItems,
         subtotal,
-        shipping,
+        shippingCost: shipping,
         total
       }
     })
@@ -88,7 +88,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
   return (
     <div className="w-full min-h-screen bg-gray-50">
       <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
-      
+
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Left Section - Contact and Shipping Form */}
@@ -106,7 +106,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     Sign in
                   </button>
                 </div>
-                
+
                 <div className="mb-4">
                   <input
                     type="text"
@@ -117,7 +117,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     className="w-full px-4 py-3 border-2 border-[#8B7355] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:ring-offset-2 transition-all"
                   />
                 </div>
-                
+
                 <div className="flex items-center">
                   <input
                     type="checkbox"
@@ -136,7 +136,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
               {/* Shipping Address Section */}
               <div className="bg-white rounded-lg p-6 md:p-8 shadow-sm">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Shipping address</h2>
-                
+
                 {/* Country/Region */}
                 <div className="mb-4">
                   <select
@@ -275,7 +275,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
           <div className="lg:col-span-1">
             <div className="bg-gray-50 rounded-lg p-6 md:p-8 sticky top-24">
               <h3 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h3>
-              
+
               {/* Product Items */}
               <div className="space-y-4 mb-6">
                 {checkoutItems.map((item) => (

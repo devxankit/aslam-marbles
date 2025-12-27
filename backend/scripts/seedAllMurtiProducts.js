@@ -47,7 +47,15 @@ const categoryMapping = {
     'jain murti': 'jain-gods',
     'nandi': 'nandi',
     'balaji': 'balaji',
-    'yugal': 'jugal-jodi'
+    'yugal': 'jugal-jodi',
+    'buddha': 'buddha',
+    'natraja': 'natraja',
+    'vishnu-ji': 'vishnu-ji',
+    'laddu-gopal': 'laddu-gopal',
+    'kali': 'kali',
+    'radha': 'radha',
+    'ganesh-laxmi': 'ganesh-laxmi',
+    'ganesh-laxmi-saraswati': 'ganesh-laxmi-saraswati'
 };
 
 const seed = async () => {
@@ -59,7 +67,7 @@ const seed = async () => {
         await MurtiProduct.deleteMany({});
         console.log('🗑️  Cleared existing Murti products\n');
 
-        const murtiAssetsPath = path.join(__dirname, '../../my-project/src/assets/ourcreation/murti');
+        const murtiAssetsPath = path.join(__dirname, '../../frontend/src/assets/ourcreation/murti');
 
         // Get all category folders
         const folders = fs.readdirSync(murtiAssetsPath).filter(item => {

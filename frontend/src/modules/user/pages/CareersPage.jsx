@@ -79,37 +79,37 @@ const CareersPage = ({
 
       {/* Hero Image Section - Horizontal */}
       <section className="w-full relative">
-        <div className="relative w-full h-[350px] md:h-[450px] lg:h-[550px] overflow-hidden">
+        <div className="relative w-full h-[210px] md:h-[450px] lg:h-[550px] overflow-hidden">
           <img
             src={careersData?.heroImage?.url}
             alt="Careers"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
 
           {/* Overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="absolute inset-0 bg-black/50"></div>
 
           {/* Captions and Apply Button - Center of Image */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-5xl px-4 md:px-6 lg:px-8">
-            <div className="text-center text-white space-y-4 md:space-y-6">
+            <div className="text-center text-white space-y-0.5 md:space-y-6">
               {/* Heading */}
-              <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight drop-shadow-lg">
+              <h1 className="text-sm md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight drop-shadow-lg">
                 Craft Timeless Masterpieces at Aslam Marble Suppliers
               </h1>
-              <p className="text-lg md:text-xl lg:text-2xl font-medium text-gray-200">
+              <p className="text-[10px] md:text-xl lg:text-2xl font-medium text-gray-200">
                 Where Tradition Meets Excellence
               </p>
 
               {/* Description */}
-              <p className="text-sm md:text-base lg:text-lg leading-relaxed max-w-3xl mx-auto text-gray-100 drop-shadow-md">
+              <p className="text-[9px] md:text-base lg:text-lg leading-relaxed max-w-3xl mx-auto text-gray-100 drop-shadow-md line-clamp-2 md:line-clamp-none">
                 Join a team where heritage, artistry, and innovation come together to create extraordinary works of marble. At Aslam Marble Suppliers, we transform raw stone into sacred spaces and stunning masterpieces through passion, precision, and unmatched craftsmanship.
               </p>
 
               {/* Apply Now Button */}
-              <div className="pt-2 md:pt-4">
+              <div className="pt-1.5 md:pt-4">
                 <button
                   onClick={handleApplyNow}
-                  className="bg-white text-[#8B7355] font-bold px-8 md:px-12 lg:px-16 py-3 md:py-4 lg:py-5 rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:scale-105 text-sm md:text-base lg:text-lg uppercase tracking-wide"
+                  className="bg-white text-[#8B7355] font-bold px-3 py-1 md:px-12 lg:px-16 md:py-4 lg:py-5 rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:scale-105 text-[9px] md:text-base lg:text-lg uppercase tracking-wide"
                 >
                   Apply Now
                 </button>
@@ -131,14 +131,14 @@ const CareersPage = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-3 gap-2 md:gap-6 lg:gap-8">
             {careersData?.whyJoinUs?.map((item, index) => (
               <div
                 key={index}
-                className="group relative bg-white rounded-xl shadow-lg hover:shadow-2xl p-6 md:p-8 border border-gray-100 transition-all duration-500 hover:-translate-y-2 overflow-hidden text-center"
+                className="group relative bg-white rounded-xl shadow-lg hover:shadow-2xl p-2 md:p-8 border border-gray-100 transition-all duration-500 hover:-translate-y-2 overflow-hidden text-center"
               >
                 {/* Background Accent from About Us */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-[#8B7355]/5 rounded-bl-full transform translate-x-8 -translate-y-8 transition-transform duration-700 group-hover:scale-150"></div>
+                <div className="absolute top-0 right-0 w-12 h-12 md:w-24 md:h-24 bg-[#8B7355]/5 rounded-bl-full transform translate-x-4 -translate-y-4 transition-transform duration-700 group-hover:scale-150"></div>
 
                 <div className="relative z-10">
                   <div className="text-4xl mb-4 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 inline-block">

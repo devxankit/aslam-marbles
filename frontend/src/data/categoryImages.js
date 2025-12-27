@@ -51,6 +51,9 @@ export const furnitureData = {
     'Center Tables': [centerTable1],
     'Pedestal Columns': [pestal1, pestal2, pestal3, pestal4, pestal5],
     'Fire Places': [fireplace1],
+    'Dining Tables': [centerTable1],
+    'Side Tables': [centerTable1],
+    'Marble Chair': [centerTable1],
 }
 
 export const homeDecorData = {
@@ -62,7 +65,39 @@ export const homeDecorData = {
     'Sculptures': [scul1, scul2, scul3, scul4, scul5],
     'Wall': [wall1, wall2, wall3, wall4, wall5, wall6, wall7],
     'Office & Desk': [office1],
+    'Tulsi Gamla': [pot1],
+    'Indoor Sculptures': [scul1],
+    'Outdoor Sculptures': [scul2],
+    'Mortar & Pestle': [tableware1],
+    'Tray': [tableware2],
+    'Coasters': [tableware1],
+    'Candle Holders': [lamp1],
+    'Kitchen Accessories': [tableware2],
+    'Bathroom Accessories': [bath1],
+    'Stone Sinks': [bath2],
+    'Bookends': [office1],
+    'Photo Frames': [office1],
+}
+
+export const limitedEditionData = {
+    'Limited Series': [
+        'https://images.unsplash.com/photo-1544006659-f0b21f04cb1b?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1515898913320-f38370edab7a?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1505373396105-8f6a90800600?auto=format&fit=crop&q=80&w=1200'
+    ]
+}
+
+export const onSaleData = {
+    'Exclusive Offers': [
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&q=80&w=1200'
+    ]
 }
 
 export const allFurnitureCategories = Object.keys(furnitureData)
 export const allHomeDecorCategories = Object.keys(homeDecorData)
+export const allLimitedEditionCategories = Object.keys(limitedEditionData)
+export const allOnSaleCategories = Object.keys(onSaleData)

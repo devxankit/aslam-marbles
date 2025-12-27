@@ -96,18 +96,19 @@ const TheTeamPage = ({
             />
 
             {/* Full Screen Horizontal Hero Image */}
-            <section className="w-full h-screen relative overflow-hidden">
+            {/* Full Screen Horizontal Hero Image */}
+            <section className="w-full h-auto md:h-screen relative overflow-hidden">
                 <img
                     src={heroImage}
                     alt="Our Team"
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto md:h-full object-cover object-top"
                 />
-                {/* Overlay for better text readability */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
+                {/* Overlay for better text readability - Hidden on mobile/tablet to remove grey area */}
+                <div className="hidden md:block absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
             </section>
 
             {/* Caption Section */}
-            <section className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-white">
+            <section className="w-full py-6 md:py-12 px-4 md:px-6 lg:px-8 bg-white">
                 <div className="max-w-4xl mx-auto text-center">
                     <p className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed" style={{ color: '#8B7355' }}>
                         At Aslam Marble Suppliers, our team is the heart of our craft. Each member brings decades of expertise,

@@ -387,17 +387,13 @@ const Header = ({
 
             {/* Shared Dropdown Container - Full Screen Width - Inside Hover Wrapper */}
             <div
-              className={`absolute bg-white shadow-2xl transition-all duration-300 ease-in-out z-50 ${hoveredDropdown
+              className={`hidden lg:block fixed left-0 right-0 bg-white shadow-2xl transition-all duration-300 ease-in-out z-50 ${hoveredDropdown
                 ? 'h-[350px] translate-y-0 pointer-events-auto overflow-hidden'
                 : 'h-0 -translate-y-4 pointer-events-none overflow-hidden'
                 }`}
               style={{
-                left: '50%',
-                transform: hoveredDropdown
-                  ? 'translateX(-50%) translateY(0)'
-                  : 'translateX(-50%) translateY(-16px)',
-                width: '100vw',
-                top: 'calc(100% - 2px)',
+                width: '100%',
+                top: hoveredDropdown ? 'var(--header-height, 130px)' : '100px', // Approximate header height, adjusting dynamically if possible
                 opacity: isFading ? 0 : (hoveredDropdown ? 1 : 0),
                 transition: 'opacity 0.3s ease-in-out, transform 0.5s ease-in-out, height 0.5s ease-in-out'
               }}
@@ -449,36 +445,36 @@ const Header = ({
               <>
                 {/* Overlay */}
                 <div
-                  className="fixed inset-0 bg-black bg-opacity-50 z-[199] lg:hidden"
+                  className="fixed inset-0 bg-black/20 backdrop-blur-md z-[199] lg:hidden"
                   onClick={() => setOpen(false)}
                 ></div>
 
                 {/* Sidebar */}
                 <div className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl z-[201] transform transition-transform duration-300 ease-in-out overflow-y-auto">
-                  <div className="p-4">
-                    {/* Close Button */}
-                    <div className="flex justify-between items-center mb-6 pb-4 border-b">
+                  <div className="flex flex-col">
+                    {/* Header with Logo and Close Button */}
+                    <div className="relative flex items-center justify-center p-0 m-0 border-none sticky top-0 bg-white z-10 leading-none">
                       <img
                         src={logoImage}
                         alt="Logo"
-                        className="h-12 object-contain"
+                        className="h-12 object-contain block p-0 m-0"
                       />
                       <button
                         onClick={() => setOpen(false)}
-                        className="text-2xl text-gray-600 hover:text-black"
+                        className="absolute right-2 top-1 text-3xl text-gray-400 hover:text-black leading-none"
                         aria-label="Close Menu"
                       >
-                        ×
+                        &times;
                       </button>
                     </div>
 
                     {/* Menu Items */}
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-0">
                       {/* ASLAM MARBLE SUPPLIERS - With Dropdown */}
                       <div className="border-b border-gray-100">
                         <button
                           onClick={() => setMobileExpandedMenu(mobileExpandedMenu === 'house-of-tilak' ? null : 'house-of-tilak')}
-                          className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
+                          className="w-full flex items-center justify-between px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                         >
                           <span>ASLAM MARBLE SUPPLIERS</span>
                           <svg
@@ -614,35 +610,35 @@ const Header = ({
                       <Link
                         to="/how-it-works"
                         onClick={() => setOpen(false)}
-                        className="text-left px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
+                        className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
                         HOW IT WORKS
                       </Link>
                       <Link
                         to="/location"
                         onClick={() => setOpen(false)}
-                        className="text-left px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
+                        className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
                         LOCATION
                       </Link>
                       <Link
                         to="/blog"
                         onClick={() => setOpen(false)}
-                        className="text-left px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
+                        className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
                         BLOG
                       </Link>
                       <Link
                         to="/book-appointment"
                         onClick={() => setOpen(false)}
-                        className="text-left px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
+                        className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
                         BOOK APPOINTMENT
                       </Link>
                       <Link
                         to="/testimonials"
                         onClick={() => setOpen(false)}
-                        className="text-left px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
+                        className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
                         TESTIMONIALS
                       </Link>

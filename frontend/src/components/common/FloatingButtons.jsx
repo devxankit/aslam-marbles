@@ -1,7 +1,8 @@
 const FloatingButtons = () => {
+  return null;
+  /*
   return (
     <>
-      {/* Phone Button */}
       <div className="fixed right-4 md:right-6 bottom-20 md:bottom-24 z-50">
         <a href="tel:+919319374633" className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-amber-700 via-amber-600 to-amber-800 flex items-center justify-center shadow-lg hover:scale-110 transition-transform mb-4">
           <svg className="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -10,7 +11,6 @@ const FloatingButtons = () => {
         </a>
       </div>
 
-      {/* Scroll to Top Button */}
       <div className="fixed right-4 md:right-6 bottom-4 md:bottom-6 z-50">
         <button 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -23,7 +23,7 @@ const FloatingButtons = () => {
       </div>
     </>
   )
+  */
 }
 
 export default FloatingButtons
-

@@ -143,10 +143,11 @@ const VisitStorePage = ({
       </section>
 
       {/* Spacer Gap */}
-      <div className="w-full h-20 md:h-32 lg:h-40 bg-white"></div>
+      {/* Spacer Gap */}
+      <div className="w-full h-0 lg:h-40 bg-white"></div>
 
       {/* Location and Map Section */}
-      <section className="w-full py-8 md:py-12 px-4 md:px-6 bg-[#fffbf0]">
+      <section className="w-full pt-0 pb-8 -mt-16 md:mt-0 md:py-12 px-4 md:px-6 bg-[#fffbf0] relative z-20 shadow-xl md:shadow-none rounded-t-3xl md:rounded-none">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
             {/* Left Side - Address (Slides in from left) */}
@@ -201,39 +202,54 @@ const VisitStorePage = ({
       </section>
 
       {/* Reviews Section */}
-      <section className="w-full py-8 md:py-12 px-4 md:px-6 bg-white">
+      <section className="w-full py-12 md:py-20 px-4 md:px-6 bg-gradient-to-b from-white to-[#fffbf0]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic font-bold mb-3">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic font-bold mb-4">
               Customer Reviews
             </h2>
-            <p className="text-base md:text-lg text-gray-600">
+            <div className="w-24 h-1 bg-[#8B7355] mx-auto rounded-full mb-4"></div>
+            <p className="text-base md:text-lg text-gray-600 font-light">
               See what our customers have to say about their experience
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-3 gap-3 md:gap-8">
             {reviews.map((review) => (
               <div
                 key={review.id}
-                className="bg-white border border-gray-200 rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow duration-300"
+                className="group relative bg-white border border-gray-100 rounded-xl p-3 md:p-8 shadow-md hover:shadow-2xl transition-all duration-500 flex flex-col justify-between overflow-hidden hover:-translate-y-1"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-[#8B7355] rounded-full flex items-center justify-center text-white font-semibold">
-                      {review.name.charAt(0)}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-800">{review.name}</h3>
-                      <p className="text-xs text-gray-500">{review.location}</p>
+                {/* Decorative Quote Icon Background */}
+                <div className="absolute top-2 right-2 md:top-4 md:right-4 text-[#8B7355]/5 font-serif text-6xl md:text-8xl leading-none select-none pointer-events-none group-hover:text-[#8B7355]/10 transition-colors duration-500">
+                  &rdquo;
+                </div>
+
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-2 md:mb-6">
+                    <div className="flex items-center gap-2 md:gap-4">
+                      <div className="w-8 h-8 md:w-12 md:h-12 bg-[#8B7355] text-white rounded-full flex items-center justify-center font-serif text-xs md:text-xl font-bold shadow-lg group-hover:bg-black transition-colors duration-300">
+                        {review.name.charAt(0)}
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-gray-900 text-[10px] md:text-lg truncate group-hover:text-[#8B7355] transition-colors">{review.name}</h3>
+                        <p className="text-[8px] md:text-xs text-[#8B7355] uppercase tracking-wide truncate">{review.location}</p>
+                      </div>
                     </div>
                   </div>
+
+                  <div className="flex items-center gap-0.5 md:gap-1 mb-2 md:mb-4">
+                    {renderStars(review.rating)}
+                  </div>
+
+                  <p className="text-[9px] md:text-base text-gray-600 mb-2 md:mb-4 leading-relaxed md:leading-relaxed line-clamp-4 md:line-clamp-none font-serif italic group-hover:text-gray-900 transition-colors">
+                    "{review.comment}"
+                  </p>
                 </div>
-                <div className="flex items-center gap-1 mb-3">
-                  {renderStars(review.rating)}
+
+                <div className="relative z-10 pt-2 md:pt-4 border-t border-gray-100 mt-auto">
+                  <p className="text-[8px] md:text-xs text-gray-400 font-medium uppercase tracking-wider">{review.date}</p>
                 </div>
-                <p className="text-sm text-gray-600 mb-3 leading-relaxed">{review.comment}</p>
-                <p className="text-xs text-gray-400">{review.date}</p>
               </div>
             ))}
           </div>

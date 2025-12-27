@@ -127,26 +127,12 @@ const Footer = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-[10px] md:text-sm mb-1 font-semibold text-gray-400">Across India:</p>
-                  <div className="text-[9px] md:text-sm text-gray-500 flex flex-nowrap gap-1 md:gap-2 overflow-x-auto pb-1">
+                  <div className="text-[9px] md:text-sm text-gray-500 flex flex-wrap gap-2 md:gap-3 pb-1 mb-1">
                     {INDIAN_CITIES.map((city, index) => (
                       <Link
                         key={index}
                         to={`/location/${city.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="px-1.5 py-0.5 bg-gray-900/50 rounded hover:text-[#8B7355] transition-colors whitespace-nowrap"
-                      >
-                        {city}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-[10px] md:text-sm mb-1 font-semibold text-gray-400">Globe:</p>
-                  <div className="text-[9px] md:text-sm text-gray-500 flex flex-nowrap gap-1 md:gap-2 overflow-x-auto pb-1">
-                    {INTERNATIONAL_CITIES.map((city, index) => (
-                      <Link
-                        key={index}
-                        to={`/location/${city.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="px-1.5 py-0.5 bg-gray-900/50 rounded hover:text-[#8B7355] transition-colors whitespace-nowrap"
+                        className="px-2 py-1 bg-gray-900/50 rounded hover:text-[#8B7355] transition-colors whitespace-nowrap border border-white/5"
                       >
                         {city}
                       </Link>
