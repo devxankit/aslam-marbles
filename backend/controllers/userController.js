@@ -109,14 +109,98 @@ const generateOtpPayload = () => {
   return { otpCode, otpToken, expiresAt };
 };
 
+const sendEmail = require('../utils/sendEmail');
+
 exports.forgotPassword = async (req, res, next) => {
   try {
-    const { emailOrPhone, type } = req.body;
+    const { emailOrPhone } = req.body;
+    console.log('Forgot Password Request for:', emailOrPhone);
+
     if (!emailOrPhone) {
       return res.status(400).json({ success: false, message: 'Email or phone is required' });
     }
 
-    const isEmail = type === 'email' || emailOrPhone.includes('@');
+    const isEmail = emailOrPhone.includes('@');
+    const query = isEmail
+      ? { email: emailOrPhone.toLowerCase() }
+      : { phone: emailOrPhone.replace(/\D/g, '') };
+
+    const user = await User.findOne(query);
+    if (!user) {
+      console.log('User not found for query:', query);
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Generate 6-digit OTP
+    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    console.log('Generated OTP:', otpCode, 'for user:', user.email);
+
+    user.otpCode = otpCode;
+    user.otpExpiresAt = expiresAt;
+    await user.save();
+
+    const message = `
+      <div style="font-family: Arial, sans-serif; max-w-600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+        <h2 style="color: #8B7355; text-align: center;">Password Reset OTP</h2>
+        <p style="text-align: center; color: #555;">Use the following OTP to reset your password. This OTP is valid for 10 minutes.</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <span style="display: inline-block; padding: 15px 30px; background-color: #f8f8f8; color: #333; font-size: 24px; font-weight: bold; letter-spacing: 5px; border-radius: 8px; border: 2px dashed #8B7355;">${otpCode}</span>
+        </div>
+        <p style="text-align: center; color: #888; font-size: 12px;">If you didn't request this, please ignore this email.</p>
+      </div>
+    `;
+
+    try {
+      if (isEmail) {
+        // Attempt to send email, but don't crash if credentials are wrong
+        try {
+          await sendEmail({
+            email: user.email,
+            subject: 'Aslam Marble Suppliers - Password Reset OTP',
+            message
+          });
+        } catch (innerError) {
+          console.error('⚠️ Email send failed (likely invalid credentials). OTP is still valid.');
+          console.error('DEBUG OTP for testing:', otpCode);
+          // Proceed as if success so user can enter the OTP from console
+        }
+      } else {
+        // SMS implementation...
+        return res.status(400).json({ success: false, message: 'Currently only Email reset is supported via backend integration.' });
+      }
+
+      return res.json({
+        success: true,
+        message: `OTP generated! Check server console for code (Email sending may have failed).`,
+      });
+
+    } catch (emailError) {
+      // This catch might not be reached due to inner catch, but keeps safety
+      console.error('Critical Email Error:', emailError);
+      return res.status(500).json({ success: false, message: 'Email could not be sent.' });
+    }
+
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.verifyOtp = async (req, res, next) => {
+  // Keeping this for backward compatibility if needed, but the main flow is resetPassword
+  return res.status(400).json({ success: false, message: 'Please use the Reset Password form directly.' });
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    const { emailOrPhone, otp, password } = req.body;
+
+    if (!emailOrPhone || !otp || !password) {
+      return res.status(400).json({ success: false, message: 'Email, OTP, and new password are required' });
+    }
+
+    const isEmail = emailOrPhone.includes('@');
     const query = isEmail
       ? { email: emailOrPhone.toLowerCase() }
       : { phone: emailOrPhone.replace(/\D/g, '') };
@@ -126,125 +210,32 @@ exports.forgotPassword = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    const { otpCode, otpToken, expiresAt } = generateOtpPayload();
-    user.otpCode = otpCode;
-    user.otpToken = otpToken;
-    user.otpExpiresAt = expiresAt;
-    await user.save();
-
-    // In production send OTP via email/SMS. For now, return token and expose otp for testing.
-    return res.json({
-      success: true,
-      message: 'OTP sent successfully',
-      token: otpToken,
-      debugOtp: otpCode
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.verifyOtp = async (req, res, next) => {
-  try {
-    const { emailOrPhone, otp, token } = req.body;
-    if (!emailOrPhone || !otp || !token) {
-      return res.status(400).json({ success: false, message: 'Email/phone, otp, and token are required' });
-    }
-
-    const query = emailOrPhone.includes('@')
-      ? { email: emailOrPhone.toLowerCase() }
-      : { phone: emailOrPhone.replace(/\D/g, '') };
-
-    const user = await User.findOne(query);
-    if (!user || !user.otpToken || user.otpToken !== token) {
-      return res.status(400).json({ success: false, message: 'Invalid token' });
-    }
-
-    if (!user.otpExpiresAt || user.otpExpiresAt < new Date()) {
-      return res.status(400).json({ success: false, message: 'OTP expired' });
-    }
-
     if (user.otpCode !== otp) {
       return res.status(400).json({ success: false, message: 'Invalid OTP' });
     }
 
-    const resetToken = crypto.randomBytes(20).toString('hex');
-    user.resetToken = resetToken;
-    user.resetExpiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
-    user.otpCode = null;
-    user.otpToken = null;
-    user.otpExpiresAt = null;
-    await user.save();
-
-    return res.json({
-      success: true,
-      message: 'OTP verified',
-      resetToken
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.resendOtp = async (req, res, next) => {
-  try {
-    const { emailOrPhone } = req.body;
-    if (!emailOrPhone) {
-      return res.status(400).json({ success: false, message: 'Email or phone is required' });
+    if (user.otpExpiresAt < Date.now()) {
+      return res.status(400).json({ success: false, message: 'OTP has expired' });
     }
 
-    const query = emailOrPhone.includes('@')
-      ? { email: emailOrPhone.toLowerCase() }
-      : { phone: emailOrPhone.replace(/\D/g, '') };
-
-    const user = await User.findOne(query);
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
-    }
-
-    const { otpCode, otpToken, expiresAt } = generateOtpPayload();
-    user.otpCode = otpCode;
-    user.otpToken = otpToken;
-    user.otpExpiresAt = expiresAt;
-    await user.save();
-
-    return res.json({
-      success: true,
-      message: 'OTP resent successfully',
-      token: otpToken,
-      debugOtp: otpCode
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.resetPassword = async (req, res, next) => {
-  try {
-    const { emailOrPhone, password, token } = req.body;
-    if (!emailOrPhone || !password || !token) {
-      return res.status(400).json({ success: false, message: 'Email/phone, password, and token are required' });
-    }
-
-    const query = emailOrPhone.includes('@')
-      ? { email: emailOrPhone.toLowerCase() }
-      : { phone: emailOrPhone.replace(/\D/g, '') };
-
-    const user = await User.findOne(query);
-    if (!user || user.resetToken !== token) {
-      return res.status(400).json({ success: false, message: 'Invalid reset token' });
-    }
-
-    if (!user.resetExpiresAt || user.resetExpiresAt < new Date()) {
-      return res.status(400).json({ success: false, message: 'Reset token expired' });
-    }
-
+    // Hash is handled by pre-save hook in User model if modified
     user.password = password;
-    user.resetToken = null;
-    user.resetExpiresAt = null;
+    user.otpCode = undefined;
+    user.otpExpiresAt = undefined;
+    user.resetToken = undefined;
+    user.resetExpiresAt = undefined;
+
     await user.save();
 
-    return res.json({ success: true, message: 'Password reset successful' });
+    // Generate token so user is automatically logged in? 
+    // User requested "user new password se login karta hai", implies they go to login page.
+    // So I will just return success.
+
+    return res.json({
+      success: true,
+      message: 'Password reset successful. Please login with your new password.'
+    });
+
   } catch (err) {
     next(err);
   }

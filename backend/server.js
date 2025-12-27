@@ -1,4 +1,6 @@
 const express = require('express');
+// server update 9 - Force Restart & Verify
+console.log('--- BACKEND SERVER RESTARTING (Update 9) ---');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');

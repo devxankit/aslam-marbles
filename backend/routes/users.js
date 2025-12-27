@@ -8,8 +8,7 @@ const {
   listUsers,
   forgotPassword,
   verifyOtp,
-  resetPassword,
-  resendOtp
+  resetPassword
 } = require('../controllers/userController');
 
 // Public
@@ -21,7 +20,6 @@ router.post('/login', login);
 router.post('/forgot-password', forgotPassword);
 router.post('/verify-otp', verifyOtp);
 router.post('/reset-password', resetPassword);
-router.post('/resend-otp', resendOtp);
 
 // Protected
 router.get('/me', auth, getProfile);

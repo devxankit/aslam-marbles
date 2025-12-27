@@ -46,19 +46,36 @@ const connectDB = async (mongoUri) => {
     throw new Error('Missing MongoDB connection string (MONGODB_URI)');
   }
 
-  try {
-    await mongoose.connect(mongoUri, {
-      serverSelectionTimeoutMS: 15000, // Increased timeout to 15s
-      socketTimeoutMS: 45000,
-      family: 4 // Force IPv4 to resolve partial DNS issues
-    });
+  const connect = async (retries = 5) => {
+    try {
+      await mongoose.connect(mongoUri, {
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+        family: 4
+      });
 
-    console.log('✅ MongoDB connected successfully');
-    await ensureDefaultAdmin();
-  } catch (error) {
-    console.error('❌ MongoDB Connection Error:', error.message);
-    // Don't exit process, allow retry or investigation
-  }
+      console.log('✅ MongoDB connected successfully');
+      await ensureDefaultAdmin();
+    } catch (error) {
+      console.error(`❌ MongoDB Connection Error (Remaining retries: ${retries}):`, error.message);
+
+      if (retries > 0) {
+        console.log('🔄 Retrying connection in 5 seconds...');
+        setTimeout(() => connect(retries - 1), 5000);
+      } else {
+        console.error('❌ Failed to connect to MongoDB after multiple attempts.');
+        // process.exit(1); // Optional: keep running to allow eventual recovery
+      }
+    }
+  };
+
+  await connect();
+
+  // Handle disconnection events
+  mongoose.connection.on('disconnected', () => {
+    console.log('⚠️ MongoDB disconnected! Attempting to reconnect...');
+    connect();
+  });
 };
 
 module.exports = connectDB;

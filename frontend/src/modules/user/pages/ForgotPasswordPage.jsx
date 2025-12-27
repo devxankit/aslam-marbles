@@ -6,7 +6,7 @@ import FloatingButtons from '../../../components/common/FloatingButtons'
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate()
-  const [step, setStep] = useState(1) // 1: Email/Phone, 2: OTP Verification, 3: Reset Password
+  const [step, setStep] = useState(1) // 1: Email/Phone, 2: OTP + Reset Password
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -14,11 +14,8 @@ const ForgotPasswordPage = () => {
   // Step 1: Email/Phone Input
   const [emailOrPhone, setEmailOrPhone] = useState('')
 
-  // Step 2: OTP Verification
+  // Step 2: OTP + Password
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
-  const [otpToken, setOtpToken] = useState('')
-
-  // Step 3: Reset Password
   const [passwordData, setPasswordData] = useState({
     password: '',
     confirmPassword: ''
@@ -56,7 +53,7 @@ const ForgotPasswordPage = () => {
     if (/^\d+$/.test(pastedData)) {
       const newOtp = pastedData.split('').concat(Array(6 - pastedData.length).fill(''))
       setOtp(newOtp.slice(0, 6))
-      
+
       // Focus last input
       const lastFilledIndex = Math.min(pastedData.length - 1, 5)
       const lastInput = document.getElementById(`otp-${lastFilledIndex}`)
@@ -76,17 +73,6 @@ const ForgotPasswordPage = () => {
       return
     }
 
-    // Validate email or phone format
-    const isEmail = emailOrPhone.includes('@')
-    if (isEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone)) {
-      setError('Please enter a valid email address')
-      return
-    }
-    if (!isEmail && !/^\d{10}$/.test(emailOrPhone.replace(/\D/g, ''))) {
-      setError('Please enter a valid 10-digit phone number')
-      return
-    }
-
     setLoading(true)
 
     try {
@@ -97,8 +83,7 @@ const ForgotPasswordPage = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          emailOrPhone: isEmail ? emailOrPhone.toLowerCase() : emailOrPhone.replace(/\D/g, ''),
-          type: isEmail ? 'email' : 'phone'
+          emailOrPhone: emailOrPhone.trim()
         })
       })
 
@@ -108,8 +93,7 @@ const ForgotPasswordPage = () => {
         throw new Error(data.message || 'Failed to send OTP. Please try again.')
       }
 
-      setOtpToken(data.token || data.resetToken || '')
-      setSuccess(`OTP sent successfully to your ${isEmail ? 'email' : 'phone number'}!`)
+      setSuccess(data.message || 'OTP sent successfully!')
       setStep(2)
 
       // Clear success message after 3 seconds
@@ -121,8 +105,8 @@ const ForgotPasswordPage = () => {
     }
   }
 
-  // Step 2: Verify OTP
-  const handleVerifyOtp = async (e) => {
+  // Step 2: Reset Password (Verify OTP + Reset)
+  const handleResetPassword = async (e) => {
     e.preventDefault()
     setError('')
     setSuccess('')
@@ -132,58 +116,6 @@ const ForgotPasswordPage = () => {
       setError('Please enter the complete 6-digit OTP')
       return
     }
-
-    if (!/^\d{6}$/.test(otpValue)) {
-      setError('OTP must contain only digits')
-      return
-    }
-
-    setLoading(true)
-
-    try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-      const response = await fetch(`${API_URL}/users/verify-otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          emailOrPhone: emailOrPhone.trim(),
-          otp: otpValue,
-          token: otpToken
-        })
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Invalid OTP. Please try again.')
-      }
-
-      // Store reset token for password reset
-      if (data.resetToken) {
-        setOtpToken(data.resetToken)
-      }
-
-      setSuccess('OTP verified successfully!')
-      setStep(3)
-
-      // Clear success message after 2 seconds
-      setTimeout(() => setSuccess(''), 2000)
-    } catch (err) {
-      setError(err.message || 'Invalid OTP. Please try again.')
-      // Clear OTP on error
-      setOtp(['', '', '', '', '', ''])
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Step 3: Reset Password
-  const handleResetPassword = async (e) => {
-    e.preventDefault()
-    setError('')
-    setSuccess('')
 
     if (!passwordData.password) {
       setError('Password is required')
@@ -211,15 +143,15 @@ const ForgotPasswordPage = () => {
         },
         body: JSON.stringify({
           emailOrPhone: emailOrPhone.trim(),
-          password: passwordData.password,
-          token: otpToken
+          otp: otpValue,
+          password: passwordData.password
         })
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to reset password. Please try again.')
+        throw new Error(data.message || 'Failed to reset password.')
       }
 
       setSuccess('Password reset successfully! Redirecting to login...')
@@ -252,17 +184,15 @@ const ForgotPasswordPage = () => {
 
     try {
       const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-      const isEmail = emailOrPhone.includes('@')
-      
-      const response = await fetch(`${API_URL}/users/resend-otp`, {
+
+      // Re-use forgot-password endpoint for resend as logic is same
+      const response = await fetch(`${API_URL}/users/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          emailOrPhone: isEmail ? emailOrPhone.toLowerCase() : emailOrPhone.replace(/\D/g, ''),
-          type: isEmail ? 'email' : 'phone',
-          token: otpToken
+          emailOrPhone: emailOrPhone.trim()
         })
       })
 
@@ -274,14 +204,7 @@ const ForgotPasswordPage = () => {
 
       setSuccess('OTP resent successfully!')
       setOtp(['', '', '', '', '', ''])
-      
-      // Focus first OTP input
-      setTimeout(() => {
-        const firstInput = document.getElementById('otp-0')
-        if (firstInput) firstInput.focus()
-      }, 100)
 
-      // Clear success message after 3 seconds
       setTimeout(() => setSuccess(''), 3000)
     } catch (err) {
       setError(err.message || 'Failed to resend OTP. Please try again.')
@@ -294,11 +217,11 @@ const ForgotPasswordPage = () => {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header
         variant="default"
-        onShowSidebar={() => {}}
-        onShowProjects={() => {}}
-        onShowCreations={() => {}}
-        onShowServices={() => {}}
-        onShowProducts={() => {}}
+        onShowSidebar={() => { }}
+        onShowProjects={() => { }}
+        onShowCreations={() => { }}
+        onShowServices={() => { }}
+        onShowProducts={() => { }}
       />
 
       <main className="flex-1 flex items-center justify-center px-4 py-8 md:py-12">
@@ -311,44 +234,29 @@ const ForgotPasswordPage = () => {
                 Reset Password
               </h1>
               <p className="text-white/90 text-sm">
-                {step === 1 && 'Enter your email or phone number'}
-                {step === 2 && 'Enter the OTP sent to your email/phone'}
-                {step === 3 && 'Create your new password'}
+                {step === 1 ? 'Enter your email or phone number' : 'Enter OTP & New Password'}
               </p>
             </div>
 
             {/* Progress Indicator */}
             <div className="px-6 pt-6 pb-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-center">
                 <div className="flex items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
-                    step >= 1 ? 'bg-[#8B7355] text-white' : 'bg-gray-200 text-gray-500'
-                  }`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold ${step >= 1 ? 'bg-[#8B7355] text-white' : 'bg-gray-200 text-gray-500'
+                    }`}>
                     1
                   </div>
                   <span className={`ml-2 text-sm ${step >= 1 ? 'text-[#8B7355] font-medium' : 'text-gray-500'}`}>
-                    Verify
+                    Request OTP
                   </span>
                 </div>
-                <div className={`flex-1 h-0.5 mx-2 ${step >= 2 ? 'bg-[#8B7355]' : 'bg-gray-200'}`}></div>
+                <div className={`w-16 h-0.5 mx-4 ${step >= 2 ? 'bg-[#8B7355]' : 'bg-gray-200'}`}></div>
                 <div className="flex items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
-                    step >= 2 ? 'bg-[#8B7355] text-white' : 'bg-gray-200 text-gray-500'
-                  }`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold ${step >= 2 ? 'bg-[#8B7355] text-white' : 'bg-gray-200 text-gray-500'
+                    }`}>
                     2
                   </div>
                   <span className={`ml-2 text-sm ${step >= 2 ? 'text-[#8B7355] font-medium' : 'text-gray-500'}`}>
-                    OTP
-                  </span>
-                </div>
-                <div className={`flex-1 h-0.5 mx-2 ${step >= 3 ? 'bg-[#8B7355]' : 'bg-gray-200'}`}></div>
-                <div className="flex items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
-                    step >= 3 ? 'bg-[#8B7355] text-white' : 'bg-gray-200 text-gray-500'
-                  }`}>
-                    3
-                  </div>
-                  <span className={`ml-2 text-sm ${step >= 3 ? 'text-[#8B7355] font-medium' : 'text-gray-500'}`}>
                     Reset
                   </span>
                 </div>
@@ -419,9 +327,10 @@ const ForgotPasswordPage = () => {
                 </form>
               )}
 
-              {/* Step 2: OTP Verification */}
+              {/* Step 2: OTP + Password */}
               {step === 2 && (
-                <form onSubmit={handleVerifyOtp} className="space-y-4">
+                <form onSubmit={handleResetPassword} className="space-y-6">
+                  {/* OTP Section */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Enter 6-Digit OTP
@@ -445,80 +354,48 @@ const ForgotPasswordPage = () => {
                       ))}
                     </div>
                     <p className="mt-2 text-xs text-gray-500 text-center">
-                      OTP sent to {emailOrPhone.includes('@') ? 'email' : 'phone'}
+                      OTP sent to {emailOrPhone}
                     </p>
+                  </div>
+
+                  {/* Password Section */}
+                  <div className="space-y-4">
+                    <div>
+                      <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                        New Password
+                      </label>
+                      <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={passwordData.password}
+                        onChange={handlePasswordChange}
+                        placeholder="Enter new password (min 6 characters)"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-2 focus:ring-[#8B7355] transition-all"
+                        disabled={loading}
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                        Confirm New Password
+                      </label>
+                      <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        value={passwordData.confirmPassword}
+                        onChange={handlePasswordChange}
+                        placeholder="Confirm new password"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-2 focus:ring-[#8B7355] transition-all"
+                        disabled={loading}
+                      />
+                    </div>
                   </div>
 
                   <button
                     type="submit"
                     disabled={loading || otp.join('').length !== 6}
-                    className="w-full py-3 bg-[#8B7355] text-white font-semibold rounded-lg hover:bg-[#7a6349] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-                  >
-                    {loading ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Verifying...
-                      </span>
-                    ) : (
-                      'Verify OTP'
-                    )}
-                  </button>
-
-                  <div className="text-center">
-                    <button
-                      type="button"
-                      onClick={handleResendOtp}
-                      disabled={loading}
-                      className="text-sm text-[#8B7355] hover:underline font-medium disabled:opacity-50"
-                    >
-                      Didn't receive OTP? Resend
-                    </button>
-                  </div>
-                </form>
-              )}
-
-              {/* Step 3: Reset Password */}
-              {step === 3 && (
-                <form onSubmit={handleResetPassword} className="space-y-4">
-                  <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                      New Password
-                    </label>
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      value={passwordData.password}
-                      onChange={handlePasswordChange}
-                      placeholder="Enter new password (min 6 characters)"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-2 focus:ring-[#8B7355] transition-all"
-                      disabled={loading}
-                      autoFocus
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                      Confirm New Password
-                    </label>
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      value={passwordData.confirmPassword}
-                      onChange={handlePasswordChange}
-                      placeholder="Confirm new password"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-2 focus:ring-[#8B7355] transition-all"
-                      disabled={loading}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
                     className="w-full py-3 bg-[#8B7355] text-white font-semibold rounded-lg hover:bg-[#7a6349] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                   >
                     {loading ? (
@@ -533,6 +410,17 @@ const ForgotPasswordPage = () => {
                       'Reset Password'
                     )}
                   </button>
+
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={handleResendOtp}
+                      disabled={loading}
+                      className="text-sm text-[#8B7355] hover:underline font-medium disabled:opacity-50"
+                    >
+                      Didn't receive OTP? Resend
+                    </button>
+                  </div>
                 </form>
               )}
 
