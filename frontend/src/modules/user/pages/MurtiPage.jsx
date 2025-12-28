@@ -21,6 +21,7 @@ import { krishnaProducts } from '../../../data/krishnaProducts'
 import { furnitureData, homeDecorData, allFurnitureCategories, allHomeDecorCategories } from '../../../data/categoryImages'
 import { Link } from 'react-router-dom'
 import homeDecorHeading from '../../../assets/ourcreation/home decore/heading.png'
+import LazyImage from '../../../components/common/LazyImage'
 
 const MurtiPage = ({
   onShowSidebar,
@@ -205,10 +206,12 @@ const MurtiPage = ({
 
       {/* Hero Section - Simple & Elegant */}
       <div className="relative w-full h-[40vh] md:h-[50vh] overflow-hidden bg-white">
-        <img
+        <LazyImage
           src={pageData?.heroSection?.image?.url || 'https://images.unsplash.com/photo-1544006659-f0b21f04cb1b?auto=format&fit=crop&q=80&w=2000'}
           alt="Divine Collection"
-          className="w-full h-full object-cover opacity-80"
+          className="w-full h-full"
+          imageClassName="w-full h-full object-cover opacity-80"
+          priority={true}
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-4 bg-white/10">
           <div className="text-center">
@@ -289,10 +292,12 @@ const MurtiPage = ({
                         className="flex-shrink-0 cursor-pointer snap-center"
                       >
                         <div className="relative w-56 aspect-square md:w-64 md:aspect-square overflow-hidden bg-gray-50 border border-gray-100 group transition-all duration-300">
-                          <img
+                          <LazyImage
                             src={category.heroSection?.image?.url || 'https://via.placeholder.com/300x500'}
                             alt={category.name}
-                            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                            className="w-full h-full"
+                            imageClassName="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                            width={300}
                           />
                         </div>
                         <p className="mt-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest text-center group-hover:text-gray-900 transition-colors">
@@ -340,7 +345,13 @@ const MurtiPage = ({
               return (
                 <div key={category} onClick={() => navigate(`/furniture/${category.toLowerCase().replace(/\s+/g, '-')}`)} className="cursor-pointer group">
                   <div className="aspect-square overflow-hidden bg-gray-50 mb-3 rounded-xl">
-                    <img src={coverImage} alt={category} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                    <LazyImage
+                      src={coverImage}
+                      alt={category}
+                      className="w-full h-full"
+                      imageClassName="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                      width={300}
+                    />
                   </div>
                   <h4 className="text-gray-900 text-sm font-medium uppercase tracking-widest text-center">{category}</h4>
                 </div>
@@ -362,7 +373,13 @@ const MurtiPage = ({
               return (
                 <div key={category} onClick={() => navigate(`/home-decor/${category.toLowerCase().replace(/\s+/g, '-')}`)} className="cursor-pointer group">
                   <div className="aspect-[4/5] overflow-hidden bg-gray-50 mb-4 rounded-xl border border-gray-100">
-                    <img src={coverImage} alt={category} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                    <LazyImage
+                      src={coverImage}
+                      alt={category}
+                      className="w-full h-full"
+                      imageClassName="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                      width={400}
+                    />
                   </div>
                   <h4 className="text-gray-900 text-[10px] font-bold uppercase tracking-widest text-center">{category}</h4>
                 </div>

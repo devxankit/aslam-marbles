@@ -70,6 +70,7 @@ import ImportedPage from './modules/user/pages/ImportedPage'
 import PackagingPage from './modules/user/pages/PackagingPage'
 import PackagingCategoryPage from './modules/user/pages/PackagingCategoryPage'
 import MurtiCategoryTemplate from './modules/user/components/MurtiCategoryTemplate'
+import LiveInventoryPage from './modules/user/pages/LiveInventoryPage'
 
 
 import LimitedEditionPage from './modules/user/pages/LimitedEditionPage'
@@ -109,6 +110,7 @@ import CommunalTemplesManagementPage from './modules/admin/pages/CommunalTemples
 import JainTemplesManagementPage from './modules/admin/pages/JainTemplesManagementPage'
 import MurtiManagementPage from './modules/admin/pages/MurtiManagementPage'
 import HomeDecorManagementPage from './modules/admin/pages/HomeDecorManagementPage'
+import LiveInventoryManagementPage from './modules/admin/pages/LiveInventoryManagementPage'
 
 import OurServicesManagementPage from './modules/admin/pages/OurServicesManagementPage'
 import TSADesignHubManagementPage from './modules/admin/pages/TSADesignHubManagementPage'
@@ -467,6 +469,19 @@ function App() {
               onShowProducts={() => setShowOurProducts(true)}
               onShowServices={() => setShowOurServices(true)}
               onShowHowItWorks={() => setShowModal(true)}
+            />
+          } />
+
+          <Route path="/services/live-inventory" element={
+            <LiveInventoryPage
+              onShowSidebar={() => setShowSidebar(true)}
+              onShowProjects={() => setShowProjectsModal(true)}
+              onShowCreations={() => setShowOurCreations(true)}
+              onShowProducts={() => setShowOurProducts(true)}
+              onShowServices={() => setShowOurServices(true)}
+              onShowHowItWorks={() => setShowModal(true)}
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
             />
           } />
 
@@ -1356,6 +1371,11 @@ function App() {
           <Route path="/admin/content/our-services" element={
             <ProtectedRoute>
               <OurServicesManagementPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/services/live-inventory" element={
+            <ProtectedRoute>
+              <LiveInventoryManagementPage />
             </ProtectedRoute>
           } />
           <Route path="/admin/our-services/design-hub" element={

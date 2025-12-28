@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { homeImages } from '../../data/homeImages'
 import { fetchAslamHouseItems, buildImageUrl } from '../../utils/aslamHouseUtils'
+import LazyImage from '../common/LazyImage'
 
 const HomeImagesSection = () => {
   const navigate = useNavigate()
@@ -41,10 +42,11 @@ const HomeImagesSection = () => {
               style={{ minHeight: '200px' }}
             >
               <picture>
-                <img
+                <LazyImage
                   src={visitStoreImage.image}
                   alt={visitStoreImage.name}
-                  className="w-full h-40 sm:h-[50vh] md:h-[60vh] lg:h-[70vh] object-cover object-center transform transition-transform duration-[2s] hover:scale-105"
+                  className="w-full h-40 sm:h-[50vh] md:h-[60vh] lg:h-[70vh]"
+                  imageClassName="w-full h-full object-cover object-center transform transition-transform duration-[2s] hover:scale-105"
                 />
               </picture>
 

@@ -19,6 +19,7 @@ import { jainMurtiProducts } from '../../../data/jainMurtiProducts'
 import { nandiProducts } from '../../../data/nandiProducts'
 import { balajiProducts } from '../../../data/balajiProducts'
 import { getProductById } from '../../../data/generatedProducts'
+import LazyImage from '../../../components/common/LazyImage'
 
 const ProductDetailPage = ({
   onShowSidebar,
@@ -240,10 +241,12 @@ const ProductDetailPage = ({
                     className={`flex-shrink-0 w-20 h-20 lg:w-24 lg:h-24 rounded-lg overflow-hidden cursor-pointer border-2 transition-all ${selectedImageIndex === index ? 'border-[#8B7355]' : 'border-transparent hover:border-gray-300'
                       }`}
                   >
-                    <img
+                    <LazyImage
                       src={typeof img === 'string' ? img : img?.url}
                       alt={`${product.name} view ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full"
+                      imageClassName="w-full h-full object-cover"
+                      width={100}
                     />
                   </div>
                 ))}
@@ -251,10 +254,13 @@ const ProductDetailPage = ({
 
               {/* Main Image */}
               <div className="relative flex-1 aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                <img
+                <LazyImage
                   src={typeof product.images[selectedImageIndex] === 'string' ? product.images[selectedImageIndex] : product.images[selectedImageIndex]?.url}
                   alt={product.name}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full"
+                  imageClassName="w-full h-full object-contain"
+                  width={800}
+                  priority={true}
                 />
                 {/* Navigation Arrows */}
                 {product.images.length > 1 && (

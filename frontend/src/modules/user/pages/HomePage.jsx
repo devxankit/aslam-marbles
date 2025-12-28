@@ -19,6 +19,8 @@ import { fetchHomePageData } from '../../../utils/homePageUtils'
 import BeforeAfterSlider from '../../../components/common/BeforeAfterSlider'
 import afterImage from '../../../assets/ourcreation/pooja room/before&after/compare1.png'
 import beforeImage from '../../../assets/ourcreation/pooja room/before&after/compare2.jpg'
+import LazyImage from '../../../components/common/LazyImage'
+
 
 const HomePage = ({
   onShowSidebar,
@@ -120,10 +122,11 @@ const HomePage = ({
 
       {/* Completed Custom Projects Section */}
       <section className="w-full relative h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden">
-        <img
+        <LazyImage
           src={homePageData?.completedProjectsSection?.backgroundImage?.url || "https://res.cloudinary.com/djuyp9lut/image/upload/v1766129645/artist/hero/yjy4w3bfu9s4fhirpius.webp"}
           alt={homePageData?.completedProjectsSection?.backgroundImage?.alt || "Completed Custom Projects"}
-          className="w-full h-full object-cover"
+          className="w-full h-full"
+          imageClassName="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
@@ -263,11 +266,12 @@ const BlogCard = memo(({ post, onClick }) => (
   >
     {/* Image Section */}
     <div className="relative w-full h-20 sm:h-32 md:h-48 overflow-hidden">
-      <img
+      <LazyImage
         src={post.image}
         alt={post.title}
-        loading="lazy"
-        className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+        className="w-full h-full"
+        imageClassName="transition-transform duration-500 ease-in-out group-hover:scale-110"
+        width={400} // Approximate width for blog cards
       />
     </div>
 

@@ -1,4 +1,5 @@
 import ExpertFormOverlay from './ExpertFormOverlay'
+import LazyImage from './LazyImage'
 
 const HeroSectionWithForm = ({
   heroImage,
@@ -15,12 +16,12 @@ const HeroSectionWithForm = ({
       style={!enableMobileModal ? { height: '75vh', minHeight: '600px' } : {}}
     >
       {/* Background Image */}
-      <img
+      <LazyImage
         src={heroImage}
         alt={title}
-        className="w-full h-full object-cover"
-        style={{ objectFit: 'cover', objectPosition: 'center' }}
-        referrerPolicy="no-referrer"
+        className="w-full h-full"
+        imageClassName="w-full h-full object-cover"
+        priority={true}
       />
 
       {/* Gradient Overlay */}

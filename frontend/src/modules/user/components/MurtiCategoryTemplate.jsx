@@ -20,6 +20,7 @@ import { saraswatiProducts } from '../../../data/saraswatiProducts'
 import { shivParvatiProducts } from '../../../data/shivParvatiProducts'
 import { saiBabaProducts } from '../../../data/saiBabaProducts'
 import { vishnuLaxmiProducts } from '../../../data/vishnuLaxmiProducts'
+import LazyImage from '../../../components/common/LazyImage'
 
 const MurtiCategoryTemplate = ({
     categoryId,
@@ -144,10 +145,12 @@ const MurtiCategoryTemplate = ({
             <div className={`relative w-full overflow-hidden ${(!categoryInfo?.heroSection?.image?.url && !subtitle && !categoryInfo?.heroSection?.subtitle) ? 'py-12 md:py-16' : 'h-[300px]'}`}>
                 {categoryInfo?.heroSection?.image?.url ? (
                     <>
-                        <img
+                        <LazyImage
                             src={categoryInfo.heroSection.image.url}
                             alt={categoryInfo.name || title}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full"
+                            imageClassName="w-full h-full object-cover"
+                            priority={true}
                         />
                         <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center z-10 px-4 text-white">
                             <h1 className="text-3xl md:text-5xl font-serif italic mb-4 font-bold drop-shadow-lg text-center">
@@ -234,10 +237,12 @@ const MurtiCategoryTemplate = ({
                                                     <span className="text-white text-xs font-semibold uppercase">Pre Order</span>
                                                 </div>
                                             )}
-                                            <img
+                                            <LazyImage
                                                 src={previewImage}
                                                 alt={product.name}
-                                                className="w-full h-full object-cover object-top transition-transform duration-500 ease-in-out group-hover:scale-110"
+                                                className="w-full h-full"
+                                                imageClassName="w-full h-full object-cover object-top transition-transform duration-500 ease-in-out group-hover:scale-110"
+                                                width={400}
                                             />
                                             {/* Hover Actions */}
                                             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
