@@ -10,6 +10,12 @@ const { cloudinary } = require('../utils/cloudinary');
 dotenv.config();
 
 // Helper to upload image to Cloudinary
+if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+    console.error('\n❌ CRITICAL ERROR: Cloudinary credentials missing in .env file.');
+    console.error('Please ensure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set.\n');
+    process.exit(1);
+}
+
 const uploadImageToCloudinary = async (imagePath, categoryName) => {
     try {
         const imageBuffer = fs.readFileSync(imagePath);

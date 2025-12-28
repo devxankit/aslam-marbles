@@ -12,6 +12,12 @@ const connectDB = require('../config/db');
 dotenv.config();
 
 // Cloudinary Config
+if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+    console.error('\n❌ CRITICAL ERROR: Cloudinary credentials missing in .env file.');
+    console.error('Please ensure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set.\n');
+    process.exit(1);
+}
+
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
