@@ -30,6 +30,9 @@ import DreamTemplePage from './modules/user/pages/DreamTemplePage'
 import PoojaRoomPage from './modules/user/pages/PoojaRoomPage'
 import HomeDecorPage from './modules/user/pages/HomeDecorPage'
 import OnSalePage from './modules/user/pages/OnSalePage'
+import ShopByCategoryPage from './modules/user/pages/ShopByCategoryPage'
+import ShopByPage from './modules/user/pages/ShopByPage'
+import ShopByProductDetailPage from './modules/user/pages/ShopByProductDetailPage'
 import CommunalTemplesPage from './modules/user/pages/CommunalTemplesPage'
 import JainTemplesPage from './modules/user/pages/JainTemplesPage'
 import ArtisansOfTilakPage from './modules/user/pages/ArtisansOfTilakPage'
@@ -111,6 +114,7 @@ import JainTemplesManagementPage from './modules/admin/pages/JainTemplesManageme
 import MurtiManagementPage from './modules/admin/pages/MurtiManagementPage'
 import HomeDecorManagementPage from './modules/admin/pages/HomeDecorManagementPage'
 import SpecialCollectionManagementPage from './modules/admin/pages/SpecialCollectionManagementPage'
+import ShopByManagementPage from './modules/admin/pages/ShopByManagementPage'
 import LiveInventoryManagementPage from './modules/admin/pages/LiveInventoryManagementPage'
 
 import OurServicesManagementPage from './modules/admin/pages/OurServicesManagementPage'
@@ -543,6 +547,36 @@ function App() {
             <ProductDetailPage
               onShowCart={() => setShowCart(true)}
               onShowLikes={() => setShowLikes(true)}
+            />
+          } />
+
+          <Route path="/shop-by" element={
+            <ShopByPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+              onShowBooking={() => setShowBookingModal(true)}
+            />
+          } />
+
+          <Route path="/shop-by/:section/:category" element={
+            <ShopByCategoryPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+              onShowSidebar={() => setShowSidebar(true)}
+              onShowProjects={() => setShowProjectsModal(true)}
+              onShowCreations={() => setShowOurCreations(true)}
+              onShowProducts={() => setShowOurProducts(true)}
+              onShowServices={() => setShowOurServices(true)}
+              onShowHowItWorks={() => setShowModal(true)}
+              onShowBooking={() => setShowBookingModal(true)}
+            />
+          } />
+
+          <Route path="/shop-by/:section/:category/:productId" element={
+            <ShopByProductDetailPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+              onShowBooking={() => setShowBookingModal(true)}
             />
           } />
 
@@ -1371,6 +1405,11 @@ function App() {
           <Route path="/admin/content/special-collections" element={
             <ProtectedRoute>
               <SpecialCollectionManagementPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/content/shop-by" element={
+            <ProtectedRoute>
+              <ShopByManagementPage />
             </ProtectedRoute>
           } />
 

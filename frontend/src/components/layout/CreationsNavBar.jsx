@@ -194,9 +194,26 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                         key={item.name}
                         onMouseEnter={() => handleDropdownChange(item.dropdownKey)}
                       >
-                        <Link
-                          to={item.path}
-                          className={`
+                        {item.name === 'SHOP BY' ? (
+                          <span
+                            className={`
+                          relative group pb-1
+                          text-[11px] md:text-[12px] lg:text-[13px] xl:text-[14px]
+                          font-medium tracking-[0.05em] uppercase
+                          whitespace-nowrap
+                          transition-all duration-300 ease-in-out
+                          select-none
+                          cursor-pointer
+                          text-gray-700 hover:text-[#8B7355]
+                        `}
+                          >
+                            {item.name}
+                            <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B7355] transition-all duration-300 group-hover:w-full"></span>
+                          </span>
+                        ) : (
+                          <Link
+                            to={item.path}
+                            className={`
                           relative group pb-1
                           text-[11px] md:text-[12px] lg:text-[13px] xl:text-[14px]
                           font-medium tracking-[0.05em] uppercase
@@ -204,17 +221,18 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                           transition-all duration-300 ease-in-out
                           select-none focus:outline-none caret-transparent
                           ${isActive
-                              ? 'text-black font-semibold'
-                              : 'text-gray-700 hover:text-[#8B7355]'
-                            }
+                                ? 'text-black font-semibold'
+                                : 'text-gray-700 hover:text-[#8B7355]'
+                              }
                         `}
-                        >
-                          {item.name}
-                          {isActive && (
-                            <span className="absolute left-0 bottom-0 w-full h-[2px] bg-[#8B7355] transition-all duration-300"></span>
-                          )}
-                          <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B7355] transition-all duration-300 group-hover:w-full"></span>
-                        </Link>
+                          >
+                            {item.name}
+                            {isActive && (
+                              <span className="absolute left-0 bottom-0 w-full h-[2px] bg-[#8B7355] transition-all duration-300"></span>
+                            )}
+                            <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B7355] transition-all duration-300 group-hover:w-full"></span>
+                          </Link>
+                        )}
                       </div>
                     )
                   }

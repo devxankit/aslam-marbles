@@ -140,6 +140,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
             { title: 'Jain Temples', path: '/admin/category/jain-temples' },
             { title: 'On Sale', path: '/admin/content/special-collections?tab=on-sale' },
             { title: 'Limited Edition', path: '/admin/content/special-collections?tab=limited-edition' },
+            { title: 'Shop By', path: '/admin/content/shop-by' },
             { title: 'Manage Hover', path: '/admin/pages/our-creations-nav' }
           ]
         },

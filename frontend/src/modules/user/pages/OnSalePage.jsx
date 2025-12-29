@@ -4,6 +4,7 @@ import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import { useCartAndLikes } from '../../../contexts/CartAndLikesContext'
+import LazyImage from '../../../components/common/LazyImage'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
@@ -35,7 +36,7 @@ const OnSalePage = ({ onShowCart, onShowLikes }) => {
             <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
 
             {/* Banner Section */}
-            <div className="w-full py-12 md:py-16 px-4 md:px-6 lg:px-8 bg-[#F5F8F9]">
+            <div className="w-full py-12 md:py-16 px-4 md:px-6 lg:px-8 bg-[#FDFBF7]">
                 <div className="max-w-7xl mx-auto text-center">
                     <h1 className="text-3xl md:text-5xl font-serif text-[#8B7355] italic mb-4 font-bold tracking-tight">
                         On Sale
@@ -55,7 +56,7 @@ const OnSalePage = ({ onShowCart, onShowLikes }) => {
                             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#8B7355]"></div>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
                             {products.length === 0 ? (
                                 <div className="col-span-full text-center text-gray-500 py-10">
                                     No products currently on sale.
@@ -68,11 +69,21 @@ const OnSalePage = ({ onShowCart, onShowLikes }) => {
                                 >
                                     {/* Image Container */}
                                     <div className="relative w-full aspect-[4/5] overflow-hidden bg-gray-50">
-                                        <img
-                                            src={product.images && product.images[0] ? product.images[0].url : ''}
-                                            alt={product.name}
-                                            className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
-                                        />
+                                        {product.images && product.images[0] ? (
+                                            <LazyImage
+                                                src={product.images[0].url}
+                                                alt={product.name}
+                                                className="w-full h-full"
+                                                imageClassName="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                                                width={400}
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                                                <svg className="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                            </div>
+                                        )}
                                         {/* Sale Tag */}
                                         <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
                                             Sale
