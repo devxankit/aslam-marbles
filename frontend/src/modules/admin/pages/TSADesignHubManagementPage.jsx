@@ -15,7 +15,8 @@ const TSADesignHubManagementPage = () => {
     const fetchData = async () => {
         try {
             setLoading(true)
-            const res = await axios.get('http://localhost:5000/api/ams-design-hub')
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+            const res = await axios.get(`${API_URL}/ams-design-hub`)
             setData(res.data)
             setLoading(false)
         } catch (err) {

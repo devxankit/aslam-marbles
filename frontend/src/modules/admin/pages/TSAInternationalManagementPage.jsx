@@ -15,7 +15,8 @@ const TSAInternationalManagementPage = () => {
     const fetchData = async () => {
         try {
             setLoading(true)
-            const res = await axios.get('http://localhost:5000/api/ams-international')
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+            const res = await axios.get(`${API_URL}/ams-international`)
             setData(res.data)
             setLoading(false)
         } catch (err) {

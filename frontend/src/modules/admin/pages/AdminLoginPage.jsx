@@ -15,14 +15,14 @@ const AdminLoginPage = () => {
     setError('')
     setLoading(true)
 
-    const result = await login(email, password)
-    
+    const result = await login(email.trim(), password)
+
     if (result.success) {
       navigate('/admin/dashboard')
     } else {
       setError(result.error || 'Invalid credentials')
     }
-    
+
     setLoading(false)
   }
 
@@ -55,7 +55,7 @@ const AdminLoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8B7355] transition-colors"
-                placeholder="admin@tilakstone.com"
+                placeholder="aslammarble@gmail.com"
                 required
               />
             </div>
@@ -87,9 +87,9 @@ const AdminLoginPage = () => {
           {/* Demo Credentials */}
           <div className="mt-6 p-4 bg-gray-50 rounded-lg">
             <p className="text-xs text-gray-600 text-center">
-              <strong>Demo Credentials:</strong><br />
-              Email: admin@tilakstone.com<br />
-              Password: admin123
+              <strong>Default Credentials:</strong><br />
+              Email: aslammarble@gmail.com<br />
+              Password: aslam123
             </p>
           </div>
         </div>

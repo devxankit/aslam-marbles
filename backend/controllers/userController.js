@@ -112,7 +112,7 @@ exports.adminLogin = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Email and password are required' });
     }
 
-    const user = await User.findOne({ email: email.toLowerCase(), role: 'admin' });
+    const user = await User.findOne({ email: email.trim().toLowerCase(), role: 'admin' });
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
