@@ -194,7 +194,8 @@ const LeadsManagementPage = () => {
             department: app.department,
             role: app.applyingFor,
             currentPosition: app.currentPosition,
-            resumeName: app.resumeName
+            resumeName: app.resumeName,
+            resumePath: app.resumePath
           }))
           setLeads(mapped)
         } else {
@@ -449,7 +450,14 @@ const LeadsManagementPage = () => {
                     <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Name</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Email</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Phone</th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">City</th>
+                    {type === 'job-openings' ? (
+                      <>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Role</th>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Resume</th>
+                      </>
+                    ) : (
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">City</th>
+                    )}
                     <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Status</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Date</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Actions</th>
@@ -469,7 +477,27 @@ const LeadsManagementPage = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{lead.name}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.email}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.phone}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.city}</td>
+                        {type === 'job-openings' ? (
+                          <>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.role}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {lead.resumePath ? (
+                                <a
+                                  href={`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace('/api', '')}${lead.resumePath}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-blue-600 hover:underline"
+                                >
+                                  Download
+                                </a>
+                              ) : (
+                                lead.resumeName || '-'
+                              )}
+                            </td>
+                          </>
+                        ) : (
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.city}</td>
+                        )}
                         <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(lead.status)}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.date}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
@@ -623,6 +651,41 @@ const LeadsManagementPage = () => {
                     <label className="text-sm font-semibold text-gray-600">City</label>
                     <p className="text-gray-800">{selectedLead.city}</p>
                   </div>
+                  {selectedLead.department && (
+                    <div>
+                      <label className="text-sm font-semibold text-gray-600">Department</label>
+                      <p className="text-gray-800">{selectedLead.department}</p>
+                    </div>
+                  )}
+                  {selectedLead.role && (
+                    <div>
+                      <label className="text-sm font-semibold text-gray-600">Applying For</label>
+                      <p className="text-gray-800">{selectedLead.role}</p>
+                    </div>
+                  )}
+                  {selectedLead.currentPosition && (
+                    <div>
+                      <label className="text-sm font-semibold text-gray-600">Current Position</label>
+                      <p className="text-gray-800">{selectedLead.currentPosition}</p>
+                    </div>
+                  )}
+                  {selectedLead.resumeName && (
+                    <div>
+                      <label className="text-sm font-semibold text-gray-600">Resume</label>
+                      <p className="text-gray-800">
+                        {selectedLead.resumePath ? (
+                          <a
+                            href={`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace('/api', '')}${selectedLead.resumePath}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-blue-600 hover:underline"
+                          >
+                            Download {selectedLead.resumeName}
+                          </a>
+                        ) : selectedLead.resumeName}
+                      </p>
+                    </div>
+                  )}
                   {selectedLead.address && (
                     <div className="col-span-2">
                       <label className="text-sm font-semibold text-gray-600">Address</label>

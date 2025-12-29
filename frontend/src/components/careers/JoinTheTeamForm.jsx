@@ -27,23 +27,24 @@ const JoinTheTeamForm = () => {
 
     try {
       const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-      const payload = {
-        fullName: formData.fullName,
-        currentCity: formData.currentCity,
-        currentPosition: formData.currentPosition,
-        email: formData.email,
-        department: formData.department,
-        applyingFor: formData.applyingFor,
-        phoneNo: formData.phoneNo,
-        resumeName: formData.resume ? formData.resume.name : ''
+
+      const formDataToSend = new FormData()
+      formDataToSend.append('fullName', formData.fullName)
+      formDataToSend.append('currentCity', formData.currentCity)
+      formDataToSend.append('currentPosition', formData.currentPosition)
+      formDataToSend.append('email', formData.email)
+      formDataToSend.append('department', formData.department)
+      formDataToSend.append('applyingFor', formData.applyingFor)
+      formDataToSend.append('phoneNo', formData.phoneNo)
+
+      if (formData.resume) {
+        formDataToSend.append('resume', formData.resume)
       }
 
       const res = await fetch(`${API_URL}/jobs/apply`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
+        // Content-Type header must NOT be set manually for FormData; browser sets it with boundary
+        body: formDataToSend
       })
 
       const data = await res.json()
@@ -62,7 +63,9 @@ const JoinTheTeamForm = () => {
         phoneNo: '',
         resume: null
       })
+      // Reset file input manually if needed, but react state should handle basic
     } catch (error) {
+      console.error('Submission error:', error)
       alert(error.message || 'Something went wrong. Please try again.')
     }
   }
