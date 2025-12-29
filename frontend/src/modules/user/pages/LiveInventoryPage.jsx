@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../../../components/layout/Header'
 import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
@@ -23,6 +24,24 @@ const LiveInventoryPage = ({
     const [loading, setLoading] = useState(true)
     const [showMobileForm, setShowMobileForm] = useState(false)
     const [filterCategory, setFilterCategory] = useState('All')
+    const navigate = useNavigate()
+
+    const handleBuyNow = (item) => {
+        const checkoutItem = {
+            id: item._id,
+            name: item.name,
+            price: item.price || 0, // Ensure price exists
+            image: item.image?.url,
+            quantity: 1,
+            category: 'Live Inventory'
+        }
+
+        navigate('/checkout', {
+            state: {
+                items: [checkoutItem]
+            }
+        })
+    }
 
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
     const defaultHeroImage = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
@@ -182,14 +201,28 @@ const LiveInventoryPage = ({
                                                     <span className="font-medium text-gray-800">{item.specifications.finish}</span>
                                                 </div>
                                             )}
+                                            {item.price && (
+                                                <div className="flex justify-between text-sm">
+                                                    <span className="text-gray-500">Price</span>
+                                                    <span className="font-bold text-[#8B7355]">₹{item.price.toLocaleString('en-IN')}</span>
+                                                </div>
+                                            )}
                                         </div>
 
-                                        <button
-                                            onClick={() => setShowMobileForm(true)}
-                                            className="w-full mt-6 bg-gray-900 text-white py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-[#8B7355] transition-colors duration-300"
-                                        >
-                                            Enquire Now
-                                        </button>
+                                        <div className="flex gap-2 mt-6">
+                                            <button
+                                                onClick={() => handleBuyNow(item)}
+                                                className="flex-1 bg-[#8B7355] text-white py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors duration-300"
+                                            >
+                                                Buy Now
+                                            </button>
+                                            <button
+                                                onClick={() => setShowMobileForm(true)}
+                                                className="flex-1 border border-gray-300 text-gray-900 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-50 transition-colors duration-300"
+                                            >
+                                                Enquire
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}

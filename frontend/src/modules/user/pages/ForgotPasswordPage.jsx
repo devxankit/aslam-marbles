@@ -83,7 +83,7 @@ const ForgotPasswordPage = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          emailOrPhone: emailOrPhone.trim()
+          email: emailOrPhone.trim()
         })
       })
 
@@ -142,7 +142,7 @@ const ForgotPasswordPage = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          emailOrPhone: emailOrPhone.trim(),
+          email: emailOrPhone.trim(),
           otp: otpValue,
           password: passwordData.password
         })
@@ -192,7 +192,7 @@ const ForgotPasswordPage = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          emailOrPhone: emailOrPhone.trim()
+          email: emailOrPhone.trim()
         })
       })
 

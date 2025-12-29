@@ -5,7 +5,11 @@ const {
   register,
   login,
   getProfile,
-  listUsers
+  listUsers,
+  forgotPassword,
+  verifyResetOtp,
+  resetPassword,
+  adminLogin
 } = require('../controllers/userController');
 
 // Public
@@ -14,6 +18,11 @@ router.get('/register', (req, res) => res.status(405).json({ success: false, mes
 router.get('/login', (req, res) => res.status(405).json({ success: false, message: 'Use POST /api/users/login with JSON body' }));
 router.post('/register', register);
 router.post('/login', login);
+router.post('/admin-login', adminLogin);
+
+router.post('/forgot-password', forgotPassword);
+router.post('/verify-otp', verifyResetOtp);
+router.post('/reset-password', resetPassword);
 
 // Protected
 router.get('/me', auth, getProfile);
