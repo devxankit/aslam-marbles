@@ -1,171 +1,213 @@
 import { useState, useEffect } from 'react'
 import AdminLayout from '../components/AdminLayout'
+import { Search, Download, Eye, Trash2, Calendar, Mail, Phone, MapPin, User, FileText, X } from 'lucide-react'
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 const TalkToExpertPage = () => {
   const [consultations, setConsultations] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [selectedConsultation, setSelectedConsultation] = useState(null)
-  const [showDetailsModal, setShowDetailsModal] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
-  const [consultationToDelete, setConsultationToDelete] = useState(null)
-  const [filter, setFilter] = useState('all')
+  const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
-  const [editFormData, setEditFormData] = useState({})
+  const [filterStatus, setFilterStatus] = useState('all')
+  const [filterSource, setFilterSource] = useState('all')
+  const [selectedConsultation, setSelectedConsultation] = useState(null)
+  const [showDetailModal, setShowDetailModal] = useState(false)
 
   useEffect(() => {
     fetchConsultations()
-  }, [filter, searchTerm])
+  }, [])
 
   const fetchConsultations = async () => {
-    setLoading(true)
     try {
-      const adminToken = localStorage.getItem('adminToken')
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-
-      let url = `${API_URL}/expert-consultations?status=${filter}`
-      if (searchTerm) {
-        url += `&search=${encodeURIComponent(searchTerm)}`
-      }
-
-      const res = await fetch(url, {
+      const token = localStorage.getItem('adminToken')
+      const res = await fetch(`${API_URL}/expert-consultations`, {
         headers: {
-          'Content-Type': 'application/json',
-          ...(adminToken ? { 'Authorization': `Bearer ${adminToken}` } : {})
+          'Authorization': `Bearer ${token}`
         }
       })
-
       const data = await res.json()
-      if (res.ok && data.success !== false) {
-        setConsultations(data.consultations || [])
-      } else {
-        console.error('Failed to fetch consultations:', data.message)
-        setConsultations([])
+      if (data.success || data.consultations) {
+        setConsultations(data.data || data.consultations || [])
       }
-    } catch (err) {
-      console.error('Failed to fetch consultations:', err)
-      setConsultations([])
+    } catch (error) {
+      console.error('Failed to fetch consultations:', error)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleViewDetails = (consultation) => {
-    setSelectedConsultation(consultation)
-    setShowDetailsModal(true)
-  }
-
-  const handleEdit = (consultation) => {
-    setEditFormData({
-      status: consultation.status,
-      notes: consultation.notes || ''
-    })
-    setSelectedConsultation(consultation)
-    setShowEditModal(true)
-  }
-
-  const handleUpdate = async () => {
+  const updateStatus = async (id, newStatus) => {
     try {
-      const adminToken = localStorage.getItem('adminToken')
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-
-      const res = await fetch(`${API_URL}/expert-consultations/${selectedConsultation._id}`, {
+      const token = localStorage.getItem('adminToken')
+      const res = await fetch(`${API_URL}/expert-consultations/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
-          ...(adminToken ? { 'Authorization': `Bearer ${adminToken}` } : {})
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(editFormData)
+        body: JSON.stringify({ status: newStatus })
       })
-
-      const data = await res.json()
-      if (res.ok && data.success !== false) {
-        alert('Consultation updated successfully!')
-        setShowEditModal(false)
+      if (res.ok) {
         fetchConsultations()
-      } else {
-        alert(data.message || 'Failed to update consultation')
+        // optional: show toast
       }
-    } catch (err) {
-      console.error('Error updating consultation:', err)
-      alert('Failed to update consultation')
+    } catch (error) {
+      console.error('Failed to update status:', error)
     }
   }
 
-  const handleDeleteClick = (consultation) => {
-    setConsultationToDelete(consultation)
-    setShowDeleteConfirm(true)
-  }
+  const deleteConsultation = async (id) => {
+    if (!confirm('Are you sure you want to delete this consultation?')) return
 
-  const handleDelete = async () => {
     try {
-      const adminToken = localStorage.getItem('adminToken')
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-
-      const res = await fetch(`${API_URL}/expert-consultations/${consultationToDelete._id}`, {
+      const token = localStorage.getItem('adminToken')
+      const res = await fetch(`${API_URL}/expert-consultations/${id}`, {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
-          ...(adminToken ? { 'Authorization': `Bearer ${adminToken}` } : {})
+          'Authorization': `Bearer ${token}`
         }
       })
-
-      const data = await res.json()
-      if (res.ok && data.success !== false) {
-        alert('Consultation deleted successfully!')
-        setShowDeleteConfirm(false)
-        setConsultationToDelete(null)
+      if (res.ok) {
         fetchConsultations()
-      } else {
-        alert(data.message || 'Failed to delete consultation')
+        alert('Deleted successfully!')
       }
-    } catch (err) {
-      console.error('Error deleting consultation:', err)
-      alert('Failed to delete consultation')
+    } catch (error) {
+      console.error('Failed to delete consultation:', error)
     }
   }
 
-  const getStatusColor = (status) => {
-    const colors = {
-      new: 'bg-blue-100 text-blue-800',
-      contacted: 'bg-yellow-100 text-yellow-800',
-      in_progress: 'bg-purple-100 text-purple-800',
-      completed: 'bg-green-100 text-green-800',
-      closed: 'bg-gray-100 text-gray-800'
-    }
-    return colors[status] || colors.new
+  const exportToCSV = () => {
+    const headers = ['Date', 'Name', 'Email', 'Phone', 'City', 'Type', 'Status', 'Budget', 'Timeline', 'Source']
+    const rows = filteredConsultations.map(c => [
+      new Date(c.createdAt).toLocaleDateString(),
+      c.fullName,
+      c.email,
+      c.phone,
+      c.city,
+      c.type,
+      c.status,
+      c.budget || 'N/A',
+      c.timeline || 'N/A',
+      c.source || 'N/A'
+    ])
+
+    const csvContent = [headers, ...rows].map(row => row.join(',')).join('\n')
+    const blob = new Blob([csvContent], { type: 'text/csv' })
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `talk-to-expert-leads-${new Date().toISOString().split('T')[0]}.csv`
+    a.click()
   }
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A'
-    const date = new Date(dateString)
-    return date.toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
+  const filteredConsultations = consultations.filter(c => {
+    const matchesSearch = c.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.phone.includes(searchTerm)
+    const matchesStatusFilter = filterStatus === 'all' || c.status === filterStatus
+    const matchesSourceFilter = filterSource === 'all' || c.source === filterSource
+    return matchesSearch && matchesStatusFilter && matchesSourceFilter
+  })
+
+  const stats = {
+    total: consultations.length,
+    new: consultations.filter(c => c.status === 'new').length,
+    inProgress: consultations.filter(c => c.status === 'in_progress').length,
+    completed: consultations.filter(c => c.status === 'completed').length
   }
+
+  // Get unique sources for filter
+  const sources = [...new Set(consultations.map(c => c.source).filter(Boolean))]
 
   return (
     <AdminLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Talk to Expert Consultations</h1>
-          <div className="flex items-center gap-3">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
-            />
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Talk to Expert Leads</h1>
+            <p className="text-gray-600">Manage all expert consultation requests from various pages</p>
+          </div>
+          <button
+            onClick={exportToCSV}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors whitespace-nowrap self-end md:self-auto"
+          >
+            <Download className="w-5 h-5" />
+            Export CSV
+          </button>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 text-sm font-medium">Total Leads</p>
+                <p className="text-3xl font-bold text-gray-900 mt-2">{stats.total}</p>
+              </div>
+              <div className="p-3 bg-blue-100 rounded-lg">
+                <FileText className="w-6 h-6 text-blue-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 text-sm font-medium">New</p>
+                <p className="text-3xl font-bold text-blue-600 mt-2">{stats.new}</p>
+              </div>
+              <div className="p-3 bg-blue-50 rounded-lg">
+                <Mail className="w-6 h-6 text-blue-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 text-sm font-medium">In Progress</p>
+                <p className="text-3xl font-bold text-purple-600 mt-2">{stats.inProgress}</p>
+              </div>
+              <div className="p-3 bg-purple-50 rounded-lg">
+                <Calendar className="w-6 h-6 text-purple-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 text-sm font-medium">Completed</p>
+                <p className="text-3xl font-bold text-green-600 mt-2">{stats.completed}</p>
+              </div>
+              <div className="p-3 bg-green-50 rounded-lg">
+                <FileText className="w-6 h-6 text-green-600" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Filters and Search */}
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="flex flex-col md:flex-row gap-4">
+            {/* Search */}
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search by name, email, or phone..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Status Filter */}
             <select
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="all">All Status</option>
               <option value="new">New</option>
@@ -174,107 +216,115 @@ const TalkToExpertPage = () => {
               <option value="completed">Completed</option>
               <option value="closed">Closed</option>
             </select>
-          </div>
-        </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-2xl font-bold text-gray-800">{consultations.length}</div>
-            <div className="text-sm text-gray-600">Total</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-2xl font-bold text-blue-600">
-              {consultations.filter(c => c.status === 'new').length}
-            </div>
-            <div className="text-sm text-gray-600">New</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-2xl font-bold text-yellow-600">
-              {consultations.filter(c => c.status === 'contacted').length}
-            </div>
-            <div className="text-sm text-gray-600">Contacted</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-2xl font-bold text-purple-600">
-              {consultations.filter(c => c.status === 'in_progress').length}
-            </div>
-            <div className="text-sm text-gray-600">In Progress</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-2xl font-bold text-green-600">
-              {consultations.filter(c => c.status === 'completed').length}
-            </div>
-            <div className="text-sm text-gray-600">Completed</div>
+            {/* Source Filter */}
+            <select
+              value={filterSource}
+              onChange={(e) => setFilterSource(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent md:w-48"
+            >
+              <option value="all">All Pages</option>
+              {sources.map(source => (
+                <option key={source} value={source}>{source}</option>
+              ))}
+            </select>
           </div>
         </div>
 
         {/* Table */}
-        {loading ? (
-          <div className="text-center py-12">Loading...</div>
-        ) : consultations.length === 0 ? (
-          <div className="text-center py-12 text-gray-500">No consultations found</div>
-        ) : (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+          {loading ? (
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+            </div>
+          ) : filteredConsultations.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-64">
+              <FileText className="w-16 h-16 text-gray-300 mb-4" />
+              <p className="text-gray-500 text-lg">No consultations found</p>
+            </div>
+          ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">City</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Contact Info</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Type</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Page Source</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {consultations.map((consultation) => (
-                    <tr key={consultation._id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {consultation.fullName}
+                <tbody className="divide-y divide-gray-200">
+                  {filteredConsultations.map((consultation) => (
+                    <tr key={consultation._id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4" />
+                          {new Date(consultation.createdAt).toLocaleDateString()}
+                        </div>
                       </td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                        {consultation.email}
+                      <td className="px-6 py-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
+                            <User className="w-4 h-4 text-gray-400" />
+                            {consultation.fullName}
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <Mail className="w-4 h-4 text-gray-400" />
+                            {consultation.email}
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <Phone className="w-4 h-4 text-gray-400" />
+                            {consultation.phone}
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <MapPin className="w-4 h-4 text-gray-400" />
+                            {consultation.city}
+                          </div>
+                        </div>
                       </td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                        {consultation.phone}
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                        {consultation.city}
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                        {consultation.type}
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(consultation.status)}`}>
-                          {consultation.status.replace('_', ' ').toUpperCase()}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-semibold rounded-full">
+                          {consultation.type}
                         </span>
                       </td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                        {formatDate(consultation.createdAt)}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <select
+                          value={consultation.status}
+                          onChange={(e) => updateStatus(consultation._id, e.target.value)}
+                          className="text-xs font-semibold px-3 py-1 rounded-full border focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="new">NEW</option>
+                          <option value="contacted">CONTACTED</option>
+                          <option value="in_progress">IN PROGRESS</option>
+                          <option value="completed">COMPLETED</option>
+                          <option value="closed">CLOSED</option>
+                        </select>
                       </td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                      <td className="px-6 py-4 text-sm text-gray-600">
+                        <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">
+                          {consultation.source || 'Unknown'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => handleViewDetails(consultation)}
-                            className="text-[#8B7355] hover:text-[#7a6349]"
+                            onClick={() => {
+                              setSelectedConsultation(consultation)
+                              setShowDetailModal(true)
+                            }}
+                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            title="View Details"
                           >
-                            View
+                            <Eye className="w-5 h-5" />
                           </button>
                           <button
-                            onClick={() => handleEdit(consultation)}
-                            className="text-blue-600 hover:text-blue-800"
+                            onClick={() => deleteConsultation(consultation._id)}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Delete"
                           >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteClick(consultation)}
-                            className="text-red-600 hover:text-red-800"
-                          >
-                            Delete
+                            <Trash2 className="w-5 h-5" />
                           </button>
                         </div>
                       </td>
@@ -283,181 +333,99 @@ const TalkToExpertPage = () => {
                 </tbody>
               </table>
             </div>
-          </div>
-        )}
-
-        {/* Details Modal */}
-        {showDetailsModal && selectedConsultation && (
-          <div className="fixed inset-0 backdrop-blur-sm bg-black/30 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-2xl font-bold text-gray-800">Consultation Details</h2>
-                  <button
-                    onClick={() => setShowDetailsModal(false)}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    ×
-                  </button>
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Full Name</label>
-                    <p className="text-base text-gray-900">{selectedConsultation.fullName}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Email</label>
-                    <p className="text-base text-gray-900">{selectedConsultation.email}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Phone</label>
-                    <p className="text-base text-gray-900">{selectedConsultation.phone}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">City</label>
-                    <p className="text-base text-gray-900">{selectedConsultation.city}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Type</label>
-                    <p className="text-base text-gray-900">{selectedConsultation.type}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">About Yourself</label>
-                    <p className="text-base text-gray-900">
-                      {selectedConsultation.aboutYourself === 'homeowner'
-                        ? 'Homeowner looking for pooja unit/room'
-                        : 'Interior designer/consultant'}
-                    </p>
-                  </div>
-                  {selectedConsultation.lookingFor && (
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Looking For</label>
-                      <p className="text-base text-gray-900">
-                        {selectedConsultation.lookingFor === 'singular'
-                          ? 'Singular Marble Mandir Unit'
-                          : 'Complete Pooja Room Solution'}
-                      </p>
-                    </div>
-                  )}
-                  {selectedConsultation.budget && (
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Budget</label>
-                      <p className="text-base text-gray-900">{selectedConsultation.budget}</p>
-                    </div>
-                  )}
-                  {selectedConsultation.timeline && (
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Timeline</label>
-                      <p className="text-base text-gray-900">{selectedConsultation.timeline}</p>
-                    </div>
-                  )}
-                  {selectedConsultation.additionalInfo && (
-                    <div>
-                      <label className="text-sm font-medium text-gray-500">Additional Information</label>
-                      <p className="text-base text-gray-900">{selectedConsultation.additionalInfo}</p>
-                    </div>
-                  )}
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Status</label>
-                    <p className="text-base">
-                      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(selectedConsultation.status)}`}>
-                        {selectedConsultation.status.replace('_', ' ').toUpperCase()}
-                      </span>
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Submitted On</label>
-                    <p className="text-base text-gray-900">{formatDate(selectedConsultation.createdAt)}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Edit Modal */}
-        {showEditModal && selectedConsultation && (
-          <div className="fixed inset-0 backdrop-blur-sm bg-black/30 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg max-w-md w-full">
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-bold text-gray-800">Edit Consultation</h2>
-                  <button
-                    onClick={() => setShowEditModal(false)}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    ×
-                  </button>
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <select
-                      value={editFormData.status}
-                      onChange={(e) => setEditFormData({ ...editFormData, status: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
-                    >
-                      <option value="new">New</option>
-                      <option value="contacted">Contacted</option>
-                      <option value="in_progress">In Progress</option>
-                      <option value="completed">Completed</option>
-                      <option value="closed">Closed</option>
-                    </select>
-                  </div>
-                  <div className="flex gap-3">
-                    <button
-                      onClick={handleUpdate}
-                      className="flex-1 px-4 py-2 bg-[#8B7355] text-white rounded-lg hover:opacity-90"
-                    >
-                      Update
-                    </button>
-                    <button
-                      onClick={() => setShowEditModal(false)}
-                      className="flex-1 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Delete Confirmation Modal */}
-        {showDeleteConfirm && (
-          <div className="fixed inset-0 backdrop-blur-sm bg-black/30 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg max-w-md w-full">
-              <div className="p-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">Confirm Delete</h2>
-                <p className="text-gray-600 mb-6">
-                  Are you sure you want to delete this consultation? This action cannot be undone.
-                </p>
-                <div className="flex gap-3">
-                  <button
-                    onClick={handleDelete}
-                    className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowDeleteConfirm(false)
-                      setConsultationToDelete(null)
-                    }}
-                    className="flex-1 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+
+      {/* Detail Modal */}
+      {showDetailModal && selectedConsultation && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+              <h3 className="text-xl font-bold text-gray-900">Consultation Details</h3>
+              <button
+                onClick={() => setShowDetailModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-semibold text-gray-600">Full Name</label>
+                  <p className="text-gray-900 mt-1">{selectedConsultation.fullName}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-gray-600">Type</label>
+                  <p className="text-gray-900 mt-1">{selectedConsultation.type}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-gray-600">Email</label>
+                  <p className="text-gray-900 mt-1">{selectedConsultation.email}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-gray-600">Phone</label>
+                  <p className="text-gray-900 mt-1">{selectedConsultation.phone}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-gray-600">City</label>
+                  <p className="text-gray-900 mt-1">{selectedConsultation.city}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-gray-600">About</label>
+                  <p className="text-gray-900 mt-1 capitalize">{selectedConsultation.aboutYourself}</p>
+                </div>
+                {selectedConsultation.lookingFor && (
+                  <div>
+                    <label className="text-sm font-semibold text-gray-600">Looking For</label>
+                    <p className="text-gray-900 mt-1 capitalize">{selectedConsultation.lookingFor}</p>
+                  </div>
+                )}
+                {selectedConsultation.budget && (
+                  <div>
+                    <label className="text-sm font-semibold text-gray-600">Budget</label>
+                    <p className="text-gray-900 mt-1">{selectedConsultation.budget}</p>
+                  </div>
+                )}
+                {selectedConsultation.timeline && (
+                  <div>
+                    <label className="text-sm font-semibold text-gray-600">Timeline</label>
+                    <p className="text-gray-900 mt-1">{selectedConsultation.timeline}</p>
+                  </div>
+                )}
+                <div>
+                  <label className="text-sm font-semibold text-gray-600">Page Source</label>
+                  <p className="text-gray-900 mt-1">{selectedConsultation.source || 'Unknown'}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-gray-600">Submitted On</label>
+                  <p className="text-gray-900 mt-1">{new Date(selectedConsultation.createdAt).toLocaleString()}</p>
+                </div>
+              </div>
+
+              {selectedConsultation.additionalInfo && (
+                <div>
+                  <label className="text-sm font-semibold text-gray-600">Additional Information</label>
+                  <p className="text-gray-900 mt-1 whitespace-pre-wrap">{selectedConsultation.additionalInfo}</p>
+                </div>
+              )}
+            </div>
+
+            <div className="sticky bottom-0 bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t border-gray-200">
+              <button
+                onClick={() => setShowDetailModal(false)}
+                className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   )
 }
 
 export default TalkToExpertPage
-

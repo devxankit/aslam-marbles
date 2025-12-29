@@ -14,7 +14,8 @@ exports.createConsultation = async (req, res, next) => {
       budget,
       timeline,
       additionalInfo,
-      designReferences
+      designReferences,
+      source
     } = req.body;
 
     // Validate required fields
@@ -38,7 +39,7 @@ exports.createConsultation = async (req, res, next) => {
       additionalInfo,
       designReferences: designReferences || [],
       status: 'new',
-      source: 'homepage-popup'
+      source: source || 'homepage-popup'
     });
 
     return res.status(201).json({

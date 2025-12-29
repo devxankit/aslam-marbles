@@ -82,6 +82,7 @@ const LiveInventoryPage = ({
 
             {/* Hero Section with Talk to Expert Form */}
             <HeroSectionWithForm
+                source="live-inventory-page"
                 heroImage={defaultHeroImage} // Plan to replace this with generated image later
                 title="Live Inventory"
                 subtitle="Exclusive Marble Collection"
@@ -106,7 +107,7 @@ const LiveInventoryPage = ({
                             </svg>
                         </button>
                         <div className="max-h-[85vh] overflow-y-auto">
-                            <ExpertFormOverlay className="w-full flex flex-col shadow-none" />
+                            <ExpertFormOverlay source="live-inventory-page" className="w-full flex flex-col shadow-none" />
                         </div>
                     </div>
                 </div>

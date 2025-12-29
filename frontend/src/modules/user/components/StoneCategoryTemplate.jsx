@@ -94,6 +94,7 @@ const StoneCategoryTemplate = ({
             />
 
             <HeroSectionWithForm
+                source={`stone-category-${categoryId}`}
                 heroImage={heroImage}
                 title={title}
                 subtitle={subtitle}
@@ -140,7 +141,7 @@ const StoneCategoryTemplate = ({
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
-                        <ExpertFormOverlay className="w-full flex flex-col max-h-[85vh]" />
+                        <ExpertFormOverlay source={`stone-category-${categoryId}`} className="w-full flex flex-col max-h-[85vh]" />
                     </div>
                 </div>
             )}

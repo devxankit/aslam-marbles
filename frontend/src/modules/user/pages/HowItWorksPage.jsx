@@ -117,6 +117,7 @@ const HowItWorksPage = ({
 
       {/* Hero Section with Form */}
       <HeroSectionWithForm
+        source="how-it-works-page"
         heroImage={howItWorksBg}
         title="How It Works"
         subtitle="Your Journey to a Divine Home"
@@ -142,7 +143,7 @@ const HowItWorksPage = ({
               </svg>
             </button>
             <div className="max-h-[85vh] overflow-y-auto">
-              <ExpertFormOverlay className="w-full flex flex-col shadow-none" />
+              <ExpertFormOverlay source="how-it-works-page" className="w-full flex flex-col shadow-none" />
             </div>
           </div>
         </div>

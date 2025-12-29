@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { BUDGET_OPTIONS, TIMELINE_OPTIONS } from '../../utils/constants'
 
-const ExpertFormOverlay = ({ className }) => {
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
+const ExpertFormOverlay = ({ className, source = 'unknown-page' }) => {
   const [formStep, setFormStep] = useState(1)
+  const [submitting, setSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     type: 'DOMESTIC',
     fullName: '',
@@ -17,24 +20,54 @@ const ExpertFormOverlay = ({ className }) => {
     designReferences: null
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    alert('Thank you! Your form has been submitted.')
-    setFormStep(1)
-    setFormData({
-      type: 'DOMESTIC',
-      fullName: '',
-      email: '',
-      phone: '',
-      city: '',
-      aboutYourself: '',
-      lookingFor: '',
-      budget: '',
-      timeline: '',
-      additionalInfo: '',
-      designReferences: null
-    })
+    setSubmitting(true)
+
+    try {
+      const submitData = {
+        ...formData,
+        source: source,
+        // Don't send file data for now - can be added later
+        designReferences: formData.designReferences ? Array.from(formData.designReferences).map(f => f.name) : []
+      }
+
+      const response = await fetch(`${API_URL}/expert-consultations`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(submitData)
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        alert('Thank you! Your request has been submitted successfully. Our expert will contact you soon.')
+        // Reset form
+        setFormStep(1)
+        setFormData({
+          type: 'DOMESTIC',
+          fullName: '',
+          email: '',
+          phone: '',
+          city: '',
+          aboutYourself: '',
+          lookingFor: '',
+          budget: '',
+          timeline: '',
+          additionalInfo: '',
+          designReferences: null
+        })
+      } else {
+        throw new Error(data.message || 'Failed to submit form')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      alert('Sorry, there was an error submitting your form. Please try again or contact us directly.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const defaultClasses = "absolute right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 w-[85%] sm:w-[320px] md:w-[340px] max-w-[calc(100%-32px)] bg-white rounded-xl md:rounded-2xl shadow-2xl z-20 flex flex-col backdrop-blur-sm bg-white/95"
@@ -281,12 +314,13 @@ const ExpertFormOverlay = ({ className }) => {
               </button>
               <button
                 type="submit"
-                className="flex-1 text-white py-2 rounded-lg text-xs font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                disabled={submitting}
+                className="flex-1 text-white py-2 rounded-lg text-xs font-bold uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ backgroundColor: '#8B7355' }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
+                onMouseEnter={(e) => !submitting && (e.target.style.backgroundColor = '#7a6349')}
+                onMouseLeave={(e) => !submitting && (e.target.style.backgroundColor = '#8B7355')}
               >
-                SUBMIT
+                {submitting ? 'SUBMITTING...' : 'SUBMIT'}
               </button>
             </div>
           </form>

@@ -96,7 +96,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
         </div>
 
         {/* Desktop Form - Using the ExpertFormOverlay component for exact UI match */}
-        <ExpertFormOverlay
+        <ExpertFormOverlay source="communal-temples-page"
           className="hidden lg:flex absolute top-1/2 right-4 md:right-10 transform -translate-y-1/2 w-[350px] z-20 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl flex-col overflow-hidden"
         />
       </div>
@@ -668,7 +668,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <ExpertFormOverlay className="w-full h-full bg-white flex flex-col" />
+            <ExpertFormOverlay source="communal-temples-page" className="w-full h-full bg-white flex flex-col" />
           </div>
         </div>
       )}

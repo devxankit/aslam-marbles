@@ -8,7 +8,8 @@ const HeroSectionWithForm = ({
   description,
   enableMobileModal = false,
   onMobileButtonClick,
-  disableGradient = false
+  disableGradient = false,
+  source = "hero-section"
 }) => {
   return (
     <div
@@ -56,7 +57,7 @@ const HeroSectionWithForm = ({
 
       {/* Form Overlay */}
       <div className={enableMobileModal ? "hidden md:block" : ""}>
-        <ExpertFormOverlay />
+        <ExpertFormOverlay source={source} />
       </div>
     </div>
   )
