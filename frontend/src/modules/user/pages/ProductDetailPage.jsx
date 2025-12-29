@@ -49,13 +49,26 @@ const ProductDetailPage = ({
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5100/api'
 
   useEffect(() => {
-    // Attempt to fetch from backend if ID looks like a Mongo ID or just try generic fetch
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`${API_URL}/stone-products/${productId}`)
+        let url = `${API_URL}/stone-products/${productId}`
+
+        // Determine correct endpoint based on URL
+        if (location.pathname.includes('/on-sale')) {
+          url = `${API_URL}/special-products/on-sale/${productId}`
+        } else if (location.pathname.includes('/limited-edition')) {
+          url = `${API_URL}/special-products/limited-edition/${productId}`
+        }
+
+        const res = await fetch(url)
         if (res.ok) {
           const data = await res.json()
-          setBackendProduct(data)
+          // Handle different response structures
+          if (data.success && data.data) {
+            setBackendProduct(data.data)
+          } else {
+            setBackendProduct(data)
+          }
         }
       } catch (e) {
         console.log('Not a backend product or fetch failed')
@@ -64,7 +77,7 @@ const ProductDetailPage = ({
     if (productId && productId.length === 24) {
       fetchProduct()
     }
-  }, [productId])
+  }, [productId, location.pathname])
 
   // Available sizes
   const availableSizes = ['5', '6', '7', '9', '11', '12', '14', '15', '18', '19', '24', '30', '33']
@@ -426,8 +439,9 @@ const ProductDetailPage = ({
                   </button>
                   {showTechnicalSpecs && (
                     <div className="mt-3 text-sm text-gray-600 space-y-2">
-                      <p><strong>Material:</strong> {product.material}</p>
-                      <p><strong>Size:</strong> {product.size}</p>
+                      <p><strong>Material:</strong> {product.material || product.specifications?.material || 'N/A'}</p>
+                      <p><strong>Size:</strong> {product.size || product.specifications?.size || 'N/A'}</p>
+                      {product.specifications?.origin && <p><strong>Origin:</strong> {product.specifications.origin}</p>}
                       <p><strong>Weight:</strong> Custom</p>
                       <p><strong>Finish:</strong> Premium</p>
                     </div>

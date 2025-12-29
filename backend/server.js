@@ -109,6 +109,7 @@ app.use('/api/home-page', require('./routes/homePageRoutes'));
 app.use('/api/ams-international', require('./routes/tsaInternationalRoutes'));
 app.use('/api/trusted-by', require('./routes/trustedByRoutes'));
 app.use('/api/live-inventory', require('./routes/liveInventoryRoutes'));
+app.use('/api/special-products', require('./routes/specialProductRoutes'));
 
 // Health check
 app.get('/api/health', (req, res) => {

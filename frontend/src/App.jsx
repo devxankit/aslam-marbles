@@ -110,6 +110,7 @@ import CommunalTemplesManagementPage from './modules/admin/pages/CommunalTemples
 import JainTemplesManagementPage from './modules/admin/pages/JainTemplesManagementPage'
 import MurtiManagementPage from './modules/admin/pages/MurtiManagementPage'
 import HomeDecorManagementPage from './modules/admin/pages/HomeDecorManagementPage'
+import SpecialCollectionManagementPage from './modules/admin/pages/SpecialCollectionManagementPage'
 import LiveInventoryManagementPage from './modules/admin/pages/LiveInventoryManagementPage'
 
 import OurServicesManagementPage from './modules/admin/pages/OurServicesManagementPage'
@@ -1365,6 +1366,11 @@ function App() {
           <Route path="/admin/content/dream-temple" element={
             <ProtectedRoute>
               <DreamTempleManagementPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/content/special-collections" element={
+            <ProtectedRoute>
+              <SpecialCollectionManagementPage />
             </ProtectedRoute>
           } />
 

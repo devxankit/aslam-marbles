@@ -30,6 +30,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
       location.pathname.startsWith('/admin/category/home-decor') ||
       location.pathname.startsWith('/admin/category/communal-temples') ||
       location.pathname.startsWith('/admin/category/jain-temples') ||
+      location.pathname.startsWith('/admin/content/special-collections') ||
       location.pathname.startsWith('/admin/pages/our-creations-nav'),
     ourServicesNav: location.pathname.startsWith('/admin/our-services') ||
       location.pathname.startsWith('/admin/pages/our-services-nav'),
@@ -137,6 +138,8 @@ const AdminSidebar = ({ isOpen, onClose }) => {
             { title: 'Home Decor', path: '/admin/content/home-decor' },
             { title: 'Communal Temples', path: '/admin/category/communal-temples' },
             { title: 'Jain Temples', path: '/admin/category/jain-temples' },
+            { title: 'On Sale', path: '/admin/content/special-collections?tab=on-sale' },
+            { title: 'Limited Edition', path: '/admin/content/special-collections?tab=limited-edition' },
             { title: 'Manage Hover', path: '/admin/pages/our-creations-nav' }
           ]
         },
