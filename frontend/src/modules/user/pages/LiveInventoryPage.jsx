@@ -25,6 +25,7 @@ const LiveInventoryPage = ({
     onShowLikes
 }) => {
     const [inventory, setInventory] = useState([])
+    const [pageSettings, setPageSettings] = useState(null)
     const [loading, setLoading] = useState(true)
     const [showMobileForm, setShowMobileForm] = useState(false)
     const [filterCategory, setFilterCategory] = useState('All')
@@ -50,21 +51,30 @@ const LiveInventoryPage = ({
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
     useEffect(() => {
-        const fetchInventory = async () => {
+        const fetchData = async () => {
             try {
                 setLoading(true)
-                const res = await fetch(`${API_URL}/live-inventory`)
-                if (res.ok) {
-                    const data = await res.json()
+                const [inventoryRes, settingsRes] = await Promise.all([
+                    fetch(`${API_URL}/live-inventory`),
+                    fetch(`${API_URL}/live-inventory/settings`)
+                ])
+
+                if (inventoryRes.ok) {
+                    const data = await inventoryRes.json()
                     setInventory(data)
                 }
+
+                if (settingsRes.ok) {
+                    const settings = await settingsRes.json()
+                    setPageSettings(settings)
+                }
             } catch (error) {
-                console.error('Error fetching inventory:', error)
+                console.error('Error fetching data:', error)
             } finally {
                 setLoading(false)
             }
         }
-        fetchInventory()
+        fetchData()
     }, [])
 
     const categories = ['All', ...new Set(inventory.map(item => item.category))]
@@ -90,10 +100,10 @@ const LiveInventoryPage = ({
             {/* Hero Section with Talk to Expert Form */}
             <HeroSectionWithForm
                 source="live-inventory-page"
-                heroImage={heroImage}
-                title="Live Inventory"
-                subtitle="Exclusive Marble Collection"
-                description="Explore our real-time stock of premium natural stones. From rare Italian marble to exquisite Indian granite, find the perfect slab for your dream project."
+                heroImage={pageSettings?.headSection?.heroImage?.url || heroImage}
+                title={pageSettings?.headSection?.title || "Live Inventory"}
+                subtitle={pageSettings?.headSection?.subtitle || "Exclusive Marble Collection"}
+                description={pageSettings?.headSection?.description || "Explore our real-time stock of premium natural stones. From rare Italian marble to exquisite Indian granite, find the perfect slab for your dream project."}
                 enableMobileModal={true}
                 onMobileButtonClick={() => setShowMobileForm(true)}
             />
@@ -271,7 +281,7 @@ const LiveInventoryPage = ({
             <section className="w-full">
                 <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px]">
                     <LazyImage
-                        src={horizontalImage}
+                        src={pageSettings?.horizontalSection?.image?.url || horizontalImage}
                         alt="Natural Stone Collection"
                         className="w-full h-full"
                         imageClassName="w-full h-full object-cover"
