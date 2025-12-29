@@ -33,7 +33,8 @@ const AdminSidebar = ({ isOpen, onClose }) => {
       location.pathname.startsWith('/admin/content/special-collections') ||
       location.pathname.startsWith('/admin/pages/our-creations-nav'),
     ourServicesNav: location.pathname.startsWith('/admin/our-services') ||
-      location.pathname.startsWith('/admin/pages/our-services-nav'),
+      location.pathname.startsWith('/admin/pages/our-services-nav') ||
+      location.pathname.startsWith('/admin/services/live-inventory'),
     ourProductsNav: location.pathname.startsWith('/admin/products/stone') ||
       location.pathname.startsWith('/admin/products/stone-pages') ||
       location.pathname.startsWith('/admin/pages/our-products-nav')
@@ -151,6 +152,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
           submenu: [
             { title: 'Design Hub', path: '/admin/our-services/design-hub' },
             { title: 'International', path: '/admin/our-services/international' },
+            { title: 'Live Inventory', path: '/admin/services/live-inventory' },
             { title: 'Manage Hover', path: '/admin/pages/our-services-nav' }
           ]
         },
