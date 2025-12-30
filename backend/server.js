@@ -129,6 +129,8 @@ app.use('/api/trusted-by', require('./routes/trustedByRoutes'));
 app.use('/api/live-inventory', require('./routes/liveInventoryRoutes'));
 app.use('/api/special-products', require('./routes/specialProductRoutes'));
 app.use('/api/shop-by-products', require('./routes/shopByProductRoutes'));
+app.use('/api/settings', require('./routes/settingsRoutes'));
+app.use('/api/page-content', require('./routes/pageContentRoutes'));
 
 // Errors
 app.use(notFound);

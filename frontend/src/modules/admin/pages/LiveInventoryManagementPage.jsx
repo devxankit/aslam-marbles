@@ -233,7 +233,7 @@ const LiveInventoryManagementPage = () => {
                                             </div>
                                             <div className="p-4">
                                                 <h3 className="font-bold text-gray-800 line-clamp-1">{item.name}</h3>
-                                                <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">{item.category}</p>
+
                                                 <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
                                                     <div><span className="font-semibold">Size:</span> {item.specifications?.dimensions || '-'}</div>
                                                     <div><span className="font-semibold">Qty:</span> {item.specifications?.quantity || '-'}</div>
@@ -413,23 +413,7 @@ const InventoryModal = ({ item, onClose, onSave, loading }) => {
                                     placeholder="e.g. Statuario Marble Block A"
                                 />
                             </div>
-                            <div>
-                                <label className="text-xs font-black uppercase text-gray-400">Category</label>
-                                <select
-                                    className="w-full p-2 border rounded-lg outline-none"
-                                    value={formData.category}
-                                    onChange={e => setFormData({ ...formData, category: e.target.value })}
-                                >
-                                    <option value="">Select Category</option>
-                                    <option value="Italian Marble">Italian Marble</option>
-                                    <option value="Indian Marble">Indian Marble</option>
-                                    <option value="Granite">Granite</option>
-                                    <option value="Onyx">Onyx</option>
-                                    <option value="Sandstone">Sandstone</option>
-                                    <option value="Travertine">Travertine</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
+
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="text-xs font-black uppercase text-gray-400">Status</label>

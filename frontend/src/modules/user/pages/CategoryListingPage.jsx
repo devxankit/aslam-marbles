@@ -50,7 +50,7 @@ const CategoryListingPage = ({
             <div className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
                     {products.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
                             {products.map((product) => (
                                 <div
                                     key={product.id}

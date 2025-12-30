@@ -4,6 +4,7 @@ import Header from '../../../components/layout/Header'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import TrustedBySection from '../../../components/common/TrustedBySection'
+import ExpertFormSection from '../../../components/common/ExpertFormSection'
 import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
 import { fetchFAQs } from '../../../utils/faqUtils'
 import { internationalLocations } from '../../../data/locations'
@@ -39,6 +40,7 @@ const TSAInternationalPage = ({
   const [expandedFaq, setExpandedFaq] = useState(null)
   const [faqs, setFaqs] = useState([])
   const [loadingFAQs, setLoadingFAQs] = useState(true)
+  const [showMobileForm, setShowMobileForm] = useState(false)
   const { getTranslatedText } = usePageTranslation()
 
   // Fetch FAQs from API
@@ -163,70 +165,78 @@ const TSAInternationalPage = ({
         title={getTranslatedText("AMS INTERNATIONAL")}
         subtitle={getTranslatedText("Global Excellence in Stone Art")}
         description={getTranslatedText("Expanding our legacy of craftsmanship and design excellence across international markets, bringing premium stone art solutions to clients worldwide.")}
+        disableGradient={true}
+        enableMobileModal={true}
+        onMobileButtonClick={() => setShowMobileForm(true)}
       />
+
+      {/* Mobile Form Modal */}
+      {showMobileForm && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn"
+          onClick={() => setShowMobileForm(false)}
+        >
+          <div
+            className="relative w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-scaleIn bg-white"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ExpertFormOverlay
+              source="tsa-international-page"
+              className="w-full flex flex-col max-h-[85vh]"
+              onClose={() => setShowMobileForm(false)}
+            />
+          </div>
+        </div>
+      )}
 
       {/* End to End Solutions Section */}
 
 
       {/* GIF with Caption Section */}
-      <section className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-white">
+      <section className="w-full py-12 md:py-20 px-3 md:px-6 lg:px-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-            {/* Left Side - GIF */}
-            <div className="order-1 md:order-1">
-              <div className="relative overflow-hidden rounded-xl shadow-2xl bg-white p-4">
-                <img
-                  src={internationalGif}
-                  alt="AMS International"
-                  className="w-full h-auto object-contain rounded-lg"
-                />
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-10 lg:p-12 border-2 border-white/50">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+              {/* Left Side - GIF */}
+              <div className="order-1">
+                <div className="relative overflow-hidden rounded-2xl shadow-2xl group">
+                  <img
+                    src={internationalGif}
+                    alt="AMS International"
+                    className="w-full h-auto object-contain transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl"></div>
+                </div>
               </div>
-            </div>
 
-            {/* Right Side - Caption */}
-            <div className="order-2 md:order-2">
-              <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-3 sm:mb-6 md:mb-8 leading-tight font-bold">
-                <TranslatedText>What Sets AMS International Apart – Short Version</TranslatedText>
-              </h2>
-              <div className="space-y-2 sm:space-y-4 md:space-y-5">
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Strong Connector System:</TranslatedText></span> <TranslatedText>Durable nut-and-bolt fittings for secure global installations.</TranslatedText>
-                  </p>
+              {/* Right Side - Caption */}
+              <div className="order-2">
+                <span className="text-[#8B7355] font-black tracking-[0.3em] uppercase text-[10px] md:text-xs mb-4 block">
+                  <TranslatedText>Global Standards</TranslatedText>
+                </span>
+                <h2 className="text-2xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-6 leading-tight">
+                  <TranslatedText>What Sets AMS International Apart</TranslatedText>
+                </h2>
+
+                <div className="space-y-4 md:space-y-6 mb-8">
+                  {[
+                    { title: "Strong Connector System", desc: "Durable nut-and-bolt fittings for secure global installations." },
+                    { title: "Premium Vietnam Marble", desc: "High-quality stone with unmatched shine and energy." },
+                    { title: "Artistic Detailing", desc: "Painting, inlay, overlay, and embossing for rich visual appeal." },
+                    { title: "Smart Storage Units", desc: "Stylish base cabinets for pooja essentials." },
+                    { title: "Push-to-Open Drawers", desc: "Sleek, modern, knob-less design." },
+                    { title: "Built-In Ambient Lighting", desc: "Soft, divine illumination for a serene atmosphere." }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-start gap-4 group">
+                      <div className="w-2 h-2 rounded-full bg-[#8B7355] mt-2 flex-shrink-0 group-hover:scale-150 transition-transform duration-300"></div>
+                      <p className="text-sm md:text-lg text-gray-700 leading-relaxed">
+                        <span className="font-bold text-[#8B7355]"><TranslatedText>{item.title}:</TranslatedText></span> <TranslatedText>{item.desc}</TranslatedText>
+                      </p>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Premium Vietnam Marble:</TranslatedText></span> <TranslatedText>High-quality stone with unmatched shine and energy.</TranslatedText>
-                  </p>
-                </div>
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Artistic Detailing:</TranslatedText></span> <TranslatedText>Painting, inlay, overlay, and embossing for rich visual appeal.</TranslatedText>
-                  </p>
-                </div>
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Smart Storage Units:</TranslatedText></span> <TranslatedText>Stylish base cabinets for pooja essentials.</TranslatedText>
-                  </p>
-                </div>
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Push-to-Open Drawers:</TranslatedText></span> <TranslatedText>Sleek, modern, knob-less design.</TranslatedText>
-                  </p>
-                </div>
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
-                  <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Built-In Ambient Lighting:</TranslatedText></span> <TranslatedText>Soft, divine illumination for a serene atmosphere.</TranslatedText>
-                  </p>
-                </div>
+                <div className="w-24 h-1 bg-[#8B7355]"></div>
               </div>
-              <div className="w-24 h-1 rounded-full mt-4 sm:mt-6" style={{ backgroundColor: '#8B7355' }}></div>
             </div>
           </div>
         </div>
@@ -276,11 +286,17 @@ const TSAInternationalPage = ({
       </section>
 
       {/* Shipping Timelines Section */}
-      <section className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-white">
+      <section className="w-full py-12 md:py-24 px-3 md:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-6 md:mb-8 text-center tracking-wide font-bold">
-            <TranslatedText>Understand Your Shipping Timelines</TranslatedText>
-          </h2>
+          <div className="text-center mb-10 md:mb-16">
+            <span className="text-[#8B7355] font-black tracking-[0.4em] uppercase text-[10px] md:text-xs mb-3 block">
+              <TranslatedText>Logistics & Delivery</TranslatedText>
+            </span>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-6 tracking-tight">
+              <TranslatedText>Shipping Timelines</TranslatedText>
+            </h2>
+            <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-[#8B7355] to-transparent mx-auto opacity-40"></div>
+          </div>
 
           {/* Tabs */}
           <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-6 md:mb-8">
@@ -367,125 +383,98 @@ const TSAInternationalPage = ({
       {/* 5 Steps Process Section */}
       <ProcessStepsSection selectedStep={selectedProcessStep} onStepChange={setSelectedProcessStep} />
 
-      {/* End to End Solutions Section (Moved) */}
-      <section className="w-full py-6 md:py-12 px-2 md:px-6 lg:px-8 bg-[#fffbf0]">
+      {/* End to End Solutions Section */}
+      <section className="w-full py-12 md:py-20 px-3 md:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-8 lg:gap-12">
-            {/* Design */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center mb-1 sm:mb-3 md:mb-4">
-                <img
-                  src={designIcon}
-                  alt="Design"
-                  className="w-full h-full object-contain"
-                />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 lg:gap-12">
+            {[
+              { icon: designIcon, title: "Design" },
+              { icon: productionIcon, title: "Production" },
+              { icon: shippingIcon, title: "Shipping" },
+              { icon: diyAssemblyIcon, title: "DIY Assembly" }
+            ].map((item, idx) => (
+              <div key={idx} className="group flex flex-col items-center text-center bg-white p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 hover:-translate-y-2">
+                <div className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                  <img
+                    src={item.icon}
+                    alt={item.title}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h4 className="text-sm md:text-xl font-serif text-[#8B7355] italic font-bold tracking-wider">
+                  <TranslatedText>{item.title}</TranslatedText>
+                </h4>
               </div>
-              <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
-                <TranslatedText>Design</TranslatedText>
-              </p>
-            </div>
-
-            {/* Production */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center mb-1 sm:mb-3 md:mb-4">
-                <img
-                  src={productionIcon}
-                  alt="Production"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
-                <TranslatedText>Production</TranslatedText>
-              </p>
-            </div>
-
-            {/* Shipping */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center mb-1 sm:mb-3 md:mb-4">
-                <img
-                  src={shippingIcon}
-                  alt="Shipping"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
-                <TranslatedText>Shipping</TranslatedText>
-              </p>
-            </div>
-
-            {/* DIY Assembly */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center mb-1 sm:mb-3 md:mb-4">
-                <img
-                  src={diyAssemblyIcon}
-                  alt="DIY Assembly"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
-                <TranslatedText>DIY Assembly</TranslatedText>
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white">
+      <section className="w-full py-12 md:py-24 px-3 md:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-8 md:mb-12 font-bold">
-            <TranslatedText>Frequently Asked Questions</TranslatedText>
-          </h2>
+          {/* Section Header */}
+          <div className="text-center mb-10 md:mb-16">
+            <span className="text-[#8B7355] font-black tracking-[0.4em] uppercase text-[10px] md:text-xs mb-3 block">
+              <TranslatedText>Support</TranslatedText>
+            </span>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-6 tracking-tight">
+              <TranslatedText>Frequently Asked Questions</TranslatedText>
+            </h2>
+            <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-[#8B7355] to-transparent mx-auto opacity-40"></div>
+          </div>
 
           <div className="space-y-4">
             {loadingFAQs ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg"><TranslatedText>Loading FAQs...</TranslatedText></p>
+                <div className="inline-flex items-center gap-3">
+                  <div className="w-5 h-5 border-2 border-[#8B7355] border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-gray-600 text-base md:text-lg"><TranslatedText>Loading FAQs...</TranslatedText></p>
+                </div>
               </div>
             ) : faqs.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg"><TranslatedText>No FAQs available at the moment.</TranslatedText></p>
+              <div className="text-center py-12 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+                <p className="text-gray-500 text-base md:text-lg"><TranslatedText>No FAQs available at the moment.</TranslatedText></p>
               </div>
             ) : (
               faqs.map((faq, index) => {
                 const faqId = faq._id || faq.id || index
                 const isExpanded = expandedFaq === faqId
                 return (
-                  <div key={faqId} className="bg-gray-50 rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md">
+                  <div
+                    key={faqId}
+                    className={`bg-white rounded-2xl shadow-sm border overflow-hidden transition-all duration-300 ${isExpanded ? 'border-[#8B7355] shadow-md ring-1 ring-[#8B7355]/20' : 'border-gray-100 hover:shadow-md hover:border-gray-200'}`}
+                  >
                     <button
                       onClick={() => setExpandedFaq(isExpanded ? null : faqId)}
-                      className="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer"
+                      className="w-full px-5 md:px-6 py-5 flex items-center justify-between text-left cursor-pointer group"
                     >
-                      <div className="flex items-center gap-3 flex-1">
-                        <span className="text-base md:text-lg font-semibold text-gray-800 flex-shrink-0">
-                          Q.{index + 1}
+                      <div className="flex items-center gap-4 flex-1">
+                        <span className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-bold flex-shrink-0 transition-colors ${isExpanded ? 'bg-[#8B7355] text-white' : 'bg-[#8B7355]/10 text-[#8B7355] group-hover:bg-[#8B7355]/20'}`}>
+                          {index + 1}
                         </span>
-                        <span className={`text-sm md:text-base font-medium flex-1 ${isExpanded ? 'text-[#8B7355]' : 'text-gray-800'}`}>
+                        <span className={`text-base font-bold flex-1 transition-colors ${isExpanded ? 'text-[#8B7355]' : 'text-gray-800'}`}>
                           {faq.question}
                         </span>
                       </div>
-                      <div className="flex-shrink-0 ml-4">
-                        {isExpanded ? (
-                          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                          </svg>
-                        ) : (
-                          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                          </svg>
-                        )}
+                      <div className={`flex-shrink-0 ml-4 w-8 h-8 rounded-full flex items-center justify-center transition-all ${isExpanded ? 'bg-[#8B7355] rotate-180' : 'bg-gray-100'}`}>
+                        <svg className={`w-4 h-4 transition-colors ${isExpanded ? 'text-white' : 'text-gray-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
                       </div>
                     </button>
-                    {isExpanded && faq.answer && (
-                      <div className="px-5 pb-4 pt-0">
-                        <div className="pl-8 border-l-2 border-gray-300">
-                          <div
-                            className="text-sm md:text-base text-gray-600 leading-relaxed"
-                            dangerouslySetInnerHTML={{ __html: faq.answer }}
-                          />
+                    <div className={`overflow-hidden transition-all duration-500 ${isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                      {faq.answer && (
+                        <div className="px-6 pb-6">
+                          <div className="pl-14 border-l-2 border-[#8B7355]/30">
+                            <div
+                              className="text-sm md:text-base text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                              dangerouslySetInnerHTML={{ __html: faq.answer }}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 )
               })
@@ -494,6 +483,7 @@ const TSAInternationalPage = ({
         </div>
       </section>
 
+      <ExpertFormSection />
       <TrustedBySection />
       <Footer />
       <FloatingButtons />
@@ -534,51 +524,69 @@ const ProcessStepsSection = ({ selectedStep, onStepChange }) => {
 
   return (
     <section className="w-full py-6 md:py-12 px-3 md:px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-6 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center tracking-wide font-bold">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-10 md:mb-16">
+          <span className="text-[#8B7355] font-black tracking-[0.4em] uppercase text-[10px] md:text-xs mb-3 block">
+            <TranslatedText>Our Methodology</TranslatedText>
+          </span>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-6 tracking-tight">
             <TranslatedText>Our 5-Step Process</TranslatedText>
           </h2>
+          <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-[#8B7355] to-transparent mx-auto opacity-40"></div>
         </div>
-        <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:gap-8">
-          <div className="relative">
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+          <div className="space-y-4 md:space-y-6">
             {steps.map((step) => (
               <div
                 key={step.id}
-                className={`relative mb-2 sm:mb-5 cursor-pointer group ${selectedStep === step.id ? 'opacity-100' : 'opacity-70'}`}
+                className={`group relative bg-white rounded-2xl p-5 md:p-6 cursor-pointer transition-all duration-500 border-2 ${selectedStep === step.id ? 'border-[#8B7355] shadow-xl' : 'border-gray-50 hover:border-gray-200'}`}
                 onClick={() => onStepChange(step.id)}
               >
-                <div className="flex items-start gap-1.5 sm:gap-3">
-                  <div className={`flex-shrink-0 w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-[#8B8B5C] flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 z-10 mt-0.5 sm:mt-0`}>
-                    <span className="text-white text-[10px] sm:text-sm font-bold">{step.id}</span>
+                <div className="flex items-start gap-4 md:gap-6">
+                  <div className={`flex-shrink-0 w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center text-sm md:text-xl font-black transition-all duration-500 ${selectedStep === step.id ? 'bg-[#8B7355] text-white rotate-[360deg]' : 'bg-gray-100 text-[#8B7355]'}`}>
+                    0{step.id}
                   </div>
-
-                  <div className={`flex-1 bg-white rounded-lg shadow-md p-2 sm:p-4 hover:shadow-lg transition-all duration-300 ${selectedStep === step.id ? 'ring-1 sm:ring-2 ring-[#8B8B5C]' : ''}`}>
-                    <h3 className="text-[10px] sm:text-sm font-bold text-gray-800 mb-0.5 sm:mb-2 leading-tight">
+                  <div className="flex-1">
+                    <h3 className={`text-sm md:text-lg font-black uppercase tracking-widest mb-2 transition-colors duration-300 ${selectedStep === step.id ? 'text-[#8B7355]' : 'text-gray-800'}`}>
                       <TranslatedText>{step.title}</TranslatedText>
                     </h3>
-                    <p className="text-[9px] sm:text-xs text-gray-600 leading-tight sm:leading-relaxed">
+                    <p className="text-xs md:text-base text-gray-500 line-clamp-2 md:line-clamp-none font-medium">
                       <TranslatedText>{step.description}</TranslatedText>
                     </p>
                   </div>
                 </div>
+                {selectedStep === step.id && (
+                  <div className="absolute -right-3 top-1/2 -translate-y-1/2 hidden lg:block">
+                    <div className="w-6 h-6 bg-[#8B7355] rotate-45"></div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
 
-          <div className="bg-white">
-            <div className="bg-white rounded-lg p-3 sm:p-6 border sm:border-0 border-gray-100 shadow-sm sm:shadow-none h-full">
-              <h2 className="text-sm sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">
+          <div className="sticky top-24">
+            <div className="bg-[#8B7355]/5 rounded-3xl p-6 md:p-10 border-2 border-white shadow-2xl backdrop-blur-sm">
+              <div className="w-16 h-1 bg-[#8B7355] mb-8"></div>
+              <h2 className="text-2xl md:text-4xl font-serif text-[#8B7355] italic mb-6 leading-tight">
                 <TranslatedText>{steps.find(s => s.id === selectedStep)?.title}</TranslatedText>
               </h2>
-              <p className="text-[10px] sm:text-sm text-gray-500 mb-3 sm:mb-4 leading-relaxed">
-                <TranslatedText>{steps.find(s => s.id === selectedStep)?.description}</TranslatedText>
-              </p>
-              <hr className="border-gray-300 mb-3 sm:mb-5" />
-              <div className="space-y-3 sm:space-y-5">
-                <p className="text-[10px] sm:text-sm text-gray-500 leading-relaxed">
-                  <TranslatedText>More details about this step will be shown here. This is a simplified version of the process steps detail view.</TranslatedText>
+              <div className="space-y-6">
+                <p className="text-sm md:text-lg text-gray-700 leading-relaxed">
+                  <TranslatedText>{steps.find(s => s.id === selectedStep)?.description}</TranslatedText>
                 </p>
+                <div className="pt-6 border-t border-[#8B7355]/20">
+                  <div className="flex items-center gap-4 text-[#8B7355]">
+                    <div className="w-8 h-8 rounded-full bg-[#8B7355] text-white flex items-center justify-center">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="font-bold text-xs md:text-sm uppercase tracking-widest">
+                      <TranslatedText>Guaranteed Quality</TranslatedText>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

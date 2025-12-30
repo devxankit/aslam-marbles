@@ -6,6 +6,8 @@ import FloatingButtons from '../../../components/common/FloatingButtons'
 import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
 import LazyImage from '../../../components/common/LazyImage'
+import TrustedBySection from '../../../components/common/TrustedBySection'
+import ExpertFormSection from '../../../components/common/ExpertFormSection'
 
 // Import images
 import heroImage from '../../../assets/services/live inventory/inventory1.png'
@@ -30,7 +32,7 @@ const LiveInventoryPage = ({
     const [pageSettings, setPageSettings] = useState(null)
     const [loading, setLoading] = useState(true)
     const [showMobileForm, setShowMobileForm] = useState(false)
-    const [filterCategory, setFilterCategory] = useState('All')
+
     const { getTranslatedText } = usePageTranslation()
     const navigate = useNavigate()
 
@@ -80,11 +82,7 @@ const LiveInventoryPage = ({
         fetchData()
     }, [])
 
-    const categories = ['All', ...new Set(inventory.map(item => item.category))]
 
-    const filteredInventory = filterCategory === 'All'
-        ? inventory
-        : inventory.filter(item => item.category === filterCategory)
 
     return (
         <div className="w-full min-h-screen bg-white">
@@ -134,27 +132,32 @@ const LiveInventoryPage = ({
             )}
 
             {/* Introduction Section */}
-            <section className="w-full py-12 md:py-16 px-4 md:px-8 bg-white">
+            <section className="w-full py-12 md:py-20 px-3 md:px-6 lg:px-8 bg-white">
                 <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                        <div>
-                            <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">
-                                <TranslatedText>Premium Selection</TranslatedText>
-                            </span>
-                            <h2 className="text-3xl md:text-5xl font-serif text-[#8B7355] italic mb-6 leading-tight">
-                                <TranslatedText>Handpicked Stones for Your Masterpiece</TranslatedText>
-                            </h2>
-                            <p className="text-gray-600 leading-relaxed mb-6">
-                                <TranslatedText>Our live inventory features the finest selection of natural stones, available for immediate viewing and purchase. Each slab is photographed in high resolution to give you a true-to-life representation of its patterns and textures.</TranslatedText>
-                            </p>
-                            <div className="w-24 h-1 bg-[#8B7355]"></div>
-                        </div>
-                        <div className="relative rounded-xl overflow-hidden shadow-2xl aspect-[4/3]">
-                            <img
-                                src={sideImage}
-                                alt={getTranslatedText("Marble Stock")}
-                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                            />
+                    <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-10 lg:p-12 border-2 border-white/50">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                            <div className="order-2 lg:order-1">
+                                <span className="text-[#8B7355] font-black tracking-[0.3em] uppercase text-[10px] md:text-xs mb-4 block">
+                                    <TranslatedText>Premium Selection</TranslatedText>
+                                </span>
+                                <h2 className="text-2xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-6 leading-tight">
+                                    <TranslatedText>Handpicked Stones for Your Masterpiece</TranslatedText>
+                                </h2>
+                                <p className="text-sm md:text-lg text-gray-600 leading-relaxed mb-8">
+                                    <TranslatedText>Our live inventory features the finest selection of natural stones, available for immediate viewing and purchase. Each slab is photographed in high resolution to give you a true-to-life representation of its patterns and textures.</TranslatedText>
+                                </p>
+                                <div className="w-24 h-1 bg-[#8B7355]"></div>
+                            </div>
+                            <div className="order-1 lg:order-2">
+                                <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] group">
+                                    <img
+                                        src={sideImage}
+                                        alt={getTranslatedText("Marble Stock")}
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                                    />
+                                    <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -165,55 +168,38 @@ const LiveInventoryPage = ({
                 <div className="max-w-7xl mx-auto">
 
                     {/* Section Header */}
-                    <div className="text-center mb-12">
-                        <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-[10px] md:text-xs mb-2 md:mb-4 block">
+                    <div className="text-center mb-10 md:mb-16">
+                        <span className="text-[#8B7355] font-black tracking-[0.4em] uppercase text-[10px] md:text-xs mb-3 block">
                             <TranslatedText>Real-Time Stock</TranslatedText>
                         </span>
-                        <h2 className="text-3xl md:text-5xl font-serif text-[#8B7355] italic mb-4 md:mb-6 tracking-tight">
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-6 tracking-tight">
                             <TranslatedText>Available Slabs & Blocks</TranslatedText>
                         </h2>
-                        <div className="w-12 h-[1px] bg-[#8B7355] mx-auto opacity-30"></div>
+                        <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-[#8B7355] to-transparent mx-auto opacity-40"></div>
                     </div>
 
-                    {/* Filter Tabs */}
-                    {categories.length > 2 && (
-                        <div className="flex flex-wrap justify-center gap-4 mb-12">
-                            {categories.map(cat => (
-                                <button
-                                    key={cat}
-                                    onClick={() => setFilterCategory(cat)}
-                                    className={`px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300
-                    ${filterCategory === cat
-                                            ? 'bg-[#8B7355] text-white shadow-lg'
-                                            : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-                                        }`}
-                                >
-                                    <TranslatedText>{cat}</TranslatedText>
-                                </button>
-                            ))}
-                        </div>
-                    )}
+
 
                     {/* Inventory Grid */}
                     {loading ? (
                         <div className="flex justify-center py-20">
                             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[#8B7355]"></div>
                         </div>
-                    ) : filteredInventory.length === 0 ? (
+                    ) : inventory.length === 0 ? (
                         <div className="text-center py-16 bg-gray-50 rounded-2xl border border-gray-100">
-                            <p className="text-gray-500 text-lg"><TranslatedText>No inventory items found matching your criteria.</TranslatedText></p>
+                            <p className="text-gray-500 text-lg"><TranslatedText>No inventory items found.</TranslatedText></p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {filteredInventory.map((item) => (
-                                <div key={item._id} className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col">
+                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-10">
+                            {inventory.map((item) => (
+                                <div key={item._id} className="group relative bg-white rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(139,115,85,0.15)] transition-all duration-500 border border-gray-100 flex flex-col hover:-translate-y-1">
                                     {/* Image Container */}
                                     <div className="aspect-[4/3] overflow-hidden bg-gray-100 relative">
                                         <LazyImage
                                             src={item.image?.url || 'https://via.placeholder.com/600x400?text=Stone+Image'}
                                             alt={item.name}
                                             className="w-full h-full"
-                                            imageClassName="transition-transform duration-700 group-hover:scale-110"
+                                            imageClassName="transition-transform duration-1000 group-hover:scale-110"
                                             width={600}
                                         />
                                         {item.status !== 'Available' && (
@@ -227,7 +213,7 @@ const LiveInventoryPage = ({
                                     <div className="p-6 flex flex-col flex-1">
                                         <div className="mb-4">
                                             <h3 className="text-xl font-serif text-gray-900 mb-1 line-clamp-1">{item.name}</h3>
-                                            <p className="text-[#8B7355] text-xs font-bold uppercase tracking-widest"><TranslatedText>{item.category}</TranslatedText></p>
+
                                         </div>
 
                                         <div className="space-y-2 border-t border-gray-100 pt-4 mb-6 flex-1">
@@ -257,16 +243,16 @@ const LiveInventoryPage = ({
                                             )}
                                         </div>
 
-                                        <div className="flex gap-2">
+                                        <div className="flex gap-3">
                                             <button
                                                 onClick={() => handleBuyNow(item)}
-                                                className="flex-1 bg-[#8B7355] text-white py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors duration-300"
+                                                className="flex-1 bg-[#8B7355] text-white py-3.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-gray-900 transition-all duration-300 shadow-lg shadow-[#8B7355]/20 hover:shadow-gray-900/20"
                                             >
                                                 <TranslatedText>Buy Now</TranslatedText>
                                             </button>
                                             <button
                                                 onClick={() => setShowMobileForm(true)}
-                                                className="flex-1 border border-gray-300 text-gray-900 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-50 transition-colors duration-300"
+                                                className="flex-1 border-2 border-gray-100 text-gray-900 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-gray-50 hover:border-[#8B7355]/30 transition-all duration-300"
                                             >
                                                 <TranslatedText>Enquire</TranslatedText>
                                             </button>
@@ -281,18 +267,23 @@ const LiveInventoryPage = ({
             </div>
 
             {/* Horizontal Image Section */}
-            <section className="w-full">
-                <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px]">
-                    <LazyImage
-                        src={pageSettings?.horizontalSection?.image?.url || horizontalImage}
-                        alt={getTranslatedText("Natural Stone Collection")}
-                        className="w-full h-full"
-                        imageClassName="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/20"></div>
+            <section className="w-full pb-16 md:pb-24 px-3 md:px-6 lg:px-8 bg-gray-50">
+                <div className="max-w-7xl mx-auto">
+                    <div className="relative w-full h-[300px] md:h-[450px] lg:h-[550px] rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-2xl">
+                        <LazyImage
+                            src={pageSettings?.horizontalSection?.image?.url || horizontalImage}
+                            alt={getTranslatedText("Natural Stone Collection")}
+                            className="w-full h-full"
+                            imageClassName="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/10"></div>
+                        <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl md:rounded-[2.5rem]"></div>
+                    </div>
                 </div>
             </section>
 
+            <ExpertFormSection />
+            <TrustedBySection />
             <Footer />
             <FloatingButtons />
         </div>

@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import AdminLayout from '../components/AdminLayout'
 
 const StoneProductsManagementPage = () => {
+    const [searchParams] = useSearchParams()
+    const queryCategory = searchParams.get('category')
+
     const [categories, setCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState(null)
     const [products, setProducts] = useState([])
@@ -19,12 +23,21 @@ const StoneProductsManagementPage = () => {
 
     const heroInputRef = useRef(null)
 
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5100/api'
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
     const token = localStorage.getItem('adminToken')
 
     useEffect(() => {
         fetchCategories()
     }, [])
+
+    useEffect(() => {
+        if (categories.length > 0 && queryCategory) {
+            const matched = categories.find(c => c.id === queryCategory)
+            if (matched) {
+                setSelectedCategory(matched)
+            }
+        }
+    }, [queryCategory, categories])
 
     useEffect(() => {
         if (selectedCategory) {
@@ -37,8 +50,11 @@ const StoneProductsManagementPage = () => {
             const response = await fetch(`${API_URL}/stone-products/categories`)
             const data = await response.json()
             setCategories(data)
-            if (data.length > 0 && !selectedCategory) {
-                setSelectedCategory(data[0])
+
+            // Check if we have a query param, otherwise pick first
+            if (data.length > 0) {
+                const matched = queryCategory ? data.find(c => c.id === queryCategory) : null
+                setSelectedCategory(matched || data[0])
             }
             setLoading(false)
         } catch (error) {

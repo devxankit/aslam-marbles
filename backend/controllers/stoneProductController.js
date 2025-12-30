@@ -29,31 +29,42 @@ const uploadBase64ToCloudinary = async (base64String, folder) => {
 // @route   GET /api/stone-products/categories
 // @access  Public
 const getCategories = asyncHandler(async (req, res) => {
-    // Ensure default packaging categories exist
-    const packagingIds = ['packaging-slab', 'packaging-tiles', 'packaging-artifacts', 'packaging-other'];
-    const existingPackaging = await StoneCategory.find({ id: { $in: packagingIds } });
+    // Ensure default stone categories exist
+    const defaultIds = [
+        'monument', 'agate',
+        'packaging-slab', 'packaging-tiles', 'packaging-artifacts', 'packaging-other'
+    ];
+    const existingDefault = await StoneCategory.find({ id: { $in: defaultIds } });
 
-    if (existingPackaging.length < 4) {
-        const defaults = [
+    if (existingDefault.length < defaultIds.length) {
+        const stoneDefaults = [
+            { id: 'monument', name: 'Monument', title: 'MONUMENT', subtitle: 'Timeless Tributes in Stone', description: 'Honor and celebrate legacies with our expertly crafted stone monuments.', origin: 'India' },
+            { id: 'agate', name: 'Agate', title: 'AGATE', subtitle: 'Exotic Elegance and Natural patterns', description: 'Discover the mesmerizing beauty of agate, featuring unique colors and patterns.', origin: 'India' }
+        ];
+
+        const packagingDefaults = [
             { id: 'packaging-slab', name: 'Slab Packaging', title: 'SLAB PACKAGING', origin: 'Internal' },
             { id: 'packaging-tiles', name: 'Tiles Packaging', title: 'TILES PACKAGING', origin: 'Internal' },
             { id: 'packaging-artifacts', name: 'Artifacts Packaging', title: 'ARTIFACTS PACKAGING', origin: 'Internal' },
             { id: 'packaging-other', name: 'Other Packaging', title: 'OTHER PACKAGING', origin: 'Internal' }
         ];
 
-        for (const def of defaults) {
-            const exists = existingPackaging.find(c => c.id === def.id);
+        const allDefaults = [...stoneDefaults, ...packagingDefaults];
+
+        for (const def of allDefaults) {
+            const exists = existingDefault.find(c => c.id === def.id);
             if (!exists) {
                 await StoneCategory.create({
                     id: def.id,
                     name: def.name,
                     heroSection: {
-                        image: { url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop', alt: def.name },
+                        image: { url: 'https://images.unsplash.com/photo-1596422846543-75c6fc183f24?q=80&w=2070&auto=format&fit=crop', alt: def.name },
                         title: def.title,
-                        subtitle: 'Ensuring Safety Every Step of the Way',
-                        description: 'Premium protection for your precious stones.'
+                        subtitle: def.subtitle || 'Premium Collection',
+                        description: def.description || 'Finest quality stones for your needs.'
                     },
-                    origin: def.origin
+                    origin: def.origin,
+                    stoneType: 'stones'
                 });
             }
         }

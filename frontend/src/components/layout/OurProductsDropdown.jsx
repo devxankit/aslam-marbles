@@ -26,6 +26,8 @@ const OurProductsDropdown = () => {
     if (id === 'natural-indian-stones') return '/products/natural-indian-stones'
     if (id === 'modern-art') return '/art/modern-art'
     if (id === 'imported') return '/art/imported'
+    if (id === 'monument') return '/products/monument'
+    if (id === 'agate') return '/products/agate'
     if (id === 'packaging') return '/art/packaging'
     return null
   }

@@ -67,6 +67,8 @@ import SoapStonePage from './modules/user/pages/SoapStonePage'
 import TravertinePage from './modules/user/pages/TravertinePage'
 import TSADesignHubPage from './modules/user/pages/TSADesignHubPage'
 import TSAInternationalPage from './modules/user/pages/TSAInternationalPage'
+import MonumentPage from './modules/user/pages/MonumentPage'
+import AgatePage from './modules/user/pages/AgatePage'
 import IndividualProductDetailPage from './modules/user/pages/IndividualProductDetailPage'
 import ModernArtPage from './modules/user/pages/ModernArtPage'
 import ImportedPage from './modules/user/pages/ImportedPage'
@@ -988,6 +990,60 @@ function App() {
 
           <Route path="/products/travertine-stones" element={
             <TravertinePage
+              onShowSidebar={() => setShowSidebar(true)}
+              onShowProjects={() => setShowProjectsModal(true)}
+              onShowCreations={() => setShowOurCreations(true)}
+              onShowProducts={() => setShowOurProducts(true)}
+              onShowServices={() => setShowOurServices(true)}
+              onShowHowItWorks={() => setShowModal(true)}
+              onShowLocation={() => { }}
+              onShowBooking={() => { }}
+            />
+          } />
+
+          {/* Monument Routes */}
+          <Route path="/products/monument" element={
+            <MonumentPage
+              onShowSidebar={() => setShowSidebar(true)}
+              onShowProjects={() => setShowProjectsModal(true)}
+              onShowCreations={() => setShowOurCreations(true)}
+              onShowProducts={() => setShowOurProducts(true)}
+              onShowServices={() => setShowOurServices(true)}
+              onShowHowItWorks={() => setShowModal(true)}
+              onShowLocation={() => { }}
+              onShowBooking={() => { }}
+            />
+          } />
+
+          <Route path="/products/monument/:productId" element={
+            <StoneProductDetailPage
+              onShowSidebar={() => setShowSidebar(true)}
+              onShowProjects={() => setShowProjectsModal(true)}
+              onShowCreations={() => setShowOurCreations(true)}
+              onShowProducts={() => setShowOurProducts(true)}
+              onShowServices={() => setShowOurServices(true)}
+              onShowHowItWorks={() => setShowModal(true)}
+              onShowLocation={() => { }}
+              onShowBooking={() => { }}
+            />
+          } />
+
+          {/* Agate Routes */}
+          <Route path="/products/agate" element={
+            <AgatePage
+              onShowSidebar={() => setShowSidebar(true)}
+              onShowProjects={() => setShowProjectsModal(true)}
+              onShowCreations={() => setShowOurCreations(true)}
+              onShowProducts={() => setShowOurProducts(true)}
+              onShowServices={() => setShowOurServices(true)}
+              onShowHowItWorks={() => setShowModal(true)}
+              onShowLocation={() => { }}
+              onShowBooking={() => { }}
+            />
+          } />
+
+          <Route path="/products/agate/:productId" element={
+            <StoneProductDetailPage
               onShowSidebar={() => setShowSidebar(true)}
               onShowProjects={() => setShowProjectsModal(true)}
               onShowCreations={() => setShowOurCreations(true)}

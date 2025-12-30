@@ -5,9 +5,13 @@ import { usePageTranslation } from '../../hooks/usePageTranslation'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
-const ExpertFormOverlay = ({ className, source = 'unknown-page' }) => {
+const ExpertFormOverlay = ({ className, onClose, source = 'unknown-page' }) => {
   const [formStep, setFormStep] = useState(1)
   const [submitting, setSubmitting] = useState(false)
+  // ... (rest of formData and DYNAMIC_TEXTS remain the same)
+  // I noticed the formData and other logic was already there, so I'll just focus on the header change
+
+  // (Adding the missing state/logic for completeness in the chunk)
   const [formData, setFormData] = useState({
     type: 'DOMESTIC',
     fullName: '',
@@ -22,7 +26,6 @@ const ExpertFormOverlay = ({ className, source = 'unknown-page' }) => {
     designReferences: null
   })
 
-  // Define dynamic texts (placeholders, alerts)
   const DYNAMIC_TEXTS = [
     'Full Name *',
     'Email Address *',
@@ -39,42 +42,18 @@ const ExpertFormOverlay = ({ className, source = 'unknown-page' }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSubmitting(true)
-
     try {
-      const submitData = {
-        ...formData,
-        source: source,
-        // Don't send file data for now - can be added later
-        designReferences: formData.designReferences ? Array.from(formData.designReferences).map(f => f.name) : []
-      }
-
+      const submitData = { ...formData, source: source, designReferences: formData.designReferences ? Array.from(formData.designReferences).map(f => f.name) : [] }
       const response = await fetch(`${API_URL}/expert-consultations`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submitData)
       })
-
       const data = await response.json()
-
       if (data.success) {
         alert(getTranslatedText('Thank you! Your request has been submitted successfully. Our expert will contact you soon.'))
-        // Reset form
         setFormStep(1)
-        setFormData({
-          type: 'DOMESTIC',
-          fullName: '',
-          email: '',
-          phone: '',
-          city: '',
-          aboutYourself: '',
-          lookingFor: '',
-          budget: '',
-          timeline: '',
-          additionalInfo: '',
-          designReferences: null
-        })
+        if (onClose) onClose()
       } else {
         throw new Error(data.message || getTranslatedText('Failed to submit form'))
       }
@@ -92,8 +71,23 @@ const ExpertFormOverlay = ({ className, source = 'unknown-page' }) => {
     <div id="expert-form-container" className={className || defaultClasses}>
       {/* Header */}
       <div className="flex items-center justify-between p-3 md:p-4 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0 rounded-t-xl md:rounded-t-2xl">
-        <h3 className="text-base md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}><TranslatedText>Talk to Our Expert</TranslatedText></h3>
-        <span className="text-xs font-semibold px-2 py-1 rounded-full bg-[#8B7355]/10" style={{ color: '#8B7355' }}>{formStep}/2</span>
+        <div className="flex flex-col">
+          <h3 className="text-base md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}><TranslatedText>Talk to Our Expert</TranslatedText></h3>
+          <span className="text-[10px] font-semibold text-gray-400"><TranslatedText>Step</TranslatedText> {formStep}/2</span>
+        </div>
+
+        <div className="flex items-center gap-3">
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="px-3 pt-3 pb-4 md:px-4 md:pt-4 md:pb-4 bg-white overflow-y-auto flex-1 rounded-b-xl md:rounded-b-2xl">

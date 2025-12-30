@@ -9,7 +9,8 @@ const {
   forgotPassword,
   verifyResetOtp,
   resetPassword,
-  adminLogin
+  adminLogin,
+  changePassword
 } = require('../controllers/userController');
 
 // Public
@@ -26,6 +27,7 @@ router.post('/reset-password', resetPassword);
 
 // Protected
 router.get('/me', auth, getProfile);
+router.post('/change-password', auth, changePassword);
 router.get('/', auth, adminOnly, listUsers);
 
 module.exports = router;

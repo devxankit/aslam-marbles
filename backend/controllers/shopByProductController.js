@@ -137,3 +137,14 @@ exports.deleteProduct = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+// Get single product by ID
+exports.getProductById = async (req, res) => {
+    try {
+        const product = await ShopByProduct.findById(req.params.id);
+        if (!product) return res.status(404).json({ success: false, message: 'Product not found' });
+        res.status(200).json({ success: true, data: product });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};

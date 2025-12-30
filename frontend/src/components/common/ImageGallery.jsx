@@ -112,7 +112,7 @@ const ImageGallery = ({
         <div className="max-w-[1600px] mx-auto">
           <div className={isUniform
             ? "grid grid-cols-5 gap-1 md:gap-2 auto-rows-[120px] md:auto-rows-[180px]"
-            : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 auto-rows-[280px] md:auto-rows-[340px]"
+            : "grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 auto-rows-[280px] md:auto-rows-[340px]"
           }>
             {images.map((item, index) => {
               // Base classes

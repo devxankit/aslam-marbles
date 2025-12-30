@@ -92,6 +92,16 @@ export const products = [
     image: homedecorImg
   },
   {
+    id: 'monument',
+    name: 'Monument',
+    image: 'https://images.unsplash.com/photo-1596422846543-75c6fc183f24?q=80&w=2070&auto=format&fit=crop'
+  },
+  {
+    id: 'agate',
+    name: 'Agate',
+    image: 'https://images.unsplash.com/photo-1596422846543-75c6fc183f24?q=80&w=2070&auto=format&fit=crop'
+  },
+  {
     id: 'packaging',
     name: 'Packaging',
     image: poojaImg

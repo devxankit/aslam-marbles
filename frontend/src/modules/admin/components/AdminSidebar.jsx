@@ -161,7 +161,9 @@ const AdminSidebar = ({ isOpen, onClose }) => {
           key: 'ourProductsNav',
           isNested: true,
           submenu: [
-            { title: 'Our Products', path: '/admin/products/stone-pages' },
+            { title: 'Stone Products', path: '/admin/products/stone-pages' },
+            { title: 'Monument Management', path: '/admin/products/stone-pages?category=monument' },
+            { title: 'Agate Management', path: '/admin/products/stone-pages?category=agate' },
             { title: 'Manage Hover', path: '/admin/pages/our-products-nav' }
           ]
         }

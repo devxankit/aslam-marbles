@@ -45,6 +45,8 @@ const OurProductsModal = ({ isOpen, onClose }) => {
                 { name: 'Natural Indian Stones', path: '/products/natural-indian-stones' },
                 { name: 'Modern Art', path: '/art/modern-art' },
                 { name: 'Imported', path: '/art/imported' },
+                { name: 'Monument', path: '/products/monument' },
+                { name: 'Agate', path: '/products/agate' },
                 { name: 'Packaging', path: '/art/packaging' }
               ].map((item) => (
                 <Link

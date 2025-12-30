@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import TranslatedText from '../TranslatedText'
 import ExpertFormOverlay from './ExpertFormOverlay'
 import LazyImage from './LazyImage'
@@ -12,6 +13,8 @@ const HeroSectionWithForm = ({
   disableGradient = false,
   source = "hero-section"
 }) => {
+  const [showHeroForm, setShowHeroForm] = useState(true)
+
   return (
     <div
       className={`relative w-full overflow-hidden ${enableMobileModal ? 'h-[40vh] min-h-[300px] md:h-[75vh] md:min-h-[600px]' : ''}`}
@@ -46,20 +49,27 @@ const HeroSectionWithForm = ({
         )}
 
         {/* Mobile "Talk to Our Expert" Button */}
-        {enableMobileModal && (
-          <button
-            onClick={onMobileButtonClick}
-            className="md:hidden mt-4 px-5 py-2 text-xs bg-[#8B7355] text-white font-bold uppercase tracking-wider rounded shadow-lg hover:bg-[#725E45] transition-colors"
-          >
-            <TranslatedText>Talk to Our Expert</TranslatedText>
-          </button>
+        {(enableMobileModal || !showHeroForm) && (
+          <div className="flex gap-4">
+            <button
+              onClick={onMobileButtonClick || (() => setShowHeroForm(true))}
+              className="mt-4 px-5 py-2 text-xs bg-[#8B7355] text-white font-bold uppercase tracking-wider rounded shadow-lg hover:bg-[#725E45] transition-colors"
+            >
+              <TranslatedText>Talk to Our Expert</TranslatedText>
+            </button>
+          </div>
         )}
       </div>
 
       {/* Form Overlay */}
-      <div className={enableMobileModal ? "hidden md:block" : ""}>
-        <ExpertFormOverlay source={source} />
-      </div>
+      {showHeroForm && (
+        <div className={enableMobileModal ? "hidden md:block" : ""}>
+          <ExpertFormOverlay
+            source={source}
+            onClose={() => setShowHeroForm(false)}
+          />
+        </div>
+      )}
     </div>
   )
 }
