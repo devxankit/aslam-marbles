@@ -1,6 +1,7 @@
 import { memo, useState, useEffect } from 'react'
 import TranslatedText from '../TranslatedText'
-import { usePageTranslation } from '../../contexts/PageTranslationContext'
+
+import { usePageTranslation } from '../../hooks/usePageTranslation'
 import { fetchTrustedByData } from '../../utils/trustedByUtils'
 import clientLogo1 from '../../assets/house of marble/our client/icons/download.png'
 import clientLogo2 from '../../assets/house of marble/our client/icons/download (1).png'

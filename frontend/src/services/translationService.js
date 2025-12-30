@@ -6,8 +6,8 @@ import { normalizeText, isEmptyText } from '../utils/textUtils';
 // Queue for batching requests
 let translationQueue = [];
 let isQueueProcessing = false;
-const BATCH_INTERVAL = 300; // ms (increased from 200ms to collect more requests)
-const MAX_BATCH_SIZE = 50; // items per batch call (increased from 10 to 50)
+const BATCH_INTERVAL = 75; // ms (reduced from 300ms for faster UI response)
+const MAX_BATCH_SIZE = 100; // items per batch call (increased to match backend limit)
 
 // Request deduplication: track pending requests to avoid duplicate API calls
 const pendingRequests = new Map(); // { cacheKey: Promise }

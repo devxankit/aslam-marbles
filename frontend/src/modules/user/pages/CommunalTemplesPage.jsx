@@ -35,8 +35,10 @@ import visualisationIcon from '../../../assets/ourcreation/pooja room/icons/5vis
 import projectTrackingIcon from '../../../assets/ourcreation/pooja room/icons/6project tracking.png'
 import { fetchCommunalTemplesData } from '../../../utils/communalTemplesUtils'
 import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../hooks/usePageTranslation'
 
 const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
+  const { getTranslatedText } = usePageTranslation()
   const navigate = useNavigate()
   const [showMobileForm, setShowMobileForm] = useState(false)
   const { refs, visibleSections } = useIntersectionObserver(0.3)
@@ -69,7 +71,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
         {/* Horizontal Heading Image */}
         <LazyImage
           src={pageData?.heroSection?.image?.url || headingImage}
-          alt={pageData?.heroSection?.image?.alt || "Communal Temples"}
+          alt={pageData?.heroSection?.image?.alt || getTranslatedText("Communal Temples")}
           className="w-full h-full"
           imageClassName="w-full h-full object-cover object-top"
           priority={true}
@@ -81,10 +83,10 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
         {/* Hero Content Overlay */}
         <div className="absolute top-16 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-xl md:max-w-2xl text-center md:text-left">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif text-white italic drop-shadow-2xl mb-4 leading-tight">
-            {pageData?.heroSection?.title || "Crafting Sacred Communal Spaces"}
+            <TranslatedText>{pageData?.heroSection?.title || "Crafting Sacred Communal Spaces"}</TranslatedText>
           </h1>
           <p className="text-white/95 text-base md:text-xl font-medium drop-shadow-lg">
-            {pageData?.heroSection?.subtitle || "Exquisite marble temples built with devotion and architectural excellence for communities worldwide."}
+            <TranslatedText>{pageData?.heroSection?.subtitle || "Exquisite marble temples built with devotion and architectural excellence for communities worldwide."}</TranslatedText>
           </p>
 
           {/* Mobile "Talk to Our Expert" Button */}
@@ -120,10 +122,10 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
               <div key={index} className="group bg-white p-3 md:p-8 rounded-xl md:rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_40px_rgba(139,115,85,0.15)] transition-all duration-500 hover:-translate-y-2 text-center flex flex-col items-center">
                 <div className="w-12 h-12 md:w-24 md:h-24 mx-auto mb-2 md:mb-6 relative flex-shrink-0">
                   <div className="absolute inset-0 bg-[#8B7355]/5 rounded-full scale-0 group-hover:scale-110 transition-transform duration-500"></div>
-                  <img src={item.icon?.url || item.icon} alt={item.title} className="w-full h-full object-contain relative z-10 p-1 md:p-2" />
+                  <img src={item.icon?.url || item.icon} alt={getTranslatedText(item.title)} className="w-full h-full object-contain relative z-10 p-1 md:p-2" />
                 </div>
-                <h3 className="text-xs md:text-xl font-bold text-gray-800 mb-1 md:mb-3 group-hover:text-[#8B7355] transition-colors leading-tight">{item.title}</h3>
-                <p className="text-gray-600 text-[10px] md:text-sm leading-tight md:leading-relaxed">{item.desc || item.description}</p>
+                <h3 className="text-xs md:text-xl font-bold text-gray-800 mb-1 md:mb-3 group-hover:text-[#8B7355] transition-colors leading-tight"><TranslatedText>{item.title}</TranslatedText></h3>
+                <p className="text-gray-600 text-[10px] md:text-sm leading-tight md:leading-relaxed"><TranslatedText>{item.desc || item.description}</TranslatedText></p>
               </div>
             ))}
           </div>
@@ -136,10 +138,10 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
           {/* Heading */}
           <div className="text-center mb-4">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic font-bold mb-3">
-              Build Your Dream Temple in Just 5 Steps
+              <TranslatedText>Build Your Dream Temple in Just 5 Steps</TranslatedText>
             </h2>
             <p className="text-sm md:text-base lg:text-lg text-gray-600">
-              Ready to design your Dream Temple? Here's how you can get started.
+              <TranslatedText>Ready to design your Dream Temple? Here's how you can get started.</TranslatedText>
             </p>
           </div>
 
@@ -155,7 +157,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 />
               </div>
               <p className="text-[9px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight px-1">
-                {pageData?.fiveSteps?.steps[0]?.title || "Let's Connect One on One"}
+                <TranslatedText>{pageData?.fiveSteps?.steps[0]?.title || "Let's Connect One on One"}</TranslatedText>
               </p>
             </div>
 
@@ -176,7 +178,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 />
               </div>
               <p className="text-[9px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight px-1">
-                {pageData?.fiveSteps?.steps[1]?.title || "Explore our Catalog"}
+                <TranslatedText>{pageData?.fiveSteps?.steps[1]?.title || "Explore our Catalog"}</TranslatedText>
               </p>
             </div>
 
@@ -197,7 +199,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 />
               </div>
               <p className="text-[9px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight px-1">
-                {pageData?.fiveSteps?.steps[2]?.title || "Place The Order"}
+                <TranslatedText>{pageData?.fiveSteps?.steps[2]?.title || "Place The Order"}</TranslatedText>
               </p>
             </div>
 
@@ -218,7 +220,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 />
               </div>
               <p className="text-[9px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight px-1">
-                {pageData?.fiveSteps?.steps[3]?.title || "Approval"}
+                <TranslatedText>{pageData?.fiveSteps?.steps[3]?.title || "Approval"}</TranslatedText>
               </p>
             </div>
 
@@ -239,7 +241,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 />
               </div>
               <p className="text-[9px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight px-1">
-                {pageData?.fiveSteps?.steps[4]?.title || "Delivery and Installation"}
+                <TranslatedText>{pageData?.fiveSteps?.steps[4]?.title || "Delivery and Installation"}</TranslatedText>
               </p>
             </div>
           </div>
@@ -251,7 +253,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
               className="px-6 py-3 md:px-8 md:py-4 text-white text-sm md:text-base font-bold uppercase tracking-wide transition-colors shadow-lg hover:opacity-90"
               style={{ backgroundColor: THEME_COLORS.primary }}
             >
-              Start Your Project Now
+              <TranslatedText>Start Your Project Now</TranslatedText>
             </button>
           </div>
         </div>
@@ -268,14 +270,14 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
       >
         <div className="space-y-4">
           <StepInfoItem
-            title="It all Begins with a Form"
-            description="Let's get acquainted. The more we learn about you, the better we can design your home."
-            buttonText="Fill Form Link"
+            title={<TranslatedText>It all Begins with a Form</TranslatedText>}
+            description={<TranslatedText>Let's get acquainted. The more we learn about you, the better we can design your home.</TranslatedText>}
+            buttonText={<TranslatedText>Fill Form Link</TranslatedText>}
             onButtonClick={() => navigate('/book-appointment')}
           />
           <StepInfoItem
-            title="Connect over a Meet"
-            description="Let's get acquainted. The more we learn about you, the better we can design your home."
+            title={<TranslatedText>Connect over a Meet</TranslatedText>}
+            description={<TranslatedText>Let's get acquainted. The more we learn about you, the better we can design your home.</TranslatedText>}
           />
         </div>
       </StepSection>
@@ -317,12 +319,12 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
             </h2>
             <div className="space-y-4">
               <StepInfoItem
-                title="Start the Order Process"
-                description="Once you're happy with what we've proposed, pay 50% of the final quote."
+                title={<TranslatedText>Start the Order Process</TranslatedText>}
+                description={<TranslatedText>Once you're happy with what we've proposed, pay 50% of the final quote.</TranslatedText>}
               />
               <StepInfoItem
-                title="The Work Commences"
-                description="Keep a tab on your project status on the portal provided."
+                title={<TranslatedText>The Work Commences</TranslatedText>}
+                description={<TranslatedText>Keep a tab on your project status on the portal provided.</TranslatedText>}
               />
             </div>
           </StepSection>
@@ -335,7 +337,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
               </svg>
             </div>
             <p className="text-white text-sm md:text-base lg:text-lg font-bold uppercase">
-              YOU ARE HALF WAY THERE ! YOUR ORDER IS IN PROCESS
+              <TranslatedText>YOU ARE HALF WAY THERE ! YOUR ORDER IS IN PROCESS</TranslatedText>
             </p>
           </div>
         </div>
@@ -356,12 +358,12 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
             </h2>
             <div className="space-y-4">
               <StepInfoItem
-                title="Give your Approval"
-                description="Once the Order reaches the approval stage, you will be asked to provide your feedback and approve"
+                title={<TranslatedText>Give your Approval</TranslatedText>}
+                description={<TranslatedText>Once the Order reaches the approval stage, you will be asked to provide your feedback and approve</TranslatedText>}
               />
               <StepInfoItem
-                title="Pay 100% at Execution Milestone"
-                description="Once the Order is fully set according to your requirements pay the 100% and the next stage begins."
+                title={<TranslatedText>Pay 100% at Execution Milestone</TranslatedText>}
+                description={<TranslatedText>Once the Order is fully set according to your requirements pay the 100% and the next stage begins.</TranslatedText>}
               />
             </div>
           </StepSection>
@@ -374,7 +376,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
               </svg>
             </div>
             <p className="text-white text-sm md:text-base lg:text-lg font-bold uppercase">
-              HURRAH! COMPLETE PAYMENT HAS BEEN MADE!
+              <TranslatedText>HURRAH! COMPLETE PAYMENT HAS BEEN MADE!</TranslatedText>
             </p>
           </div>
         </div>
@@ -392,12 +394,12 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
         </h2>
         <div className="space-y-4">
           <StepInfoItem
-            title="Prepare for Delivery"
-            description="Once the 100% of the order value is received we prepare for the Delivery and Installation of the Order"
+            title={<TranslatedText>Prepare for Delivery</TranslatedText>}
+            description={<TranslatedText>Once the 100% of the order value is received we prepare for the Delivery and Installation of the Order</TranslatedText>}
           />
           <StepInfoItem
-            title="Installation"
-            description="Our Team reaches your Home and Install it at your space"
+            title={<TranslatedText>Installation</TranslatedText>}
+            description={<TranslatedText>Our Team reaches your Home and Install it at your space</TranslatedText>}
           />
         </div>
       </StepSection>
@@ -431,12 +433,12 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                   <div className="mb-4 w-20 h-20 md:w-24 md:h-24 flex items-center justify-center">
                     <img
                       src={service.icon?.url || service.icon}
-                      alt={service.name}
+                      alt={getTranslatedText(service.name)}
                       className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
                   <h3 className="text-sm md:text-base font-semibold text-gray-800 group-hover:text-[#8B7355] transition-colors duration-300">
-                    {service.name}
+                    <TranslatedText>{service.name}</TranslatedText>
                   </h3>
                 </div>
               </div>
@@ -451,10 +453,10 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
           {/* Title */}
           <div className="text-center mb-10 md:mb-14">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-4 md:mb-5 tracking-wide">
-              The AMS Difference
+              <TranslatedText>The AMS Difference</TranslatedText>
             </h2>
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover why thousands choose us for their sacred space design
+              <TranslatedText>Discover why thousands choose us for their sacred space design</TranslatedText>
             </p>
             <div className="w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: THEME_COLORS.primary }}></div>
           </div>
@@ -470,16 +472,16 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
               <thead>
                 <tr>
                   <th className="px-2 py-3 md:px-3 md:py-3 text-left text-xs md:text-sm font-bold text-gray-800 uppercase border border-gray-200 bg-gray-50">
-                    Feature
+                    <TranslatedText>Feature</TranslatedText>
                   </th>
                   <th
                     className="px-2 py-3 md:px-3 md:py-3 text-center text-xs md:text-sm font-bold text-white uppercase border border-gray-200"
                     style={{ backgroundColor: THEME_COLORS.primary }}
                   >
-                    Aslam Marble Suppliers
+                    <TranslatedText>Aslam Marble Suppliers</TranslatedText>
                   </th>
                   <th className="px-2 py-3 md:px-3 md:py-3 text-center text-xs md:text-sm font-bold text-gray-800 uppercase border border-gray-200 bg-gray-50">
-                    Local Vendors
+                    <TranslatedText>Local Vendors</TranslatedText>
                   </th>
                 </tr>
               </thead>
@@ -487,14 +489,14 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 1: Artisanal Expertise */}
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Artisanal Expertise
+                    <TranslatedText>Artisanal Expertise</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: THEME_COLORS.primary }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>25+ Years Experience</span>
+                      <span><TranslatedText>25+ Years Experience</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -502,7 +504,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>May Vary</span>
+                      <span><TranslatedText>May Vary</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -510,14 +512,14 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 2: Customized Design */}
                 <tr className="hover:bg-gray-50 transition-colors" style={{ backgroundColor: '#f9f9f9' }}>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Customized Design
+                    <TranslatedText>Customized Design</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: THEME_COLORS.primary }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Tradition & Modernity</span>
+                      <span><TranslatedText>Tradition & Modernity</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -525,7 +527,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Limited Options</span>
+                      <span><TranslatedText>Limited Options</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -533,14 +535,14 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 3: Durability and Quality */}
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Durability and Quality
+                    <TranslatedText>Durability and Quality</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: THEME_COLORS.primary }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Assured</span>
+                      <span><TranslatedText>Assured</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -548,7 +550,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Questionable</span>
+                      <span><TranslatedText>Questionable</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -556,14 +558,14 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 4: Established Trust */}
                 <tr className="hover:bg-gray-50 transition-colors" style={{ backgroundColor: '#f9f9f9' }}>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Established Trust
+                    <TranslatedText>Established Trust</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: THEME_COLORS.primary }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Proven Reliability</span>
+                      <span><TranslatedText>Proven Reliability</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -571,7 +573,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Uncertain</span>
+                      <span><TranslatedText>Uncertain</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -579,14 +581,14 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 5: End to End Support */}
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    End to End Support
+                    <TranslatedText>End to End Support</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: THEME_COLORS.primary }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>From Design to Installation</span>
+                      <span><TranslatedText>From Design to Installation</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -594,7 +596,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Limited</span>
+                      <span><TranslatedText>Limited</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -602,22 +604,22 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 6: Marble Expertise */}
                 <tr className="hover:bg-gray-50 transition-colors" style={{ backgroundColor: '#f9f9f9' }}>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Marble Expertise
+                    <TranslatedText>Marble Expertise</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: THEME_COLORS.primary }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Specialized Knowledge</span>
-                    </div >
-                  </td >
+                      <span><TranslatedText>Specialized Knowledge</TranslatedText></span>
+                    </div>
+                  </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>General Know-how</span>
+                      <span><TranslatedText>General Know-how</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -625,14 +627,14 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 7: Global Standards Compliance */}
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Global Standards Compliance
+                    <TranslatedText>Global Standards Compliance</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: THEME_COLORS.primary }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>International Quality</span>
+                      <span><TranslatedText>International Quality</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -640,7 +642,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Unverified</span>
+                      <span><TranslatedText>Unverified</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -683,7 +685,7 @@ function TrustedBySection() {
   return (
     <section className="w-full py-12 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
-        <p className="text-center text-gray-400 uppercase tracking-[0.3em] font-bold text-xs mb-8">Trusted By Leading Organizations</p>
+        <p className="text-center text-gray-400 uppercase tracking-[0.3em] font-bold text-xs mb-8"><TranslatedText>Trusted By Leading Organizations</TranslatedText></p>
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-40 grayscale">
           {/* Add logos here if needed */}
         </div>

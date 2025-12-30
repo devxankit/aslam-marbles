@@ -10,6 +10,7 @@ import headingImage from '../../../assets/ourcreation/jain temple/heading/SMT017
 import { fetchArtistData } from '../../../utils/artistUtils'
 import { fetchJainTemplesData } from '../../../utils/jainTemplesUtils'
 import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../hooks/usePageTranslation'
 
 // Artisan Fallback Images
 import artisan1 from '../../../assets/house of marble/our artist/slide1.jpeg'
@@ -25,6 +26,7 @@ import img4 from '../../../assets/ourcreation/jain temple/IMAGES/jain-marble-tem
 import img5 from '../../../assets/ourcreation/jain temple/IMAGES/marble-swethamber-jain-temple-in-india.jpg'
 
 const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
+  const { getTranslatedText } = usePageTranslation()
   const navigate = useNavigate()
   const [selectedProject, setSelectedProject] = useState(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -35,10 +37,10 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
 
   // Static Artisans for fallback
   const fallbackArtisans = [
-    { id: 1, image: artisan1, alt: 'Artisan 1' },
-    { id: 2, image: artisan2, alt: 'Artisan 2' },
-    { id: 3, image: artisan3, alt: 'Artisan 3' },
-    { id: 4, image: artisan4, alt: 'Artisan 4' }
+    { id: 1, image: artisan1, alt: getTranslatedText('Artisan 1') },
+    { id: 2, image: artisan2, alt: getTranslatedText('Artisan 2') },
+    { id: 3, image: artisan3, alt: getTranslatedText('Artisan 3') },
+    { id: 4, image: artisan4, alt: getTranslatedText('Artisan 4') }
   ]
 
   // Fetch Artist Images & Page Data
@@ -100,7 +102,7 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
         {/* Horizontal Heading Image */}
         <LazyImage
           src={pageData?.heroSection?.image?.url || headingImage}
-          alt={pageData?.heroSection?.image?.alt || "Jain Temples"}
+          alt={pageData?.heroSection?.image?.alt || getTranslatedText("Jain Temples")}
           className="w-full h-full"
           imageClassName="w-full h-full object-cover object-top"
           priority={true}
@@ -112,10 +114,10 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
         {/* Hero Text Overlay */}
         <div className="absolute top-16 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-xl md:max-w-2xl">
           <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 md:mb-4 leading-tight uppercase tracking-wide drop-shadow-lg">
-            {pageData?.heroSection?.title || 'Jain Temples'}
+            <TranslatedText>{pageData?.heroSection?.title || 'Jain Temples'}</TranslatedText>
           </h1>
           <p className="text-white/95 text-sm md:text-base lg:text-lg font-medium drop-shadow-md">
-            {pageData?.heroSection?.subtitle || 'Designing Sacred Spaces with Timeless Elegance'}
+            <TranslatedText>{pageData?.heroSection?.subtitle || 'Designing Sacred Spaces with Timeless Elegance'}</TranslatedText>
           </p>
 
           {/* Mobile "Talk to Our Expert" Button */}
@@ -171,7 +173,7 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
                   <div className="absolute inset-0 rounded-2xl overflow-hidden border-2 border-white shadow-xl transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[#8B7355]/20">
                     <LazyImage
                       src={art.image || art.url}
-                      alt={art.alt || 'Artisan'}
+                      alt={art.alt || getTranslatedText('Artisan')}
                       className="w-full h-full"
                       imageClassName="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
                     />
@@ -189,10 +191,10 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
           {/* Section Header */}
           <div className="text-center mb-10 md:mb-14 lg:mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-4 md:mb-5 tracking-wide">
-              {pageData?.projectsSection?.title || 'Our Jain Temple Projects'}
+              <TranslatedText>{pageData?.projectsSection?.title || 'Our Jain Temple Projects'}</TranslatedText>
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              {pageData?.projectsSection?.description || 'Showcasing our beautiful Jain temples that bring divine energy into refined spaces.'}
+              <TranslatedText>{pageData?.projectsSection?.description || 'Showcasing our beautiful Jain temples that bring divine energy into refined spaces.'}</TranslatedText>
             </p>
             <div className="w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -217,7 +219,7 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
                 >
                   <LazyImage
                     src={project.image?.url}
-                    alt={project.title}
+                    alt={getTranslatedText(project.title)}
                     className="w-full h-full"
                     imageClassName="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                   />
@@ -226,17 +228,17 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
 
                   {/* Location Badge */}
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-[#8B7355] uppercase tracking-wide shadow-sm">
-                    {project.location}
+                    <TranslatedText>{project.location}</TranslatedText>
                   </div>
                 </div>
 
                 {/* Content Area */}
                 <div className="p-5 flex flex-col flex-1">
                   <h3 className="text-lg font-serif font-bold text-gray-800 mb-2 line-clamp-1 group-hover:text-[#8B7355] transition-colors">
-                    {project.title}
+                    <TranslatedText>{project.title}</TranslatedText>
                   </h3>
                   <p className="text-gray-500 text-sm mb-4 line-clamp-2 flex-grow">
-                    {project.description}
+                    <TranslatedText>{project.description}</TranslatedText>
                   </p>
 
                   <div className="mt-auto grid grid-cols-2 gap-3 pt-4 border-t border-gray-100">

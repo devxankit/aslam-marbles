@@ -20,6 +20,7 @@ import diyAssemblyIcon from '../../../assets/services/TSA international/heading/
 
 // Import GIF
 import internationalGif from '../../../assets/services/TSA international/gif video/international.gif'
+import { usePageTranslation } from '../../../hooks/usePageTranslation'
 
 const TSAInternationalPage = ({
   onShowSidebar,
@@ -38,6 +39,7 @@ const TSAInternationalPage = ({
   const [expandedFaq, setExpandedFaq] = useState(null)
   const [faqs, setFaqs] = useState([])
   const [loadingFAQs, setLoadingFAQs] = useState(true)
+  const { getTranslatedText } = usePageTranslation()
 
   // Fetch FAQs from API
   useEffect(() => {
@@ -158,9 +160,9 @@ const TSAInternationalPage = ({
       <HeroSectionWithForm
         source="tsa-international-page"
         heroImage={tsaInternationalHeroImage}
-        title="AMS INTERNATIONAL"
-        subtitle="Global Excellence in Stone Art"
-        description="Expanding our legacy of craftsmanship and design excellence across international markets, bringing premium stone art solutions to clients worldwide."
+        title={getTranslatedText("AMS INTERNATIONAL")}
+        subtitle={getTranslatedText("Global Excellence in Stone Art")}
+        description={getTranslatedText("Expanding our legacy of craftsmanship and design excellence across international markets, bringing premium stone art solutions to clients worldwide.")}
       />
 
       {/* End to End Solutions Section */}
@@ -190,37 +192,37 @@ const TSAInternationalPage = ({
                 <div className="flex items-start gap-2 sm:gap-3">
                   <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
                   <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]">Strong Connector System:</span> Durable nut-and-bolt fittings for secure global installations.
+                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Strong Connector System:</TranslatedText></span> <TranslatedText>Durable nut-and-bolt fittings for secure global installations.</TranslatedText>
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
                   <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
                   <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]">Premium Vietnam Marble:</span> High-quality stone with unmatched shine and energy.
+                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Premium Vietnam Marble:</TranslatedText></span> <TranslatedText>High-quality stone with unmatched shine and energy.</TranslatedText>
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
                   <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
                   <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]">Artistic Detailing:</span> Painting, inlay, overlay, and embossing for rich visual appeal.
+                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Artistic Detailing:</TranslatedText></span> <TranslatedText>Painting, inlay, overlay, and embossing for rich visual appeal.</TranslatedText>
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
                   <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
                   <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]">Smart Storage Units:</span> Stylish base cabinets for pooja essentials.
+                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Smart Storage Units:</TranslatedText></span> <TranslatedText>Stylish base cabinets for pooja essentials.</TranslatedText>
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
                   <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
                   <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]">Push-to-Open Drawers:</span> Sleek, modern, knob-less design.
+                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Push-to-Open Drawers:</TranslatedText></span> <TranslatedText>Sleek, modern, knob-less design.</TranslatedText>
                   </p>
                 </div>
                 <div className="flex items-start gap-2 sm:gap-3">
                   <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#8B7355] mt-1 sm:mt-2 flex-shrink-0"></div>
                   <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                    <span className="font-semibold text-[#8B7355]">Built-In Ambient Lighting:</span> Soft, divine illumination for a serene atmosphere.
+                    <span className="font-semibold text-[#8B7355]"><TranslatedText>Built-In Ambient Lighting:</TranslatedText></span> <TranslatedText>Soft, divine illumination for a serene atmosphere.</TranslatedText>
                   </p>
                 </div>
               </div>
@@ -277,7 +279,7 @@ const TSAInternationalPage = ({
       <section className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-6 md:mb-8 text-center tracking-wide font-bold">
-            Understand Your Shipping Timelines
+            <TranslatedText>Understand Your Shipping Timelines</TranslatedText>
           </h2>
 
           {/* Tabs */}
@@ -303,22 +305,22 @@ const TSAInternationalPage = ({
                 <thead>
                   <tr className="bg-[#8B7355] text-white">
                     <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
-                      Temple Width (in feet)
+                      <TranslatedText>Temple Width (in feet)</TranslatedText>
                     </th>
                     <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
-                      Design Phase
+                      <TranslatedText>Design Phase</TranslatedText>
                     </th>
                     <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
-                      Production Lead Time
+                      <TranslatedText>Production Lead Time</TranslatedText>
                     </th>
                     <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
-                      Shipping Time
+                      <TranslatedText>Shipping Time</TranslatedText>
                     </th>
                     <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
-                      Average Weight
+                      <TranslatedText>Average Weight</TranslatedText>
                     </th>
                     <th className="border border-gray-300 px-1 py-2 sm:px-3 sm:py-2 md:px-4 md:py-3 text-left text-[9px] xs:text-[10px] sm:text-sm md:text-base font-semibold whitespace-normal md:whitespace-nowrap align-top leading-tight">
-                      Port Delivery Charges <span className="block text-[8px] xs:text-[9px] sm:text-xs font-normal opacity-90 mt-0.5">(Based on October 2024)</span>
+                      <TranslatedText>Port Delivery Charges</TranslatedText> <span className="block text-[8px] xs:text-[9px] sm:text-xs font-normal opacity-90 mt-0.5">(<TranslatedText>Based on October 2024</TranslatedText>)</span>
                     </th>
                   </tr>
                 </thead>
@@ -326,22 +328,22 @@ const TSAInternationalPage = ({
                   {shippingData[activeTab].data.map((row, index) => (
                     <tr key={index} className="hover:bg-gray-50 transition-colors">
                       <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-800 font-medium whitespace-normal md:whitespace-nowrap align-top">
-                        {row.width}
+                        <TranslatedText>{row.width}</TranslatedText>
                       </td>
                       <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 whitespace-normal md:whitespace-nowrap align-top">
-                        {row.design}
+                        <TranslatedText>{row.design}</TranslatedText>
                       </td>
                       <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 whitespace-normal md:whitespace-nowrap align-top">
-                        {row.production}
+                        <TranslatedText>{row.production}</TranslatedText>
                       </td>
                       <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 whitespace-normal md:whitespace-nowrap align-top">
-                        {row.shipping}
+                        <TranslatedText>{row.shipping}</TranslatedText>
                       </td>
                       <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 whitespace-normal md:whitespace-nowrap align-top">
-                        {row.weight}
+                        <TranslatedText>{row.weight}</TranslatedText>
                       </td>
                       <td className="border border-gray-300 px-1 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-[9px] xs:text-[10px] sm:text-sm md:text-base text-gray-700 font-semibold whitespace-normal md:whitespace-nowrap align-top">
-                        {row.charges}
+                        <TranslatedText>{row.charges}</TranslatedText>
                       </td>
                     </tr>
                   ))}
@@ -356,7 +358,7 @@ const TSAInternationalPage = ({
               {activeTab}
             </h3>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              {shippingData[activeTab].note}
+              <TranslatedText>{shippingData[activeTab].note}</TranslatedText>
             </p>
           </div>
         </div>
@@ -379,7 +381,7 @@ const TSAInternationalPage = ({
                 />
               </div>
               <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
-                Design
+                <TranslatedText>Design</TranslatedText>
               </p>
             </div>
 
@@ -393,7 +395,7 @@ const TSAInternationalPage = ({
                 />
               </div>
               <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
-                Production
+                <TranslatedText>Production</TranslatedText>
               </p>
             </div>
 
@@ -407,7 +409,7 @@ const TSAInternationalPage = ({
                 />
               </div>
               <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
-                Shipping
+                <TranslatedText>Shipping</TranslatedText>
               </p>
             </div>
 
@@ -421,7 +423,7 @@ const TSAInternationalPage = ({
                 />
               </div>
               <p className="text-[9px] xs:text-[10px] sm:text-base md:text-lg font-medium text-gray-800 leading-tight">
-                DIY Assembly
+                <TranslatedText>DIY Assembly</TranslatedText>
               </p>
             </div>
           </div>
@@ -500,6 +502,8 @@ const TSAInternationalPage = ({
 }
 
 const ProcessStepsSection = ({ selectedStep, onStepChange }) => {
+  const { getTranslatedText } = usePageTranslation()
+
   const steps = [
     {
       id: 1,
@@ -551,10 +555,10 @@ const ProcessStepsSection = ({ selectedStep, onStepChange }) => {
 
                   <div className={`flex-1 bg-white rounded-lg shadow-md p-2 sm:p-4 hover:shadow-lg transition-all duration-300 ${selectedStep === step.id ? 'ring-1 sm:ring-2 ring-[#8B8B5C]' : ''}`}>
                     <h3 className="text-[10px] sm:text-sm font-bold text-gray-800 mb-0.5 sm:mb-2 leading-tight">
-                      {step.title}
+                      <TranslatedText>{step.title}</TranslatedText>
                     </h3>
                     <p className="text-[9px] sm:text-xs text-gray-600 leading-tight sm:leading-relaxed">
-                      {step.description}
+                      <TranslatedText>{step.description}</TranslatedText>
                     </p>
                   </div>
                 </div>
@@ -565,15 +569,15 @@ const ProcessStepsSection = ({ selectedStep, onStepChange }) => {
           <div className="bg-white">
             <div className="bg-white rounded-lg p-3 sm:p-6 border sm:border-0 border-gray-100 shadow-sm sm:shadow-none h-full">
               <h2 className="text-sm sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">
-                {steps.find(s => s.id === selectedStep)?.title}
+                <TranslatedText>{steps.find(s => s.id === selectedStep)?.title}</TranslatedText>
               </h2>
               <p className="text-[10px] sm:text-sm text-gray-500 mb-3 sm:mb-4 leading-relaxed">
-                {steps.find(s => s.id === selectedStep)?.description}
+                <TranslatedText>{steps.find(s => s.id === selectedStep)?.description}</TranslatedText>
               </p>
               <hr className="border-gray-300 mb-3 sm:mb-5" />
               <div className="space-y-3 sm:space-y-5">
                 <p className="text-[10px] sm:text-sm text-gray-500 leading-relaxed">
-                  More details about this step will be shown here. This is a simplified version of the process steps detail view.
+                  <TranslatedText>More details about this step will be shown here. This is a simplified version of the process steps detail view.</TranslatedText>
                 </p>
               </div>
             </div>

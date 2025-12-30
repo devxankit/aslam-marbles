@@ -340,16 +340,23 @@ const translateBatch = async (texts, targetLang, sourceLang = null, isStatic = f
         } catch (error) {
             console.error('Batch translation error:', error.message);
 
-            // Fallback for this chunk via MyMemory (sequential to avoid rate limits)
-            for (let j = 0; j < chunk.length; j++) {
-                const originalIndex = chunkIndices[j];
-                const originalText = chunk[j];
-                const fallback = await translateViaMyMemory(originalText, targetCode, sourceLang || 'en');
-                results[originalIndex] = fallback || texts[originalIndex];
+            // Fallback for this chunk via MyMemory
+            // Use parallel processing with concurrency control (5 at a time) to avoid extreme slowness while respecting rate limits
+            const FALLBACK_CONCURRENCY = 5;
+            for (let j = 0; j < chunk.length; j += FALLBACK_CONCURRENCY) {
+                const subChunkIndices = chunkIndices.slice(j, j + FALLBACK_CONCURRENCY);
+                const subChunkTexts = chunk.slice(j, j + FALLBACK_CONCURRENCY);
 
-                if (fallback && fallback !== originalText) {
-                    setCachedTranslation(originalText, fallback, targetCode, sourceLang, isStatic);
-                }
+                await Promise.all(subChunkTexts.map(async (originalText, subIdx) => {
+                    const originalIndex = subChunkIndices[subIdx];
+                    const fallback = await translateViaMyMemory(originalText, targetCode, sourceLang || 'en');
+
+                    results[originalIndex] = fallback || texts[originalIndex];
+
+                    if (fallback && fallback !== originalText) {
+                        setCachedTranslation(originalText, fallback, targetCode, sourceLang, isStatic);
+                    }
+                }));
             }
         }
     }

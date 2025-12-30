@@ -4,6 +4,7 @@ import Header from '../../../components/layout/Header';
 import Footer from '../../../components/layout/Footer';
 import FloatingButtons from '../../../components/common/FloatingButtons';
 import { fetchInternationalProjectsData } from '../../../utils/internationalProjectsUtils';
+import { usePageTranslation } from '../../../hooks/usePageTranslation';
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay';
 import TranslatedText from '../../../components/TranslatedText';
 
@@ -16,6 +17,7 @@ const InternationalProjectsPage = ({
   onShowLocation,
   onShowBooking,
 }) => {
+  const { getTranslatedText } = usePageTranslation();
   const [showMobileForm, setShowMobileForm] = useState(false);
   const [internationalData, setInternationalData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -74,7 +76,7 @@ const InternationalProjectsPage = ({
         ) : internationalData?.heroImage?.url ? (
           <img
             src={internationalData.heroImage.url}
-            alt={internationalData.heroImage.alt || 'International Projects'}
+            alt={internationalData.heroImage.alt || getTranslatedText('International Projects')}
             className="w-full h-full object-cover"
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
@@ -87,13 +89,13 @@ const InternationalProjectsPage = ({
         {/* Hero Text Overlay - Left Side */}
         <div className="absolute top-10 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-[60%] md:max-w-2xl">
           <h1 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 md:mb-4 leading-tight uppercase tracking-wide drop-shadow-lg">
-            {internationalData?.title || 'INTERNATIONAL PROJECTS'}
+            <TranslatedText>{internationalData?.title || 'INTERNATIONAL PROJECTS'}</TranslatedText>
           </h1>
           <p className="text-xs md:text-base lg:text-lg text-white font-light mb-1.5 md:mb-2 drop-shadow-md">
-            {internationalData?.subtitle || 'Global Excellence in Stone Architecture'}
+            <TranslatedText>{internationalData?.subtitle || 'Global Excellence in Stone Architecture'}</TranslatedText>
           </p>
           <p className="text-[10px] md:text-sm text-white/90 font-light leading-relaxed drop-shadow-md hidden sm:block">
-            {internationalData?.description || 'From India to the world, exploring our international footprint in stone architecture and temple construction.'}
+            <TranslatedText>{internationalData?.description || 'From India to the world, exploring our international footprint in stone architecture and temple construction.'}</TranslatedText>
           </p>
           <button
             onClick={() => setShowMobileForm(true)}
@@ -112,10 +114,10 @@ const InternationalProjectsPage = ({
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-0 md:mb-14 lg:mb-16">
             <h2 className="text-xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-2 md:mb-5 tracking-wide">
-              {internationalData?.sectionTitle || 'Our International Projects'}
+              <TranslatedText>{internationalData?.sectionTitle || 'Our International Projects'}</TranslatedText>
             </h2>
             <p className="text-[10px] md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
-              {internationalData?.sectionDescription || 'Showcasing our global stone architecture projects.'}
+              <TranslatedText>{internationalData?.sectionDescription || 'Showcasing our global stone architecture projects.'}</TranslatedText>
             </p>
             <div className="w-12 md:w-24 h-0.5 md:h-1 mx-auto mt-3 md:mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -135,20 +137,20 @@ const InternationalProjectsPage = ({
                   <div className="relative w-full h-36 md:h-96 overflow-hidden bg-gray-100">
                     <img
                       src={image.url}
-                      alt={image.alt || image.title || `International Project ${index + 1}`}
+                      alt={image.alt || image.title || getTranslatedText(`International Project ${index + 1}`)}
                       className="w-full h-full !h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 md:p-6 text-white">
                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
                         <h3 className="text-[10px] md:text-xl font-serif leading-none md:leading-tight mb-0.5 md:mb-1 truncate">
-                          {image.title || 'International Project'}
+                          <TranslatedText>{image.title || 'International Project'}</TranslatedText>
                         </h3>
-                        <p className="text-[8px] md:text-lg mb-1 md:mb-0 truncate">{image.location || 'Location'}</p>
-                        <p className="text-[8px] md:text-xs text-gray-300 mb-1 md:mb-3 font-light leading-relaxed line-clamp-1 hidden sm:block">{image.address || ''}</p>
+                        <p className="text-[8px] md:text-lg mb-1 md:mb-0 truncate"><TranslatedText>{image.location || 'Location'}</TranslatedText></p>
+                        <p className="text-[8px] md:text-xs text-gray-300 mb-1 md:mb-3 font-light leading-relaxed line-clamp-1 hidden sm:block"><TranslatedText>{image.address || ''}</TranslatedText></p>
                         <div className="w-full h-[1px] bg-white/30 my-1 md:my-3 hidden sm:block"></div>
-                        <p className="text-[8px] md:text-sm font-medium tracking-wide truncate hidden sm:block">{image.client || ''}</p>
+                        <p className="text-[8px] md:text-sm font-medium tracking-wide truncate hidden sm:block"><TranslatedText>{image.client || ''}</TranslatedText></p>
                         <div className="w-full h-[1px] bg-white/30 my-1 md:my-3 hidden sm:block"></div>
-                        <p className="text-[8px] md:text-sm font-light hidden sm:block">{image.duration || ''}</p>
+                        <p className="text-[8px] md:text-sm font-light hidden sm:block"><TranslatedText>{image.duration || ''}</TranslatedText></p>
                       </div>
                     </div>
                   </div>

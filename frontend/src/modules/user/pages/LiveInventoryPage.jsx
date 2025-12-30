@@ -139,20 +139,20 @@ const LiveInventoryPage = ({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div>
                             <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">
-                                Premium Selection
+                                <TranslatedText>Premium Selection</TranslatedText>
                             </span>
                             <h2 className="text-3xl md:text-5xl font-serif text-[#8B7355] italic mb-6 leading-tight">
-                                Handpicked Stones for Your Masterpiece
+                                <TranslatedText>Handpicked Stones for Your Masterpiece</TranslatedText>
                             </h2>
                             <p className="text-gray-600 leading-relaxed mb-6">
-                                Our live inventory features the finest selection of natural stones, available for immediate viewing and purchase. Each slab is photographed in high resolution to give you a true-to-life representation of its patterns and textures.
+                                <TranslatedText>Our live inventory features the finest selection of natural stones, available for immediate viewing and purchase. Each slab is photographed in high resolution to give you a true-to-life representation of its patterns and textures.</TranslatedText>
                             </p>
                             <div className="w-24 h-1 bg-[#8B7355]"></div>
                         </div>
                         <div className="relative rounded-xl overflow-hidden shadow-2xl aspect-[4/3]">
                             <img
                                 src={sideImage}
-                                alt="Marble Stock"
+                                alt={getTranslatedText("Marble Stock")}
                                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                             />
                         </div>
@@ -285,7 +285,7 @@ const LiveInventoryPage = ({
                 <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px]">
                     <LazyImage
                         src={pageSettings?.horizontalSection?.image?.url || horizontalImage}
-                        alt="Natural Stone Collection"
+                        alt={getTranslatedText("Natural Stone Collection")}
                         className="w-full h-full"
                         imageClassName="w-full h-full object-cover"
                     />

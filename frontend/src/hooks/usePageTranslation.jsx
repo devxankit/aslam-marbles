@@ -18,11 +18,24 @@ export const usePageTranslation = (staticTexts = [], sourceLang = 'en') => {
 
             if (!staticTexts || staticTexts.length === 0) return;
 
-            setIsTranslating(true);
+            // PERFORMANCE OPTIMIZATION: Check if we have everything in cache first
+            // This prevents "flicker" where text shows loading state unnecessarily
+
+            // We'll treat the initial load differently. If we can get results fast, we won't set isTranslating to true
+            // preventing the UI from showing a loader for cached content.
 
             try {
                 // Use batch API for efficient translation (single API call instead of N calls)
-                const translations = await translateBatch(staticTexts, targetLang, sourceLang, true); // true = isStatic
+                // translateBatch handles checking both L1 (memory/local) and L2 (backend) caches
+                const translationsPromise = translateBatch(staticTexts, targetLang, sourceLang, true); // true = isStatic
+
+                // If we don't have results within 50ms, trigger loading state
+                const loadingTimer = setTimeout(() => {
+                    if (isMounted) setIsTranslating(true);
+                }, 50);
+
+                const translations = await translationsPromise;
+                clearTimeout(loadingTimer);
 
                 if (isMounted) {
                     const newMap = {};
@@ -30,6 +43,7 @@ export const usePageTranslation = (staticTexts = [], sourceLang = 'en') => {
                         newMap[original] = translations[idx] || original;
                     });
                     setTranslatedMap(newMap);
+                    setIsTranslating(false);
                 }
             } catch (error) {
                 console.error('Page translation error:', error);
@@ -40,9 +54,8 @@ export const usePageTranslation = (staticTexts = [], sourceLang = 'en') => {
                         fallbackMap[text] = text;
                     });
                     setTranslatedMap(fallbackMap);
+                    setIsTranslating(false);
                 }
-            } finally {
-                if (isMounted) setIsTranslating(false);
             }
         };
 
