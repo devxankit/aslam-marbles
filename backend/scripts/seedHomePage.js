@@ -115,8 +115,6 @@ const seedHomePage = async () => {
             completedProjectsSection: {
                 heading: 'COMPLETED CUSTOM PROJECTS',
                 backgroundImage: {
-                    url: 'https://res.cloudinary.com/djuyp9lut/image/upload/v1766129645/artist/hero/yjy4w3bfu9s4fhirpius.webp',
-                    publicId: 'artist/hero/yjy4w3bfu9s4fhirpius',
                     alt: 'Completed Projects Background'
                 },
                 stats: {

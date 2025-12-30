@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
+import TranslatedText from '../TranslatedText'
 import { BUDGET_OPTIONS, TIMELINE_OPTIONS } from '../../utils/constants'
+import { usePageTranslation } from '../../hooks/usePageTranslation'
 
 const HomePageFormPopup = ({ onClose }) => {
   const [formStep, setFormStep] = useState(1)
@@ -17,6 +19,41 @@ const HomePageFormPopup = ({ onClose }) => {
     additionalInfo: '',
     designReferences: null
   })
+
+  const STATIC_TEXTS = [
+    'Talk to Our Expert',
+    'DOMESTIC',
+    'INTERNATIONAL',
+    'Full Name *',
+    'Email Address *',
+    'Phone number',
+    'Phone number *',
+    'City *',
+    'Tell us about yourself *',
+    'I am a homeowner looking for a pooja unit or pooja room',
+    'I am an interior designer/consultant seeking solutions for my client',
+    'NEXT →',
+    'What are you looking for? *',
+    'Singular Marble Mandir Unit',
+    'Complete Pooja Room Solution',
+    'What is your estimated budget? *',
+    'What is your timeline for the project? *',
+    'Please share a bit more about your needs',
+    'UPLOAD DESIGN REFERENCES',
+    'Selected files:',
+    'SUBMIT',
+    'BACK',
+    'Budget',
+    'Timeline',
+    'Additional Information (Optional)',
+    'Submit',
+    'Back',
+    'Thank you! Your consultation request has been submitted successfully. We will contact you soon.',
+    'Something went wrong. Please try again.',
+    'Failed to submit consultation request'
+  ]
+
+  const { getTranslatedText } = usePageTranslation(STATIC_TEXTS, 'en')
 
   useEffect(() => {
     // Show popup after 2 seconds
@@ -63,10 +100,10 @@ const HomePageFormPopup = ({ onClose }) => {
       const data = await res.json()
 
       if (!res.ok || data.success === false) {
-        throw new Error(data.message || 'Failed to submit consultation request')
+        throw new Error(data.message || getTranslatedText('Failed to submit consultation request'))
       }
 
-      alert('Thank you! Your consultation request has been submitted successfully. We will contact you soon.')
+      alert(getTranslatedText('Thank you! Your consultation request has been submitted successfully. We will contact you soon.'))
 
       // Reset form
       setFormStep(1)
@@ -86,7 +123,7 @@ const HomePageFormPopup = ({ onClose }) => {
       handleClose()
     } catch (error) {
       console.error('Error submitting consultation:', error)
-      alert(error.message || 'Something went wrong. Please try again.')
+      alert(error.message || getTranslatedText('Something went wrong. Please try again.'))
     }
   }
 
@@ -124,7 +161,7 @@ const HomePageFormPopup = ({ onClose }) => {
         >
           {/* Header with Close Button */}
           <div className="flex items-center justify-between p-4 md:p-5 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0 rounded-t-xl md:rounded-t-2xl">
-            <h3 className="text-lg md:text-xl font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>
+            <h3 className="text-lg md:text-xl font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>{getTranslatedText('Talk to Our Expert')}</h3>
             <div className="flex items-center gap-2">
               <span className="text-xs md:text-sm font-semibold px-2.5 py-1.5 rounded-full bg-[#8B7355]/10" style={{ color: '#8B7355' }}>{formStep}/2</span>
               <button
@@ -150,7 +187,7 @@ const HomePageFormPopup = ({ onClose }) => {
                       onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-4 h-4 accent-amber-600"
                     />
-                    <span className="text-sm font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
+                    <span className="text-sm font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>{getTranslatedText('DOMESTIC')}</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -161,13 +198,13 @@ const HomePageFormPopup = ({ onClose }) => {
                       onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-4 h-4 accent-amber-600"
                     />
-                    <span className="text-sm font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
+                    <span className="text-sm font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>{getTranslatedText('INTERNATIONAL')}</span>
                   </label>
                 </div>
 
                 <input
                   type="text"
-                  placeholder="Full Name *"
+                  placeholder={getTranslatedText('Full Name *')}
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -176,7 +213,7 @@ const HomePageFormPopup = ({ onClose }) => {
 
                 <input
                   type="email"
-                  placeholder="Email Address *"
+                  placeholder={getTranslatedText('Email Address *')}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -184,7 +221,7 @@ const HomePageFormPopup = ({ onClose }) => {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Phone number</label>
+                  <label className="block text-sm font-medium mb-2">{getTranslatedText('Phone number')}</label>
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                     <div className="flex items-center gap-1.5 px-3 py-3 bg-gray-50 border-r">
                       <span className="text-base">🇮🇳</span>
@@ -192,7 +229,7 @@ const HomePageFormPopup = ({ onClose }) => {
                     </div>
                     <input
                       type="tel"
-                      placeholder="Phone number *"
+                      placeholder={getTranslatedText('Phone number *')}
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="flex-1 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -203,7 +240,7 @@ const HomePageFormPopup = ({ onClose }) => {
 
                 <input
                   type="text"
-                  placeholder="City *"
+                  placeholder={getTranslatedText('City *')}
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                   className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -211,7 +248,7 @@ const HomePageFormPopup = ({ onClose }) => {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium mb-2.5">Tell us about yourself *</label>
+                  <label className="block text-sm font-medium mb-2.5">{getTranslatedText('Tell us about yourself *')}</label>
                   <div className="space-y-2.5">
                     <label className="flex items-start gap-2.5 cursor-pointer">
                       <input
@@ -223,7 +260,7 @@ const HomePageFormPopup = ({ onClose }) => {
                         className="mt-1 w-4 h-4 accent-amber-600 flex-shrink-0"
                         required
                       />
-                      <span className="text-sm leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
+                      <span className="text-sm leading-relaxed">{getTranslatedText('I am a homeowner looking for a pooja unit or pooja room')}</span>
                     </label>
                     <label className="flex items-start gap-2.5 cursor-pointer">
                       <input
@@ -235,7 +272,7 @@ const HomePageFormPopup = ({ onClose }) => {
                         className="mt-1 w-4 h-4 accent-amber-600 flex-shrink-0"
                         required
                       />
-                      <span className="text-sm leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
+                      <span className="text-sm leading-relaxed">{getTranslatedText('I am an interior designer/consultant seeking solutions for my client')}</span>
                     </label>
                   </div>
                 </div>
@@ -247,13 +284,13 @@ const HomePageFormPopup = ({ onClose }) => {
                   onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                   onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
                 >
-                  NEXT →
+                  {getTranslatedText('NEXT →')}
                 </button>
               </form>
             ) : (
               <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
-                  <label className="block text-sm font-bold mb-2.5">What are you looking for? *</label>
+                  <label className="block text-sm font-bold mb-2.5">{getTranslatedText('What are you looking for? *')}</label>
                   <div className="space-y-2.5">
                     <label className="flex items-center gap-2.5 cursor-pointer">
                       <input
@@ -265,7 +302,7 @@ const HomePageFormPopup = ({ onClose }) => {
                         className="w-4 h-4 accent-amber-600"
                         required
                       />
-                      <span className="text-sm">Singular Marble Mandir Unit</span>
+                      <span className="text-sm">{getTranslatedText('Singular Marble Mandir Unit')}</span>
                     </label>
                     <label className="flex items-center gap-2.5 cursor-pointer">
                       <input
@@ -277,13 +314,13 @@ const HomePageFormPopup = ({ onClose }) => {
                         className="w-4 h-4 accent-amber-600"
                         required
                       />
-                      <span className="text-sm">Complete Pooja Room Solution</span>
+                      <span className="text-sm">{getTranslatedText('Complete Pooja Room Solution')}</span>
                     </label>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold mb-2.5">What is your estimated budget? *</label>
+                  <label className="block text-sm font-bold mb-2.5">{getTranslatedText('What is your estimated budget? *')}</label>
                   <div className="space-y-2.5">
                     {BUDGET_OPTIONS.map((budget) => (
                       <label key={budget} className="flex items-center gap-2.5 cursor-pointer">
@@ -296,14 +333,14 @@ const HomePageFormPopup = ({ onClose }) => {
                           className="w-4 h-4 accent-amber-600"
                           required
                         />
-                        <span className="text-sm">{budget}</span>
+                        <span className="text-sm"><TranslatedText>{budget}</TranslatedText></span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold mb-2.5">What is your timeline for the project? *</label>
+                  <label className="block text-sm font-bold mb-2.5">{getTranslatedText('What is your timeline for the project? *')}</label>
                   <div className="space-y-2.5">
                     {TIMELINE_OPTIONS.map((timeline) => (
                       <label key={timeline} className="flex items-center gap-2.5 cursor-pointer">
@@ -316,14 +353,14 @@ const HomePageFormPopup = ({ onClose }) => {
                           className="w-4 h-4 accent-amber-600"
                           required
                         />
-                        <span className="text-sm">{timeline}</span>
+                        <span className="text-sm"><TranslatedText>{timeline}</TranslatedText></span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <textarea
-                  placeholder="Please share a bit more about your needs"
+                  placeholder={getTranslatedText('Please share a bit more about your needs')}
                   value={formData.additionalInfo}
                   onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
                   rows={4}
@@ -346,11 +383,11 @@ const HomePageFormPopup = ({ onClose }) => {
                     onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                     onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
                   >
-                    UPLOAD DESIGN REFERENCES
+                    {getTranslatedText('UPLOAD DESIGN REFERENCES')}
                   </label>
                   {formData.designReferences && formData.designReferences.length > 0 && (
                     <p className="text-sm text-gray-600 mt-2">
-                      {formData.designReferences.length} file(s) selected
+                      {formData.designReferences.length} {getTranslatedText('Selected files:')}
                     </p>
                   )}
                 </div>
@@ -368,7 +405,7 @@ const HomePageFormPopup = ({ onClose }) => {
                       e.target.style.backgroundColor = 'white'
                     }}
                   >
-                    BACK
+                    {getTranslatedText('BACK')}
                   </button>
                   <button
                     type="submit"
@@ -377,7 +414,7 @@ const HomePageFormPopup = ({ onClose }) => {
                     onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                     onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
                   >
-                    SUBMIT
+                    {getTranslatedText('SUBMIT')}
                   </button>
                 </div>
               </form>

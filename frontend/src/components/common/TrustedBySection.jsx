@@ -1,4 +1,6 @@
 import { memo, useState, useEffect } from 'react'
+import TranslatedText from '../TranslatedText'
+import { usePageTranslation } from '../../contexts/PageTranslationContext'
 import { fetchTrustedByData } from '../../utils/trustedByUtils'
 import clientLogo1 from '../../assets/house of marble/our client/icons/download.png'
 import clientLogo2 from '../../assets/house of marble/our client/icons/download (1).png'
@@ -16,6 +18,7 @@ const fallbackLogos = [
 ]
 
 const TrustedBySection = memo(() => {
+  const { getTranslatedText } = usePageTranslation()
   const [heading, setHeading] = useState('Trusted By')
   const [clientLogos, setClientLogos] = useState(fallbackLogos)
   const [loading, setLoading] = useState(true)
@@ -62,7 +65,7 @@ const TrustedBySection = memo(() => {
         {/* Section Title */}
         <div className="text-center mb-6 md:mb-8 px-4">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-3">
-            {heading}
+            <TranslatedText>{heading}</TranslatedText>
           </h2>
           <div className="w-20 h-1 mx-auto" style={{ backgroundColor: '#8B7355' }}></div>
         </div>
@@ -71,7 +74,7 @@ const TrustedBySection = memo(() => {
         <div className="relative w-full overflow-hidden">
           {loading ? (
             <div className="text-center py-8">
-              <p className="text-gray-600">Loading...</p>
+              <p className="text-gray-600"><TranslatedText>Loading...</TranslatedText></p>
             </div>
           ) : (
             <div className="flex gap-6 md:gap-8 lg:gap-10 animate-scroll-right-to-left">
@@ -84,7 +87,7 @@ const TrustedBySection = memo(() => {
                   <div className="relative p-2 transition-all duration-500 hover:scale-110">
                     <img
                       src={logo.image}
-                      alt={logo.name}
+                      alt={getTranslatedText(logo.name)}
                       className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain transition-all duration-500 group-hover:brightness-110 filter grayscale hover:grayscale-0"
                       loading="lazy"
                     />

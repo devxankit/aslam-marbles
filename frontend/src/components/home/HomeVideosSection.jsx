@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import TranslatedText from '../TranslatedText'
 import { fetchHomePageData } from '../../utils/homePageUtils'
 
 // Import videos as fallback
@@ -8,9 +9,9 @@ import video3 from '../../assets/video/videos/ef556fd0-b8ee-475e-7616-2e2ca5640b
 
 const HomeVideosSection = () => {
   const [videos, setVideos] = useState([
-    { id: 1, src: video1 },
-    { id: 2, src: video2 },
-    { id: 3, src: video3 }
+    { id: 1, src: video1, loaded: false, error: false },
+    { id: 2, src: video2, loaded: false, error: false },
+    { id: 3, src: video3, loaded: false, error: false }
   ])
   const [loading, setLoading] = useState(true)
 
@@ -42,7 +43,7 @@ const HomeVideosSection = () => {
       <section className="w-full bg-white py-12 px-4 md:px-8">
         <div className="max-w-[1920px] mx-auto">
           <div className="text-center py-8">
-            <p className="text-gray-600">Loading videos...</p>
+            <p className="text-gray-600"><TranslatedText>Loading videos...</TranslatedText></p>
           </div>
         </div>
       </section>
@@ -55,17 +56,43 @@ const HomeVideosSection = () => {
         <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-8">
           {videos.map((video) => (
             <div key={video.id} className="relative w-full aspect-[9/16] overflow-hidden rounded-lg md:rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 border border-gray-100">
-              <video
-                className="w-full h-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-                controls={false}
-              >
-                <source src={video.src} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              {video.error ? (
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <div className="text-center text-gray-500">
+                    <svg className="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-sm"><TranslatedText>Video unavailable</TranslatedText></p>
+                  </div>
+                </div>
+              ) : (
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls={false}
+                  onLoadedData={() => {
+                    // Mark video as loaded successfully
+                    setVideos(prev => prev.map(v =>
+                      v.id === video.id ? { ...v, loaded: true } : v
+                    ));
+                  }}
+                  onError={(e) => {
+                    console.warn('Video failed to load:', video.src, e);
+                    // Mark video as having an error
+                    setVideos(prev => prev.map(v =>
+                      v.id === video.id ? { ...v, error: true } : v
+                    ));
+                  }}
+                  preload="none"
+                  crossOrigin="anonymous"
+                >
+                  <source src={video.src} type="video/mp4" />
+                  <TranslatedText>Your browser does not support the video tag.</TranslatedText>
+                </video>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none"></div>
             </div>
           ))}

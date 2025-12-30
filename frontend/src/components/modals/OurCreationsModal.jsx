@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ourCreations, categories } from '../../data/creations'
+import TranslatedText from '../TranslatedText'
 
 const OurCreationsModal = ({ isOpen, onClose }) => {
   const [selectedCategory, setSelectedCategory] = useState('Pooja Rooms')
@@ -20,7 +21,7 @@ const OurCreationsModal = ({ isOpen, onClose }) => {
           style={{ animation: 'slideUp 0.5s ease-out' }}
         >
           <div className="flex items-center justify-between p-4 md:p-6 border-b border-gray-200">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-black">OUR CREATIONS</h2>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-black"><TranslatedText>OUR CREATIONS</TranslatedText></h2>
             <button
               onClick={onClose}
               className="text-gray-500 hover:text-gray-800 text-3xl font-bold transition-colors w-8 h-8 flex items-center justify-center"
@@ -49,7 +50,7 @@ const OurCreationsModal = ({ isOpen, onClose }) => {
                         onClick={onClose}
                         className="block w-full text-center px-6 py-4 rounded-xl transition-all duration-300 text-gray-700 hover:bg-[#8B7355]/5 hover:text-[#8B7355] font-serif italic text-xl md:text-2xl border border-transparent hover:border-[#8B7355]/20"
                       >
-                        {category}
+                        <TranslatedText>{category}</TranslatedText>
                       </Link>
                     </div>
                   )

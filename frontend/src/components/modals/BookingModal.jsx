@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import TranslatedText from '../TranslatedText'
+import { usePageTranslation } from '../../contexts/PageTranslationContext'
 
 const BookingModal = ({ isOpen, onClose }) => {
+  const { getTranslatedText } = usePageTranslation()
   const [bookingData, setBookingData] = useState({
     fullName: '',
     contactNumber: '',
@@ -51,7 +54,7 @@ const BookingModal = ({ isOpen, onClose }) => {
         }
 
         await response.json()
-        alert('Appointment booked successfully!')
+        alert(getTranslatedText('Appointment booked successfully!'))
         onClose()
         setBookingData({
           fullName: '',
@@ -64,10 +67,10 @@ const BookingModal = ({ isOpen, onClose }) => {
         setCurrentMonth(new Date().getMonth())
         setCurrentYear(new Date().getFullYear())
       } catch (error) {
-        alert(error.message || 'Failed to book appointment. Please try again.')
+        alert(error.message || getTranslatedText('Failed to book appointment. Please try again.'))
       }
     } else {
-      alert('Please fill in all required fields, select a date and time.')
+      alert(getTranslatedText('Please fill in all required fields, select a date and time.'))
     }
   }
 
@@ -109,27 +112,27 @@ const BookingModal = ({ isOpen, onClose }) => {
           {/* Form Content */}
           <div className="flex-1">
             <h2 className="text-sm md:text-xl lg:text-2xl font-bold text-black text-center mt-8 md:mt-2 mb-4 md:mb-6">
-              BOOK AN APPOINTMENT NOW
+              <TranslatedText>BOOK AN APPOINTMENT NOW</TranslatedText>
             </h2>
 
             <div className="grid grid-cols-3 gap-1 md:gap-4 mb-4 md:mb-6">
               <input
                 type="text"
-                placeholder="Full Name *"
+                placeholder={getTranslatedText("Full Name *")}
                 value={bookingData.fullName}
                 onChange={(e) => setBookingData({ ...bookingData, fullName: e.target.value })}
                 className="px-2 py-1.5 md:px-4 md:py-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-[#8B7355] text-[10px] md:text-base shadow-sm"
               />
               <input
                 type="tel"
-                placeholder="Contact *"
+                placeholder={getTranslatedText("Contact *")}
                 value={bookingData.contactNumber}
                 onChange={(e) => setBookingData({ ...bookingData, contactNumber: e.target.value })}
                 className="px-2 py-1.5 md:px-4 md:py-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-[#8B7355] text-[10px] md:text-base shadow-sm"
               />
               <input
                 type="text"
-                placeholder="City *"
+                placeholder={getTranslatedText("City *")}
                 value={bookingData.city}
                 onChange={(e) => setBookingData({ ...bookingData, city: e.target.value })}
                 className="px-2 py-1.5 md:px-4 md:py-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-[#8B7355] text-[10px] md:text-base shadow-sm"
@@ -161,9 +164,9 @@ const BookingModal = ({ isOpen, onClose }) => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                       </div>
-                      <span className="font-semibold text-[10px] md:text-lg">Store Tour</span>
+                      <span className="font-semibold text-[10px] md:text-lg"><TranslatedText>Store Tour</TranslatedText></span>
                     </div>
-                    <p className="text-[8px] md:text-sm text-gray-600">45 min</p>
+                    <p className="text-[8px] md:text-sm text-gray-600"><TranslatedText>45 min</TranslatedText></p>
                   </div>
                 </div>
               </div>
@@ -192,16 +195,16 @@ const BookingModal = ({ isOpen, onClose }) => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                       </div>
-                      <span className="font-semibold text-[10px] md:text-lg">Customization</span>
+                      <span className="font-semibold text-[10px] md:text-lg"><TranslatedText>Customization</TranslatedText></span>
                     </div>
-                    <p className="text-[8px] md:text-sm text-gray-600">1h 30m</p>
+                    <p className="text-[8px] md:text-sm text-gray-600"><TranslatedText>1h 30m</TranslatedText></p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="mb-4 md:mb-6">
-              <h3 className="text-xs md:text-base font-bold text-black mb-2 md:mb-3">SELECT DATE:</h3>
+              <h3 className="text-xs md:text-base font-bold text-black mb-2 md:mb-3"><TranslatedText>SELECT DATE:</TranslatedText></h3>
               <div className="flex flex-col lg:flex-row gap-2 md:gap-5 items-start">
                 {/* Calendar Section */}
                 <div className="flex-1 w-full">
@@ -280,7 +283,7 @@ const BookingModal = ({ isOpen, onClose }) => {
               onClick={handleSubmit}
               className="bg-[#8B7355] text-white px-8 md:px-10 py-3 md:py-3.5 rounded-lg text-sm md:text-base font-semibold hover:bg-[#7a6348] transition-colors shadow-lg w-full md:w-auto"
             >
-              Book Appointment
+              <TranslatedText>Book Appointment</TranslatedText>
             </button>
           </div>
         </div>

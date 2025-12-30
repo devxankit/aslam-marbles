@@ -25,12 +25,13 @@ const TranslatedText = ({ children, className = '', as: Component = 'span' }) =>
                 return;
             }
 
-            translateText(original, targetLang, 'en')
+            translateText(original, targetLang, 'en', true) // true = isStatic
                 .then(res => {
                     if (isMounted) setTranslation(res);
                 })
                 .catch(err => {
-                    // Fallback
+                    // Fallback - keep original text
+                    if (isMounted) setTranslation(original);
                 });
         }
 

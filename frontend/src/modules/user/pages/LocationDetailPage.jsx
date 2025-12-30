@@ -4,6 +4,7 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
+import TranslatedText from '../../../components/TranslatedText'
 
 import { formatLocationName, indianLocations } from '../../../data/locations'
 import { fetchFAQs } from '../../../utils/faqUtils'
@@ -112,10 +113,10 @@ const LocationDetailPage = ({
           {/* Section Header */}
           <div className="text-center mb-8 md:mb-16">
             <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-[10px] md:text-xs mb-2 md:mb-4 block">
-              End-to-End Service
+              <TranslatedText>End-to-End Service</TranslatedText>
             </span>
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-4 md:mb-6 tracking-tight">
-              We Take Care of Everything
+              <TranslatedText>We Take Care of Everything</TranslatedText>
             </h2>
             <div className="w-12 md:w-20 h-0.5 md:h-1 bg-[#8B7355]/30 mx-auto mb-4 md:mb-6"></div>
             <p className="text-sm md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
@@ -300,7 +301,7 @@ const LocationDetailPage = ({
                 FAQs
               </span>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
-                Frequently Asked Questions
+                <TranslatedText>Frequently Asked Questions</TranslatedText>
               </h2>
               <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
                 Everything you need to know about our premium marble temples and pooja rooms in {location}
@@ -312,7 +313,7 @@ const LocationDetailPage = ({
                 <div className="text-center py-12">
                   <div className="inline-flex items-center gap-3">
                     <div className="w-5 h-5 border-2 border-[#8B7355] border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-gray-600 text-base md:text-lg">Loading FAQs...</p>
+                    <p className="text-gray-600 text-base md:text-lg"><TranslatedText>Loading FAQs...</TranslatedText></p>
                   </div>
                 </div>
               ) : faqs.length === 0 ? (
@@ -320,7 +321,7 @@ const LocationDetailPage = ({
                   <svg className="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="text-gray-500 text-base md:text-lg">No FAQs available at the moment.</p>
+                  <p className="text-gray-500 text-base md:text-lg"><TranslatedText>No FAQs available at the moment.</TranslatedText></p>
                 </div>
               ) : (
                 faqs.map((faq, index) => {
@@ -408,7 +409,7 @@ const ProcessStepsSection = ({ selectedStep, onStepChange }) => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center tracking-wide font-bold">
-            Our 5-Step Process
+            <TranslatedText>Our 5-Step Process</TranslatedText>
           </h2>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">

@@ -34,6 +34,7 @@ import customDesignIcon from '../../../assets/ourcreation/pooja room/icons/4cust
 import visualisationIcon from '../../../assets/ourcreation/pooja room/icons/5visualisation.png'
 import projectTrackingIcon from '../../../assets/ourcreation/pooja room/icons/6project tracking.png'
 import { fetchCommunalTemplesData } from '../../../utils/communalTemplesUtils'
+import TranslatedText from '../../../components/TranslatedText'
 
 const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
   const navigate = useNavigate()
@@ -91,7 +92,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
             onClick={() => setShowMobileForm(true)}
             className="lg:hidden mt-6 px-6 py-2.5 text-sm bg-[#8B7355] text-white font-bold uppercase tracking-wider rounded shadow-lg hover:bg-[#725E45] transition-transform hover:scale-105"
           >
-            Talk to Our Expert
+            <TranslatedText>Talk to Our Expert</TranslatedText>
           </button>
         </div>
 
@@ -105,7 +106,7 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
       <section className="w-full py-20 px-4 md:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif text-[#8B7355] italic mb-6">Why Choose Us</h2>
+            <h2 className="text-4xl md:text-5xl font-serif text-[#8B7355] italic mb-6"><TranslatedText>Why Choose Us</TranslatedText></h2>
             <div className="w-24 h-1 mx-auto bg-[#8B7355] rounded-full opacity-60"></div>
           </div>
 
@@ -647,32 +648,34 @@ const CommunalTemplesPage = ({ onShowCart, onShowLikes }) => {
             </table>
           </div>
         </div>
-      </section>
+      </section >
 
       <TrustedBySection />
       <Footer />
       <FloatingButtons />
 
       {/* Mobile Form Modal */}
-      {showMobileForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn lg:hidden">
-          <div
-            className="relative w-full max-w-sm h-auto max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden animate-scaleIn flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setShowMobileForm(false)}
-              className="absolute top-3 right-3 z-30 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100/80 text-gray-500 hover:bg-gray-200 transition-colors backdrop-blur-sm"
+      {
+        showMobileForm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn lg:hidden">
+            <div
+              className="relative w-full max-w-sm h-auto max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden animate-scaleIn flex flex-col"
+              onClick={(e) => e.stopPropagation()}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <ExpertFormOverlay source="communal-temples-page" className="w-full h-full bg-white flex flex-col" />
+              <button
+                onClick={() => setShowMobileForm(false)}
+                className="absolute top-3 right-3 z-30 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100/80 text-gray-500 hover:bg-gray-200 transition-colors backdrop-blur-sm"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <ExpertFormOverlay source="communal-temples-page" className="w-full h-full bg-white flex flex-col" />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   )
 }
 

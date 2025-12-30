@@ -1,11 +1,14 @@
 import MurtiCategoryTemplate from '../components/MurtiCategoryTemplate'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const BalajiCategoryPage = (props) => {
+  const { getTranslatedText } = usePageTranslation()
+
   return (
-    <MurtiCategoryTemplate 
+    <MurtiCategoryTemplate
       categoryId="balaji"
-      title="Shri Balaji Murti"
-      subtitle="Divine craftsmanship carved in stone"
+      title={getTranslatedText("Shri Balaji Murti")}
+      subtitle={getTranslatedText("Divine craftsmanship carved in stone")}
       {...props}
     />
   )

@@ -10,6 +10,7 @@ import headingImage from '../../../assets/house of marble/about us/heading/Gemin
 import aboutImage1 from '../../../assets/house of marble/about us/Screenshot 2025-12-10 131359.png'
 import aboutImage2 from '../../../assets/house of marble/about us/Screenshot 2025-12-10 131414.png'
 import { teamMembers } from '../../../data/teamMembers'
+import TranslatedText from '../../../components/TranslatedText'
 
 // CSS to hide scrollbar
 const scrollbarHideStyle = `
@@ -100,7 +101,7 @@ const AboutUsPage = ({
               letterSpacing: '0.05em',
               fontWeight: '900'
             }}>
-              About Aslam Marble Suppliers
+              <TranslatedText>About Aslam Marble Suppliers</TranslatedText>
             </h1>
           </div>
         </section>
@@ -127,21 +128,21 @@ const AboutUsPage = ({
                     <div className="flex items-center gap-3 mb-4 md:mb-6">
                       <div className="w-1 h-12 md:h-16" style={{ backgroundColor: '#8B7355' }}></div>
                       <h2 className="text-2xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic">
-                        Introduction
+                        <TranslatedText>Introduction</TranslatedText>
                       </h2>
                     </div>
                     <div className="space-y-3 md:space-y-4 text-gray-700 leading-relaxed">
                       <p className="text-sm md:text-lg">
-                        <span className="font-bold text-gray-900">Aslam Marble Suppliers</span> stands as a beacon of excellence in the realm of marble craftsmanship and spiritual artistry. With decades of unwavering dedication, we have transformed countless spaces into sanctuaries of divine beauty and timeless elegance.
+                        <span className="font-bold text-gray-900"><TranslatedText>Aslam Marble Suppliers</TranslatedText></span> <TranslatedText>stands as a beacon of excellence in the realm of marble craftsmanship and spiritual artistry. With decades of unwavering dedication, we have transformed countless spaces into sanctuaries of divine beauty and timeless elegance.</TranslatedText>
                       </p>
                       <p className="text-sm md:text-lg">
-                        Our journey began with a simple yet profound vision: to blend traditional Indian craftsmanship with contemporary design sensibilities, creating marble masterpieces that honor both heritage and innovation. Every piece we create is a testament to our commitment to quality, precision, and the sacred art of stone carving.
+                        <TranslatedText>Our journey began with a simple yet profound vision: to blend traditional Indian craftsmanship with contemporary design sensibilities, creating marble masterpieces that honor both heritage and innovation. Every piece we create is a testament to our commitment to quality, precision, and the sacred art of stone carving.</TranslatedText>
                       </p>
                       <p className="text-sm md:text-lg">
-                        From intricate temple installations to elegant home decor, we have served clients across India and beyond, bringing the essence of spiritual artistry into their spaces. Our team of skilled artisans, guided by generations of knowledge, ensures that each creation tells a story of devotion, craftsmanship, and timeless beauty.
+                        <TranslatedText>From intricate temple installations to elegant home decor, we have served clients across India and beyond, bringing the essence of spiritual artistry into their spaces. Our team of skilled artisans, guided by generations of knowledge, ensures that each creation tells a story of devotion, craftsmanship, and timeless beauty.</TranslatedText>
                       </p>
                       <p className="text-sm md:text-lg">
-                        At Aslam Marble Suppliers, we don't just create products; we craft experiences that connect the divine with the everyday, transforming ordinary spaces into extraordinary sanctuaries of peace and devotion.
+                        <TranslatedText>At Aslam Marble Suppliers, we don't just create products; we craft experiences that connect the divine with the everyday, transforming ordinary spaces into extraordinary sanctuaries of peace and devotion.</TranslatedText>
                       </p>
                     </div>
                   </div>
@@ -155,10 +156,10 @@ const AboutUsPage = ({
         <section className="w-full py-12 md:py-20 lg:py-24" style={{ backgroundColor: '#FFFAF0' }}>
           <div className="max-w-7xl mx-auto px-4 text-center">
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-serif text-[#333] tracking-[0.2em] mb-6 md:mb-8 uppercase">
-              OUR VISION
+              <TranslatedText>OUR VISION</TranslatedText>
             </h2>
             <p className="text-lg md:text-2xl lg:text-3xl text-gray-700 font-light italic leading-relaxed max-w-5xl mx-auto">
-              "Crafting exquisite temples with precision and artistry; Ensuring client satisfaction with timeless designs."
+              <TranslatedText>"Crafting exquisite temples with precision and artistry; Ensuring client satisfaction with timeless designs."</TranslatedText>
             </p>
           </div>
         </section>
@@ -193,10 +194,10 @@ const AboutUsPage = ({
               {/* Title Section */}
               <div className="mb-8 md:mb-12 text-center">
                 <h2 className="text-2xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-3 md:mb-4">
-                  Timeline of Excellence
+                  <TranslatedText>Timeline of Excellence</TranslatedText>
                 </h2>
                 <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto">
-                  A journey through the milestones that have shaped Aslam Marble Suppliers into the trusted name it is today.
+                  <TranslatedText>A journey through the milestones that have shaped Aslam Marble Suppliers into the trusted name it is today.</TranslatedText>
                 </p>
               </div>
 
@@ -245,7 +246,7 @@ const AboutUsPage = ({
                       {/* Year Indicator */}
                       <div className="relative z-10 flex items-start justify-between mb-4 md:mb-6">
                         <div className="flex flex-col">
-                          <span className="text-2xl md:text-3xl font-bold text-[#8B7355] mb-1 md:mb-2">{item.year}</span>
+                          <span className="text-2xl md:text-3xl font-bold text-[#8B7355] mb-1 md:mb-2"><TranslatedText>{item.year}</TranslatedText></span>
                           <div className="w-8 md:w-12 h-1 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
                         </div>
                       </div>
@@ -253,10 +254,10 @@ const AboutUsPage = ({
                       {/* Content */}
                       <div className="relative z-10">
                         <h3 className="text-lg md:text-xl font-bold text-gray-800 uppercase tracking-widest mb-2 md:mb-4 group-hover:text-[#8B7355] transition-colors">
-                          {item.title}
+                          <TranslatedText>{item.title}</TranslatedText>
                         </h3>
                         <p className="text-xs md:text-base text-gray-600 leading-relaxed italic" style={{ fontWeight: 400 }}>
-                          {item.description}
+                          <TranslatedText>{item.description}</TranslatedText>
                         </p>
                       </div>
 
@@ -277,10 +278,10 @@ const AboutUsPage = ({
               {/* Title Section */}
               <div className="mb-8 md:mb-12 text-center">
                 <h2 className="text-2xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-3 md:mb-4">
-                  Our Values
+                  <TranslatedText>Our Values</TranslatedText>
                 </h2>
                 <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto">
-                  We uphold our values in every step, guiding our craftsmanship, decisions, and interactions as the foundation of excellence in temple making.
+                  <TranslatedText>We uphold our values in every step, guiding our craftsmanship, decisions, and interactions as the foundation of excellence in temple making.</TranslatedText>
                 </p>
               </div>
 
@@ -304,12 +305,12 @@ const AboutUsPage = ({
 
                     {/* Title */}
                     <h3 className="relative z-10 text-xs md:text-xl font-bold text-gray-800 uppercase tracking-wider mb-2 md:mb-3 group-hover:text-[#8B7355] transition-colors">
-                      {value.title}
+                      <TranslatedText>{value.title}</TranslatedText>
                     </h3>
 
                     {/* Description */}
                     <p className="relative z-10 text-[10px] md:text-sm text-gray-600 leading-relaxed italic" style={{ fontWeight: 400 }}>
-                      {value.description}
+                      <TranslatedText>{value.description}</TranslatedText>
                     </p>
 
                     {/* Bottom Gradient Border */}

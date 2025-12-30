@@ -2,6 +2,7 @@ import Header from '../../../components/layout/Header'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import footerBackgroundImage from '../../../assets/footer page background/Beige Pink Elegant Watercolor Background Notes Planner.png'
+import TranslatedText from '../../../components/TranslatedText'
 
 const DisclaimerPage = ({
   onShowSidebar,
@@ -42,7 +43,7 @@ const DisclaimerPage = ({
           {/* Page Header */}
           <div className="text-center mb-10 md:mb-12">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-4 tracking-wide font-bold">
-              Disclaimer
+              <TranslatedText>Disclaimer</TranslatedText>
             </h1>
             <div className="w-24 h-1 rounded-full mx-auto" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -50,115 +51,115 @@ const DisclaimerPage = ({
           {/* Website Disclaimer */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              Website Disclaimer
+              <TranslatedText>Website Disclaimer</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              The information provided by Aslam Marble Suppliers ("we," "us," or "our") on our website (the "Site") is for general informational purposes only. All information on the Site is provided in good faith; however, we make no representation or warranty, express or implied, regarding:
+              <TranslatedText>The information provided by Aslam Marble Suppliers ("we," "us," or "our") on our website (the "Site") is for general informational purposes only. All information on the Site is provided in good faith; however, we make no representation or warranty, express or implied, regarding:</TranslatedText>
             </p>
             <ul className="space-y-2 mb-4 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Accuracy</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Accuracy</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Adequacy</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Adequacy</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Validity</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Validity</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Reliability</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Reliability</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Availability</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Availability</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Completeness</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Completeness</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              Under no circumstances shall we be liable for any loss or damage incurred as a result of using the Site or relying on any information found on the Site. Your use of the Site and your reliance on any information on the Site is strictly at your own risk.
+              <TranslatedText>Under no circumstances shall we be liable for any loss or damage incurred as a result of using the Site or relying on any information found on the Site. Your use of the Site and your reliance on any information on the Site is strictly at your own risk.</TranslatedText>
             </p>
           </div>
 
           {/* External Links Disclaimer */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              External Links Disclaimer
+              <TranslatedText>External Links Disclaimer</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              The Site may contain links to third-party websites, external content, or advertising banners. Such links are not monitored, investigated, or checked by us for accuracy, reliability, or completeness.
+              <TranslatedText>The Site may contain links to third-party websites, external content, or advertising banners. Such links are not monitored, investigated, or checked by us for accuracy, reliability, or completeness.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              We do not:
+              <TranslatedText>We do not:</TranslatedText>
             </p>
             <ul className="space-y-2 mb-4 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Warrant or endorse third-party websites</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Warrant or endorse third-party websites</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Guarantee the accuracy of external content</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Guarantee the accuracy of external content</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Assume responsibility for any linked website or advertisement</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Assume responsibility for any linked website or advertisement</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              We are not responsible for any transaction between you and a third-party provider of products or services.
+              <TranslatedText>We are not responsible for any transaction between you and a third-party provider of products or services.</TranslatedText>
             </p>
           </div>
 
           {/* Testimonials Disclaimer */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              Testimonials Disclaimer
+              <TranslatedText>Testimonials Disclaimer</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              The Site may include testimonials from customers who have used our products and/or services. These testimonials reflect:
+              <TranslatedText>The Site may include testimonials from customers who have used our products and/or services. These testimonials reflect:</TranslatedText>
             </p>
             <ul className="space-y-2 mb-4 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Real experiences</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Real experiences</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Personal opinions of individual users</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Personal opinions of individual users</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              However, these experiences are unique to those users and may not represent the results of all customers. Your own results may vary.
+              <TranslatedText>However, these experiences are unique to those users and may not represent the results of all customers. Your own results may vary.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              All testimonials appear on the Site exactly as submitted (minor corrections in grammar or typing may be made). Some testimonials may be shortened for clarity or relevance.
+              <TranslatedText>All testimonials appear on the Site exactly as submitted (minor corrections in grammar or typing may be made). Some testimonials may be shortened for clarity or relevance.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              The opinions expressed in testimonials:
+              <TranslatedText>The opinions expressed in testimonials:</TranslatedText>
             </p>
             <ul className="space-y-2 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Belong solely to the customers</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Belong solely to the customers</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Do not reflect the views or opinions of Aslam Marble Suppliers</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Do not reflect the views or opinions of Aslam Marble Suppliers</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Are not influenced by any paid promotion</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Are not influenced by any paid promotion</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mt-3">
-              We do not pay or compensate users for providing testimonials.
+              <TranslatedText>We do not pay or compensate users for providing testimonials.</TranslatedText>
             </p>
           </div>
         </div>

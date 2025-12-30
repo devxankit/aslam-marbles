@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { products as defaultProducts } from '../../data/products'
 import { buildImageUrl, fetchNavItems } from '../../utils/aslamHouseUtils'
+import TranslatedText from '../TranslatedText'
 
 const GROUP = 'our-products-nav'
 
@@ -65,14 +66,14 @@ const OurProductsDropdown = () => {
                 to={route}
                 className="block w-full text-left px-2 py-1.5 text-xs md:text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 rounded transition-all duration-200 font-medium uppercase"
               >
-                {product.name}
+                <TranslatedText>{product.name}</TranslatedText>
               </Link>
             ) : (
               <button
                 key={product.id}
                 className="w-full text-left px-2 py-1.5 text-xs md:text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 rounded transition-all duration-200 font-medium uppercase"
               >
-                {product.name}
+                <TranslatedText>{product.name}</TranslatedText>
               </button>
             )
           })}
@@ -118,7 +119,7 @@ const OurProductsDropdown = () => {
                 <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/30 rounded-lg transition-all duration-300 pointer-events-none"></div>
               </div>
               <h3 className="text-xs font-semibold text-black text-center mt-1.5 group-hover:text-[#8B7355] transition-colors whitespace-nowrap uppercase">
-                {product.name}
+                <TranslatedText>{product.name}</TranslatedText>
               </h3>
             </>
           )

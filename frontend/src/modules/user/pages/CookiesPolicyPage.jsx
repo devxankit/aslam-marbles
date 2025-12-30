@@ -2,20 +2,21 @@ import Header from '../../../components/layout/Header'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import footerBackgroundImage from '../../../assets/footer page background/Beige Pink Elegant Watercolor Background Notes Planner.png'
+import TranslatedText from '../../../components/TranslatedText'
 
-const CookiesPolicyPage = ({ 
-  onShowSidebar, 
-  onShowProjects, 
-  onShowCreations, 
-  onShowProducts, 
-  onShowServices, 
-  onShowHowItWorks, 
-  onShowLocation, 
-  onShowBooking 
+const CookiesPolicyPage = ({
+  onShowSidebar,
+  onShowProjects,
+  onShowCreations,
+  onShowProducts,
+  onShowServices,
+  onShowHowItWorks,
+  onShowLocation,
+  onShowBooking
 }) => {
   return (
     <div className="w-full min-h-screen bg-white">
-      <Header 
+      <Header
         onShowSidebar={onShowSidebar}
         onShowProjects={onShowProjects}
         onShowCreations={onShowCreations}
@@ -27,7 +28,7 @@ const CookiesPolicyPage = ({
       />
 
       {/* Main Content with Background Image */}
-      <section 
+      <section
         className="w-full py-12 md:py-16 lg:py-20 px-8 md:px-12 lg:px-16 xl:px-20 relative"
         style={{
           backgroundImage: `url(${footerBackgroundImage})`,
@@ -42,7 +43,7 @@ const CookiesPolicyPage = ({
           {/* Page Header */}
           <div className="text-center mb-10 md:mb-12">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 uppercase tracking-wide" style={{ color: '#8B7355' }}>
-              Cookies Policy
+              <TranslatedText>Cookies Policy</TranslatedText>
             </h1>
             <div className="w-24 h-1 rounded-full mx-auto" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -50,17 +51,17 @@ const CookiesPolicyPage = ({
           {/* Introduction */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3" style={{ color: '#8B7355' }}>
-              Introduction
+              <TranslatedText>Introduction</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              At Aslam Marble Suppliers (AMS), we value your privacy and are committed to being transparent about how we collect, use, and protect your information. This Cookies Policy explains what cookies are, how we use them, and the choices you have regarding their use on our website.
+              <TranslatedText>At Aslam Marble Suppliers (AMS), we value your privacy and are committed to being transparent about how we collect, use, and protect your information. This Cookies Policy explains what cookies are, how we use them, and the choices you have regarding their use on our website.</TranslatedText>
             </p>
           </div>
 
           {/* What Are Cookies */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3" style={{ color: '#8B7355' }}>
-              What Are Cookies?
+              <TranslatedText>What Are Cookies?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
               Cookies are small text files stored on your device (computer, tablet, or smartphone) when you visit a website. Cookies help:
@@ -68,19 +69,19 @@ const CookiesPolicyPage = ({
             <ul className="space-y-2 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Improve your browsing experience</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Improve your browsing experience</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Remember your preferences</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Remember your preferences</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Understand how users interact with the website</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Understand how users interact with the website</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Enhance website performance and personalization</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Enhance website performance and personalization</TranslatedText></span>
               </li>
             </ul>
           </div>
@@ -88,34 +89,34 @@ const CookiesPolicyPage = ({
           {/* How We Use Cookies */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3" style={{ color: '#8B7355' }}>
-              How We Use Cookies
+              <TranslatedText>How We Use Cookies</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
               We use cookies for the following purposes:
             </p>
             <div className="space-y-4 ml-4">
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">1. Essential Cookies</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>1. Essential Cookies</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  Required for the website to function properly. Without them, some features may not work.
+                  <TranslatedText>Required for the website to function properly. Without them, some features may not work.</TranslatedText>
                 </p>
               </div>
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">2. Performance & Analytics Cookies</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>2. Performance & Analytics Cookies</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  These cookies help us understand how visitors interact with our website by collecting anonymous usage data. This helps us improve performance and user experience.
+                  <TranslatedText>These cookies help us understand how visitors interact with our website by collecting anonymous usage data. This helps us improve performance and user experience.</TranslatedText>
                 </p>
               </div>
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">3. Functionality Cookies</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>3. Functionality Cookies</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  These allow the website to remember your preferences (such as location or language) and provide a more personalized experience.
+                  <TranslatedText>These allow the website to remember your preferences (such as location or language) and provide a more personalized experience.</TranslatedText>
                 </p>
               </div>
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">4. Advertising & Targeting Cookies</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>4. Advertising & Targeting Cookies</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  These cookies may be used to deliver relevant advertisements and measure marketing campaign performance.
+                  <TranslatedText>These cookies may be used to deliver relevant advertisements and measure marketing campaign performance.</TranslatedText>
                 </p>
               </div>
             </div>
@@ -124,25 +125,25 @@ const CookiesPolicyPage = ({
           {/* Types of Cookies We Use */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3" style={{ color: '#8B7355' }}>
-              Types of Cookies We Use
+              <TranslatedText>Types of Cookies We Use</TranslatedText>
             </h2>
             <div className="space-y-4 ml-4">
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">1. Session Cookies</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>1. Session Cookies</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  Temporary cookies that are deleted when you close your browser. They help the website function during your visit.
+                  <TranslatedText>Temporary cookies that are deleted when you close your browser. They help the website function during your visit.</TranslatedText>
                 </p>
               </div>
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">2. Persistent Cookies</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>2. Persistent Cookies</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  Stored on your device for a set period or until you delete them manually. They help remember your preferences for future visits.
+                  <TranslatedText>Stored on your device for a set period or until you delete them manually. They help remember your preferences for future visits.</TranslatedText>
                 </p>
               </div>
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">3. Third-Party Cookies</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>3. Third-Party Cookies</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  We may use third-party services like Google Analytics to collect insights about website usage and to show relevant ads.
+                  <TranslatedText>We may use third-party services like Google Analytics to collect insights about website usage and to show relevant ads.</TranslatedText>
                 </p>
               </div>
             </div>
@@ -151,27 +152,27 @@ const CookiesPolicyPage = ({
           {/* Managing Cookies */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3" style={{ color: '#8B7355' }}>
-              Managing Cookies
+              <TranslatedText>Managing Cookies</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
               You can control and manage cookies in the following ways:
             </p>
             <div className="space-y-4 ml-4">
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">Browser Settings</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>Browser Settings</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  Most browsers allow you to block or delete cookies. However, disabling cookies may affect the functionality of our website.
+                  <TranslatedText>Most browsers allow you to block or delete cookies. However, disabling cookies may affect the functionality of our website.</TranslatedText>
                 </p>
               </div>
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">Opt-Out Tools</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>Opt-Out Tools</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-2">
-                  Some third-party services offer opt-out tools, such as:
+                  <TranslatedText>Some third-party services offer opt-out tools, such as:</TranslatedText>
                 </p>
                 <ul className="space-y-2 ml-4">
                   <li className="flex items-start gap-3">
                     <span className="text-[#8B7355] font-bold mt-1">•</span>
-                    <span className="text-sm md:text-base text-gray-700">Google Analytics Opt-Out Browser Add-on</span>
+                    <span className="text-sm md:text-base text-gray-700"><TranslatedText>Google Analytics Opt-Out Browser Add-on</TranslatedText></span>
                   </li>
                 </ul>
               </div>
@@ -181,33 +182,33 @@ const CookiesPolicyPage = ({
           {/* Your Consent */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3" style={{ color: '#8B7355' }}>
-              Your Consent
+              <TranslatedText>Your Consent</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              By using our website, you consent to the use of cookies as described in this policy.
+              <TranslatedText>By using our website, you consent to the use of cookies as described in this policy.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              If you do not agree, you may disable cookies through your browser settings, but this may impact your browsing experience.
+              <TranslatedText>If you do not agree, you may disable cookies through your browser settings, but this may impact your browsing experience.</TranslatedText>
             </p>
           </div>
 
           {/* Changes to This Policy */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3" style={{ color: '#8B7355' }}>
-              Changes to This Policy
+              <TranslatedText>Changes to This Policy</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              We may update this Cookies Policy occasionally to reflect changes in technology, legal requirements, or our practices. Updated versions will be posted on this page, and we encourage you to review it periodically.
+              <TranslatedText>We may update this Cookies Policy occasionally to reflect changes in technology, legal requirements, or our practices. Updated versions will be posted on this page, and we encourage you to review it periodically.</TranslatedText>
             </p>
           </div>
 
           {/* Contact Us */}
           <div className="mb-8 md:mb-10 bg-gray-50 p-5 md:p-6 rounded-lg border-l-4" style={{ borderColor: '#8B7355' }}>
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4" style={{ color: '#8B7355' }}>
-              Contact Us
+              <TranslatedText>Contact Us</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              If you have questions or concerns about our use of cookies, please contact us at:
+              <TranslatedText>If you have questions or concerns about our use of cookies, please contact us at:</TranslatedText>
             </p>
             <div className="space-y-2">
               <p className="text-sm md:text-base font-semibold text-gray-800 mb-3">
@@ -216,7 +217,7 @@ const CookiesPolicyPage = ({
               <div className="flex items-center gap-3">
                 <span className="text-lg">📍</span>
                 <p className="text-sm md:text-base text-gray-700">
-                  Borawar Bypass Road, Makrana, Rajasthan
+                  <TranslatedText>Borawar Bypass Road, Makrana, Rajasthan</TranslatedText>
                 </p>
               </div>
               <div className="flex items-center gap-3">

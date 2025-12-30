@@ -5,6 +5,8 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import { getProductsByCategorySlug } from '../../../data/generatedProducts'
 import { useCartAndLikes } from '../../../contexts/CartAndLikesContext'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const CategoryListingPage = ({
     onShowCart,
@@ -14,6 +16,7 @@ const CategoryListingPage = ({
     const navigate = useNavigate()
     const location = useLocation()
     const { toggleLike, isLiked } = useCartAndLikes()
+    const { getTranslatedText } = usePageTranslation()
 
     // Determine type based on URL
     let type = 'decor'
@@ -37,7 +40,7 @@ const CategoryListingPage = ({
             <div className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
                 <div className="max-w-7xl mx-auto">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center mb-4 font-bold">
-                        {categoryName} Collection
+                        <TranslatedText>{categoryName}</TranslatedText> <TranslatedText>Collection</TranslatedText>
                     </h1>
                     <div className="w-24 h-1 bg-[#8B7355] mx-auto rounded-full"></div>
                 </div>
@@ -58,7 +61,7 @@ const CategoryListingPage = ({
                                     <div className="relative w-full aspect-[3/4] overflow-hidden bg-gray-100">
                                         <img
                                             src={product.images[0]}
-                                            alt={product.name}
+                                            alt={getTranslatedText(product.name)}
                                             className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                                         />
                                         {/* Like Button */}
@@ -88,7 +91,7 @@ const CategoryListingPage = ({
                                     {/* Product Info */}
                                     <div className="p-4 flex flex-col flex-1">
                                         <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-[#8B7355] transition-colors">
-                                            {product.name}
+                                            <TranslatedText>{product.name}</TranslatedText>
                                         </h3>
                                         <div className="mt-auto">
                                             <p className="text-xl font-bold text-[#8B7355] mb-4">₹ {product.price.toLocaleString('en-IN')}</p>
@@ -107,13 +110,13 @@ const CategoryListingPage = ({
                                                     }}
                                                     className="flex-1 px-4 py-2 bg-[#8B7355] text-white font-semibold rounded hover:opacity-90 transition-all text-sm"
                                                 >
-                                                    Buy Now
+                                                    <TranslatedText>Buy Now</TranslatedText>
                                                 </button>
                                                 <button
                                                     onClick={() => navigate(`/${type === 'decor' ? 'home-decor' : type}/${categoryId}/${product.id}`)}
                                                     className="flex-1 px-4 py-2 bg-white border border-[#8B7355] text-[#8B7355] font-semibold rounded hover:bg-[#8B7355] hover:text-white transition-all text-sm"
                                                 >
-                                                    Details
+                                                    <TranslatedText>Details</TranslatedText>
                                                 </button>
                                             </div>
                                         </div>
@@ -123,18 +126,17 @@ const CategoryListingPage = ({
                         </div>
                     ) : (
                         <div className="text-center py-20">
-                            <p className="text-2xl text-gray-400 font-serif italic">No products available in this category yet.</p>
+                            <p className="text-2xl text-gray-400 font-serif italic"><TranslatedText>No products available in this category yet.</TranslatedText></p>
                             <button
                                 onClick={() => navigate('/murti#shop-furniture')}
                                 className="mt-8 px-8 py-3 bg-[#8B7355] text-white rounded hover:opacity-90 transition-opacity"
                             >
-                                Back to Shop
+                                <TranslatedText>Back to Shop</TranslatedText>
                             </button>
                         </div>
                     )}
                 </div>
             </div>
-
             <Footer />
             <FloatingButtons />
         </div>

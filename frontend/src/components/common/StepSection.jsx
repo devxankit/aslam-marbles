@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import TranslatedText from '../TranslatedText'
 import { THEME_COLORS } from '../../utils/theme'
 
 const StepSection = memo(({
@@ -17,11 +18,11 @@ const StepSection = memo(({
         {subtitle && (
           <div className="text-center mb-6 md:mb-8">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
-              {subtitle}
+              <TranslatedText>{subtitle}</TranslatedText>
             </h2>
             {title && (
               <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800">
-                {title}
+                <TranslatedText>{title}</TranslatedText>
               </h3>
             )}
           </div>
@@ -49,8 +50,8 @@ const StepSection = memo(({
 
           {/* Right - Info Box */}
           <div className={`w-full lg:w-1/2 bg-white p-5 md:p-6 rounded-xl md:rounded-2xl shadow-xl border border-gray-100 lg:sticky lg:top-24 lg:self-start transition-all duration-700 ease-out ${isVisible
-              ? 'opacity-100 lg:translate-x-0'
-              : 'opacity-100 lg:opacity-0 lg:translate-x-full'
+            ? 'opacity-100 lg:translate-x-0'
+            : 'opacity-100 lg:opacity-0 lg:translate-x-full'
             }`}>
             {children}
           </div>

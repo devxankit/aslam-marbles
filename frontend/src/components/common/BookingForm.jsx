@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import TranslatedText from '../TranslatedText'
+import { usePageTranslation } from '../../hooks/usePageTranslation'
 
 const BookingForm = ({ onSuccess }) => {
     const [bookingData, setBookingData] = useState({
@@ -11,6 +13,18 @@ const BookingForm = ({ onSuccess }) => {
     })
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
+
+    // Define strings that need translation but can't be wrapped in components (placeholders, alerts)
+    const DYNAMIC_TEXTS = [
+        'Full Name *',
+        'Contact Number *',
+        'City *',
+        'Appointment booked successfully!',
+        'Failed to book appointment',
+        'Please fill in all required fields.'
+    ]
+
+    const { getTranslatedText } = usePageTranslation(DYNAMIC_TEXTS, 'en')
 
     const storeTourTimeSlots = [
         '10:00 AM', '11:30 AM', '1:00 PM', '2:30 PM', '4:00 PM', '5:30 PM'
@@ -39,10 +53,10 @@ const BookingForm = ({ onSuccess }) => {
 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}))
-                    throw new Error(errorData.message || 'Failed to book appointment')
+                    throw new Error(errorData.message || getTranslatedText('Failed to book appointment'))
                 }
 
-                alert('Appointment booked successfully!')
+                alert(getTranslatedText('Appointment booked successfully!'))
                 setBookingData({
                     fullName: '',
                     contactNumber: '',
@@ -53,10 +67,10 @@ const BookingForm = ({ onSuccess }) => {
                 })
                 if (onSuccess) onSuccess()
             } catch (error) {
-                alert(error.message || 'Failed to book appointment')
+                alert(error.message || getTranslatedText('Failed to book appointment'))
             }
         } else {
-            alert('Please fill in all required fields.')
+            alert(getTranslatedText('Please fill in all required fields.'))
         }
     }
 
@@ -89,23 +103,23 @@ const BookingForm = ({ onSuccess }) => {
 
     return (
         <div className="bg-white p-6 rounded-2xl shadow-xl border-2 border-[#8B7355]/30">
-            <h2 className="text-2xl font-bold text-gray-800 text-center mb-8 uppercase tracking-wider">Book Your Visit</h2>
+            <h2 className="text-2xl font-bold text-gray-800 text-center mb-8 uppercase tracking-wider"><TranslatedText>Book Your Visit</TranslatedText></h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                 <input
-                    type="text" placeholder="Full Name *"
+                    type="text" placeholder={getTranslatedText("Full Name *")}
                     value={bookingData.fullName}
                     onChange={(e) => setBookingData({ ...bookingData, fullName: e.target.value })}
                     className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#8B7355] outline-none transition-all shadow-sm"
                 />
                 <input
-                    type="tel" placeholder="Contact Number *"
+                    type="tel" placeholder={getTranslatedText("Contact Number *")}
                     value={bookingData.contactNumber}
                     onChange={(e) => setBookingData({ ...bookingData, contactNumber: e.target.value })}
                     className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#8B7355] outline-none transition-all shadow-sm"
                 />
                 <input
-                    type="text" placeholder="City *"
+                    type="text" placeholder={getTranslatedText("City *")}
                     value={bookingData.city}
                     onChange={(e) => setBookingData({ ...bookingData, city: e.target.value })}
                     className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#8B7355] outline-none transition-all shadow-sm"
@@ -122,8 +136,8 @@ const BookingForm = ({ onSuccess }) => {
                         {bookingData.appointmentType === 'store-tour' && <div className="w-3 h-3 rounded-full bg-[#8B7355]"></div>}
                     </div>
                     <div className="text-left">
-                        <p className="font-bold text-gray-800">Store Tour</p>
-                        <p className="text-xs text-gray-500 italic">45 minutes</p>
+                        <p className="font-bold text-gray-800"><TranslatedText>Store Tour</TranslatedText></p>
+                        <p className="text-xs text-gray-500 italic">45 <TranslatedText>minutes</TranslatedText></p>
                     </div>
                 </button>
                 <button
@@ -135,8 +149,8 @@ const BookingForm = ({ onSuccess }) => {
                         {bookingData.appointmentType === 'temple-customization' && <div className="w-3 h-3 rounded-full bg-[#8B7355]"></div>}
                     </div>
                     <div className="text-left">
-                        <p className="font-bold text-gray-800">Temple Customization</p>
-                        <p className="text-xs text-gray-500 italic">1 hr 30 mins</p>
+                        <p className="font-bold text-gray-800"><TranslatedText>Temple Customization</TranslatedText></p>
+                        <p className="text-xs text-gray-500 italic">1 <TranslatedText>hr</TranslatedText> 30 <TranslatedText>mins</TranslatedText></p>
                     </div>
                 </button>
             </div>
@@ -191,7 +205,7 @@ const BookingForm = ({ onSuccess }) => {
                     onClick={handleSubmit}
                     className="bg-[#8B7355] text-white px-12 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-[#6B5A42] transition-all shadow-xl active:scale-95"
                 >
-                    Confirm Appointment
+                    <TranslatedText>Confirm Appointment</TranslatedText>
                 </button>
             </div>
         </div>

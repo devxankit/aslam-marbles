@@ -2,15 +2,16 @@ import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { homeImages } from '../../data/homeImages'
 import { fetchAslamHouseItems, buildImageUrl } from '../../utils/aslamHouseUtils'
+import TranslatedText from '../TranslatedText'
 
 const HouseOfTilakDropdown = () => {
   const defaultMenu = useMemo(() => [
-    { name: 'About Us', path: '/about-us', id: 'about-us' },
-    { name: 'Experience Centre', path: '/experience-centre', id: 'experience-centre' },
-    { name: 'The Team', path: '/the-team', id: 'the-team' },
-    { name: 'Careers', path: '/careers', id: 'careers' },
-    { name: 'Our Artist', path: '/artist', id: 'artist' },
-    { name: 'Our Clients', path: '/our-clients', id: 'our-clients' }
+    { nameKey: 'About Us', path: '/about-us', id: 'about-us' },
+    { nameKey: 'Experience Centre', path: '/experience-centre', id: 'experience-centre' },
+    { nameKey: 'The Team', path: '/the-team', id: 'the-team' },
+    { nameKey: 'Careers', path: '/careers', id: 'careers' },
+    { nameKey: 'Our Artist', path: '/artist', id: 'artist' },
+    { nameKey: 'Our Clients', path: '/our-clients', id: 'our-clients' }
   ], [])
 
   const [navItems, setNavItems] = useState(homeImages)
@@ -58,14 +59,14 @@ const HouseOfTilakDropdown = () => {
             <div key={index}>
               {item.path === '#' ? (
                 <button className="w-full text-left px-3 py-2 text-xs md:text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 rounded transition-all duration-200 font-medium">
-                  {item.name}
+                  <TranslatedText>{item.nameKey}</TranslatedText>
                 </button>
               ) : (
                 <Link
                   to={item.path}
                   className="block w-full text-left px-3 py-2 text-xs md:text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 rounded transition-all duration-200 font-medium"
                 >
-                  {item.name}
+                  <TranslatedText>{item.nameKey}</TranslatedText>
                 </Link>
               )}
             </div>
@@ -86,7 +87,7 @@ const HouseOfTilakDropdown = () => {
                 />
               </div>
               <h3 className="text-xs md:text-sm font-semibold text-black text-center mt-1.5 group-hover:text-[#8B7355] transition-colors whitespace-nowrap">
-                {item.name}
+                <TranslatedText>{item.name}</TranslatedText>
               </h3>
             </div>
           )

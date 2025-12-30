@@ -3,8 +3,11 @@ import { useNavigate, Link } from 'react-router-dom'
 import Header from '../../../components/layout/Header'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const ForgotPasswordPage = () => {
+  const { getTranslatedText } = usePageTranslation()
   const navigate = useNavigate()
   const [step, setStep] = useState(1) // 1: Email/Phone, 2: OTP + Reset Password
   const [loading, setLoading] = useState(false)
@@ -69,7 +72,7 @@ const ForgotPasswordPage = () => {
     setSuccess('')
 
     if (!emailOrPhone.trim()) {
-      setError('Please enter your email or phone number')
+      setError(getTranslatedText('Please enter your email or phone number'))
       return
     }
 
@@ -90,16 +93,16 @@ const ForgotPasswordPage = () => {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to send OTP. Please try again.')
+        throw new Error(data.message || getTranslatedText('Failed to send OTP. Please try again.'))
       }
 
-      setSuccess(data.message || 'OTP sent successfully!')
+      setSuccess(data.message || getTranslatedText('OTP sent successfully!'))
       setStep(2)
 
       // Clear success message after 3 seconds
       setTimeout(() => setSuccess(''), 3000)
     } catch (err) {
-      setError(err.message || 'An error occurred. Please try again.')
+      setError(err.message || getTranslatedText('An error occurred. Please try again.'))
     } finally {
       setLoading(false)
     }
@@ -113,22 +116,22 @@ const ForgotPasswordPage = () => {
 
     const otpValue = otp.join('')
     if (otpValue.length !== 6) {
-      setError('Please enter the complete 6-digit OTP')
+      setError(getTranslatedText('Please enter the complete 6-digit OTP'))
       return
     }
 
     if (!passwordData.password) {
-      setError('Password is required')
+      setError(getTranslatedText('Password is required'))
       return
     }
 
     if (passwordData.password.length < 6) {
-      setError('Password must be at least 6 characters long')
+      setError(getTranslatedText('Password must be at least 6 characters long'))
       return
     }
 
     if (passwordData.password !== passwordData.confirmPassword) {
-      setError('Passwords do not match')
+      setError(getTranslatedText('Passwords do not match'))
       return
     }
 
@@ -151,17 +154,17 @@ const ForgotPasswordPage = () => {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to reset password.')
+        throw new Error(data.message || getTranslatedText('Failed to reset password.'))
       }
 
-      setSuccess('Password reset successfully! Redirecting to login...')
+      setSuccess(getTranslatedText('Password reset successfully! Redirecting to login...'))
 
       // Redirect to login after 2 seconds
       setTimeout(() => {
         navigate('/login', { replace: true })
       }, 2000)
     } catch (err) {
-      setError(err.message || 'An error occurred. Please try again.')
+      setError(err.message || getTranslatedText('An error occurred. Please try again.'))
     } finally {
       setLoading(false)
     }
@@ -199,15 +202,15 @@ const ForgotPasswordPage = () => {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to resend OTP')
+        throw new Error(data.message || getTranslatedText('Failed to resend OTP'))
       }
 
-      setSuccess('OTP resent successfully!')
+      setSuccess(getTranslatedText('OTP sent successfully!'))
       setOtp(['', '', '', '', '', ''])
 
       setTimeout(() => setSuccess(''), 3000)
     } catch (err) {
-      setError(err.message || 'Failed to resend OTP. Please try again.')
+      setError(err.message || getTranslatedText('Failed to resend OTP. Please try again.'))
     } finally {
       setLoading(false)
     }
@@ -231,10 +234,10 @@ const ForgotPasswordPage = () => {
             {/* Header Section */}
             <div className="bg-gradient-to-r from-[#8B7355] to-[#7a6349] py-6 px-6 text-center">
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                Reset Password
+                <TranslatedText>Reset Password</TranslatedText>
               </h1>
               <p className="text-white/90 text-sm">
-                {step === 1 ? 'Enter your email or phone number' : 'Enter OTP & New Password'}
+                {step === 1 ? getTranslatedText('Enter your email or phone number') : getTranslatedText('Enter OTP & New Password')}
               </p>
             </div>
 
@@ -247,7 +250,7 @@ const ForgotPasswordPage = () => {
                     1
                   </div>
                   <span className={`ml-2 text-sm ${step >= 1 ? 'text-[#8B7355] font-medium' : 'text-gray-500'}`}>
-                    Request OTP
+                    <TranslatedText>Request OTP</TranslatedText>
                   </span>
                 </div>
                 <div className={`w-16 h-0.5 mx-4 ${step >= 2 ? 'bg-[#8B7355]' : 'bg-gray-200'}`}></div>
@@ -257,7 +260,7 @@ const ForgotPasswordPage = () => {
                     2
                   </div>
                   <span className={`ml-2 text-sm ${step >= 2 ? 'text-[#8B7355] font-medium' : 'text-gray-500'}`}>
-                    Reset
+                    <TranslatedText>Reset</TranslatedText>
                   </span>
                 </div>
               </div>
@@ -290,7 +293,7 @@ const ForgotPasswordPage = () => {
                 <form onSubmit={handleSendOtp} className="space-y-4">
                   <div>
                     <label htmlFor="emailOrPhone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email or Phone Number
+                      <TranslatedText>Email or Phone Number</TranslatedText>
                     </label>
                     <input
                       type="text"
@@ -300,7 +303,7 @@ const ForgotPasswordPage = () => {
                         setEmailOrPhone(e.target.value)
                         setError('')
                       }}
-                      placeholder="Enter your email or phone number"
+                      placeholder={getTranslatedText("Enter your email or phone number")}
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-2 focus:ring-[#8B7355] transition-all"
                       disabled={loading}
                       autoFocus
@@ -318,10 +321,10 @@ const ForgotPasswordPage = () => {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Sending OTP...
+                        <TranslatedText>Sending OTP...</TranslatedText>
                       </span>
                     ) : (
-                      'Send OTP'
+                      <TranslatedText>Send OTP</TranslatedText>
                     )}
                   </button>
                 </form>
@@ -333,7 +336,7 @@ const ForgotPasswordPage = () => {
                   {/* OTP Section */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Enter 6-Digit OTP
+                      <TranslatedText>Enter 6-Digit OTP</TranslatedText>
                     </label>
                     <div className="flex justify-between gap-2">
                       {otp.map((digit, index) => (
@@ -354,7 +357,7 @@ const ForgotPasswordPage = () => {
                       ))}
                     </div>
                     <p className="mt-2 text-xs text-gray-500 text-center">
-                      OTP sent to {emailOrPhone}
+                      <TranslatedText>OTP sent to</TranslatedText> {emailOrPhone}
                     </p>
                   </div>
 
@@ -362,7 +365,7 @@ const ForgotPasswordPage = () => {
                   <div className="space-y-4">
                     <div>
                       <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                        New Password
+                        <TranslatedText>New Password</TranslatedText>
                       </label>
                       <input
                         type="password"
@@ -370,7 +373,7 @@ const ForgotPasswordPage = () => {
                         name="password"
                         value={passwordData.password}
                         onChange={handlePasswordChange}
-                        placeholder="Enter new password (min 6 characters)"
+                        placeholder={getTranslatedText("Enter new password (min 6 characters)")}
                         className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-2 focus:ring-[#8B7355] transition-all"
                         disabled={loading}
                       />
@@ -378,7 +381,7 @@ const ForgotPasswordPage = () => {
 
                     <div>
                       <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                        Confirm New Password
+                        <TranslatedText>Confirm New Password</TranslatedText>
                       </label>
                       <input
                         type="password"
@@ -386,7 +389,7 @@ const ForgotPasswordPage = () => {
                         name="confirmPassword"
                         value={passwordData.confirmPassword}
                         onChange={handlePasswordChange}
-                        placeholder="Confirm new password"
+                        placeholder={getTranslatedText("Confirm new password")}
                         className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8B7355] focus:ring-2 focus:ring-[#8B7355] transition-all"
                         disabled={loading}
                       />
@@ -404,10 +407,10 @@ const ForgotPasswordPage = () => {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Resetting Password...
+                        <TranslatedText>Resetting Password...</TranslatedText>
                       </span>
                     ) : (
-                      'Reset Password'
+                      <TranslatedText>Reset Password</TranslatedText>
                     )}
                   </button>
 
@@ -418,7 +421,7 @@ const ForgotPasswordPage = () => {
                       disabled={loading}
                       className="text-sm text-[#8B7355] hover:underline font-medium disabled:opacity-50"
                     >
-                      Didn't receive OTP? Resend
+                      <TranslatedText>Didn't receive OTP? Resend</TranslatedText>
                     </button>
                   </div>
                 </form>
@@ -430,7 +433,7 @@ const ForgotPasswordPage = () => {
                   to="/login"
                   className="text-sm text-[#8B7355] hover:underline font-medium"
                 >
-                  ← Back to Sign In
+                  ← <TranslatedText>Back to Sign In</TranslatedText>
                 </Link>
               </div>
             </div>

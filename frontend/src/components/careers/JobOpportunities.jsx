@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import TranslatedText from '../TranslatedText'
 
 const JobOpportunities = ({ jobs = [] }) => {
   const [selectedJob, setSelectedJob] = useState(null)
@@ -41,7 +42,7 @@ const JobOpportunities = ({ jobs = [] }) => {
       {/* Title Section */}
       <div className="text-center mb-12 md:mb-16">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-6">
-          Job Opportunities
+          <TranslatedText>Job Opportunities</TranslatedText>
         </h2>
         <div className="w-24 h-1 bg-[#8B7355] mx-auto mb-6 rounded-full"></div>
       </div>
@@ -67,7 +68,7 @@ const JobOpportunities = ({ jobs = [] }) => {
             }}
             className="px-3 py-1.5 md:px-6 md:py-2 text-[10px] md:text-base font-medium tracking-wider transition-all duration-300 text-gray-700 hover:text-[#8B7355] border-b-2 border-transparent hover:border-[#8B7355] whitespace-nowrap"
           >
-            {categoryTitles[category]}
+            <TranslatedText>{categoryTitles[category] || category}</TranslatedText>
           </button>
         ))}
       </div>
@@ -81,12 +82,12 @@ const JobOpportunities = ({ jobs = [] }) => {
             className="bg-white border border-gray-200 p-4 md:p-6 flex flex-col justify-between transition-all duration-300 rounded-lg shadow-sm"
           >
             <div>
-              <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-wider mb-1 md:mb-2">{categoryTitles[job.category]}</p>
+              <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-wider mb-1 md:mb-2"><TranslatedText>{categoryTitles[job.category] || job.category}</TranslatedText></p>
               <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 md:mb-3">
-                {job.title}
+                <TranslatedText>{job.title}</TranslatedText>
               </h3>
               <p className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4">
-                Experience: {job.experience}
+                <TranslatedText>Experience:</TranslatedText> <TranslatedText>{job.experience}</TranslatedText>
               </p>
             </div>
 
@@ -100,14 +101,14 @@ const JobOpportunities = ({ jobs = [] }) => {
                 className="flex-1 text-center px-2 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium transition-all duration-300 underline"
                 style={{ color: '#8B7355' }}
               >
-                Apply Now
+                <TranslatedText>Apply Now</TranslatedText>
               </a>
               <button
                 onClick={() => openJobModal(job)}
                 className="flex-1 px-2 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-white transition-all duration-300 hover:opacity-90 rounded"
                 style={{ backgroundColor: '#8B7355' }}
               >
-                View More
+                <TranslatedText>View More</TranslatedText>
               </button>
             </div>
           </div>
@@ -133,10 +134,10 @@ const JobOpportunities = ({ jobs = [] }) => {
                 <div className="w-1.5 h-10 bg-[#8B7355] rounded-full"></div>
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-                    {selectedJob.title}
+                    <TranslatedText>{selectedJob.title}</TranslatedText>
                   </h2>
                   <p className="text-[#8B7355] font-medium uppercase tracking-widest text-xs mt-1">
-                    {selectedJob.type} • {selectedJob.location}
+                    <TranslatedText>{selectedJob.type}</TranslatedText> • <TranslatedText>{selectedJob.location}</TranslatedText>
                   </p>
                 </div>
               </div>
@@ -157,10 +158,10 @@ const JobOpportunities = ({ jobs = [] }) => {
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
                     <span className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#8B7355]/10 text-[#8B7355]">📝</span>
-                    Job Description
+                    <TranslatedText>Job Description</TranslatedText>
                   </h3>
                   <p className="text-gray-600 leading-relaxed font-light italic text-lg">
-                    {selectedJob.description}
+                    <TranslatedText>{selectedJob.description}</TranslatedText>
                   </p>
                 </div>
 
@@ -169,13 +170,13 @@ const JobOpportunities = ({ jobs = [] }) => {
                   <div>
                     <h3 className="text-lg font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
                       <span className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#8B7355]/10 text-[#8B7355]">✅</span>
-                      Requirements
+                      <TranslatedText>Requirements</TranslatedText>
                     </h3>
                     <ul className="space-y-3">
                       {selectedJob.requirements.map((req, idx) => (
                         <li key={idx} className="flex items-start gap-4 text-gray-600">
                           <span className="mt-1.5 w-2 h-2 rounded-full bg-[#8B7355] flex-shrink-0"></span>
-                          <span className="font-light">{req}</span>
+                          <span className="font-light"><TranslatedText>{req}</TranslatedText></span>
                         </li>
                       ))}
                     </ul>
@@ -190,7 +191,7 @@ const JobOpportunities = ({ jobs = [] }) => {
                 onClick={closeJobModal}
                 className="px-6 py-3 font-bold text-gray-600 hover:text-black transition-colors"
               >
-                Close
+                <TranslatedText>Close</TranslatedText>
               </button>
               <a
                 href="#join-the-team"
@@ -203,7 +204,7 @@ const JobOpportunities = ({ jobs = [] }) => {
                 }}
                 className="px-8 py-3 rounded-xl bg-[#8B7355] text-white font-bold hover:bg-[#6B5A42] transition-all duration-300 shadow-lg hover:shadow-xl uppercase tracking-wider"
               >
-                Apply Now
+                <TranslatedText>Apply Now</TranslatedText>
               </a>
             </div>
           </div>

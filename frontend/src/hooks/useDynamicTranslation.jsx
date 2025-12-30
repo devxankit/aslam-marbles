@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { translateText, translateObject as translateObjService } from '../services/translationService';
+import { translateText, translateBatch as translateBatchService, translateObject as translateObjService } from '../services/translationService';
 
 export const useDynamicTranslation = ({ sourceLang = 'en' } = {}) => {
     const { language: targetLang, isChangingLanguage } = useLanguage();
@@ -38,8 +38,8 @@ export const useDynamicTranslation = ({ sourceLang = 'en' } = {}) => {
 
         setIsTranslating(true);
         try {
-            const promises = textsArray.map(text => translateText(text, targetLang, sourceLang));
-            const results = await Promise.all(promises);
+            // Use optimized batch service (single API call with deduplication)
+            const results = await translateBatchService(textsArray, targetLang, sourceLang, false); // false = dynamic content
             return results;
         } catch (error) {
             console.error('Batch translation hook error:', error);
@@ -49,13 +49,13 @@ export const useDynamicTranslation = ({ sourceLang = 'en' } = {}) => {
         }
     }, [targetLang, sourceLang]);
 
-    const translateObject = useCallback(async (obj, keys = []) => {
+    const translateObject = useCallback(async (obj, keys = [], isStatic = false) => {
         if (!obj) return obj;
         if (sourceLang === targetLang) return obj;
 
         setIsTranslating(true);
         try {
-            const result = await translateObjService(obj, targetLang, sourceLang, keys);
+            const result = await translateObjService(obj, targetLang, sourceLang, keys, isStatic);
             return result;
         } catch (error) {
             console.error('Object translation hook error:', error);

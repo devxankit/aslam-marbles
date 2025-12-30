@@ -6,6 +6,8 @@ import TrustedBySection from '../../../components/common/TrustedBySection'
 import JobOpportunities from '../../../components/careers/JobOpportunities'
 import JoinTheTeamForm from '../../../components/careers/JoinTheTeamForm'
 import { useNavigate, useLocation } from 'react-router-dom'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const CareersPage = ({
   onShowSidebar,
@@ -16,6 +18,7 @@ const CareersPage = ({
 }) => {
   const navigate = useNavigate()
   const location = useLocation()
+  const { getTranslatedText } = usePageTranslation()
   const [careersData, setCareersData] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -82,7 +85,7 @@ const CareersPage = ({
         <div className="relative w-full h-[210px] md:h-[450px] lg:h-[550px] overflow-hidden">
           <img
             src={careersData?.heroImage?.url}
-            alt="Careers"
+            alt={getTranslatedText("Careers")}
             className="w-full h-full object-cover object-top"
           />
 
@@ -94,15 +97,15 @@ const CareersPage = ({
             <div className="text-center text-white space-y-0.5 md:space-y-6">
               {/* Heading */}
               <h1 className="text-sm md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight drop-shadow-lg">
-                Craft Timeless Masterpieces at Aslam Marble Suppliers
+                <TranslatedText>Craft Timeless Masterpieces at Aslam Marble Suppliers</TranslatedText>
               </h1>
               <p className="text-[10px] md:text-xl lg:text-2xl font-medium text-gray-200">
-                Where Tradition Meets Excellence
+                <TranslatedText>Where Tradition Meets Excellence</TranslatedText>
               </p>
 
               {/* Description */}
               <p className="text-[9px] md:text-base lg:text-lg leading-relaxed max-w-3xl mx-auto text-gray-100 drop-shadow-md line-clamp-2 md:line-clamp-none">
-                Join a team where heritage, artistry, and innovation come together to create extraordinary works of marble. At Aslam Marble Suppliers, we transform raw stone into sacred spaces and stunning masterpieces through passion, precision, and unmatched craftsmanship.
+                <TranslatedText>Join a team where heritage, artistry, and innovation come together to create extraordinary works of marble. At Aslam Marble Suppliers, we transform raw stone into sacred spaces and stunning masterpieces through passion, precision, and unmatched craftsmanship.</TranslatedText>
               </p>
 
               {/* Apply Now Button */}
@@ -111,7 +114,7 @@ const CareersPage = ({
                   onClick={handleApplyNow}
                   className="bg-white text-[#8B7355] font-bold px-3 py-1 md:px-12 lg:px-16 md:py-4 lg:py-5 rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:scale-105 text-[9px] md:text-base lg:text-lg uppercase tracking-wide"
                 >
-                  Apply Now
+                  <TranslatedText>Apply Now</TranslatedText>
                 </button>
               </div>
             </div>
@@ -123,11 +126,11 @@ const CareersPage = ({
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-6">
-              Why Join Us?
+              <TranslatedText>Why Join Us?</TranslatedText>
             </h2>
             <div className="w-24 h-1 bg-[#8B7355] mx-auto mb-6 rounded-full"></div>
             <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-              At Aslam Marble Suppliers, we offer more than just a job - we offer a career path filled with growth, learning, and meaningful contributions to timeless art.
+              <TranslatedText>At Aslam Marble Suppliers, we offer more than just a job - we offer a career path filled with growth, learning, and meaningful contributions to timeless art.</TranslatedText>
             </p>
           </div>
 
@@ -145,10 +148,10 @@ const CareersPage = ({
                     {item.icon}
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-[#8B7355] transition-colors duration-300 uppercase tracking-tight">
-                    {item.title}
+                    <TranslatedText>{item.title}</TranslatedText>
                   </h3>
                   <p className="text-gray-600 leading-relaxed font-light italic text-sm md:text-base">
-                    {item.description}
+                    <TranslatedText>{item.description}</TranslatedText>
                   </p>
                 </div>
 
@@ -169,7 +172,7 @@ const CareersPage = ({
               <div className="relative overflow-hidden shadow-2xl h-full">
                 <img
                   src={careersData?.trainingImage?.url}
-                  alt="Training and Development"
+                  alt={getTranslatedText("Training and Development")}
                   className="w-full h-full object-cover scale-110"
                 />
               </div>
@@ -180,19 +183,19 @@ const CareersPage = ({
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1 h-16" style={{ backgroundColor: '#8B7355' }}></div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic">
-                  Training and Development
+                  <TranslatedText>Training and Development</TranslatedText>
                 </h2>
               </div>
 
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p className="text-base md:text-lg">
-                  At <span className="font-bold text-gray-900">Aslam Marble Suppliers</span>, we are committed to nurturing the growth and potential of our people. We provide a supportive and dynamic work environment where every team member is encouraged to learn, grow, and excel. Our focused training programs are designed to refine craftsmanship and enhance product knowledge, ensuring that each individual develops to the highest standards of excellence.
+                  <TranslatedText>At</TranslatedText> <span className="font-bold text-gray-900"><TranslatedText>Aslam Marble Suppliers</TranslatedText></span><TranslatedText>, we are committed to nurturing the growth and potential of our people. We provide a supportive and dynamic work environment where every team member is encouraged to learn, grow, and excel. Our focused training programs are designed to refine craftsmanship and enhance product knowledge, ensuring that each individual develops to the highest standards of excellence.</TranslatedText>
                 </p>
                 <p className="text-base md:text-lg">
-                  New team members are guided by experienced professionals who mentor them throughout their journey, helping them seamlessly adapt to our values, processes, and commitment to quality.
+                  <TranslatedText>New team members are guided by experienced professionals who mentor them throughout their journey, helping them seamlessly adapt to our values, processes, and commitment to quality.</TranslatedText>
                 </p>
                 <p className="text-base md:text-lg">
-                  Our approach to training extends beyond skill enhancement—it is about building sustainable careers. Through continuous learning opportunities and a strong emphasis on personal and professional development, we cultivate long-term relationships with our team, allowing them to grow alongside the reputation and success of Aslam Marble Suppliers.
+                  <TranslatedText>Our approach to training extends beyond skill enhancement—it is about building sustainable careers. Through continuous learning opportunities and a strong emphasis on personal and professional development, we cultivate long-term relationships with our team, allowing them to grow alongside the reputation and success of Aslam Marble Suppliers.</TranslatedText>
                 </p>
               </div>
             </div>
@@ -204,11 +207,11 @@ const CareersPage = ({
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-6">
-              Employee Benefits
+              <TranslatedText>Employee Benefits</TranslatedText>
             </h2>
             <div className="w-24 h-1 bg-[#8B7355] mx-auto mb-6 rounded-full"></div>
             <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-              We value our team members and offer comprehensive benefits to support your well-being and success.
+              <TranslatedText>We value our team members and offer comprehensive benefits to support your well-being and success.</TranslatedText>
             </p>
           </div>
 
@@ -226,10 +229,10 @@ const CareersPage = ({
                     {benefit.icon}
                   </div>
                   <h4 className="font-bold text-gray-900 mb-2 group-hover:text-[#8B7355] transition-colors">
-                    {benefit.title}
+                    <TranslatedText>{benefit.title}</TranslatedText>
                   </h4>
                   <p className="text-sm text-gray-500 italic">
-                    {benefit.description}
+                    <TranslatedText>{benefit.description}</TranslatedText>
                   </p>
                 </div>
 

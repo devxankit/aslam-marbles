@@ -7,12 +7,16 @@ import App from './App.jsx'
 
 import { LanguageProvider } from './contexts/LanguageContext'
 
+import { PageTranslationProvider } from './contexts/PageTranslationContext'
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AdminAuthProvider>
         <LanguageProvider>
-          <App />
+          <PageTranslationProvider>
+            <App />
+          </PageTranslationProvider>
         </LanguageProvider>
       </AdminAuthProvider>
     </BrowserRouter>

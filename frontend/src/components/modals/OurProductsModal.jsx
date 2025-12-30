@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import TranslatedText from '../TranslatedText'
 
 const OurProductsModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null
@@ -17,7 +18,7 @@ const OurProductsModal = ({ isOpen, onClose }) => {
           style={{ animation: 'slideUp 0.5s ease-out' }}
         >
           <div className="flex items-center justify-between p-4 md:p-6 border-b border-gray-200">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-black">OUR PRODUCTS</h2>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-black"><TranslatedText>OUR PRODUCTS</TranslatedText></h2>
             <button
               onClick={onClose}
               className="text-gray-500 hover:text-gray-800 text-3xl font-bold transition-colors w-8 h-8 flex items-center justify-center"
@@ -52,7 +53,7 @@ const OurProductsModal = ({ isOpen, onClose }) => {
                   onClick={onClose}
                   className="flex items-center justify-center p-4 bg-gray-50 hover:bg-[#8B7355] hover:text-white rounded-lg transition-all duration-300 border border-gray-100 shadow-sm group"
                 >
-                  <span className="font-semibold text-center">{item.name}</span>
+                  <span className="font-semibold text-center"><TranslatedText>{item.name}</TranslatedText></span>
                 </Link>
               ))}
             </div>

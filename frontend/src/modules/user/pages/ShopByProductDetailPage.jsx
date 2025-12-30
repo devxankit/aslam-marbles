@@ -6,6 +6,7 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import { useCartAndLikes } from '../../../contexts/CartAndLikesContext'
 import LazyImage from '../../../components/common/LazyImage'
+import TranslatedText from '../../../components/TranslatedText'
 
 const ShopByProductDetailPage = ({
     onShowCart,
@@ -126,12 +127,12 @@ const ShopByProductDetailPage = ({
         return (
             <div className="min-h-screen flex items-center justify-center bg-white">
                 <div className="text-center">
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">Product Not Found</h2>
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-4"><TranslatedText>Product Not Found</TranslatedText></h2>
                     <button
                         onClick={() => navigate(`/shop-by/${section}/${category}`)}
                         className="px-6 py-2 bg-[#8B7355] text-white rounded-lg hover:bg-[#725e45] transition-colors"
                     >
-                        Back to Collection
+                        <TranslatedText>Back to Collection</TranslatedText>
                     </button>
                 </div>
             </div>
@@ -216,14 +217,14 @@ const ShopByProductDetailPage = ({
                             {/* Description */}
                             {product.description && (
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2"><TranslatedText>Description</TranslatedText></h3>
                                     <p className="text-gray-600 leading-relaxed">{product.description}</p>
                                 </div>
                             )}
 
                             {/* Quantity Selector */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-2"><TranslatedText>Quantity</TranslatedText></label>
                                 <div className="flex items-center gap-4">
                                     <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                                         <button
@@ -250,13 +251,13 @@ const ShopByProductDetailPage = ({
                                     className="w-full bg-[#8B7355] text-white py-4 rounded-lg font-semibold text-lg hover:bg-[#725e45] transition-colors flex items-center justify-center gap-2"
                                 >
                                     <ShoppingCart size={20} />
-                                    Buy Now
+                                    <TranslatedText>Buy Now</TranslatedText>
                                 </button>
                                 <button
                                     onClick={handleAddToCart}
                                     className="w-full border-2 border-[#8B7355] text-[#8B7355] py-4 rounded-lg font-semibold text-lg hover:bg-[#8B7355]/5 transition-colors"
                                 >
-                                    Add to Cart
+                                    <TranslatedText>Add to Cart</TranslatedText>
                                 </button>
                             </div>
 
@@ -305,7 +306,7 @@ const ShopByProductDetailPage = ({
                                         onClick={() => setShowTechnicalSpecs(!showTechnicalSpecs)}
                                         className="w-full flex items-center justify-between py-3 text-left"
                                     >
-                                        <span className="text-lg font-semibold text-gray-900">Product Details</span>
+                                        <span className="text-lg font-semibold text-gray-900"><TranslatedText>Product Details</TranslatedText></span>
                                         <svg
                                             className={`w-5 h-5 transition-transform ${showTechnicalSpecs ? 'rotate-180' : ''}`}
                                             fill="none"
@@ -334,7 +335,7 @@ const ShopByProductDetailPage = ({
                                     onClick={() => setShowShipping(!showShipping)}
                                     className="w-full flex items-center justify-between py-3 text-left"
                                 >
-                                    <span className="text-lg font-semibold text-gray-900">Shipping & Returns</span>
+                                    <span className="text-lg font-semibold text-gray-900"><TranslatedText>Shipping & Returns</TranslatedText></span>
                                     <svg
                                         className={`w-5 h-5 transition-transform ${showShipping ? 'rotate-180' : ''}`}
                                         fill="none"
@@ -348,15 +349,15 @@ const ShopByProductDetailPage = ({
                                     <div className="mt-4 space-y-3 text-sm text-gray-600">
                                         <div className="flex items-start gap-2">
                                             <Check size={16} className="text-green-600 mt-0.5" />
-                                            <p>Free shipping on orders above ₹10,000</p>
+                                            <p><TranslatedText>Free shipping on orders above ₹10,000</TranslatedText></p>
                                         </div>
                                         <div className="flex items-start gap-2">
                                             <Check size={16} className="text-green-600 mt-0.5" />
-                                            <p>Delivery within 7-14 working days</p>
+                                            <p><TranslatedText>Delivery within 7-14 working days</TranslatedText></p>
                                         </div>
                                         <div className="flex items-start gap-2">
                                             <Check size={16} className="text-green-600 mt-0.5" />
-                                            <p>Easy returns within 7 days of delivery</p>
+                                            <p><TranslatedText>Easy returns within 7 days of delivery</TranslatedText></p>
                                         </div>
                                     </div>
                                 )}

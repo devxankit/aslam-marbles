@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { projects as defaultProjects } from '../../data/projects'
 import { buildImageUrl, fetchNavItems } from '../../utils/aslamHouseUtils'
+import TranslatedText from '../TranslatedText'
 
 const GROUP = 'projects-nav'
 
@@ -39,7 +40,7 @@ const ProjectsDropdown = () => {
           {displayItems.map((project) => {
             const ItemContent = (
               <div className="w-full text-left px-3 py-2 text-xs md:text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 rounded transition-all duration-200 font-medium">
-                <h3 className="uppercase">{project.name}</h3>
+                <h3 className="uppercase"><TranslatedText>{project.name}</TranslatedText></h3>
               </div>
             )
 
@@ -69,7 +70,7 @@ const ProjectsDropdown = () => {
                 />
               </div>
               <h3 className="text-xs md:text-sm font-semibold text-black text-center mt-1.5 group-hover:text-[#8B7355] transition-colors whitespace-nowrap">
-                {project.name}
+                <TranslatedText>{project.name}</TranslatedText>
               </h3>
             </div>
           )

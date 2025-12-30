@@ -12,6 +12,8 @@ import artisan2 from '../../../assets/house of marble/our artist/slide2.jpeg'
 import artisan3 from '../../../assets/house of marble/our artist/slide3.jpeg'
 import artisan4 from '../../../assets/house of marble/our artist/slide4.webp'
 import visitStoreImage from '../../../assets/house of marble/our artist/visite store.png'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const ArtisansOfTilakPage = ({
   onShowSidebar,
@@ -20,6 +22,7 @@ const ArtisansOfTilakPage = ({
   onShowServices
 }) => {
   const navigate = useNavigate()
+  const { getTranslatedText } = usePageTranslation()
   const [artistData, setArtistData] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -71,7 +74,7 @@ const ArtisansOfTilakPage = ({
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8B7355] mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading artist page...</p>
+            <p className="mt-4 text-gray-600"><TranslatedText>Loading artist page...</TranslatedText></p>
           </div>
         </div>
         <Footer />
@@ -93,7 +96,7 @@ const ArtisansOfTilakPage = ({
       <section className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif text-[#8B7355] italic mb-8 md:mb-12">
-            {displayTitle}
+            <TranslatedText>{displayTitle}</TranslatedText>
           </h1>
         </div>
       </section>
@@ -104,7 +107,7 @@ const ArtisansOfTilakPage = ({
           <div className="w-full h-auto md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg">
             <img
               src={displayHeroImage}
-              alt="Artisans"
+              alt={getTranslatedText("Artisans")}
               className="w-full h-auto md:h-full object-cover"
             />
           </div>
@@ -115,7 +118,7 @@ const ArtisansOfTilakPage = ({
       <section className="w-full py-4 md:py-6 px-4 md:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed">
-            {displayDescription}
+            <TranslatedText>{displayDescription}</TranslatedText>
           </p>
         </div>
       </section>
@@ -134,7 +137,7 @@ const ArtisansOfTilakPage = ({
                       <div className="relative w-full h-64 md:h-80 lg:h-[450px] overflow-hidden bg-gray-100">
                         <img
                           src={image.url || image.image}
-                          alt={image.alt || "Artisan"}
+                          alt={image.alt || getTranslatedText("Artisan")}
                           className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                         />
                       </div>
@@ -147,16 +150,16 @@ const ArtisansOfTilakPage = ({
                   {displaySections.length > 0 ? (
                     displaySections.slice(0, 2).map((section, index) => (
                       <p key={index} className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
-                        {section.content}
+                        <TranslatedText>{section.content}</TranslatedText>
                       </p>
                     ))
                   ) : (
                     <>
                       <p className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
-                        At Aslam Marble Suppliers, our artisans are involved at every stage of the creative journey. Their deep technical knowledge, combined with artistic intuition, allows them to contribute thoughtfully to the design and development of each masterpiece. Their insights elevate the final product, ensuring every piece is unique, meaningful, and crafted to perfection.
+                        <TranslatedText>At Aslam Marble Suppliers, our artisans are involved at every stage of the creative journey. Their deep technical knowledge, combined with artistic intuition, allows them to contribute thoughtfully to the design and development of each masterpiece. Their insights elevate the final product, ensuring every piece is unique, meaningful, and crafted to perfection.</TranslatedText>
                       </p>
                       <p className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
-                        Our artisans' incredible commitment to precision, creativity, and excellence has made Aslam Marble Suppliers a trusted name in the world of marble craftsmanship. Their legacy is etched into every sculpture and structure we create, standing as a timeless testament to their skill, passion, and the rich tradition of stone artistry.
+                        <TranslatedText>Our artisans' incredible commitment to precision, creativity, and excellence has made Aslam Marble Suppliers a trusted name in the world of marble craftsmanship. Their legacy is etched into every sculpture and structure we create, standing as a timeless testament to their skill, passion, and the rich tradition of stone artistry.</TranslatedText>
                       </p>
                     </>
                   )}
@@ -170,7 +173,7 @@ const ArtisansOfTilakPage = ({
                 {/* Caption on Left */}
                 <div className="flex items-start justify-center lg:justify-start order-2 lg:order-1">
                   <p className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
-                    {displaySections.length > 2 ? displaySections[2].content : 'A single creation often takes months of patient work — every cut measured, every pattern refined, every detail perfected. Their process is not simply craftsmanship; it is devotion. This dedication reflects in the purity, symmetry, and elegance of each finished marble piece.'}
+                    {displaySections.length > 2 ? <TranslatedText>{displaySections[2].content}</TranslatedText> : <TranslatedText>A single creation often takes months of patient work — every cut measured, every pattern refined, every detail perfected. Their process is not simply craftsmanship; it is devotion. This dedication reflects in the purity, symmetry, and elegance of each finished marble piece.</TranslatedText>}
                   </p>
                 </div>
 
@@ -181,7 +184,7 @@ const ArtisansOfTilakPage = ({
                       <div className="relative w-full h-64 md:h-80 lg:h-[450px] overflow-hidden bg-gray-100">
                         <img
                           src={image.url || image.image}
-                          alt={image.alt || "Artisan"}
+                          alt={image.alt || getTranslatedText("Artisan")}
                           className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                         />
                       </div>
@@ -199,7 +202,7 @@ const ArtisansOfTilakPage = ({
         <div className="relative w-full h-[220px] md:h-[280px] lg:h-[350px] overflow-hidden">
           <img
             src={displayVisitStoreImage}
-            alt="Visit Store"
+            alt={getTranslatedText("Visit Store")}
             className="w-full h-full object-cover"
           />
           {/* Visit Store Button - Center of Image */}
@@ -208,7 +211,7 @@ const ArtisansOfTilakPage = ({
               onClick={() => navigate(displayVisitStoreButtonLink)}
               className="bg-white text-black font-semibold px-6 md:px-10 lg:px-12 py-2 md:py-3 lg:py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl text-sm md:text-base lg:text-lg uppercase tracking-wide"
             >
-              {displayVisitStoreButtonText}
+              <TranslatedText>{displayVisitStoreButtonText}</TranslatedText>
             </button>
           </div>
         </div>

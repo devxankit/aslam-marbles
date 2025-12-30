@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import TranslatedText from '../TranslatedText'
 import { THEME_COLORS } from '../../utils/theme'
 
 const StepInfoItem = memo(({ title, description, buttonText, buttonLink, onButtonClick }) => {
@@ -13,11 +14,11 @@ const StepInfoItem = memo(({ title, description, buttonText, buttonLink, onButto
   return (
     <div className="relative pl-5 border-l-2 border-dashed border-gray-300">
       <h4 className="text-base md:text-lg font-bold text-gray-800 mb-1.5">
-        {title}
+        <TranslatedText>{title}</TranslatedText>
       </h4>
       {description && (
         <p className="text-xs md:text-sm text-gray-600 mb-3">
-          {description}
+          <TranslatedText>{description}</TranslatedText>
         </p>
       )}
       {buttonText && (
@@ -26,7 +27,7 @@ const StepInfoItem = memo(({ title, description, buttonText, buttonLink, onButto
           className="px-4 py-2 text-white text-xs md:text-sm font-medium transition-colors hover:opacity-90"
           style={{ backgroundColor: THEME_COLORS.primary }}
         >
-          {buttonText}
+          <TranslatedText>{buttonText}</TranslatedText>
         </button>
       )}
     </div>

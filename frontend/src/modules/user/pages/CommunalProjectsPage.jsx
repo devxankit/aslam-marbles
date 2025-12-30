@@ -5,6 +5,8 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import { fetchCommunalProjectsData } from '../../../utils/communalProjectsUtils'
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const CommunalProjectsPage = ({
   onShowSidebar,
@@ -15,6 +17,7 @@ const CommunalProjectsPage = ({
   onShowLocation,
   onShowBooking
 }) => {
+  const { getTranslatedText } = usePageTranslation()
   const [showMobileForm, setShowMobileForm] = useState(false)
   const [communalData, setCommunalData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -72,18 +75,18 @@ const CommunalProjectsPage = ({
         {/* Background Image */}
         {loading ? (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-            <p className="text-gray-600">Loading...</p>
+            <p className="text-gray-600"><TranslatedText>Loading...</TranslatedText></p>
           </div>
         ) : communalData?.heroImage?.url ? (
           <img
             src={communalData.heroImage.url}
-            alt={communalData.heroImage.alt || 'Communal Projects'}
+            alt={getTranslatedText(communalData.heroImage.alt || 'Communal Projects')}
             className="w-full h-full object-cover"
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
         ) : (
           <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-            <p className="text-gray-600">No hero image available</p>
+            <p className="text-gray-600"><TranslatedText>No hero image available</TranslatedText></p>
           </div>
         )}
 
@@ -92,20 +95,20 @@ const CommunalProjectsPage = ({
         {/* Hero Text Overlay - Left Side */}
         <div className="absolute top-10 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-[60%] md:max-w-2xl">
           <h1 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 md:mb-4 leading-tight uppercase tracking-wide drop-shadow-lg">
-            {communalData?.title || 'COMMUNAL PROJECTS'}
+            <TranslatedText>{communalData?.title || 'COMMUNAL PROJECTS'}</TranslatedText>
           </h1>
           <p className="text-xs md:text-base lg:text-lg text-white font-light mb-1.5 md:mb-2 drop-shadow-md">
-            {communalData?.subtitle || 'Building Sacred Spaces for Communities'}
+            <TranslatedText>{communalData?.subtitle || 'Building Sacred Spaces for Communities'}</TranslatedText>
           </p>
           <p className="text-[10px] md:text-sm text-white/90 font-light leading-relaxed drop-shadow-md hidden sm:block">
-            {communalData?.description || 'Crafting magnificent communal temples and spiritual spaces that bring communities together through timeless architecture and exquisite craftsmanship.'}
+            <TranslatedText>{communalData?.description || 'Crafting magnificent communal temples and spiritual spaces that bring communities together through timeless architecture and exquisite craftsmanship.'}</TranslatedText>
           </p>
 
           <button
             onClick={() => setShowMobileForm(true)}
             className="md:hidden mt-4 bg-[#8B7355] text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wide shadow-lg border border-[#8B7355]/50 animate-pulse hover:animate-none"
           >
-            Talk to Our Expert
+            <TranslatedText>Talk to Our Expert</TranslatedText>
           </button>
         </div>
 
@@ -120,10 +123,10 @@ const CommunalProjectsPage = ({
           {/* Section Header */}
           <div className="text-center mb-0 md:mb-14 lg:mb-16">
             <h2 className="text-xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-2 md:mb-5 tracking-wide">
-              {communalData?.sectionTitle || 'Our Communal Projects'}
+              <TranslatedText>{communalData?.sectionTitle || 'Our Communal Projects'}</TranslatedText>
             </h2>
             <p className="text-[10px] md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
-              {communalData?.sectionDescription || 'Showcasing our magnificent communal temple projects that bring communities together through divine architecture.'}
+              <TranslatedText>{communalData?.sectionDescription || 'Showcasing our magnificent communal temple projects that bring communities together through divine architecture.'}</TranslatedText>
             </p>
             <div className="w-12 md:w-24 h-0.5 md:h-1 mx-auto mt-3 md:mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -131,11 +134,11 @@ const CommunalProjectsPage = ({
           {/* Images Grid */}
           {loading ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">Loading gallery...</p>
+              <p className="text-gray-600 text-lg"><TranslatedText>Loading gallery...</TranslatedText></p>
             </div>
           ) : communalImages.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">No projects available at the moment.</p>
+              <p className="text-gray-600 text-lg"><TranslatedText>No projects available at the moment.</TranslatedText></p>
             </div>
           ) : (
 
@@ -149,31 +152,31 @@ const CommunalProjectsPage = ({
                   <div className="relative w-full h-36 md:h-96 overflow-hidden bg-gray-100">
                     <img
                       src={image.url}
-                      alt={image.alt || `Communal Project ${index + 1}`}
+                      alt={getTranslatedText(image.alt || `Communal Project ${index + 1}`)}
                       className="w-full h-full !h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                     />
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 md:p-6 text-white">
                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
                         <h3 className="text-[10px] md:text-xl font-serif leading-none md:leading-tight mb-0.5 md:mb-1 truncate">
-                          {image.title || 'Jain Temple Complex'},
+                          <TranslatedText>{image.title || 'Jain Temple Complex'}</TranslatedText>,
                         </h3>
-                        <p className="text-[8px] md:text-lg mb-1 md:mb-0 truncate">{image.location || 'Ahmedabad, Gujarat'}</p>
+                        <p className="text-[8px] md:text-lg mb-1 md:mb-0 truncate"><TranslatedText>{image.location || 'Ahmedabad, Gujarat'}</TranslatedText></p>
 
                         <p className="text-[8px] md:text-xs text-gray-300 mb-1 md:mb-3 font-light leading-relaxed line-clamp-1 hidden sm:block">
-                          {image.address || '5, Pandurang Shastri Athavale Marg, Satellite, Ahmedabad, Gujarat 380015'}
+                          <TranslatedText>{image.address || '5, Pandurang Shastri Athavale Marg, Satellite, Ahmedabad, Gujarat 380015'}</TranslatedText>
                         </p>
 
                         <div className="w-full h-[1px] bg-white/30 my-1 md:my-3 hidden sm:block"></div>
 
                         <p className="text-[8px] md:text-sm font-medium tracking-wide truncate hidden sm:block">
-                          {image.client || 'Community Trust'}
+                          <TranslatedText>{image.client || 'Community Trust'}</TranslatedText>
                         </p>
 
                         <div className="w-full h-[1px] bg-white/30 my-1 md:my-3 hidden sm:block"></div>
 
                         <p className="text-[8px] md:text-sm font-light hidden sm:block">
-                          {image.duration || 'Running Project'}
+                          <TranslatedText>{image.duration || 'Running Project'}</TranslatedText>
                         </p>
                       </div>
                     </div>

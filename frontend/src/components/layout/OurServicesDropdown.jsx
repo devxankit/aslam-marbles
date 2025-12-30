@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { services as defaultServices } from '../../data/services'
 import { buildImageUrl, fetchNavItems } from '../../utils/aslamHouseUtils'
+import TranslatedText from '../TranslatedText'
 
 const GROUP = 'our-services-nav'
 
@@ -51,14 +52,14 @@ const OurServicesDropdown = () => {
                 to={route}
                 className="block w-full text-left px-3 py-2 text-xs md:text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 rounded transition-all duration-200 font-medium"
               >
-                {service.name}
+                <TranslatedText>{service.name}</TranslatedText>
               </Link>
             ) : (
               <button
                 key={service.id}
                 className="w-full text-left px-3 py-2 text-xs md:text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 rounded transition-all duration-200 font-medium"
               >
-                {service.name}
+                <TranslatedText>{service.name}</TranslatedText>
               </button>
             )
           })}
@@ -79,7 +80,7 @@ const OurServicesDropdown = () => {
                 />
               </div>
               <h3 className="text-xs md:text-sm font-semibold text-black text-center mt-1.5 group-hover:text-[#8B7355] transition-colors whitespace-nowrap">
-                {service.name}
+                <TranslatedText>{service.name}</TranslatedText>
               </h3>
             </>
           )

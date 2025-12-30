@@ -9,6 +9,7 @@ import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
 import headingImage from '../../../assets/ourcreation/jain temple/heading/SMT01780-Edit_6ebd2fd8-7aa4-4df4-b841-2cb2e362337e_large.jpeg'
 import { fetchArtistData } from '../../../utils/artistUtils'
 import { fetchJainTemplesData } from '../../../utils/jainTemplesUtils'
+import TranslatedText from '../../../components/TranslatedText'
 
 // Artisan Fallback Images
 import artisan1 from '../../../assets/house of marble/our artist/slide1.jpeg'
@@ -122,7 +123,7 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
             onClick={() => setShowMobileForm(true)}
             className="lg:hidden mt-6 px-6 py-2.5 text-xs sm:text-sm bg-[#8B7355] text-white font-bold uppercase tracking-wider rounded shadow-lg hover:bg-[#725E45] transition-transform hover:scale-105"
           >
-            Talk to Our Expert
+            <TranslatedText>Talk to Our Expert</TranslatedText>
           </button>
         </div>
 
@@ -157,7 +158,7 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif text-[#8B7355] italic mb-4">
-              Our Artist
+              <TranslatedText>Our Artist</TranslatedText>
             </h2>
             <div className="w-20 h-0.5 bg-[#8B7355] mx-auto opacity-30"></div>
           </div>
@@ -243,13 +244,13 @@ const JainTemplesPage = ({ onShowCart, onShowLikes }) => {
                       onClick={() => handleImageClick({ ...project, url: project.image?.url })}
                       className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#8B7355] border border-[#8B7355] rounded hover:bg-[#8B7355] hover:text-white transition-colors text-center"
                     >
-                      View Details
+                      <TranslatedText>View Details</TranslatedText>
                     </button>
                     <button
                       onClick={() => setShowMobileForm(true)}
                       className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white bg-[#8B7355] rounded hover:bg-[#725E45] transition-colors shadow-sm text-center"
                     >
-                      Enquire
+                      <TranslatedText>Enquire</TranslatedText>
                     </button>
                   </div>
                 </div>

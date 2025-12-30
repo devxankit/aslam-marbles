@@ -1,5 +1,13 @@
 const mongoose = require('mongoose');
 
+// Prevent mongoose from buffering model operations when MongoDB is down.
+// This avoids long hangs/timeouts like: `Operation users.findOne() buffering timed out`
+mongoose.set('bufferCommands', false);
+
+let listenersAttached = false;
+let connectingPromise = null;
+let lastMongoUri = null;
+
 const ensureDefaultAdmin = async () => {
   const User = require('../models/User');
   const email = (process.env.ADMIN_EMAIL || 'admin@tilakstone.com').toLowerCase();
@@ -46,36 +54,68 @@ const connectDB = async (mongoUri) => {
     throw new Error('Missing MongoDB connection string (MONGODB_URI)');
   }
 
-  const connect = async (retries = 5) => {
-    try {
-      await mongoose.connect(mongoUri, {
-        serverSelectionTimeoutMS: 5000,
-        socketTimeoutMS: 45000,
-        family: 4
-      });
+  lastMongoUri = mongoUri;
 
-      console.log('✅ MongoDB connected successfully');
-      await ensureDefaultAdmin();
-    } catch (error) {
-      console.error(`❌ MongoDB Connection Error (Remaining retries: ${retries}):`, error.message);
+  // Attach listeners once (avoid duplicating handlers on reconnect attempts)
+  if (!listenersAttached) {
+    listenersAttached = true;
 
-      if (retries > 0) {
-        console.log('🔄 Retrying connection in 5 seconds...');
-        setTimeout(() => connect(retries - 1), 5000);
-      } else {
-        console.error('❌ Failed to connect to MongoDB after multiple attempts.');
-        // process.exit(1); // Optional: keep running to allow eventual recovery
+    mongoose.connection.on('connected', () => {
+      console.log('✅ MongoDB connected (event)');
+    });
+
+    mongoose.connection.on('disconnected', () => {
+      console.log('⚠️ MongoDB disconnected! Will retry connection...');
+      // Fire-and-forget: let the reconnect loop handle it
+      if (lastMongoUri) connectDB(lastMongoUri).catch(() => {});
+    });
+
+    mongoose.connection.on('error', (err) => {
+      console.error('❌ MongoDB connection error (event):', err?.message || err);
+    });
+  }
+
+  // If already connected, nothing to do
+  if (mongoose.connection.readyState === 1) return;
+  // If currently connecting, reuse the same promise
+  if (connectingPromise) return connectingPromise;
+
+  const maxRetries = 5;
+  connectingPromise = (async () => {
+    for (let remaining = maxRetries; remaining >= 0; remaining--) {
+      try {
+        await mongoose.connect(mongoUri, {
+          serverSelectionTimeoutMS: 5000,
+          socketTimeoutMS: 45000,
+          family: 4
+        });
+
+        console.log('✅ MongoDB connected successfully');
+
+        // Admin seeding should never break DB connectivity; treat it as non-fatal.
+        try {
+          await ensureDefaultAdmin();
+        } catch (e) {
+          console.error('⚠️ ensureDefaultAdmin failed (non-fatal):', e?.message || e);
+        }
+
+        break;
+      } catch (error) {
+        console.error(`❌ MongoDB Connection Error (Remaining retries: ${remaining}):`, error.message);
+
+        if (remaining > 0) {
+          console.log('🔄 Retrying connection in 5 seconds...');
+          await new Promise((r) => setTimeout(r, 5000));
+        } else {
+          console.error('❌ Failed to connect to MongoDB after multiple attempts.');
+        }
       }
     }
-  };
-
-  await connect();
-
-  // Handle disconnection events
-  mongoose.connection.on('disconnected', () => {
-    console.log('⚠️ MongoDB disconnected! Attempting to reconnect...');
-    connect();
+  })().finally(() => {
+    connectingPromise = null;
   });
+
+  return connectingPromise;
 };
 
 module.exports = connectDB;

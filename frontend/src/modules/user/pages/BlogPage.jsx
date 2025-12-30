@@ -6,6 +6,8 @@ import TrustedBySection from '../../../components/common/TrustedBySection'
 import { useNavigate } from 'react-router-dom'
 import blogImg from '../../../assets/blog/blog.png'
 import { fetchBlogs } from '../../../utils/blogUtils'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const BlogPage = ({
   onShowSidebar,
@@ -17,6 +19,7 @@ const BlogPage = ({
   onShowBooking
 }) => {
   const navigate = useNavigate()
+  const { getTranslatedText } = usePageTranslation()
   const [blogPosts, setBlogPosts] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -78,13 +81,13 @@ const BlogPage = ({
         <div className="relative w-full">
           <img
             src={blogImg}
-            alt="Our Blog"
+            alt={getTranslatedText("Our Blog")}
             className="w-full h-auto object-contain"
             style={{ display: 'block', width: '100%' }}
           />
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif italic font-bold text-white uppercase tracking-wide text-center px-4 drop-shadow-2xl">
-              OUR BLOG
+              <TranslatedText>OUR BLOG</TranslatedText>
             </h1>
           </div>
         </div>
@@ -95,11 +98,11 @@ const BlogPage = ({
         <div className="max-w-7xl mx-auto">
           {loading ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-base md:text-lg">Loading blogs...</p>
+              <p className="text-gray-600 text-base md:text-lg"><TranslatedText>Loading blogs...</TranslatedText></p>
             </div>
           ) : blogPosts.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-base md:text-lg">No blogs available at the moment.</p>
+              <p className="text-gray-600 text-base md:text-lg"><TranslatedText>No blogs available at the moment.</TranslatedText></p>
             </div>
           ) : (
             <div className="grid grid-cols-3 gap-2 md:gap-4 lg:gap-6">
@@ -123,41 +126,45 @@ const BlogPage = ({
 }
 
 // Memoized Blog Card Component
-const BlogCard = memo(({ post, onClick }) => (
-  <div
-    onClick={onClick}
-    className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer group"
-  >
-    {/* Image Section */}
-    <div className="relative w-full h-20 md:h-32 lg:h-40 overflow-hidden">
-      <img
-        src={post.image}
-        alt={post.title}
-        loading="lazy"
-        className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
-      />
-    </div>
+const BlogCard = memo(({ post, onClick }) => {
+  const { getTranslatedText } = usePageTranslation()
 
-    {/* Content Section */}
-    <div className="p-2 md:p-4 lg:p-6">
-      <div className="flex items-center gap-1 mb-1 md:mb-2">
-        <span className="text-[8px] md:text-xs font-semibold text-[#8B7355] uppercase tracking-wide truncate">
-          {post.category}
-        </span>
-        <span className="text-gray-400 text-[8px]">•</span>
-        <span className="text-[8px] md:text-xs text-gray-500 truncate">{post.date}</span>
+  return (
+    <div
+      onClick={onClick}
+      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer group"
+    >
+      {/* Image Section */}
+      <div className="relative w-full h-20 md:h-32 lg:h-40 overflow-hidden">
+        <img
+          src={post.image}
+          alt={getTranslatedText(post.title)}
+          loading="lazy"
+          className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+        />
       </div>
 
-      <h2 className="text-[10px] md:text-sm lg:text-lg font-bold text-gray-800 mb-1 md:mb-2 line-clamp-2 group-hover:text-[#8B7355] transition-colors">
-        {post.title}
-      </h2>
+      {/* Content Section */}
+      <div className="p-2 md:p-4 lg:p-6">
+        <div className="flex items-center gap-1 mb-1 md:mb-2">
+          <span className="text-[8px] md:text-xs font-semibold text-[#8B7355] uppercase tracking-wide truncate">
+            <TranslatedText>{post.category}</TranslatedText>
+          </span>
+          <span className="text-gray-400 text-[8px]">•</span>
+          <span className="text-[8px] md:text-xs text-gray-500 truncate"><TranslatedText>{post.date}</TranslatedText></span>
+        </div>
 
-      <p className="text-[8px] md:text-xs lg:text-sm text-gray-600 leading-snug line-clamp-2 md:line-clamp-3">
-        {post.description}
-      </p>
+        <h2 className="text-[10px] md:text-sm lg:text-lg font-bold text-gray-800 mb-1 md:mb-2 line-clamp-2 group-hover:text-[#8B7355] transition-colors">
+          <TranslatedText>{post.title}</TranslatedText>
+        </h2>
+
+        <p className="text-[8px] md:text-xs lg:text-sm text-gray-600 leading-snug line-clamp-2 md:line-clamp-3">
+          <TranslatedText>{post.description}</TranslatedText>
+        </p>
+      </div>
     </div>
-  </div>
-))
+  )
+})
 
 BlogCard.displayName = 'BlogCard'
 

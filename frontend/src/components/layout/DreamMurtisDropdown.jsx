@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import TranslatedText from '../TranslatedText'
 
 const DreamMurtisDropdown = () => {
   const [hierarchy, setHierarchy] = useState([])
@@ -38,7 +39,7 @@ const DreamMurtisDropdown = () => {
           {hierarchy.map((group) => (
             <div key={group._id} className="animate-fadeIn">
               <h3 className="font-bold text-gray-900 mb-5 text-sm md:text-base uppercase tracking-widest border-b border-gray-100 pb-2">
-                {group.name}
+                <TranslatedText>{group.name}</TranslatedText>
               </h3>
               <ul className="space-y-2.5">
                 {group.categories.map((category) => (
@@ -47,7 +48,7 @@ const DreamMurtisDropdown = () => {
                       to={`/murti/${category.id}`}
                       className="text-gray-600 hover:text-[#8B7355] transition-all duration-300 text-xs md:text-sm font-medium hover:pl-1 block"
                     >
-                      {category.name}
+                      <TranslatedText>{category.name}</TranslatedText>
                     </Link>
                   </li>
                 ))}

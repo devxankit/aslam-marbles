@@ -2,6 +2,7 @@ import Header from '../../../components/layout/Header'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import footerBackgroundImage from '../../../assets/footer page background/Beige Pink Elegant Watercolor Background Notes Planner.png'
+import TranslatedText from '../../../components/TranslatedText'
 
 const PrivacyPolicyPage = ({
   onShowSidebar,
@@ -42,7 +43,7 @@ const PrivacyPolicyPage = ({
           {/* Page Header */}
           <div className="text-center mb-10 md:mb-12">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-4 tracking-wide font-bold">
-              Privacy Policy
+              <TranslatedText>Privacy Policy</TranslatedText>
             </h1>
             <div className="w-24 h-1 rounded-full mx-auto" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -50,43 +51,43 @@ const PrivacyPolicyPage = ({
           {/* Introduction */}
           <div className="mb-8 md:mb-10 text-left">
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              Thank you for choosing to be part of our community at Aslam Marble Suppliers, doing business as AMS ("AMS," "we," "us," or "our"). Protecting your personal information and your right to privacy is extremely important to us. If you have any questions or concerns about this policy or our practices regarding your personal data, please contact us using the information provided at the end of this document.
+              <TranslatedText>Thank you for choosing to be part of our community at Aslam Marble Suppliers, doing business as AMS ("AMS," "we," "us," or "our"). Protecting your personal information and your right to privacy is extremely important to us. If you have any questions or concerns about this policy or our practices regarding your personal data, please contact us using the information provided at the end of this document.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              This Privacy Policy applies to all information collected through our website, as well as any related services, sales, marketing, or events (collectively referred to in this policy as the "Services").
+              <TranslatedText>This Privacy Policy applies to all information collected through our website, as well as any related services, sales, marketing, or events (collectively referred to in this policy as the "Services").</TranslatedText>
             </p>
           </div>
 
           {/* Section 1 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              1. What Information Do We Collect?
+              <TranslatedText>1. What Information Do We Collect?</TranslatedText>
             </h2>
             <h3 className="text-lg md:text-xl font-serif text-[#8B7355] italic mb-2 mt-4 font-bold">
               Personal information you disclose to us
             </h3>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3 italic">
-              In Short: We collect personal information you provide to us, such as your name, contact details, address, and other relevant data.
+              <TranslatedText>In Short: We collect personal information you provide to us, such as your name, contact details, address, and other relevant data.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              We collect personal information when you:
+              <TranslatedText>We collect personal information when you:</TranslatedText>
             </p>
             <ul className="space-y-2 mb-4 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Show interest in our products or Services</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Show interest in our products or Services</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Submit inquiries</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Submit inquiries</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Participate in activities on our website</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Participate in activities on our website</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Contact us directly</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Contact us directly</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
@@ -97,15 +98,15 @@ const PrivacyPolicyPage = ({
             </p>
             <div className="ml-4 space-y-3">
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">Names and Contact Data</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>Names and Contact Data</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  We collect your name, email address, phone number, postal address, and similar contact details.
+                  <TranslatedText>We collect your name, email address, phone number, postal address, and similar contact details.</TranslatedText>
                 </p>
               </div>
               <div>
-                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2">Credentials</p>
+                <p className="text-sm md:text-base font-semibold text-gray-800 mb-2"><TranslatedText>Credentials</TranslatedText></p>
                 <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  If our website provides account access (optional), we may collect passwords or similar authentication data.
+                  <TranslatedText>If our website provides account access (optional), we may collect passwords or similar authentication data.</TranslatedText>
                 </p>
               </div>
               <div>
@@ -134,35 +135,35 @@ const PrivacyPolicyPage = ({
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Browser type & version</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Browser type & version</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Device information</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Device information</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Operating system</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Operating system</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Language preferences</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Language preferences</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Referring URLs</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Referring URLs</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Country & location</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Country & location</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Pages visited and time spent</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Pages visited and time spent</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Other diagnostic and technical data</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Other diagnostic and technical data</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
@@ -171,15 +172,15 @@ const PrivacyPolicyPage = ({
             <ul className="space-y-2 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Maintain website security</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Maintain website security</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Improve user experience</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Improve user experience</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Conduct analytics and performance monitoring</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Conduct analytics and performance monitoring</TranslatedText></span>
               </li>
             </ul>
           </div>
@@ -187,38 +188,38 @@ const PrivacyPolicyPage = ({
           {/* Section 2 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              2. How Do We Use Your Information?
+              <TranslatedText>2. How Do We Use Your Information?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3 italic">
-              In Short: We process your data for legitimate business purposes, to fulfill contracts, comply with legal obligations, and with your consent.
+              <TranslatedText>In Short: We process your data for legitimate business purposes, to fulfill contracts, comply with legal obligations, and with your consent.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              We use your information to:
+              <TranslatedText>We use your information to:</TranslatedText>
             </p>
             <ul className="space-y-2 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Create or manage user accounts</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Create or manage user accounts</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Send administrative updates</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Send administrative updates</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Improve security and protect Services</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Improve security and protect Services</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Enforce our terms and policies</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Enforce our terms and policies</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Respond to legal requests</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Respond to legal requests</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Provide requested Services</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Provide requested Services</TranslatedText></span>
               </li>
             </ul>
           </div>
@@ -226,56 +227,56 @@ const PrivacyPolicyPage = ({
           {/* Section 3 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              3. Will Your Information Be Shared With Anyone?
+              <TranslatedText>3. Will Your Information Be Shared With Anyone?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3 italic">
-              In Short: We share information only:
+              <TranslatedText>In Short: We share information only:</TranslatedText>
             </p>
             <ul className="space-y-2 mb-4 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">With your consent</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>With your consent</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">To comply with laws</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>To comply with laws</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">To deliver requested services</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>To deliver requested services</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">To protect rights and safety</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>To protect rights and safety</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">With trusted service providers working on our behalf</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>With trusted service providers working on our behalf</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              We may process your data based on:
+              <TranslatedText>We may process your data based on:</TranslatedText>
             </p>
             <ul className="space-y-2 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Consent</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Consent</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Legitimate business interests</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Legitimate business interests</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Contractual necessity</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Contractual necessity</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Legal compliance</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Legal compliance</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Vital interests (e.g., preventing harm)</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Vital interests (e.g., preventing harm)</TranslatedText></span>
               </li>
             </ul>
           </div>
@@ -283,215 +284,215 @@ const PrivacyPolicyPage = ({
           {/* Section 4 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              4. Do We Use Cookies and Tracking Technologies?
+              <TranslatedText>4. Do We Use Cookies and Tracking Technologies?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              Yes.
+              <TranslatedText>Yes.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              We may use cookies, web beacons, or tracking pixels to:
+              <TranslatedText>We may use cookies, web beacons, or tracking pixels to:</TranslatedText>
             </p>
             <ul className="space-y-2 mb-3 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Enhance user experience</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Enhance user experience</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Analyze traffic</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Analyze traffic</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Improve website performance</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Improve website performance</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              You may control cookie preferences through your browser settings.
+              <TranslatedText>You may control cookie preferences through your browser settings.</TranslatedText>
             </p>
           </div>
 
           {/* Section 5 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              5. How Do We Handle Social Logins?
+              <TranslatedText>5. How Do We Handle Social Logins?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              If our site offers login through social platforms (e.g., Google, Facebook), we may receive:
+              <TranslatedText>If our site offers login through social platforms (e.g., Google, Facebook), we may receive:</TranslatedText>
             </p>
             <ul className="space-y-2 mt-3 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Name</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Name</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Email</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Email</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Profile photo</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Profile photo</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Public profile info</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Public profile info</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mt-3">
-              This depends on your social account privacy settings.
+              <TranslatedText>This depends on your social account privacy settings.</TranslatedText>
             </p>
           </div>
 
           {/* Section 6 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              6. Is Your Information Transferred Internationally?
+              <TranslatedText>6. Is Your Information Transferred Internationally?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              Our servers are located in India.
+              <TranslatedText>Our servers are located in India.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              If you access our Services from outside India, your data may be transferred and processed within India.
+              <TranslatedText>If you access our Services from outside India, your data may be transferred and processed within India.</TranslatedText>
             </p>
           </div>
 
           {/* Section 7 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              7. How Long Do We Keep Your Information?
+              <TranslatedText>7. How Long Do We Keep Your Information?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3 italic">
-              In Short: Only as long as necessary for the purposes outlined in this policy.
+              <TranslatedText>In Short: Only as long as necessary for the purposes outlined in this policy.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              We may also retain data for legal, tax, or regulatory reasons.
+              <TranslatedText>We may also retain data for legal, tax, or regulatory reasons.</TranslatedText>
             </p>
           </div>
 
           {/* Section 8 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              8. How Do We Keep Your Information Safe?
+              <TranslatedText>8. How Do We Keep Your Information Safe?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              We implement modern security practices to protect your data.
+              <TranslatedText>We implement modern security practices to protect your data.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              However, no online system is 100% secure, and we cannot guarantee absolute protection.
+              <TranslatedText>However, no online system is 100% secure, and we cannot guarantee absolute protection.</TranslatedText>
             </p>
           </div>
 
           {/* Section 9 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              9. Do We Collect Information From Minors?
+              <TranslatedText>9. Do We Collect Information From Minors?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              No.
+              <TranslatedText>No.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              We do not knowingly collect data from children under 18 years of age.
+              <TranslatedText>We do not knowingly collect data from children under 18 years of age.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              If we learn we have such data, we will delete it promptly.
+              <TranslatedText>If we learn we have such data, we will delete it promptly.</TranslatedText>
             </p>
           </div>
 
           {/* Section 10 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              10. What Are Your Privacy Rights?
+              <TranslatedText>10. What Are Your Privacy Rights?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              Depending on your region, you may have rights to:
+              <TranslatedText>Depending on your region, you may have rights to:</TranslatedText>
             </p>
             <ul className="space-y-2 mb-3 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Access your personal data</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Access your personal data</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Request corrections or deletions</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Request corrections or deletions</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Restrict or object to data processing</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Restrict or object to data processing</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Withdraw consent</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Withdraw consent</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Request a copy of your information</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Request a copy of your information</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              You can exercise these rights by contacting us.
+              <TranslatedText>You can exercise these rights by contacting us.</TranslatedText>
             </p>
           </div>
 
           {/* Section 11 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              11. Do-Not-Track Features
+              <TranslatedText>11. Do-Not-Track Features</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              We currently do not respond to DNT browser signals due to lack of a universal standard.
+              <TranslatedText>We currently do not respond to DNT browser signals due to lack of a universal standard.</TranslatedText>
             </p>
           </div>
 
           {/* Section 12 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              12. California Residents' Privacy Rights (If Applicable)
+              <TranslatedText>12. California Residents' Privacy Rights (If Applicable)</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              If California privacy laws apply to you, you may request:
+              <TranslatedText>If California privacy laws apply to you, you may request:</TranslatedText>
             </p>
             <ul className="space-y-2 mb-3 ml-4">
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Disclosure of data collected</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Disclosure of data collected</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Deletion of your personal data</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Deletion of your personal data</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Information shared with third parties</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Information shared with third parties</TranslatedText></span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#8B7355] font-bold mt-1">•</span>
-                <span className="text-sm md:text-base text-gray-700">Non-discrimination regarding privacy rights</span>
+                <span className="text-sm md:text-base text-gray-700"><TranslatedText>Non-discrimination regarding privacy rights</TranslatedText></span>
               </li>
             </ul>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              AMS does not sell personal information.
+              <TranslatedText>AMS does not sell personal information.</TranslatedText>
             </p>
           </div>
 
           {/* Section 13 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              13. Updates to This Policy
+              <TranslatedText>13. Updates to This Policy</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              We may update this privacy policy periodically.
+              <TranslatedText>We may update this privacy policy periodically.</TranslatedText>
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              Revisions will be posted on this page with an updated "Revised" date.
+              <TranslatedText>Revisions will be posted on this page with an updated "Revised" date.</TranslatedText>
             </p>
           </div>
 
           {/* Section 14 */}
           <div className="mb-8 md:mb-10 bg-gray-50 p-5 md:p-6 rounded-lg border-l-4" style={{ borderColor: '#8B7355' }}>
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-4 font-bold">
-              14. How Can You Contact Us?
+              <TranslatedText>14. How Can You Contact Us?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              If you have questions or comments about this notice, contact us at:
+              <TranslatedText>If you have questions or comments about this notice, contact us at:</TranslatedText>
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-3">
@@ -509,7 +510,7 @@ const PrivacyPolicyPage = ({
               <div className="flex items-center gap-3">
                 <span className="text-lg">📍</span>
                 <p className="text-sm md:text-base text-gray-700">
-                  Borawar Bypass Road, Makrana, Rajasthan
+                  <TranslatedText>Borawar Bypass Road, Makrana, Rajasthan</TranslatedText>
                 </p>
               </div>
             </div>
@@ -518,10 +519,10 @@ const PrivacyPolicyPage = ({
           {/* Section 15 */}
           <div className="mb-8 md:mb-10 text-left">
             <h2 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-3 font-bold">
-              15. How Can You Access, Update, or Delete Your Data?
+              <TranslatedText>15. How Can You Access, Update, or Delete Your Data?</TranslatedText>
             </h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-3">
-              To request access, modifications, or deletion of your personal information, please contact:
+              <TranslatedText>To request access, modifications, or deletion of your personal information, please contact:</TranslatedText>
             </p>
             <div className="flex items-center gap-3">
               <span className="text-lg">📧</span>

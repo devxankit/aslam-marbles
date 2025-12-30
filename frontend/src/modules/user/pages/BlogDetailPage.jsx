@@ -5,6 +5,8 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import TrustedBySection from '../../../components/common/TrustedBySection'
 import { fetchBlogs, fetchBlogById } from '../../../utils/blogUtils'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const BlogDetailPage = ({
   onShowSidebar,
@@ -17,10 +19,11 @@ const BlogDetailPage = ({
 }) => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { getTranslatedText } = usePageTranslation()
   const [currentPost, setCurrentPost] = useState(null)
   const [allBlogs, setAllBlogs] = useState([])
   const [loading, setLoading] = useState(true)
-  
+
   useEffect(() => {
     const loadBlog = async () => {
       try {
@@ -45,7 +48,7 @@ const BlogDetailPage = ({
   if (loading) {
     return (
       <div className="w-full min-h-screen bg-white flex items-center justify-center">
-        <p className="text-xl text-gray-600">Loading blog...</p>
+        <p className="text-xl text-gray-600"><TranslatedText>Loading blog...</TranslatedText></p>
       </div>
     )
   }
@@ -53,7 +56,7 @@ const BlogDetailPage = ({
   if (!currentPost) {
     return (
       <div className="w-full min-h-screen bg-white flex items-center justify-center">
-        <p className="text-xl text-gray-600">Blog post not found</p>
+        <p className="text-xl text-gray-600"><TranslatedText>Blog post not found</TranslatedText></p>
       </div>
     )
   }
@@ -95,30 +98,32 @@ const BlogDetailPage = ({
             <div className="relative w-full">
               <img
                 src={currentPost.image}
-                alt={currentPost.title}
+                alt={getTranslatedText(currentPost.title)}
                 className="w-full h-auto object-contain"
                 style={{ display: 'block', width: '100%' }}
               />
-              
+
               {/* Previous Blog Button - Left Side */}
               {previousPost && (
                 <button
                   onClick={handlePrevious}
                   className="absolute left-4 md:left-8 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-[#8B7355] p-3 md:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-20 flex items-center justify-center"
-                  aria-label="Previous Blog"
+                  aria-label={getTranslatedText("Previous Blog")}
+                  title={getTranslatedText("Previous Blog")}
                 >
                   <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
               )}
-              
+
               {/* Next Blog Button - Right Side */}
               {nextPost && (
                 <button
                   onClick={handleNext}
                   className="absolute right-4 md:right-8 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-[#8B7355] p-3 md:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-20 flex items-center justify-center"
-                  aria-label="Next Blog"
+                  aria-label={getTranslatedText("Next Blog")}
+                  title={getTranslatedText("Next Blog")}
                 >
                   <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -132,45 +137,45 @@ const BlogDetailPage = ({
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-sm md:text-base font-semibold text-[#8B7355] uppercase tracking-wide">
-                {currentPost.category}
+                <TranslatedText>{currentPost.category}</TranslatedText>
               </span>
               <span className="text-gray-400">•</span>
-              <span className="text-sm text-gray-500">{currentPost.date}</span>
+              <span className="text-sm text-gray-500"><TranslatedText>{currentPost.date}</TranslatedText></span>
             </div>
-            
+
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-6">
-              {currentPost.title}
+              <TranslatedText>{currentPost.title}</TranslatedText>
             </h1>
-            
+
             <div className="prose max-w-none">
               <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-                {currentPost.description}
+                <TranslatedText>{currentPost.description}</TranslatedText>
               </p>
-              
+
               {currentPost.content ? (
-                <div 
+                <div
                   className="text-base md:text-lg text-gray-700 leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: currentPost.content }}
                 />
               ) : (
                 <>
                   <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-                    Vietnam White Marble has long been revered for its pristine beauty and spiritual significance. 
-                    In contemporary home design, incorporating marble temples and pooja rooms brings together 
-                    traditional craftsmanship with modern aesthetics, creating spaces that honor both heritage and innovation.
+                    <TranslatedText>Vietnam White Marble has long been revered for its pristine beauty and spiritual significance.
+                      In contemporary home design, incorporating marble temples and pooja rooms brings together
+                      traditional craftsmanship with modern aesthetics, creating spaces that honor both heritage and innovation.</TranslatedText>
                   </p>
-                  
+
                   <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-                    The intricate carvings and meticulous attention to detail in marble temple design reflect not just 
-                    artistic excellence but also a deep understanding of spiritual architecture. Each element, from the 
-                    placement of the mandir to the selection of materials, plays a crucial role in creating an environment 
-                    that promotes peace, devotion, and positive energy flow throughout your home.
+                    <TranslatedText>The intricate carvings and meticulous attention to detail in marble temple design reflect not just
+                      artistic excellence but also a deep understanding of spiritual architecture. Each element, from the
+                      placement of the mandir to the selection of materials, plays a crucial role in creating an environment
+                      that promotes peace, devotion, and positive energy flow throughout your home.</TranslatedText>
                   </p>
-                  
+
                   <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                    Whether you're designing a compact mandir for an apartment or a spacious pooja room for a traditional 
-                    home, the versatility of Vietnam White Marble ensures that your sacred space will be both functional 
-                    and beautiful, standing as a testament to timeless design and spiritual devotion for generations to come.
+                    <TranslatedText>Whether you're designing a compact mandir for an apartment or a spacious pooja room for a traditional
+                      home, the versatility of Vietnam White Marble ensures that your sacred space will be both functional
+                      and beautiful, standing as a testament to timeless design and spiritual devotion for generations to come.</TranslatedText>
                   </p>
                 </>
               )}

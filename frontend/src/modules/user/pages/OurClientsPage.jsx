@@ -7,6 +7,7 @@ import ExpertFormSection from '../../../components/common/ExpertFormSection'
 import { fetchOurClientsData } from '../../../utils/ourClientsUtils'
 import headingImage from '../../../assets/house of marble/our client/heading/Residential.jpeg'
 import headingImage2 from '../../../assets/house of marble/our client/heading/06fcbe87-a149-445b-912c-6787ef4a4d50.png'
+import TranslatedText from '../../../components/TranslatedText'
 
 const OurClientsPage = ({
   onShowSidebar,
@@ -94,7 +95,7 @@ const OurClientsPage = ({
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8B7355] mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading our clients page...</p>
+            <p className="mt-4 text-gray-600"><TranslatedText>Loading our clients page...</TranslatedText></p>
           </div>
         </div>
         <Footer />
@@ -187,13 +188,13 @@ const OurClientsPage = ({
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-16" style={{ backgroundColor: '#8B7355' }}></div>
                   <h2 className="text-3xl md:text-4xl font-serif text-[#8B7355] italic">
-                    {displayTitle}
+                    <TranslatedText>{displayTitle}</TranslatedText>
                   </h2>
                 </div>
 
                 {displayContentSections.map((section, index) => (
                   <p key={index} className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed italic" style={{ fontWeight: 400 }}>
-                    {section.content}
+                    <TranslatedText>{section.content}</TranslatedText>
                   </p>
                 ))}
               </div>

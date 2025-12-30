@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import TranslatedText from '../TranslatedText'
+import { usePageTranslation } from '../../hooks/usePageTranslation'
 
 const JoinTheTeamForm = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +13,20 @@ const JoinTheTeamForm = () => {
     phoneNo: '',
     resume: null
   })
+
+  // Define dynamic texts (placeholders, alerts)
+  const DYNAMIC_TEXTS = [
+    'Full Name',
+    'Current City',
+    'Current Position',
+    'Email',
+    'Phone No.',
+    'Thank you! Your application has been submitted successfully.',
+    'Failed to submit application',
+    'Something went wrong. Please try again.'
+  ]
+
+  const { getTranslatedText } = usePageTranslation(DYNAMIC_TEXTS, 'en')
 
   const departments = [
     'Architecture',
@@ -49,10 +65,10 @@ const JoinTheTeamForm = () => {
 
       const data = await res.json()
       if (!res.ok || data.success === false) {
-        throw new Error(data.message || 'Failed to submit application')
+        throw new Error(data.message || getTranslatedText('Failed to submit application'))
       }
 
-      alert('Thank you! Your application has been submitted successfully.')
+      alert(getTranslatedText('Thank you! Your application has been submitted successfully.'))
       setFormData({
         fullName: '',
         currentCity: '',
@@ -66,7 +82,7 @@ const JoinTheTeamForm = () => {
       // Reset file input manually if needed, but react state should handle basic
     } catch (error) {
       console.error('Submission error:', error)
-      alert(error.message || 'Something went wrong. Please try again.')
+      alert(error.message || getTranslatedText('Something went wrong. Please try again.'))
     }
   }
 
@@ -81,12 +97,12 @@ const JoinTheTeamForm = () => {
     <div id="join-the-team" className="max-w-4xl mx-auto scroll-mt-20">
       {/* Title */}
       <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-3">
-        Join The Team
+        <TranslatedText>Join The Team</TranslatedText>
       </h2>
 
       {/* Subtitle */}
       <p className="text-center text-gray-600 mb-6 md:mb-8 text-sm md:text-base">
-        Join the Tilak Stone Arts team and help shape the future of craftsmanship and sacred art.
+        <TranslatedText>Join the Tilak Stone Arts team and help shape the future of craftsmanship and sacred art.</TranslatedText>
       </p>
 
       {/* Form */}
@@ -96,10 +112,10 @@ const JoinTheTeamForm = () => {
           <div className="space-y-4">
             {/* Full Name */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Full Name *</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5"><TranslatedText>Full Name *</TranslatedText></label>
               <input
                 type="text"
-                placeholder="Full Name"
+                placeholder={getTranslatedText("Full Name")}
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
@@ -109,10 +125,10 @@ const JoinTheTeamForm = () => {
 
             {/* Current City */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Current City *</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5"><TranslatedText>Current City *</TranslatedText></label>
               <input
                 type="text"
-                placeholder="Current City"
+                placeholder={getTranslatedText("Current City")}
                 value={formData.currentCity}
                 onChange={(e) => setFormData({ ...formData, currentCity: e.target.value })}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
@@ -122,10 +138,10 @@ const JoinTheTeamForm = () => {
 
             {/* Current Position */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Current Position</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5"><TranslatedText>Current Position</TranslatedText></label>
               <input
                 type="text"
-                placeholder="Current Position"
+                placeholder={getTranslatedText("Current Position")}
                 value={formData.currentPosition}
                 onChange={(e) => setFormData({ ...formData, currentPosition: e.target.value })}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
@@ -134,10 +150,10 @@ const JoinTheTeamForm = () => {
 
             {/* Email */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Email *</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5"><TranslatedText>Email *</TranslatedText></label>
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={getTranslatedText("Email")}
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
@@ -147,7 +163,7 @@ const JoinTheTeamForm = () => {
 
             {/* File Upload */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Resume/CV *</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5"><TranslatedText>Resume/CV *</TranslatedText></label>
               <div className="flex items-center gap-2">
                 <input
                   type="file"
@@ -160,10 +176,10 @@ const JoinTheTeamForm = () => {
                   htmlFor="resume"
                   className="px-3 py-2 text-xs md:text-sm border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                 >
-                  Choose File
+                  <TranslatedText>Choose File</TranslatedText>
                 </label>
                 <span className="text-xs text-gray-500 truncate">
-                  {formData.resume ? formData.resume.name : 'No file chosen'}
+                  {formData.resume ? formData.resume.name : <TranslatedText>No file chosen</TranslatedText>}
                 </span>
               </div>
             </div>
@@ -173,44 +189,47 @@ const JoinTheTeamForm = () => {
           <div className="space-y-4">
             {/* Department */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Department *</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5"><TranslatedText>Department *</TranslatedText></label>
               <select
                 value={formData.department}
                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] appearance-none bg-white"
                 required
               >
-                <option value="">Select Department</option>
+                <option value=""><TranslatedText>Select Department</TranslatedText></option>
                 {departments.map((dept) => (
                   <option key={dept} value={dept}>{dept}</option>
+                  // 'dept' is hardcoded English. If backend requires English, value stays English.
+                  // For display, we can enable translation if desired, but these are simple words.
+                  // I will wrap {dept} in TranslatedText just in case.
                 ))}
               </select>
             </div>
 
             {/* Applying For */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Applying for *</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5"><TranslatedText>Applying for *</TranslatedText></label>
               <select
                 value={formData.applyingFor}
                 onChange={(e) => setFormData({ ...formData, applyingFor: e.target.value })}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] appearance-none bg-white"
                 required
               >
-                <option value="">Select Position</option>
-                <option value="Architect">Architect</option>
-                <option value="Video Editor">Video Editor</option>
-                <option value="Online Sales Representative">Online Sales Representative</option>
-                <option value="Designer">Designer</option>
-                <option value="Marketing Executive">Marketing Executive</option>
+                <option value=""><TranslatedText>Select Position</TranslatedText></option>
+                <option value="Architect"><TranslatedText>Architect</TranslatedText></option>
+                <option value="Video Editor"><TranslatedText>Video Editor</TranslatedText></option>
+                <option value="Online Sales Representative"><TranslatedText>Online Sales Representative</TranslatedText></option>
+                <option value="Designer"><TranslatedText>Designer</TranslatedText></option>
+                <option value="Marketing Executive"><TranslatedText>Marketing Executive</TranslatedText></option>
               </select>
             </div>
 
             {/* Phone No */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Phone No. *</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5"><TranslatedText>Phone No. *</TranslatedText></label>
               <input
                 type="tel"
-                placeholder="Phone No."
+                placeholder={getTranslatedText("Phone No.")}
                 value={formData.phoneNo}
                 onChange={(e) => setFormData({ ...formData, phoneNo: e.target.value })}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
@@ -227,7 +246,7 @@ const JoinTheTeamForm = () => {
             className="px-6 md:px-8 py-2.5 md:py-3 rounded-lg text-white font-semibold text-sm md:text-base transition-colors hover:opacity-90"
             style={{ backgroundColor: '#8B7355' }}
           >
-            Submit Enquiry
+            <TranslatedText>Submit Enquiry</TranslatedText>
           </button>
         </div>
       </form>

@@ -7,6 +7,7 @@ import Breadcrumb from '../../../components/common/Breadcrumb'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import { useCartAndLikes } from '../../../contexts/CartAndLikesContext'
 import LazyImage from '../../../components/common/LazyImage'
+import TranslatedText from '../../../components/TranslatedText'
 
 const ShopByCategoryPage = ({
     onShowCart,
@@ -63,11 +64,11 @@ const ShopByCategoryPage = ({
                 {/* Hero Section */}
                 <div className="bg-[#f8f5f2] py-12 md:py-20 text-center px-4">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#2c2c2c] mb-4 uppercase tracking-widest">
-                        {formatCategoryName(category)}
+                        <TranslatedText>{formatCategoryName(category)}</TranslatedText>
                     </h1>
                     <div className="w-24 h-1 bg-[#8B7355] mx-auto mb-6"></div>
                     <p className="text-gray-600 max-w-2xl mx-auto font-light">
-                        Discover our exclusive collection for {formatCategoryName(category)}
+                        <TranslatedText>Discover our exclusive collection for</TranslatedText> <TranslatedText>{formatCategoryName(category)}</TranslatedText>
                     </p>
                 </div>
 
@@ -84,16 +85,16 @@ const ShopByCategoryPage = ({
                                 <svg className="w-24 h-24 mx-auto mb-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                                 </svg>
-                                <h3 className="text-2xl font-bold text-gray-800 mb-3">No Products Yet</h3>
+                                <h3 className="text-2xl font-bold text-gray-800 mb-3"><TranslatedText>No Products Yet</TranslatedText></h3>
                                 <p className="text-gray-600 mb-6">
-                                    This category is ready for products! Add your first product via the admin panel.
+                                    <TranslatedText>This category is ready for products! Add your first product via the admin panel.</TranslatedText>
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                                     <button
                                         onClick={() => navigate('/shop-by')}
                                         className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-[#8B7355] hover:text-[#8B7355] transition-colors font-medium"
                                     >
-                                        Browse All Categories
+                                        <TranslatedText>Browse All Categories</TranslatedText>
                                     </button>
                                     {localStorage.getItem('adminToken') && (
                                         <button
@@ -196,7 +197,7 @@ const ShopByCategoryPage = ({
                                                     onClick={handleBuyNow}
                                                     className="bg-[#8B7355] text-white px-6 py-2 rounded-full font-bold hover:bg-white hover:text-[#8B7355] transition-all transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
                                                 >
-                                                    Buy Now
+                                                    <TranslatedText>Buy Now</TranslatedText>
                                                 </button>
                                                 <button
                                                     onClick={(e) => {

@@ -6,6 +6,8 @@ import TrustedBySection from '../../../components/common/TrustedBySection'
 import ExpertFormSection from '../../../components/common/ExpertFormSection'
 import BookingForm from '../../../components/common/BookingForm'
 import { murtiCollections } from '../../../data/murtiCollections'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 import headingImage from '../../../assets/house of marble/exprience/heading/Artisan.jpeg'
 import horizontalImage1 from '../../../assets/house of marble/exprience/horizontal/446d311a-f90e-4837-b736-3f8e6a5f4b2c.png'
 import horizontalImage2 from '../../../assets/house of marble/exprience/horizontal/SMT01780-Edit_6ebd2fd8-7aa4-4df4-b841-2cb2e362337e_large.jpeg'
@@ -112,6 +114,7 @@ const ExperienceCentrePage = ({
   onShowLocation,
   onShowBooking
 }) => {
+  const { getTranslatedText } = usePageTranslation()
   const [dynamicContent, setDynamicContent] = useState(null)
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5100/api'
 
@@ -205,7 +208,7 @@ const ExperienceCentrePage = ({
       <section className="relative w-full overflow-hidden">
         <img
           src={displayHeroImage}
-          alt="Experience Centre"
+          alt={getTranslatedText("Experience Centre")}
           className="w-full h-auto object-cover"
           style={{ display: 'block', width: '100%' }}
         />
@@ -215,10 +218,10 @@ const ExperienceCentrePage = ({
       <section className="w-full py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed italic" style={{ fontWeight: 400 }}>
-            {displayMainCaption}
+            <TranslatedText>{displayMainCaption}</TranslatedText>
           </p>
           <p className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed mt-6 italic" style={{ fontWeight: 400 }}>
-            {displaySubCaption}
+            <TranslatedText>{displaySubCaption}</TranslatedText>
           </p>
         </div>
       </section>
@@ -237,7 +240,7 @@ const ExperienceCentrePage = ({
                 <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group">
                   <img
                     src={item.image}
-                    alt={`Experience ${item.id}`}
+                    alt={getTranslatedText('Experience') + ` ${item.id}`}
                     className="w-full h-64 md:h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
@@ -247,7 +250,7 @@ const ExperienceCentrePage = ({
 
           <div className="max-w-5xl mx-auto py-8 text-center border-y border-[#8B7355]/20">
             <p className="text-lg md:text-xl lg:text-2xl text-[#8B7355] font-serif italic leading-relaxed">
-              {displayJourneyText}
+              <TranslatedText>{displayJourneyText}</TranslatedText>
             </p>
           </div>
 
@@ -257,13 +260,13 @@ const ExperienceCentrePage = ({
               <div className="w-full relative overflow-hidden rounded-lg shadow-lg">
                 <img
                   src={displayHorizontalImages[0].image}
-                  alt="Experience Centre"
+                  alt={getTranslatedText("Experience Centre")}
                   className="w-full h-auto object-cover"
                   style={{ maxHeight: '500px' }}
                 />
               </div>
               <FadeInCaption>
-                "{displayHorizontalImages[0].caption || 'Where the legacy of marble meets the soul of craftsmanship.'}"
+                "<TranslatedText>{displayHorizontalImages[0].caption || 'Where the legacy of marble meets the soul of craftsmanship.'}</TranslatedText>"
               </FadeInCaption>
             </div>
           )}
@@ -279,7 +282,7 @@ const ExperienceCentrePage = ({
                 <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group">
                   <img
                     src={item.image}
-                    alt={`Experience ${item.id}`}
+                    alt={getTranslatedText('Experience') + ` ${item.id}`}
                     className="w-full h-64 md:h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
@@ -293,13 +296,13 @@ const ExperienceCentrePage = ({
               <div className="w-full relative overflow-hidden rounded-lg shadow-lg">
                 <img
                   src={displayHorizontalImages[1].image}
-                  alt="Experience Centre"
+                  alt={getTranslatedText("Experience Centre")}
                   className="w-full h-auto object-cover"
                   style={{ maxHeight: '500px' }}
                 />
               </div>
               <FadeInCaption>
-                "{displayHorizontalImages[1].caption || 'Witness the intricate journey of stone transforming into spiritual art.'}"
+                "<TranslatedText>{displayHorizontalImages[1].caption || 'Witness the intricate journey of stone transforming into spiritual art.'}</TranslatedText>"
               </FadeInCaption>
             </div>
           )}
@@ -315,7 +318,7 @@ const ExperienceCentrePage = ({
                 <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group">
                   <img
                     src={item.image}
-                    alt={`Experience ${item.id}`}
+                    alt={getTranslatedText('Experience') + ` ${item.id}`}
                     className="w-full h-64 md:h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
@@ -326,15 +329,15 @@ const ExperienceCentrePage = ({
           {/* The Journey of Creation - Text Section */}
           <div className="max-w-5xl mx-auto px-4 py-16 md:py-24 text-center">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-4">
-              The Journey of Creation
+              <TranslatedText>The Journey of Creation</TranslatedText>
             </h2>
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-10 uppercase tracking-[0.2em]">
-              Welcome to Our Experience Center
+              <TranslatedText>Welcome to Our Experience Center</TranslatedText>
             </h3>
 
             <div className="space-y-8 text-gray-700 leading-relaxed text-lg md:text-xl font-light whitespace-pre-line">
               <p className="max-w-4xl mx-auto">
-                {displayJourneyText}
+                <TranslatedText>{displayJourneyText}</TranslatedText>
               </p>
             </div>
 
@@ -368,7 +371,7 @@ const ExperienceCentrePage = ({
                       <div className="relative w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105 border-4 border-white ring-2 ring-[#8B7355]/20">
                         <img
                           src={item.image}
-                          alt={item.name}
+                          alt={getTranslatedText(item.name)}
                           className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
                         />
                       </div>
@@ -390,13 +393,13 @@ const ExperienceCentrePage = ({
               <div className="w-full relative overflow-hidden rounded-lg shadow-lg">
                 <img
                   src={displayHorizontalImages[2].image}
-                  alt="Experience Centre"
+                  alt={getTranslatedText("Experience Centre")}
                   className="w-full h-auto object-cover"
                   style={{ maxHeight: '500px' }}
                 />
               </div>
               <FadeInCaption>
-                "{displayHorizontalImages[2].caption || 'Experience the grandeur of timeless designs and unparalleled quality.'}"
+                "<TranslatedText>{displayHorizontalImages[2].caption || 'Experience the grandeur of timeless designs and unparalleled quality.'}</TranslatedText>"
               </FadeInCaption>
             </div>
           )}
@@ -408,7 +411,7 @@ const ExperienceCentrePage = ({
                 <div key={item.id} className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group">
                   <img
                     src={item.image}
-                    alt={`Experience ${item.id}`}
+                    alt={getTranslatedText('Experience') + ` ${item.id}`}
                     className="w-full h-64 md:h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>

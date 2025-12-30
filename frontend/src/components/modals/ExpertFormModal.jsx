@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BUDGET_OPTIONS, TIMELINE_OPTIONS } from '../../utils/constants'
+import TranslatedText from '../TranslatedText'
+import { usePageTranslation } from '../../hooks/usePageTranslation'
 
 const ExpertFormModal = ({ isOpen, onClose }) => {
   const [formStep, setFormStep] = useState(1)
@@ -17,6 +19,18 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
     designReferences: null
   })
 
+  // Define dynamic texts (placeholders, alerts)
+  const DYNAMIC_TEXTS = [
+    'Full Name *',
+    'Email Address *',
+    'Phone number *',
+    'City *',
+    'Please share a bit more about your needs',
+    'Thank you! Your form has been submitted.'
+  ]
+
+  const { getTranslatedText } = usePageTranslation(DYNAMIC_TEXTS, 'en')
+
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -32,7 +46,7 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Form submitted:', formData)
-    alert('Thank you! Your form has been submitted.')
+    alert(getTranslatedText('Thank you! Your form has been submitted.'))
     setFormStep(1)
     setFormData({
       type: 'DOMESTIC',
@@ -55,20 +69,20 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
   return (
     <>
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black bg-opacity-50 z-[200] transition-opacity"
         onClick={onClose}
       ></div>
-      
+
       {/* Modal */}
       <div className="fixed inset-0 z-[210] flex items-center justify-center p-4 pointer-events-none">
-        <div 
+        <div
           className="bg-white rounded-xl md:rounded-2xl shadow-2xl w-full max-w-[340px] md:max-w-[380px] flex flex-col backdrop-blur-sm bg-white/95 pointer-events-auto transform transition-all duration-300"
           style={{ maxHeight: '90vh' }}
         >
           {/* Header with Close Button */}
           <div className="flex items-center justify-between p-3 md:p-4 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0 rounded-t-xl md:rounded-t-2xl">
-            <h3 className="text-base md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>
+            <h3 className="text-base md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}><TranslatedText>Talk to Our Expert</TranslatedText></h3>
             <div className="flex items-center gap-2">
               <span className="text-xs font-semibold px-2 py-1 rounded-full bg-[#8B7355]/10" style={{ color: '#8B7355' }}>{formStep}/2</span>
               <button
@@ -93,10 +107,10 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                       name="type"
                       value="DOMESTIC"
                       checked={formData.type === 'DOMESTIC'}
-                      onChange={(e) => setFormData({...formData, type: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-3 h-3 accent-amber-600"
                     />
-                    <span className="text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
+                    <span className="text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}><TranslatedText>DOMESTIC</TranslatedText></span>
                   </label>
                   <label className="flex items-center gap-1.5 cursor-pointer">
                     <input
@@ -104,33 +118,33 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                       name="type"
                       value="INTERNATIONAL"
                       checked={formData.type === 'INTERNATIONAL'}
-                      onChange={(e) => setFormData({...formData, type: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-3 h-3 accent-amber-600"
                     />
-                    <span className="text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
+                    <span className="text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}><TranslatedText>INTERNATIONAL</TranslatedText></span>
                   </label>
                 </div>
 
                 <input
                   type="text"
-                  placeholder="Full Name *"
+                  placeholder={getTranslatedText("Full Name *")}
                   value={formData.fullName}
-                  onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
                   required
                 />
 
                 <input
                   type="email"
-                  placeholder="Email Address *"
+                  placeholder={getTranslatedText("Email Address *")}
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
                   required
                 />
 
                 <div>
-                  <label className="block text-xs font-medium mb-1">Phone number</label>
+                  <label className="block text-xs font-medium mb-1"><TranslatedText>Phone number</TranslatedText></label>
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                     <div className="flex items-center gap-1 px-2 bg-gray-50 border-r">
                       <span className="text-sm">🇮🇳</span>
@@ -138,9 +152,9 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                     </div>
                     <input
                       type="tel"
-                      placeholder="Phone number *"
+                      placeholder={getTranslatedText("Phone number *")}
                       value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="flex-1 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-600"
                     />
                   </div>
@@ -148,15 +162,15 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
 
                 <input
                   type="text"
-                  placeholder="City *"
+                  placeholder={getTranslatedText("City *")}
                   value={formData.city}
-                  onChange={(e) => setFormData({...formData, city: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                   className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
                   required
                 />
 
                 <div>
-                  <label className="block text-xs font-medium mb-1.5">Tell us about yourself *</label>
+                  <label className="block text-xs font-medium mb-1.5"><TranslatedText>Tell us about yourself *</TranslatedText></label>
                   <div className="space-y-1.5">
                     <label className="flex items-start gap-1.5 cursor-pointer">
                       <input
@@ -164,11 +178,11 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                         name="aboutYourself"
                         value="homeowner"
                         checked={formData.aboutYourself === 'homeowner'}
-                        onChange={(e) => setFormData({...formData, aboutYourself: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
                         className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                         required
                       />
-                      <span className="text-xs leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
+                      <span className="text-xs leading-relaxed"><TranslatedText>I am a homeowner looking for a pooja unit or pooja room</TranslatedText></span>
                     </label>
                     <label className="flex items-start gap-1.5 cursor-pointer">
                       <input
@@ -176,11 +190,11 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                         name="aboutYourself"
                         value="designer"
                         checked={formData.aboutYourself === 'designer'}
-                        onChange={(e) => setFormData({...formData, aboutYourself: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, aboutYourself: e.target.value })}
                         className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                         required
                       />
-                      <span className="text-xs leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
+                      <span className="text-xs leading-relaxed"><TranslatedText>I am an interior designer/consultant seeking solutions for my client</TranslatedText></span>
                     </label>
                   </div>
                 </div>
@@ -192,13 +206,13 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                   onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                   onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
                 >
-                  NEXT →
+                  <TranslatedText>NEXT</TranslatedText> →
                 </button>
               </form>
             ) : (
               <form className="space-y-2.5" onSubmit={handleSubmit}>
                 <div>
-                  <label className="block text-xs font-bold mb-1.5">What are you looking for? *</label>
+                  <label className="block text-xs font-bold mb-1.5"><TranslatedText>What are you looking for? *</TranslatedText></label>
                   <div className="space-y-1.5">
                     <label className="flex items-center gap-1.5 cursor-pointer">
                       <input
@@ -206,11 +220,11 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                         name="lookingFor"
                         value="singular"
                         checked={formData.lookingFor === 'singular'}
-                        onChange={(e) => setFormData({...formData, lookingFor: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
                         className="w-3 h-3 accent-amber-600"
                         required
                       />
-                      <span className="text-xs">Singular Marble Mandir Unit</span>
+                      <span className="text-xs"><TranslatedText>Singular Marble Mandir Unit</TranslatedText></span>
                     </label>
                     <label className="flex items-center gap-1.5 cursor-pointer">
                       <input
@@ -218,17 +232,17 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                         name="lookingFor"
                         value="complete"
                         checked={formData.lookingFor === 'complete'}
-                        onChange={(e) => setFormData({...formData, lookingFor: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
                         className="w-3 h-3 accent-amber-600"
                         required
                       />
-                      <span className="text-xs">Complete Pooja Room Solution</span>
+                      <span className="text-xs"><TranslatedText>Complete Pooja Room Solution</TranslatedText></span>
                     </label>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold mb-1.5">What is your estimated budget? *</label>
+                  <label className="block text-xs font-bold mb-1.5"><TranslatedText>What is your estimated budget? *</TranslatedText></label>
                   <div className="space-y-1.5">
                     {BUDGET_OPTIONS.map((budget) => (
                       <label key={budget} className="flex items-center gap-1.5 cursor-pointer">
@@ -237,18 +251,18 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                           name="budget"
                           value={budget}
                           checked={formData.budget === budget}
-                          onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                           className="w-3 h-3 accent-amber-600"
                           required
                         />
-                        <span className="text-xs">{budget}</span>
+                        <span className="text-xs"><TranslatedText>{budget}</TranslatedText></span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold mb-1.5">What is your timeline for the project? *</label>
+                  <label className="block text-xs font-bold mb-1.5"><TranslatedText>What is your timeline for the project? *</TranslatedText></label>
                   <div className="space-y-1.5">
                     {TIMELINE_OPTIONS.map((timeline) => (
                       <label key={timeline} className="flex items-center gap-1.5 cursor-pointer">
@@ -257,20 +271,20 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                           name="timeline"
                           value={timeline}
                           checked={formData.timeline === timeline}
-                          onChange={(e) => setFormData({...formData, timeline: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
                           className="w-3 h-3 accent-amber-600"
                           required
                         />
-                        <span className="text-xs">{timeline}</span>
+                        <span className="text-xs"><TranslatedText>{timeline}</TranslatedText></span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <textarea
-                  placeholder="Please share a bit more about your needs"
+                  placeholder={getTranslatedText("Please share a bit more about your needs")}
                   value={formData.additionalInfo}
-                  onChange={(e) => setFormData({...formData, additionalInfo: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
                   rows={3}
                   className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600 resize-none"
                 />
@@ -281,7 +295,7 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                     id="designReferences"
                     accept="image/*,.pdf"
                     multiple
-                    onChange={(e) => setFormData({...formData, designReferences: e.target.files})}
+                    onChange={(e) => setFormData({ ...formData, designReferences: e.target.files })}
                     className="hidden"
                   />
                   <label
@@ -291,11 +305,11 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                     onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                     onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
                   >
-                    UPLOAD DESIGN REFERENCES
+                    <TranslatedText>UPLOAD DESIGN REFERENCES</TranslatedText>
                   </label>
                   {formData.designReferences && formData.designReferences.length > 0 && (
                     <p className="text-xs text-gray-600 mt-1">
-                      {formData.designReferences.length} file(s) selected
+                      {formData.designReferences.length} <TranslatedText>file(s) selected</TranslatedText>
                     </p>
                   )}
                 </div>
@@ -313,7 +327,7 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                       e.target.style.backgroundColor = 'white'
                     }}
                   >
-                    BACK
+                    <TranslatedText>BACK</TranslatedText>
                   </button>
                   <button
                     type="submit"
@@ -322,7 +336,7 @@ const ExpertFormModal = ({ isOpen, onClose }) => {
                     onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                     onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
                   >
-                    SUBMIT
+                    <TranslatedText>SUBMIT</TranslatedText>
                   </button>
                 </div>
               </form>

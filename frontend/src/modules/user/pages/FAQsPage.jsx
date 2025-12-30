@@ -6,6 +6,8 @@ import TrustedBySection from '../../../components/common/TrustedBySection'
 import footerBackgroundImage from '../../../assets/footer page background/Beige Pink Elegant Watercolor Background Notes Planner.png'
 import { indianLocations, internationalLocations, formatLocationName } from '../../../data/locations'
 import { fetchFAQs, fetchAllFAQs } from '../../../utils/faqUtils'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const FAQsPage = ({
   onShowSidebar,
@@ -17,6 +19,7 @@ const FAQsPage = ({
   onShowLocation,
   onShowBooking
 }) => {
+  const { getTranslatedText } = usePageTranslation()
   const [selectedPage, setSelectedPage] = useState('all')
   const [selectedLocation, setSelectedLocation] = useState('Mumbai')
   const [expandedFaq, setExpandedFaq] = useState(null)
@@ -26,18 +29,18 @@ const FAQsPage = ({
 
   // Get all locations for dropdown
   const allLocations = [
-    ...indianLocations.map(loc => formatLocationName(loc.name)),
-    ...internationalLocations.map(loc => loc.name)
+    ...indianLocations.map(loc => getTranslatedText(formatLocationName(loc.name))),
+    ...internationalLocations.map(loc => getTranslatedText(loc.name))
   ]
 
   // Get page options for dropdown
   const pageOptions = [
-    { key: 'all', name: 'All Pages' },
-    { key: 'how-it-works', name: 'How It Works' },
-    { key: 'murti', name: 'Murti' },
-    { key: 'dream-temple', name: 'Dream Temple' },
-    { key: 'ams-international', name: 'AMS International' },
-    { key: 'location', name: 'Location' }
+    { key: 'all', name: getTranslatedText('All Pages') },
+    { key: 'how-it-works', name: getTranslatedText('How It Works') },
+    { key: 'murti', name: getTranslatedText('Murti') },
+    { key: 'dream-temple', name: getTranslatedText('Dream Temple') },
+    { key: 'ams-international', name: getTranslatedText('AMS International') },
+    { key: 'location', name: getTranslatedText('Location') }
   ]
 
   // Load FAQs from backend when filter changes
@@ -69,7 +72,7 @@ const FAQsPage = ({
         setDisplayFAQs(faqsData)
       } catch (err) {
         console.error('Error loading FAQs:', err)
-        setError('Failed to load FAQs. Please try again later.')
+        setError(getTranslatedText('Failed to load FAQs. Please try again later.'))
         setDisplayFAQs([])
       } finally {
         setLoading(false)
@@ -108,7 +111,7 @@ const FAQsPage = ({
           {/* Page Header */}
           <div className="text-center mb-10 md:mb-12">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-4 tracking-wide font-bold">
-              Frequently Asked Questions
+              <TranslatedText>Frequently Asked Questions</TranslatedText>
             </h1>
             <div className="w-24 h-1 rounded-full mx-auto" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -118,7 +121,7 @@ const FAQsPage = ({
             <div className="w-full md:w-auto flex flex-col md:flex-row gap-4">
               <div className="w-full md:w-auto">
                 <label className="block text-sm md:text-base font-semibold text-gray-700 mb-2">
-                  Filter by Page:
+                  <TranslatedText>Filter by Page:</TranslatedText>
                 </label>
                 <select
                   value={selectedPage}
@@ -139,7 +142,7 @@ const FAQsPage = ({
               {selectedPage === 'location' && (
                 <div className="w-full md:w-auto">
                   <label className="block text-sm md:text-base font-semibold text-gray-700 mb-2">
-                    Select Location:
+                    <TranslatedText>Select Location:</TranslatedText>
                   </label>
                   <select
                     value={selectedLocation}
@@ -161,8 +164,8 @@ const FAQsPage = ({
             </div>
             <div className="text-sm md:text-base text-gray-600">
               {loading
-                ? 'Loading FAQs...'
-                : `Showing ${displayFAQs.length} question${displayFAQs.length !== 1 ? 's' : ''}`}
+                ? <TranslatedText>Loading FAQs...</TranslatedText>
+                : <><TranslatedText>Showing</TranslatedText> {displayFAQs.length} <TranslatedText>{displayFAQs.length !== 1 ? 'questions' : 'question'}</TranslatedText></>}
             </div>
           </div>
 
@@ -176,11 +179,11 @@ const FAQsPage = ({
           <div className="space-y-3">
             {loading ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg">Loading FAQs...</p>
+                <p className="text-gray-600 text-base md:text-lg"><TranslatedText>Loading FAQs...</TranslatedText></p>
               </div>
             ) : displayFAQs.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg">No FAQs found for the selected page.</p>
+                <p className="text-gray-600 text-base md:text-lg"><TranslatedText>No FAQs found for the selected page.</TranslatedText></p>
               </div>
             ) : (
               displayFAQs.map((faq, index) => {
@@ -209,7 +212,7 @@ const FAQsPage = ({
                           </span>
                           {selectedPage === 'all' && faq.pageName && (
                             <span className="text-xs text-gray-500 mt-1 block">
-                              From: {faq.pageName}
+                              <TranslatedText>From</TranslatedText>: {faq.pageName}
                             </span>
                           )}
                         </div>

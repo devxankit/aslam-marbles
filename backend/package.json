@@ -9,6 +9,7 @@
     "seed:testimonials": "node scripts/seedTestimonials.js",
     "seed:blogs": "node scripts/seedBlogs.js",
     "seed:artists": "node scripts/seedArtists.js",
+    "warm:translation-cache": "node scripts/warmTranslationCache.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

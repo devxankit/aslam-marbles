@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Header from '../layout/Header'
 import heroVideo from '../../assets/video/WhatsApp Video 2025-12-06 at 10.52.27 AM.mp4'
 import { fetchHomePageData } from '../../utils/homePageUtils'
+import TranslatedText from '../TranslatedText'
 
 const HeroSection = ({ onShowSidebar, onShowProjects, onShowCreations, onShowServices, onShowHowItWorks }) => {
   const [heroData, setHeroData] = useState({
@@ -64,13 +65,13 @@ const HeroSection = ({ onShowSidebar, onShowProjects, onShowCreations, onShowSer
       <div className="absolute inset-0 flex items-center justify-center z-20">
         <div className="text-center px-6 max-w-4xl">
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-3 md:mb-6 leading-[1.1] md:leading-tight">
-            {heroData.mainHeading}
+            <TranslatedText>{heroData.mainHeading}</TranslatedText>
           </h1>
           <p className="text-white text-sm sm:text-base md:text-xl lg:text-2xl mb-2 md:mb-4 font-light tracking-wide uppercase">
-            {heroData.subHeading}
+            <TranslatedText>{heroData.subHeading}</TranslatedText>
           </p>
           <p className="text-[#D4AF37] text-xs sm:text-sm md:text-lg lg:text-xl font-medium tracking-widest uppercase">
-            {heroData.supplierText}
+            <TranslatedText>{heroData.supplierText}</TranslatedText>
           </p>
         </div>
       </div>

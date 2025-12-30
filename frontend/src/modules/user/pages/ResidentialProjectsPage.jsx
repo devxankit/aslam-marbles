@@ -5,6 +5,7 @@ import Footer from '../../../components/layout/Footer';
 import FloatingButtons from '../../../components/common/FloatingButtons';
 import { fetchResidentialProjectsData } from '../../../utils/residentialProjectsUtils';
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay';
+import TranslatedText from '../../../components/TranslatedText';
 
 const ResidentialProjectsPage = ({
   onShowSidebar,
@@ -69,7 +70,7 @@ const ResidentialProjectsPage = ({
         {/* Background Image */}
         {loading ? (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-            <p className="text-gray-600">Loading...</p>
+            <p className="text-gray-600"><TranslatedText>Loading...</TranslatedText></p>
           </div>
         ) : residentialData?.heroImage?.url ? (
           <img
@@ -80,7 +81,7 @@ const ResidentialProjectsPage = ({
           />
         ) : (
           <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-            <p className="text-gray-600">No hero image available</p>
+            <p className="text-gray-600"><TranslatedText>No hero image available</TranslatedText></p>
           </div>
         )}
 
@@ -99,7 +100,7 @@ const ResidentialProjectsPage = ({
             onClick={() => setShowMobileForm(true)}
             className="md:hidden mt-4 bg-[#8B7355] text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wide shadow-lg border border-[#8B7355]/50 animate-pulse hover:animate-none"
           >
-            Talk to Our Expert
+            <TranslatedText>Talk to Our Expert</TranslatedText>
           </button>
         </div>
 
@@ -124,11 +125,11 @@ const ResidentialProjectsPage = ({
           {/* Images Grid */}
           {loading ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">Loading gallery...</p>
+              <p className="text-gray-600 text-lg"><TranslatedText>Loading gallery...</TranslatedText></p>
             </div>
           ) : residentialImages.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">No projects available at the moment.</p>
+              <p className="text-gray-600 text-lg"><TranslatedText>No projects available at the moment.</TranslatedText></p>
             </div>
           ) : (
             <div className="grid grid-cols-3 gap-2 md:gap-8">
@@ -171,7 +172,7 @@ const ResidentialProjectsPage = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm md:hidden">
           <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-in fade-in zoom-in duration-200">
             <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/50">
-              <h3 className="text-sm font-bold uppercase tracking-wide text-[#8B7355]">Talk to Expert</h3>
+              <h3 className="text-sm font-bold uppercase tracking-wide text-[#8B7355]"><TranslatedText>Talk to Expert</TranslatedText></h3>
               <button onClick={() => setShowMobileForm(false)} className="p-1 rounded-full hover:bg-gray-200 transition-colors" aria-label="Close modal">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

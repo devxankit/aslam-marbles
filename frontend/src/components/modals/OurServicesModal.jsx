@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { services } from '../../data/services'
+import TranslatedText from '../TranslatedText'
 
 const OurServicesModal = ({ isOpen, onClose }) => {
   const [selectedService, setSelectedService] = useState('AMS International')
@@ -20,7 +21,7 @@ const OurServicesModal = ({ isOpen, onClose }) => {
           style={{ animation: 'slideUp 0.5s ease-out' }}
         >
           <div className="flex items-center justify-between p-4 md:p-6 border-b border-gray-200">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-black">OUR SERVICES</h2>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-black"><TranslatedText>OUR SERVICES</TranslatedText></h2>
             <button
               onClick={onClose}
               className="text-gray-500 hover:text-gray-800 text-3xl font-bold transition-colors w-8 h-8 flex items-center justify-center"
@@ -43,7 +44,7 @@ const OurServicesModal = ({ isOpen, onClose }) => {
                         onClick={onClose}
                         className="block w-full text-center px-6 py-4 rounded-xl transition-all duration-300 text-gray-700 hover:bg-[#8B7355]/5 hover:text-[#8B7355] font-serif italic text-xl md:text-2xl border border-transparent hover:border-[#8B7355]/20"
                       >
-                        {service.name}
+                        <TranslatedText>{service.name}</TranslatedText>
                       </Link>
                     </div>
                   )

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import TranslatedText from '../TranslatedText'
 // Communal imports
 import communalImg1 from '../../assets/communal/1733300550903.jpeg'
 import communalImg2 from '../../assets/communal/wmremove-transformed.jpeg'
@@ -39,7 +40,7 @@ const ExploreProjectsSection = () => {
         {/* Compact Heading */}
         <div className="text-center mb-6 md:mb-12">
           <h2 className="text-xl md:text-5xl font-serif text-[#8B7355] italic mb-3 uppercase tracking-tight md:tracking-wider">
-            Explore Our Projects
+            <TranslatedText>Explore Our Projects</TranslatedText>
           </h2>
           <div className="w-12 md:w-20 h-0.5 mx-auto bg-[#8B7355]/30"></div>
         </div>
@@ -55,7 +56,7 @@ const ExploreProjectsSection = () => {
                 : 'bg-white text-gray-800 border-gray-200 hover:bg-gray-50 hover:border-[#8B7355]/50'
                 }`}
             >
-              {cat}
+              <TranslatedText>{cat}</TranslatedText>
             </button>
           ))}
         </div>

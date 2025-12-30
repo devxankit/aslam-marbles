@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { COMPANY_INFO, FOOTER_LINKS, INDIAN_CITIES, INTERNATIONAL_CITIES } from '../../utils/constants'
+import TranslatedText from '../TranslatedText'
 import Logo from './Logo'
 
 const Footer = () => {
@@ -46,13 +47,13 @@ const Footer = () => {
 
             {/* QUICK LINKS Column */}
             <div>
-              <h3 className="text-[11px] md:text-base lg:text-xl font-bold uppercase mb-1.5 md:mb-3 lg:mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-1 md:pb-2">QUICK LINKS</h3>
+              <h3 className="text-[11px] md:text-base lg:text-xl font-bold uppercase mb-1.5 md:mb-3 lg:mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-1 md:pb-2"><TranslatedText>QUICK LINKS</TranslatedText></h3>
               <ul className="space-y-0.5 md:space-y-1 lg:space-y-2">
                 {FOOTER_LINKS.quickLinks.slice(0, 5).map((link, index) => (
                   <li key={index}>
                     <Link to={link.href} className="text-[10px] md:text-xs lg:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-1.5 md:gap-2 group leading-tight">
                       <span className="w-1 h-1 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100"></span>
-                      <span>{link.label}</span>
+                      <span><TranslatedText>{link.label}</TranslatedText></span>
                     </Link>
                   </li>
                 ))}
@@ -61,13 +62,13 @@ const Footer = () => {
 
             {/* SERVICES Column */}
             <div>
-              <h3 className="text-[11px] md:text-base lg:text-xl font-bold uppercase mb-1.5 md:mb-3 lg:mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-1 md:pb-2">SERVICES</h3>
+              <h3 className="text-[11px] md:text-base lg:text-xl font-bold uppercase mb-1.5 md:mb-3 lg:mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-1 md:pb-2"><TranslatedText>SERVICES</TranslatedText></h3>
               <ul className="space-y-0.5 md:space-y-1 lg:space-y-2">
                 {FOOTER_LINKS.houseOfTilak.slice(0, 5).map((link, index) => (
                   <li key={index}>
                     <Link to={link.href} className="text-[10px] md:text-xs lg:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-1.5 md:gap-2 group leading-tight">
                       <span className="w-1 h-1 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100"></span>
-                      <span>{link.label}</span>
+                      <span><TranslatedText>{link.label}</TranslatedText></span>
                     </Link>
                   </li>
                 ))}
@@ -76,13 +77,13 @@ const Footer = () => {
 
             {/* LEGAL Column */}
             <div>
-              <h3 className="text-[11px] md:text-base lg:text-xl font-bold uppercase mb-1.5 md:mb-3 lg:mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-1 md:pb-2">LEGAL</h3>
+              <h3 className="text-[11px] md:text-base lg:text-xl font-bold uppercase mb-1.5 md:mb-3 lg:mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-1 md:pb-2"><TranslatedText>LEGAL</TranslatedText></h3>
               <ul className="space-y-0.5 md:space-y-1 lg:space-y-2">
                 {FOOTER_LINKS.legal.slice(0, 5).map((link, index) => (
                   <li key={index}>
                     <Link to={link.href} className="text-[10px] md:text-xs lg:text-base text-gray-300 hover:text-[#8B7355] transition-all duration-300 flex items-center gap-1.5 md:gap-2 group leading-tight">
                       <span className="w-1 h-1 bg-[#8B7355] rounded-full opacity-0 group-hover:opacity-100"></span>
-                      <span>{link.label}</span>
+                      <span><TranslatedText>{link.label}</TranslatedText></span>
                     </Link>
                   </li>
                 ))}
@@ -91,7 +92,7 @@ const Footer = () => {
 
             {/* SOCIALS Column */}
             <div className="col-span-1 border-t border-gray-800 lg:border-none pt-2 md:pt-4 lg:pt-0">
-              <h3 className="text-[11px] md:text-base lg:text-xl font-bold uppercase mb-1.5 md:mb-3 lg:mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-1 md:pb-2">CONNECT</h3>
+              <h3 className="text-[11px] md:text-base lg:text-xl font-bold uppercase mb-1.5 md:mb-3 lg:mb-4 text-[#8B7355] border-b border-[#8B7355]/30 pb-1 md:pb-2"><TranslatedText>CONNECT</TranslatedText></h3>
               <div className="flex items-center gap-2 md:gap-2.5 lg:gap-3">
                 {/* Social Icons - Very compact */}
                 <a href="https://www.facebook.com/share/1BvePFux9x/" target="_blank" rel="noopener noreferrer" className="w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#8B7355] transition-all">
@@ -122,11 +123,11 @@ const Footer = () => {
                 <svg className="w-4 h-4 text-[#8B7355]" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
-                <h3 className="text-xs md:text-sm font-bold uppercase text-[#8B7355]">LOCATIONS</h3>
+                <h3 className="text-xs md:text-sm font-bold uppercase text-[#8B7355]"><TranslatedText>LOCATIONS</TranslatedText></h3>
               </div>
               <div className="space-y-3">
                 <div>
-                  <p className="text-[10px] md:text-sm mb-1 font-semibold text-gray-400">Across India:</p>
+                  <p className="text-[10px] md:text-sm mb-1 font-semibold text-gray-400"><TranslatedText>Across India:</TranslatedText></p>
                   <div className="text-[9px] md:text-sm text-gray-500 flex flex-wrap gap-2 md:gap-3 pb-1 mb-1">
                     {INDIAN_CITIES.map((city, index) => (
                       <Link
@@ -134,7 +135,7 @@ const Footer = () => {
                         to={`/location/${city.toLowerCase().replace(/\s+/g, '-')}`}
                         className="px-2 py-1 bg-gray-900/50 rounded hover:text-[#8B7355] transition-colors whitespace-nowrap border border-white/5"
                       >
-                        {city}
+                        <TranslatedText>{city}</TranslatedText>
                       </Link>
                     ))}
                   </div>
@@ -152,14 +153,14 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-xs md:text-sm text-center md:text-left text-gray-400">
-              All Rights Reserved @2025 <span className="text-[#8B7355] font-semibold">Aslam Marble Suppliers</span>
+              <TranslatedText>All Rights Reserved @2025</TranslatedText> <span className="text-[#8B7355] font-semibold"><TranslatedText>Aslam Marble Suppliers</TranslatedText></span>
             </p>
             <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400">
-              <span>Made with</span>
+              <span><TranslatedText>Made with</TranslatedText></span>
               <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
               </svg>
-              <span>in India</span>
+              <span><TranslatedText>in India</TranslatedText></span>
             </div>
           </div>
         </div>
@@ -178,65 +179,65 @@ const FooterContent = () => {
         {/* Welcome Section */}
         <div className="mb-4">
           <h1 className="text-lg md:text-xl lg:text-2xl font-bold mb-2 text-center md:text-left">
-            Marble Temples for Home – Welcome to Aslam Marble Suppliers
+            <TranslatedText>Marble Temples for Home – Welcome to Aslam Marble Suppliers</TranslatedText>
           </h1>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-            At Aslam Marble Suppliers, we offer a remarkable variety of marble temples for home, created with contemporary craftsmanship that beautifully enhances the charm of traditional home décor.
+            <TranslatedText>At Aslam Marble Suppliers, we offer a remarkable variety of marble temples for home, created with contemporary craftsmanship that beautifully enhances the charm of traditional home décor.</TranslatedText>
           </p>
         </div>
 
         {/* Temple Types */}
         <div className="space-y-3 mb-4">
           <div className="bg-gray-800/50 p-3 rounded-lg border-l-4 border-[#8B7355]">
-            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Large Marble Temple for Home</h2>
+            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Large Marble Temple for Home</TranslatedText></h2>
             <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-              Our large marble temple collection is designed to be a magnificent spiritual focal point for spacious homes. These temples act as impressive shrines that elevate the devotion and elegance of any space.
+              <TranslatedText>Our large marble temple collection is designed to be a magnificent spiritual focal point for spacious homes. These temples act as impressive shrines that elevate the devotion and elegance of any space.</TranslatedText>
             </p>
           </div>
 
           <div className="bg-gray-800/50 p-3 rounded-lg border-l-4 border-[#8B7355]">
-            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Stone Temple for Home</h2>
+            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Stone Temple for Home</TranslatedText></h2>
             <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-              This thoughtfully handcrafted stone temple blends durability with aesthetic appeal, bringing a classic touch of traditional artistry into your living environment.
+              <TranslatedText>This thoughtfully handcrafted stone temple blends durability with aesthetic appeal, bringing a classic touch of traditional artistry into your living environment.</TranslatedText>
             </p>
           </div>
 
           <div className="bg-gray-800/50 p-3 rounded-lg border-l-4 border-[#8B7355]">
-            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Custom Marble Temple for Home</h2>
+            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Custom Marble Temple for Home</TranslatedText></h2>
             <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-              Our customized Hindu temple designs for home allow you to tailor your puja area based on your unique space and personal preferences, creating a truly personalized and meaningful worship experience.
+              <TranslatedText>Our customized Hindu temple designs for home allow you to tailor your puja area based on your unique space and personal preferences, creating a truly personalized and meaningful worship experience.</TranslatedText>
             </p>
           </div>
 
           <div className="bg-gray-800/50 p-3 rounded-lg border-l-4 border-[#8B7355]">
-            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Jain Marble Temple for Home</h2>
+            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Jain Marble Temple for Home</TranslatedText></h2>
             <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-              A seamless fusion of grace and devotion, our Jain Marble Temples reflect traditional Jain architectural elements while fulfilling essential spiritual needs within your home.
+              <TranslatedText>A seamless fusion of grace and devotion, our Jain Marble Temples reflect traditional Jain architectural elements while fulfilling essential spiritual needs within your home.</TranslatedText>
             </p>
           </div>
 
           <div className="bg-gray-800/50 p-3 rounded-lg border-l-4 border-[#8B7355]">
-            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Readymade Temple for Home</h2>
+            <h2 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Readymade Temple for Home</TranslatedText></h2>
             <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-              Our ready-to-install marble temples provide both beauty and convenience, allowing you to effortlessly set up a serene and sacred corner in your home.
+              <TranslatedText>Our ready-to-install marble temples provide both beauty and convenience, allowing you to effortlessly set up a serene and sacred corner in your home.</TranslatedText>
             </p>
           </div>
         </div>
 
         {/* Key Features */}
         <div className="mb-4">
-          <h2 className="text-base md:text-lg font-bold mb-2 text-center md:text-left">Key Features of Our Temples</h2>
+          <h2 className="text-base md:text-lg font-bold mb-2 text-center md:text-left"><TranslatedText>Key Features of Our Temples</TranslatedText></h2>
           <div className="grid md:grid-cols-2 gap-3">
             <div className="bg-gray-800/30 p-3 rounded-lg">
-              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Spiritual Ambience</h3>
+              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Spiritual Ambience</TranslatedText></h3>
               <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-                We take exceptional care to ensure that each temple radiates a peaceful and uplifting atmosphere, ideal for prayer and meditation — especially in our big-size marble temples for home.
+                <TranslatedText>We take exceptional care to ensure that each temple radiates a peaceful and uplifting atmosphere, ideal for prayer and meditation — especially in our big-size marble temples for home.</TranslatedText>
               </p>
             </div>
             <div className="bg-gray-800/30 p-3 rounded-lg">
-              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Customization Options</h3>
+              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Customization Options</TranslatedText></h3>
               <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-                From simple and minimal designs to intricate and grand Hindu temple layouts, we provide complete customization based on your specific requirements.
+                <TranslatedText>From simple and minimal designs to intricate and grand Hindu temple layouts, we provide complete customization based on your specific requirements.</TranslatedText>
               </p>
             </div>
           </div>
@@ -244,30 +245,30 @@ const FooterContent = () => {
 
         {/* Popular Choices */}
         <div className="mb-4">
-          <h2 className="text-base md:text-lg font-bold mb-2 text-center md:text-left">Popular Choices</h2>
+          <h2 className="text-base md:text-lg font-bold mb-2 text-center md:text-left"><TranslatedText>Popular Choices</TranslatedText></h2>
           <div className="grid md:grid-cols-2 gap-3">
             <div className="bg-gray-800/30 p-3 rounded-lg">
-              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">White Marble Mandir for Home</h3>
+              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>White Marble Mandir for Home</TranslatedText></h3>
               <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-                The pure white design exudes simplicity, calmness, and elegance, making it a perfect match for any modern or traditional home.
+                <TranslatedText>The pure white design exudes simplicity, calmness, and elegance, making it a perfect match for any modern or traditional home.</TranslatedText>
               </p>
             </div>
             <div className="bg-gray-800/30 p-3 rounded-lg">
-              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Big Mandir for Home</h3>
+              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Big Mandir for Home</TranslatedText></h3>
               <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-                A bold and striking option, our large marble mandirs add an element of grandeur and joyful charm to more open and expressive spaces.
+                <TranslatedText>A bold and striking option, our large marble mandirs add an element of grandeur and joyful charm to more open and expressive spaces.</TranslatedText>
               </p>
             </div>
             <div className="bg-gray-800/30 p-3 rounded-lg">
-              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Marble Mandir for Home</h3>
+              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Marble Mandir for Home</TranslatedText></h3>
               <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-                A seamless blend of traditional and contemporary aesthetics, our marble mandirs are ideal for daily worship and effortless home décor integration.
+                <TranslatedText>A seamless blend of traditional and contemporary aesthetics, our marble mandirs are ideal for daily worship and effortless home décor integration.</TranslatedText>
               </p>
             </div>
             <div className="bg-gray-800/30 p-3 rounded-lg">
-              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Luxury Marble Mandir for Home</h3>
+              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Luxury Marble Mandir for Home</TranslatedText></h3>
               <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-                For those seeking true magnificence, our premium marble temples create a stunning and deeply meditative environment within the home.
+                <TranslatedText>For those seeking true magnificence, our premium marble temples create a stunning and deeply meditative environment within the home.</TranslatedText>
               </p>
             </div>
           </div>
@@ -275,24 +276,24 @@ const FooterContent = () => {
 
         {/* Why Choose Aslam Marble Suppliers */}
         <div className="mb-4">
-          <h2 className="text-base md:text-lg font-bold mb-2 text-center md:text-left">Why Choose Aslam Marble Suppliers?</h2>
+          <h2 className="text-base md:text-lg font-bold mb-2 text-center md:text-left"><TranslatedText>Why Choose Aslam Marble Suppliers?</TranslatedText></h2>
           <div className="grid md:grid-cols-3 gap-3">
             <div className="bg-gray-800/30 p-3 rounded-lg text-center">
-              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Exceptional Craftsmanship</h3>
+              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Exceptional Craftsmanship</TranslatedText></h3>
               <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-                Every temple is crafted with precision and dedication, ensuring premium quality and exquisite detailing that consistently exceeds expectations.
+                <TranslatedText>Every temple is crafted with precision and dedication, ensuring premium quality and exquisite detailing that consistently exceeds expectations.</TranslatedText>
               </p>
             </div>
             <div className="bg-gray-800/30 p-3 rounded-lg text-center">
-              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Extensive Collection</h3>
+              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Extensive Collection</TranslatedText></h3>
               <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-                Whether you're looking for a simple home temple, a stone mandir, or a luxury marble shrine, we offer a complete range to match every style and need.
+                <TranslatedText>Whether you're looking for a simple home temple, a stone mandir, or a luxury marble shrine, we offer a complete range to match every style and need.</TranslatedText>
               </p>
             </div>
             <div className="bg-gray-800/30 p-3 rounded-lg text-center">
-              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]">Traditional Meets Modern</h3>
+              <h3 className="text-sm md:text-base font-bold mb-1 text-[#8B7355]"><TranslatedText>Traditional Meets Modern</TranslatedText></h3>
               <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-                Our designs strike the perfect balance between timeless spirituality and modern elegance, making each temple an artistic and meaningful addition to your home.
+                <TranslatedText>Our designs strike the perfect balance between timeless spirituality and modern elegance, making each temple an artistic and meaningful addition to your home.</TranslatedText>
               </p>
             </div>
           </div>
@@ -300,66 +301,66 @@ const FooterContent = () => {
 
         {/* Find Your Perfect Temple */}
         <div className="mb-4 bg-gradient-to-r from-[#8B7355]/20 to-transparent p-3 rounded-lg border border-[#8B7355]/30">
-          <h2 className="text-base md:text-lg font-bold mb-2 text-center md:text-left">Find Your Perfect Temple</h2>
+          <h2 className="text-base md:text-lg font-bold mb-2 text-center md:text-left"><TranslatedText>Find Your Perfect Temple</TranslatedText></h2>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-            Aslam Marble Suppliers offers one of the widest selections of marble pooja mandirs, from compact designs to grand home temple masterpieces. Whether you prefer a minimalistic home mandir or an elaborate marble structure, we have the ideal temple to elevate your sacred space. Explore our collection today and transform your home into a haven of serenity and devotion.
+            <TranslatedText>Aslam Marble Suppliers offers one of the widest selections of marble pooja mandirs, from compact designs to grand home temple masterpieces. Whether you prefer a minimalistic home mandir or an elaborate marble structure, we have the ideal temple to elevate your sacred space. Explore our collection today and transform your home into a haven of serenity and devotion.</TranslatedText>
           </p>
         </div>
 
         {/* Discover Timeless Elegance */}
         <div className="mb-4">
           <h2 className="text-base md:text-lg font-bold mb-2 text-center md:text-left">
-            Discover Timeless Elegance: Handcrafted Marble Temples for Your Sacred Space
+            <TranslatedText>Discover Timeless Elegance: Handcrafted Marble Temples for Your Sacred Space</TranslatedText>
           </h2>
         </div>
 
         {/* Finding the Perfect Marble Mandir Online */}
         <div className="mb-4 bg-gray-800/30 p-3 rounded-lg">
-          <h2 className="text-sm md:text-base font-bold mb-2 text-[#8B7355]">Finding the Perfect Marble Mandir Online</h2>
+          <h2 className="text-sm md:text-base font-bold mb-2 text-[#8B7355]"><TranslatedText>Finding the Perfect Marble Mandir Online</TranslatedText></h2>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300 mb-2">
-            Searching for the ideal marble mandir online can be overwhelming, with so many options that don't always deliver the quality your sacred corner deserves.
+            <TranslatedText>Searching for the ideal marble mandir online can be overwhelming, with so many options that don't always deliver the quality your sacred corner deserves.</TranslatedText>
           </p>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-            When choosing a luxury marble temple, details matter — from carving precision and stone purity to the overall thoughtful craftsmanship — all of which help create a truly divine atmosphere at home.
+            <TranslatedText>When choosing a luxury marble temple, details matter — from carving precision and stone purity to the overall thoughtful craftsmanship — all of which help create a truly divine atmosphere at home.</TranslatedText>
           </p>
         </div>
 
         {/* Why Choose the Best Marble Temple Manufacturer */}
         <div className="mb-4 bg-gray-800/30 p-3 rounded-lg">
-          <h2 className="text-sm md:text-base font-bold mb-2 text-[#8B7355]">Why Choose the Best Marble Temple Manufacturer</h2>
+          <h2 className="text-sm md:text-base font-bold mb-2 text-[#8B7355]"><TranslatedText>Why Choose the Best Marble Temple Manufacturer</TranslatedText></h2>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300 mb-2">
-            Not all manufacturers maintain the same commitment to excellence. The difference is seen in craftsmanship, material selection, and the balance between traditional carving and modern design.
+            <TranslatedText>Not all manufacturers maintain the same commitment to excellence. The difference is seen in craftsmanship, material selection, and the balance between traditional carving and modern design.</TranslatedText>
           </p>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300 mb-2">
-            A top marble temple manufacturer combines age-old artisan techniques with advanced methods, ensuring each piece honors spiritual heritage while complementing contemporary interiors.
+            <TranslatedText>A top marble temple manufacturer combines age-old artisan techniques with advanced methods, ensuring each piece honors spiritual heritage while complementing contemporary interiors.</TranslatedText>
           </p>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-            Every temple is shaped by skilled artisans with years of experience, ensuring flawless detailing and exceptional quality.
+            <TranslatedText>Every temple is shaped by skilled artisans with years of experience, ensuring flawless detailing and exceptional quality.</TranslatedText>
           </p>
         </div>
 
         {/* Convenient Pooja Mandir Online Shopping */}
         <div className="mb-4 bg-gray-800/30 p-3 rounded-lg">
-          <h2 className="text-sm md:text-base font-bold mb-2 text-[#8B7355]">Convenient Pooja Mandir Online Shopping</h2>
+          <h2 className="text-sm md:text-base font-bold mb-2 text-[#8B7355]"><TranslatedText>Convenient Pooja Mandir Online Shopping</TranslatedText></h2>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300 mb-2">
-            Choosing your marble temple should be a meaningful experience. Shopping online allows you to explore numerous designs at your comfort.
+            <TranslatedText>Choosing your marble temple should be a meaningful experience. Shopping online allows you to explore numerous designs at your comfort.</TranslatedText>
           </p>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300 mb-2">
-            With clear images and detailed descriptions, you can confidently select a temple that suits your space, taste, and spiritual needs.
+            <TranslatedText>With clear images and detailed descriptions, you can confidently select a temple that suits your space, taste, and spiritual needs.</TranslatedText>
           </p>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-            Online shopping makes it easy to bring home handcrafted masterpieces — whether you are in Mumbai, Delhi, Bangalore, Chennai, Hyderabad, or anywhere in India or abroad.
+            <TranslatedText>Online shopping makes it easy to bring home handcrafted masterpieces — whether you are in Mumbai, Delhi, Bangalore, Chennai, Hyderabad, or anywhere in India or abroad.</TranslatedText>
           </p>
         </div>
 
         {/* Sacred Artistry Delivered to Your Doorstep */}
         <div className="mb-4 bg-gradient-to-r from-[#8B7355]/20 to-transparent p-3 rounded-lg border border-[#8B7355]/30">
-          <h2 className="text-sm md:text-base font-bold mb-2 text-[#8B7355]">Sacred Artistry Delivered to Your Doorstep</h2>
+          <h2 className="text-sm md:text-base font-bold mb-2 text-[#8B7355]"><TranslatedText>Sacred Artistry Delivered to Your Doorstep</TranslatedText></h2>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300 mb-2">
-            Each marble mandir is more than a beautifully carved product — it's a symbol of devotion transformed into art. India's marble temple-making heritage spans generations, carried forward by artisans who dedicate their lives to this sacred craft.
+            <TranslatedText>Each marble mandir is more than a beautifully carved product — it's a symbol of devotion transformed into art. India's marble temple-making heritage spans generations, carried forward by artisans who dedicate their lives to this sacred craft.</TranslatedText>
           </p>
           <p className="text-xs md:text-sm leading-relaxed text-gray-300">
-            From compact apartments to large villas, there's a perfect temple for every home — designed to create a peaceful, devotional atmosphere for your daily worship.
+            <TranslatedText>From compact apartments to large villas, there's a perfect temple for every home — designed to create a peaceful, devotional atmosphere for your daily worship.</TranslatedText>
           </p>
         </div>
       </div>

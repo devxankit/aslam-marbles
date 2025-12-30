@@ -5,6 +5,7 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
+import TranslatedText from '../../../components/TranslatedText'
 
 // Import hero image
 import tsaDesignHubHeroImage from '../../../assets/services/TSA design hub/heading/edc914ef-1943-4164-9e46-bc67ee0d0364.png'
@@ -112,7 +113,7 @@ const TSADesignHubPage = ({
             {/* Right Side - Support Features Caption */}
             <div className="order-2 md:order-2">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-6 md:mb-8 leading-tight font-bold">
-                We Support You With:
+                <TranslatedText>We Support You With:</TranslatedText>
               </h2>
               <div className="space-y-4 md:space-y-5">
                 {[
@@ -135,10 +136,10 @@ const TSADesignHubPage = ({
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* First Image Section - Right Image, Left Caption */}
-      <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white">
+      < section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white" >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left Side - Caption */}
@@ -161,10 +162,10 @@ const TSADesignHubPage = ({
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Second Image Section - Left Image, Right Caption */}
-      <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
+      < section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50" >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left Side - Image */}
@@ -187,10 +188,10 @@ const TSADesignHubPage = ({
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Third Image Section - Right Image, Left Caption */}
-      <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white">
+      < section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white" >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left Side - Caption */}
@@ -213,15 +214,15 @@ const TSADesignHubPage = ({
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* How It Works Section */}
-      <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white border-t border-gray-100">
+      < section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white border-t border-gray-100" >
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-10 md:mb-14 lg:mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center mb-4 md:mb-5 tracking-wide font-bold">
-              How It Works
+              <TranslatedText>How It Works</TranslatedText>
             </h2>
             <div className="w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -299,10 +300,10 @@ const TSADesignHubPage = ({
 
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Horizontal Image Section Above Footer - Full Screen */}
-      <section className="w-full py-0 bg-white">
+      < section className="w-full py-0 bg-white" >
         <div className="relative w-full overflow-hidden">
           <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none"></div>
           <img
@@ -312,10 +313,10 @@ const TSADesignHubPage = ({
             style={{ width: '100%', height: 'auto', display: 'block' }}
           />
         </div>
-      </section>
+      </section >
 
       {/* Visit Store Section - Full Width Horizontal Image with Button */}
-      <section className="w-full py-8 md:py-12">
+      < section className="w-full py-8 md:py-12" >
         <div className="relative w-full h-[220px] md:h-[280px] lg:h-[350px] overflow-hidden">
           <img
             src={visitStoreImage}
@@ -328,15 +329,15 @@ const TSADesignHubPage = ({
               onClick={() => navigate('/visit-store')}
               className="bg-white text-black font-semibold px-6 md:px-10 lg:px-12 py-2 md:py-3 lg:py-4 rounded-lg shadow-lg text-sm md:text-base lg:text-lg uppercase tracking-wide"
             >
-              Visit Store
+              <TranslatedText>Visit Store</TranslatedText>
             </button>
           </div>
         </div>
-      </section>
+      </section >
 
       <Footer />
       <FloatingButtons />
-    </div>
+    </div >
   )
 }
 

@@ -18,8 +18,10 @@ import { fetchBlogs } from '../../../utils/blogUtils'
 import { fetchHomePageData } from '../../../utils/homePageUtils'
 import BeforeAfterSlider from '../../../components/common/BeforeAfterSlider'
 import afterImage from '../../../assets/ourcreation/pooja room/before&after/compare1.png'
+import completedProjectsFallback from '../../../assets/residential/large.jpeg'
 import beforeImage from '../../../assets/ourcreation/pooja room/before&after/compare2.jpg'
 import LazyImage from '../../../components/common/LazyImage'
+import TranslatedText from '../../../components/TranslatedText'
 
 
 const HomePage = ({
@@ -109,7 +111,7 @@ const HomePage = ({
       {/* Video Section with Heading */}
       <div className="w-full bg-white pt-16 pb-6 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif italic text-gray-900 px-6 leading-tight">
-          Welcome to <span className="text-[#8B7355] relative inline-block px-2 before:content-[''] before:absolute before:inset-0 before:bg-[#8B7355]/5 before:rounded-lg before:-z-10 before:-skew-x-2 transition-all duration-300">Aslam Marble Suppliers</span>
+          <TranslatedText>Welcome to</TranslatedText> <span className="text-[#8B7355] relative inline-block px-2 before:content-[''] before:absolute before:inset-0 before:bg-[#8B7355]/5 before:rounded-lg before:-z-10 before:-skew-x-2 transition-all duration-300"><TranslatedText>Aslam Marble Suppliers</TranslatedText></span>
         </h2>
         <div className="w-16 md:w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
       </div>
@@ -123,7 +125,7 @@ const HomePage = ({
       {/* Completed Custom Projects Section */}
       <section className="w-full relative h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden">
         <LazyImage
-          src={homePageData?.completedProjectsSection?.backgroundImage?.url || "https://res.cloudinary.com/djuyp9lut/image/upload/v1766129645/artist/hero/yjy4w3bfu9s4fhirpius.webp"}
+          src={homePageData?.completedProjectsSection?.backgroundImage?.url || completedProjectsFallback}
           alt={homePageData?.completedProjectsSection?.backgroundImage?.alt || "Completed Custom Projects"}
           className="w-full h-full"
           imageClassName="w-full h-full object-cover"
@@ -131,20 +133,20 @@ const HomePage = ({
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center">
-            {homePageData?.completedProjectsSection?.heading || 'COMPLETED CUSTOM PROJECTS'}
+            <TranslatedText>{homePageData?.completedProjectsSection?.heading || 'COMPLETED CUSTOM PROJECTS'}</TranslatedText>
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-16 max-w-5xl w-full">
             <div className="text-center">
               <p className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-1">{homePageData?.completedProjectsSection?.stats?.projects || 950}+</p>
-              <p className="text-xs sm:text-sm md:text-xl lg:text-2xl uppercase tracking-wider">Projects</p>
+              <p className="text-xs sm:text-sm md:text-xl lg:text-2xl uppercase tracking-wider"><TranslatedText>Projects</TranslatedText></p>
             </div>
             <div className="text-center">
               <p className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-1">{homePageData?.completedProjectsSection?.stats?.cities || 350}+</p>
-              <p className="text-xs sm:text-sm md:text-xl lg:text-2xl uppercase tracking-wider">Cities</p>
+              <p className="text-xs sm:text-sm md:text-xl lg:text-2xl uppercase tracking-wider"><TranslatedText>Cities</TranslatedText></p>
             </div>
             <div className="text-center col-span-2 md:col-span-1 mt-4 md:mt-0">
               <p className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-1">{homePageData?.completedProjectsSection?.stats?.yearsExperience || 25}+</p>
-              <p className="text-xs sm:text-sm md:text-xl lg:text-2xl uppercase tracking-wider">Years Experience</p>
+              <p className="text-xs sm:text-sm md:text-xl lg:text-2xl uppercase tracking-wider"><TranslatedText>Years Experience</TranslatedText></p>
             </div>
           </div>
         </div>
@@ -157,10 +159,10 @@ const HomePage = ({
             {/* Text Side - Very compact and centered on mobile */}
             <div className="text-center lg:text-left space-y-3 px-2">
               <h2 className="text-xl sm:text-2xl md:text-5xl font-serif text-[#8B7355] italic leading-tight uppercase tracking-tight">
-                {homePageData?.beforeAfterSection?.heading || 'The Transformation'}
+                <TranslatedText>{homePageData?.beforeAfterSection?.heading || 'The Transformation'}</TranslatedText>
               </h2>
               <p className="text-[10px] sm:text-xs md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                {homePageData?.beforeAfterSection?.description || 'Witness raw spaces evolve into spiritual sanctuaries through our master craftsmanship.'}
+                <TranslatedText>{homePageData?.beforeAfterSection?.description || 'Witness raw spaces evolve into spiritual sanctuaries through our master craftsmanship.'}</TranslatedText>
               </p>
             </div>
 
@@ -195,8 +197,8 @@ const HomePage = ({
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xs md:text-base font-bold text-gray-900 leading-tight">aslammarblesuppliers1</h3>
-                  <p className="text-[10px] md:text-sm text-gray-500">Aslam Marble Suppliers</p>
+                  <h3 className="text-xs md:text-base font-bold text-gray-900 leading-tight"><TranslatedText>aslammarblesuppliers1</TranslatedText></h3>
+                  <p className="text-[10px] md:text-sm text-gray-500"><TranslatedText>Aslam Marble Suppliers</TranslatedText></p>
                 </div>
               </div>
 
@@ -207,7 +209,7 @@ const HomePage = ({
                 rel="noopener noreferrer"
                 className="bg-[#8B7355] text-white text-[10px] md:text-sm px-4 py-2 rounded-full font-bold uppercase tracking-wider hover:bg-black transition-all shadow-md active:scale-95"
               >
-                Follow on Instagram
+                <TranslatedText>Follow on Instagram</TranslatedText>
               </a>
             </div>
           </div>
@@ -219,17 +221,17 @@ const HomePage = ({
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Heading */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center mb-8 md:mb-12">
-            AMS GUIDES
+            <TranslatedText>AMS GUIDES</TranslatedText>
           </h2>
 
           {/* Blog Posts Grid */}
           {loadingBlogs ? (
             <div className="text-center py-8">
-              <p className="text-gray-600 text-base md:text-lg">Loading guides...</p>
+              <p className="text-gray-600 text-base md:text-lg"><TranslatedText>Loading guides...</TranslatedText></p>
             </div>
           ) : blogs.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-gray-600 text-base md:text-lg">No guides available at the moment.</p>
+              <p className="text-gray-600 text-base md:text-lg"><TranslatedText>No guides available at the moment.</TranslatedText></p>
             </div>
           ) : (
             <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-8">
@@ -279,16 +281,16 @@ const BlogCard = memo(({ post, onClick }) => (
     <div className="p-2 md:p-4">
       <div className="flex items-center gap-1 mb-1 md:mb-2">
         <span className="text-[8px] md:text-xs font-semibold text-[#8B7355] uppercase tracking-tighter md:tracking-wide">
-          {post.category}
+          <TranslatedText>{post.category}</TranslatedText>
         </span>
       </div>
 
       <h2 className="text-[10px] sm:text-sm md:text-lg font-bold text-gray-800 mb-1 line-clamp-2 md:line-clamp-2 group-hover:text-[#8B7355] transition-colors leading-tight">
-        {post.title}
+        <TranslatedText>{post.title}</TranslatedText>
       </h2>
 
       <p className="hidden md:block text-sm text-gray-600 leading-relaxed line-clamp-2">
-        {post.description}
+        <TranslatedText>{post.description}</TranslatedText>
       </p>
     </div>
   </div>

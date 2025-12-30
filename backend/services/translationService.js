@@ -1,15 +1,67 @@
 const { translateClient, languageCodeMap } = require('../config/googleCloud');
+const TranslationCache = require('../models/TranslationCache');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
 
-// In-memory cache: { "source_target_text": "translation", ... }
-// This is a simple implementation. For production scaling, consider Redis.
+// Skip list for proper nouns that should NOT be translated (deity names, brand names, etc.)
+const SKIP_TRANSLATION_PATTERNS = [
+    // Deity names - Gods
+    'Hanuman', 'Hanuman ji', 'Hanuman Ji', 'Hanumanji',
+    'Ganesha', 'Ganesh', 'Ganapati', 'Ganpati',
+    'Krishna', 'Krishna ji', 'Krishn', 'Shri Krishna',
+    'Shiva', 'Shiv', 'Mahadev', 'Shivji', 'Shiv ji',
+    'Vishnu', 'Vishnu ji', 'Vishnuji',
+    'Brahma', 'Brahmaji',
+    'Ram', 'Rama', 'Ram ji', 'Shri Ram',
+    'Lakshman', 'Laxman', 'Lakshmana',
+    'Nandi', 'Nandi ji', 'Nandiswara',
+    'Sai Baba', 'Sai', 'Shirdi Sai', 'Saibaba',
+    'Buddha', 'Gautam Buddha',
+    'Balaji', 'Tirupati Balaji',
+    'Natraja', 'Nataraja', 'Natraj',
+    'Laddu Gopal', 'Ladoo Gopal', 'Gopal',
+    // Deity names - Goddesses
+    'Durga', 'Durga Maa', 'Durgaji', 'Maa Durga',
+    'Kali', 'Mahakali', 'Kaali', 'Maa Kali',
+    'Laxmi', 'Lakshmi', 'Laxmiji', 'Maa Laxmi',
+    'Saraswati', 'Saraswati Devi', 'Maa Saraswati',
+    'Radha', 'Radha Rani', 'Radhaji', 'Radhe',
+    'Parvati', 'Parvathi', 'Parvatiji',
+    // Pair/Group names
+    'Ram Darbar',
+    'Shiv Parivar', 'Shiv Parvati', 'Shiv-Parvati',
+    'Radha Krishna', 'Radha-Krishna',
+    'Vishnu Laxmi', 'Vishnu-Laxmi',
+    'Ganesh Laxmi', 'Ganesh-Laxmi',
+    'Ganesh Laxmi Saraswati',
+    'Jugal Jodi',
+    // Jain deities
+    'Jain Gods', 'Jain Murti', 'Mahavir', 'Parshvanath',
+    // Brand names
+    'Aslam Marble', 'Aslam Marble Suppliers', 'AMS',
+    // Other proper nouns
+    'Tulsi', 'Tulsi Gamla'
+];
+
+// Check if text should skip translation (is a proper noun)
+const shouldSkipTranslation = (text) => {
+    if (!text || typeof text !== 'string') return false;
+    const normalizedText = text.trim();
+    // Exact match (case-insensitive)
+    return SKIP_TRANSLATION_PATTERNS.some(pattern =>
+        normalizedText.toLowerCase() === pattern.toLowerCase()
+    );
+};
+
+// L1 Cache: In-memory cache for fastest access (short TTL)
 const translationCache = new Map();
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
-const CACHE_CLEANUP_INTERVAL = 60 * 60 * 1000; // 1 hour
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour for in-memory cache
+const CACHE_CLEANUP_INTERVAL = 30 * 60 * 1000; // 30 minutes
 
 // Cache metadata to track expiration
 const cacheMetadata = new Map();
 
-// Cleanup routine
+// Cleanup routine for in-memory cache
 setInterval(() => {
     const now = Date.now();
     for (const [key, timestamp] of cacheMetadata.entries()) {
@@ -20,28 +72,167 @@ setInterval(() => {
     }
 }, CACHE_CLEANUP_INTERVAL);
 
+// Helper to hash text
+const hashText = (text) => {
+    return crypto.createHash('sha256').update(text.trim()).digest('hex');
+};
+
+/**
+ * Fallback provider: MyMemory (free, rate-limited).
+ * Used when Google Translate is not configured/enabled.
+ */
+const translateViaMyMemory = async (text, targetLang, sourceLang = 'en') => {
+    try {
+        const q = encodeURIComponent(text);
+        const langpair = encodeURIComponent(`${sourceLang}|${targetLang}`);
+        const url = `https://api.mymemory.translated.net/get?q=${q}&langpair=${langpair}`;
+
+        const res = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'User-Agent': 'aslam-marbles-translation/1.0'
+            }
+        });
+
+        if (!res.ok) return text;
+        const data = await res.json().catch(() => null);
+        const translated = data?.responseData?.translatedText;
+
+        // Check for error messages from API that indicate failed translation
+        if (typeof translated === 'string') {
+            const lowerTranslated = translated.toLowerCase();
+            // Filter out common error messages from translation APIs
+            if (lowerTranslated.includes('does not need a translation') ||
+                lowerTranslated.includes('optional') ||
+                lowerTranslated.includes('city name') ||
+                lowerTranslated.includes('probably does not') ||
+                lowerTranslated.includes('no translation')) {
+                return text; // Return original if error message detected
+            }
+            if (translated.trim()) return translated;
+        }
+        return text;
+    } catch (_) {
+        return text;
+    }
+};
+
 /**
  * Generate a cache key for a translation request
  */
 const getCacheKey = (text, targetLang, sourceLang) => {
-    // Use base64 for text to handle special characters safely in keys
-    const textKey = Buffer.from(text).toString('base64');
-    return `${sourceLang || 'auto'}_${targetLang}_${textKey}`;
+    const textHash = hashText(text);
+    return TranslationCache.generateCacheKey(sourceLang || 'auto', targetLang, textHash);
+};
+
+/**
+ * Get from L1 (in-memory) cache
+ */
+const getL1Cache = (cacheKey) => {
+    if (translationCache.has(cacheKey)) {
+        return translationCache.get(cacheKey);
+    }
+    return null;
+};
+
+const isMongoConnected = () => mongoose.connection?.readyState === 1;
+
+/**
+ * Set L1 (in-memory) cache
+ */
+const setL1Cache = (cacheKey, translation) => {
+    translationCache.set(cacheKey, translation);
+    cacheMetadata.set(cacheKey, Date.now());
+};
+
+/**
+ * Get from L2 (MongoDB) cache with L1 fallback
+ */
+const getCachedTranslation = async (text, targetLang, sourceLang, isStatic = false) => {
+    const normalizedText = text.trim();
+    const cacheKey = getCacheKey(normalizedText, targetLang, sourceLang);
+
+    // Check L1 cache first (fastest)
+    const l1Cached = getL1Cache(cacheKey);
+    if (l1Cached) {
+        return l1Cached;
+    }
+
+    // Check L2 cache (MongoDB) - only if connected. Otherwise mongoose buffering can stall requests.
+    if (!isMongoConnected()) {
+        return null;
+    }
+
+    try {
+        const l2Cached = await TranslationCache.findCached(
+            sourceLang || 'auto',
+            targetLang,
+            normalizedText
+        );
+
+        if (l2Cached) {
+            // Populate L1 cache for faster future access
+            setL1Cache(cacheKey, l2Cached);
+            return l2Cached;
+        }
+    } catch (error) {
+        console.error('MongoDB cache read error:', error.message);
+        // Continue to API call if cache fails
+    }
+
+    return null;
+};
+
+/**
+ * Set cache in both L1 and L2
+ */
+const setCachedTranslation = async (text, translation, targetLang, sourceLang, isStatic = false) => {
+    if (translation === text) return; // Don't cache if translation equals original
+
+    const normalizedText = text.trim();
+    const cacheKey = getCacheKey(normalizedText, targetLang, sourceLang);
+
+    // Set L1 cache
+    setL1Cache(cacheKey, translation);
+
+    // Set L2 cache (MongoDB) - async, only if connected
+    if (isMongoConnected()) {
+        TranslationCache.findOrCreate({
+            sourceLang: sourceLang || 'auto',
+            targetLang,
+            originalText: normalizedText,
+            translatedText: translation,
+            isStatic,
+            ttlDays: isStatic ? 90 : 30
+        }).catch(error => {
+            console.error('MongoDB cache write error:', error.message);
+            // Non-critical error, continue
+        });
+    }
 };
 
 /**
  * Translate a single text string
  */
-const translateText = async (text, targetLang, sourceLang = null) => {
+const translateText = async (text, targetLang, sourceLang = null, isStatic = false) => {
     if (!text || typeof text !== 'string') return text;
+
+    const normalizedText = text.trim();
+    if (!normalizedText) return text;
+
+    // Skip translation for proper nouns (deity names, brand names, etc.)
+    if (shouldSkipTranslation(normalizedText)) {
+        return normalizedText;
+    }
 
     // Normalize codes
     const targetCode = languageCodeMap[targetLang] || targetLang;
 
-    // Check cache
-    const cacheKey = getCacheKey(text, targetCode, sourceLang);
-    if (translationCache.has(cacheKey)) {
-        return translationCache.get(cacheKey);
+    // Check cache (L1 + L2)
+    const cached = await getCachedTranslation(normalizedText, targetCode, sourceLang, isStatic);
+    if (cached) {
+        return cached;
     }
 
     try {
@@ -50,57 +241,69 @@ const translateText = async (text, targetLang, sourceLang = null) => {
             options.from = languageCodeMap[sourceLang] || sourceLang;
         }
 
-        // Exponential backoff logic for rate limits could be implemented here if needed,
-        // but the Google client handles some retries automatically.
-        // For manual implementation:
-        const [translation] = await retryOperation(() => translateClient.translate(text, options));
+        // Call Google Translate API with retry logic
+        const [translation] = await retryOperation(() => translateClient.translate(normalizedText, options));
 
-        // Cache the result
-        // NEVER cache if translation equals original (implies failure or same lang) - unless strict requirement
-        // But here we might want to cache valid same-lang translations if they happen?
-        // The requirement says: "Never cache translations that equal original text"
-        // However, for valid same-language requests, they are equal.
-        // We'll assume the client is smart enough to not request same-lang translation,
-        // or if they do, we shouldn't cache it as a "costly" operation result.
-        if (translation !== text) {
-            translationCache.set(cacheKey, translation);
-            cacheMetadata.set(cacheKey, Date.now());
+        // Cache the result (L1 + L2)
+        if (translation && translation !== normalizedText) {
+            await setCachedTranslation(normalizedText, translation, targetCode, sourceLang, isStatic);
         }
 
-        return translation;
+        return translation || normalizedText;
     } catch (error) {
-        console.error(`Translation error for "${text.substring(0, 20)}...":`, error.message);
-        // Graceful fallback
-        return text;
+        console.error(`Translation error for "${normalizedText.substring(0, 20)}...":`, error.message);
+
+        // Fallback provider (works without Google Cloud config)
+        const fallback = await translateViaMyMemory(normalizedText, targetCode, sourceLang || 'en');
+        if (fallback && fallback !== normalizedText) {
+            await setCachedTranslation(normalizedText, fallback, targetCode, sourceLang, isStatic);
+        }
+        return fallback || normalizedText;
     }
 };
 
 /**
  * Translate an array of texts
  */
-const translateBatch = async (texts, targetLang, sourceLang = null) => {
+const translateBatch = async (texts, targetLang, sourceLang = null, isStatic = false) => {
     if (!Array.isArray(texts) || texts.length === 0) return [];
 
     const targetCode = languageCodeMap[targetLang] || targetLang;
 
-    // Identify missing translations
+    // Identify missing translations (check both L1 and L2 cache)
     const results = new Array(texts.length).fill(null);
     const uncachedIndices = [];
     const uncachedTexts = [];
+    const cachePromises = [];
 
     texts.forEach((text, index) => {
         if (!text || typeof text !== 'string') {
             results[index] = text;
             return;
         }
-        const cacheKey = getCacheKey(text, targetCode, sourceLang);
-        if (translationCache.has(cacheKey)) {
-            results[index] = translationCache.get(cacheKey);
-        } else {
-            uncachedIndices.push(index);
-            uncachedTexts.push(text);
+
+        const normalizedText = text.trim();
+        if (!normalizedText) {
+            results[index] = text;
+            return;
         }
+
+        // Check cache asynchronously
+        cachePromises.push(
+            getCachedTranslation(normalizedText, targetCode, sourceLang, isStatic)
+                .then(cached => {
+                    if (cached) {
+                        results[index] = cached;
+                    } else {
+                        uncachedIndices.push(index);
+                        uncachedTexts.push(normalizedText);
+                    }
+                })
+        );
     });
+
+    // Wait for all cache checks to complete
+    await Promise.all(cachePromises);
 
     // If all cached, return
     if (uncachedTexts.length === 0) return results;
@@ -129,19 +332,25 @@ const translateBatch = async (texts, targetLang, sourceLang = null) => {
 
                 results[originalIndex] = trans;
 
-                // Cache
-                if (trans !== originalText) {
-                    const cacheKey = getCacheKey(originalText, targetCode, sourceLang);
-                    translationCache.set(cacheKey, trans);
-                    cacheMetadata.set(cacheKey, Date.now());
+                // Cache (L1 + L2)
+                if (trans && trans !== originalText) {
+                    setCachedTranslation(originalText, trans, targetCode, sourceLang, isStatic);
                 }
             });
         } catch (error) {
             console.error('Batch translation error:', error.message);
-            // Fallback for this chunk
-            chunkIndices.forEach(idx => {
-                results[idx] = texts[idx];
-            });
+
+            // Fallback for this chunk via MyMemory (sequential to avoid rate limits)
+            for (let j = 0; j < chunk.length; j++) {
+                const originalIndex = chunkIndices[j];
+                const originalText = chunk[j];
+                const fallback = await translateViaMyMemory(originalText, targetCode, sourceLang || 'en');
+                results[originalIndex] = fallback || texts[originalIndex];
+
+                if (fallback && fallback !== originalText) {
+                    setCachedTranslation(originalText, fallback, targetCode, sourceLang, isStatic);
+                }
+            }
         }
     }
 
@@ -151,7 +360,7 @@ const translateBatch = async (texts, targetLang, sourceLang = null) => {
 /**
  * Recursively translate object values for specified keys
  */
-const translateObject = async (obj, targetLang, sourceLang = null, keysToTranslate = []) => {
+const translateObject = async (obj, targetLang, sourceLang = null, keysToTranslate = [], isStatic = false) => {
     if (!obj || typeof obj !== 'object') return obj;
 
     // Deep clone to avoid mutating original if needed, assuming valid JSON
@@ -190,7 +399,7 @@ const translateObject = async (obj, targetLang, sourceLang = null, keysToTransla
     const paths = Array.from(textMap.keys());
     const texts = Array.from(textMap.values());
 
-    const translations = await translateBatch(texts, targetLang, sourceLang);
+    const translations = await translateBatch(texts, targetLang, sourceLang, isStatic);
 
     // Apply translations back to result
     paths.forEach((path, index) => {

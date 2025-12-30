@@ -1,12 +1,16 @@
 import baseClient from './api/baseClient';
 import { API_ENDPOINTS } from '../config/api';
 import { getCachedTranslation, setCachedTranslation } from '../utils/translationCache';
+import { normalizeText, isEmptyText } from '../utils/textUtils';
 
 // Queue for batching requests
 let translationQueue = [];
 let isQueueProcessing = false;
-const BATCH_INTERVAL = 200; // ms
-const MAX_BATCH_SIZE = 10; // items per batch call to backend (backend allows 100, we keep it small on frontend for responsiveness)
+const BATCH_INTERVAL = 300; // ms (increased from 200ms to collect more requests)
+const MAX_BATCH_SIZE = 50; // items per batch call (increased from 10 to 50)
+
+// Request deduplication: track pending requests to avoid duplicate API calls
+const pendingRequests = new Map(); // { cacheKey: Promise }
 
 const processQueue = async () => {
     if (translationQueue.length === 0) {
@@ -20,7 +24,6 @@ const processQueue = async () => {
     const currentBatch = translationQueue.splice(0, MAX_BATCH_SIZE);
 
     // Group by target language and source language to optimize API calls
-    // (Assuming mostly one target lang active at a time, but good to handle)
     const groups = {};
     currentBatch.forEach(item => {
         const key = `${item.sourceLang || 'auto'}_${item.targetLang}`;
@@ -31,42 +34,120 @@ const processQueue = async () => {
     // Process each group
     for (const key in groups) {
         const groupItems = groups[key];
-        const texts = groupItems.map(item => item.text);
         const { targetLang, sourceLang } = groupItems[0];
 
-        try {
-            // Check cache again just in case (though we check before queueing usually)
-            // Actually simpler to check before queueing. Here we just fetch.
+        // Deduplicate texts within batch
+        // NOTE: This map must store the *unique index* per normalized text.
+        // The previous implementation incorrectly used `uniqueTexts.length - 1` for duplicates,
+        // which caused mismatched translations and made <TranslatedText> unreliable.
+        const textToUniqueIdx = new Map(); // normalizedText -> uniqueIdx
+        const uniqueTexts = []; // original texts (for API call)
+        const textToIndices = []; // uniqueIdx -> [indices in groupItems]
 
-            const response = await baseClient.post(API_ENDPOINTS.TRANSLATE.BATCH, {
+        groupItems.forEach((item, idx) => {
+            const normalized = normalizeText(item.text);
+
+            let uniqueIdx = textToUniqueIdx.get(normalized);
+            if (uniqueIdx === undefined) {
+                uniqueIdx = uniqueTexts.length;
+                textToUniqueIdx.set(normalized, uniqueIdx);
+                uniqueTexts.push(item.text); // Keep original for API call
+                textToIndices.push([]);
+            }
+
+            textToIndices[uniqueIdx].push(idx);
+        });
+
+        // Check cache for unique texts before API call
+        const textsToTranslate = [];
+        const translationMap = new Map(); // uniqueIdx -> translation
+        const cachePromises = [];
+
+        for (let i = 0; i < uniqueTexts.length; i++) {
+            const text = uniqueTexts[i];
+
+            // Only check cache here.
+            //
+            // Important: DO NOT check `pendingRequests` from inside `processQueue`.
+            // `translateText()` registers the queue promise in `pendingRequests` *before*
+            // `processQueue` runs. If we check it here, we end up awaiting the same promise
+            // that this queue processing is responsible for resolving (deadlock), which
+            // makes <TranslatedText> appear "not translating".
+            cachePromises.push(
+                getCachedTranslation(text, targetLang, sourceLang, groupItems[0].isStatic || false).then(cached => {
+                    if (cached) {
+                        translationMap.set(i, cached);
+                    } else {
+                        textsToTranslate.push({ text, uniqueIdx: i });
+                    }
+                })
+            );
+        }
+
+        await Promise.all(cachePromises);
+
+        // Resolve cached translations
+        translationMap.forEach((translation, uniqueIdx) => {
+            textToIndices[uniqueIdx].forEach(originalIdx => {
+                groupItems[originalIdx].resolve(translation);
+            });
+        });
+
+        // If all cached, continue to next group
+        if (textsToTranslate.length === 0) {
+            continue;
+        }
+
+        // Translate uncached texts
+        const texts = textsToTranslate.map(item => item.text);
+        const batchCacheKey = `${sourceLang || 'auto'}_${targetLang}_batch_${texts.join('|')}`;
+
+        try {
+            // Create batch translation promise
+            const batchPromise = baseClient.post(API_ENDPOINTS.TRANSLATE.BATCH, {
                 texts,
                 targetLang,
-                sourceLang: sourceLang === 'auto' ? null : sourceLang
+                sourceLang: sourceLang === 'auto' ? null : sourceLang,
+                isStatic: groupItems[0].isStatic || false
+            }).then(response => {
+                if (response && response.success && response.data && Array.isArray(response.data.translations)) {
+                    return response.data.translations;
+                }
+                throw new Error('Invalid response format');
             });
 
-            if (response && response.success && response.data && Array.isArray(response.data.translations)) {
-                response.data.translations.forEach((translation, idx) => {
-                    const originalText = texts[idx];
-                    const item = groupItems[idx];
+            // Track pending batch request
+            pendingRequests.set(batchCacheKey, batchPromise);
 
-                    // Cache the result
-                    if (translation !== originalText) {
-                        setCachedTranslation(originalText, translation, targetLang, sourceLang);
-                    }
+            const translations = await batchPromise;
 
-                    // Resolve promise
-                    item.resolve(translation);
+            // Process translations
+            textsToTranslate.forEach((item, idx) => {
+                const translation = translations[idx];
+                const originalText = item.text;
+
+                // Cache the result
+                if (translation && translation !== originalText) {
+                    setCachedTranslation(originalText, translation, targetLang, sourceLang);
+                }
+
+                // Resolve all requests for this text
+                textToIndices[item.uniqueIdx].forEach(originalIdx => {
+                    groupItems[originalIdx].resolve(translation || originalText);
                 });
-            } else {
-                // Fallback or error format
-                groupItems.forEach((item, idx) => {
-                    item.resolve(item.text); // Return original on format error
-                });
-            }
+            });
+
+            // Clean up pending request
+            pendingRequests.delete(batchCacheKey);
         } catch (error) {
             console.error('Batch translation failed:', error);
-            // Fallback
-            groupItems.forEach(item => item.resolve(item.text));
+            // Fallback: resolve with original text
+            textsToTranslate.forEach(item => {
+                textToIndices[item.uniqueIdx].forEach(originalIdx => {
+                    groupItems[originalIdx].resolve(groupItems[originalIdx].text);
+                });
+            });
+            pendingRequests.delete(batchCacheKey);
         }
     }
 
@@ -78,9 +159,9 @@ const processQueue = async () => {
     }
 };
 
-const addToQueue = (text, targetLang, sourceLang = 'auto') => {
+const addToQueue = (text, targetLang, sourceLang = 'auto', isStatic = false) => {
     return new Promise((resolve, reject) => {
-        translationQueue.push({ text, targetLang, sourceLang, resolve, reject });
+        translationQueue.push({ text, targetLang, sourceLang, isStatic, resolve, reject });
         if (!isQueueProcessing) {
             setTimeout(processQueue, 50); // Small initial delay to collect bursts
             isQueueProcessing = true;
@@ -88,19 +169,133 @@ const addToQueue = (text, targetLang, sourceLang = 'auto') => {
     });
 };
 
-export const translateText = async (text, targetLang, sourceLang = 'auto') => {
-    if (!text || !targetLang || targetLang === 'en') return text; // Assuming 'en' is source, skip. Adjust if source is different.
+export const translateText = async (text, targetLang, sourceLang = 'auto', isStatic = false) => {
+    // Early returns
+    if (isEmptyText(text) || !targetLang || targetLang === 'en') return text;
     if (sourceLang === targetLang) return text;
 
+    // Normalize text for consistent caching
+    const normalized = normalizeText(text);
+    if (isEmptyText(normalized)) return text;
+
     // Check cache first
-    const cached = await getCachedTranslation(text, targetLang, sourceLang);
+    const cached = await getCachedTranslation(normalized, targetLang, sourceLang, isStatic);
     if (cached) return cached;
 
-    // Add to queue
-    return addToQueue(text, targetLang, sourceLang);
+    // Create cache key for deduplication
+    const cacheKey = `${sourceLang || 'auto'}_${targetLang}_${normalized}`;
+
+    // Check if same request is already pending
+    if (pendingRequests.has(cacheKey)) {
+        return pendingRequests.get(cacheKey);
+    }
+
+    // Add to queue and track pending request
+    const promise = addToQueue(normalized, targetLang, sourceLang, isStatic);
+    pendingRequests.set(cacheKey, promise);
+
+    // Clean up when resolved
+    promise.finally(() => {
+        pendingRequests.delete(cacheKey);
+    });
+
+    return promise;
 };
 
-export const translateObject = async (obj, targetLang, sourceLang = 'auto', keys = []) => {
+/**
+ * Batch translate multiple texts efficiently
+ * This is the preferred method for translating multiple texts
+ */
+export const translateBatch = async (texts, targetLang, sourceLang = 'auto', isStatic = false) => {
+    if (!Array.isArray(texts) || texts.length === 0) return [];
+    if (targetLang === 'en' || sourceLang === targetLang) return texts;
+
+    // Filter out empty texts and normalize
+    const normalizedTexts = texts.map(text => {
+        if (isEmptyText(text)) return null;
+        return normalizeText(text);
+    });
+
+    // Check cache for all texts
+    const cachePromises = normalizedTexts.map((text, idx) => {
+        if (!text) return Promise.resolve({ idx, text: texts[idx] });
+        return getCachedTranslation(text, targetLang, sourceLang, isStatic).then(cached => ({
+            idx,
+            text: texts[idx],
+            normalized: text,
+            cached
+        }));
+    });
+
+    const cacheResults = await Promise.all(cachePromises);
+    const results = new Array(texts.length);
+    const uncachedTexts = [];
+    const uncachedIndices = [];
+
+    cacheResults.forEach(({ idx, text, normalized, cached }) => {
+        if (cached) {
+            results[idx] = cached;
+        } else if (normalized) {
+            uncachedTexts.push(normalized);
+            uncachedIndices.push(idx);
+        } else {
+            results[idx] = text; // Empty text, return as-is
+        }
+    });
+
+    // If all cached, return results
+    if (uncachedTexts.length === 0) return results;
+
+    // Deduplicate uncached texts
+    const uniqueTexts = [];
+    const textToIndices = new Map(); // uniqueText -> [original indices]
+
+    uncachedTexts.forEach((text, uncachedIdx) => {
+        const originalIdx = uncachedIndices[uncachedIdx];
+        if (!textToIndices.has(text)) {
+            textToIndices.set(text, []);
+            uniqueTexts.push(text);
+        }
+        textToIndices.get(text).push(originalIdx);
+    });
+
+    // Translate unique texts
+    try {
+        const response = await baseClient.post(API_ENDPOINTS.TRANSLATE.BATCH, {
+            texts: uniqueTexts,
+            targetLang,
+            sourceLang: sourceLang === 'auto' ? null : sourceLang,
+            isStatic
+        });
+
+        if (response && response.success && response.data && Array.isArray(response.data.translations)) {
+            response.data.translations.forEach((translation, uniqueIdx) => {
+                const originalText = uniqueTexts[uniqueIdx];
+                const indices = textToIndices.get(originalText);
+
+                // Cache the result
+                if (translation && translation !== originalText) {
+                    setCachedTranslation(originalText, translation, targetLang, sourceLang, isStatic);
+                }
+
+                // Set results for all indices that map to this unique text
+                indices.forEach(originalIdx => {
+                    results[originalIdx] = translation || texts[originalIdx];
+                });
+            });
+        }
+    } catch (error) {
+        console.error('Batch translation error:', error);
+        // Fallback: return original texts
+        uncachedIndices.forEach(idx => {
+            results[idx] = texts[idx];
+        });
+    }
+
+    return results;
+};
+
+export const translateObject = async (obj, targetLang, sourceLang = 'auto', keys = [], isStatic = false) => {
     if (!obj || !targetLang || targetLang === 'en') return obj;
 
     try {
@@ -108,7 +303,8 @@ export const translateObject = async (obj, targetLang, sourceLang = 'auto', keys
             obj,
             targetLang,
             sourceLang: sourceLang === 'auto' ? null : sourceLang,
-            keys
+            keys,
+            isStatic
         });
 
         if (response.success && response.data.translatedObj) {

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { homeImages } from '../../data/homeImages'
 import { fetchAslamHouseItems, buildImageUrl } from '../../utils/aslamHouseUtils'
 import LazyImage from '../common/LazyImage'
+import TranslatedText from '../TranslatedText'
 
 const HomeImagesSection = () => {
   const navigate = useNavigate()
@@ -56,7 +57,7 @@ const HomeImagesSection = () => {
                     onClick={handleVisitStoreClick}
                     className="group relative bg-[#8B7355] text-white px-4 md:px-12 py-2.5 md:py-5 text-[10px] md:text-lg font-bold uppercase tracking-[0.15em] rounded-full hover:bg-white hover:text-[#8B7355] transition-all duration-500 shadow-xl z-10 active:scale-95"
                   >
-                    <span className="relative z-10">{visitStoreImage.name}</span>
+                    <span className="relative z-10"><TranslatedText>{visitStoreImage.name}</TranslatedText></span>
                   </button>
                 )}
               </div>

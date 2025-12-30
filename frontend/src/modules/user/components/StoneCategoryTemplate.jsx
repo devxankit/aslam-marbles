@@ -5,6 +5,8 @@ import FloatingButtons from '../../../components/common/FloatingButtons'
 import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
 import ImageGallery from '../../../components/common/ImageGallery'
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const StoneCategoryTemplate = ({
     categoryId, // e.g., 'sandstone', 'marble'
@@ -22,6 +24,7 @@ const StoneCategoryTemplate = ({
     onShowBooking,
     galleryLayout
 }) => {
+    const { getTranslatedText } = usePageTranslation()
     const [products, setProducts] = useState([])
     const [categoryData, setCategoryData] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -107,12 +110,12 @@ const StoneCategoryTemplate = ({
             {loading ? (
                 <div className="py-24 text-center">
                     <div className="inline-block w-12 h-12 border-t-2 border-b-2 border-[#8B7355] rounded-full animate-spin"></div>
-                    <p className="mt-4 text-gray-500">Loading collection...</p>
+                    <p className="mt-4 text-gray-500"><TranslatedText>Loading collection...</TranslatedText></p>
                 </div>
             ) : galleryImages.length > 0 ? (
                 <ImageGallery
-                    title={`Our ${title} Gallery`}
-                    description={`Explore our exclusive collection of ${title.toLowerCase()}, carefully sourced and crafted for excellence.`}
+                    title={`${getTranslatedText("Our")} ${title} ${getTranslatedText("Gallery")}`}
+                    description={`${getTranslatedText("Explore our exclusive collection of")} ${title.toLowerCase()}, ${getTranslatedText("carefully sourced and crafted for excellence.")}`}
                     images={galleryImages}
                     stoneType={categoryId} // used for navigation path
                     origin="India"
@@ -121,8 +124,8 @@ const StoneCategoryTemplate = ({
                 />
             ) : (
                 <div className="py-24 text-center text-gray-500">
-                    <p className="text-xl">No products found for {title}.</p>
-                    <p className="text-sm mt-2">Please check back soon or contact us.</p>
+                    <p className="text-xl"><TranslatedText>No products found for</TranslatedText> {title}.</p>
+                    <p className="text-sm mt-2"><TranslatedText>Please check back soon or contact us.</TranslatedText></p>
                 </div>
             )}
 

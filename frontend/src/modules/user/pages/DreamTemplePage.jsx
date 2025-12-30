@@ -16,8 +16,11 @@ import step4Gif from '../../../assets/how it work/5stepvideo/image4.gif'
 import step5Gif from '../../../assets/how it work/5stepvideo/image5.gif'
 
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
+  const { getTranslatedText } = usePageTranslation()
   const [selectedProcessStep, setSelectedProcessStep] = useState(1)
   const [showMobileForm, setShowMobileForm] = useState(false)
   const [expandedFaq, setExpandedFaq] = useState(null)
@@ -117,21 +120,21 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
         {/* Hero Text Overlay - Left Side */}
         <div className="absolute top-10 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-[60%] md:max-w-2xl">
           <h1 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 md:mb-4 leading-tight uppercase tracking-wide drop-shadow-lg">
-            {pageData?.heroSection?.title || 'DREAM TEMPLES'}
+            <TranslatedText>{pageData?.heroSection?.title || 'DREAM TEMPLES'}</TranslatedText>
           </h1>
           <p className="text-xs md:text-base lg:text-lg text-white font-light mb-1.5 md:mb-2 drop-shadow-md">
-            {pageData?.heroSection?.subtitle || 'Where Divine Aspirations Meet Artisanal Reality'}
+            <TranslatedText>{pageData?.heroSection?.subtitle || 'Where Divine Aspirations Meet Artisanal Reality'}</TranslatedText>
           </p>
           <div className="w-12 md:w-20 h-0.5 md:h-1 bg-white/80 mb-2 md:mb-6 rounded-full hidden sm:block"></div>
           <p className="text-[10px] md:text-sm text-white/90 font-light leading-relaxed drop-shadow-md hidden sm:block">
-            {pageData?.heroSection?.description || 'Your vision of a perfect sanctuary, brought to life with precision, passion, and premium marble craftsmanship.'}
+            <TranslatedText>{pageData?.heroSection?.description || 'Your vision of a perfect sanctuary, brought to life with precision, passion, and premium marble craftsmanship.'}</TranslatedText>
           </p>
 
           <button
             onClick={() => setShowMobileForm(true)}
             className="md:hidden mt-4 bg-[#8B7355] text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wide shadow-lg border border-[#8B7355]/50 animate-pulse hover:animate-none"
           >
-            Talk to Our Expert
+            <TranslatedText>Talk to Our Expert</TranslatedText>
           </button>
         </div>
 
@@ -145,14 +148,14 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
           {/* Section Header */}
           <div className="text-center mb-12 md:mb-20">
             <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">
-              {pageData?.collectionSection?.subtitle || 'Artisanal Excellence'}
+              <TranslatedText>{pageData?.collectionSection?.subtitle || 'Artisanal Excellence'}</TranslatedText>
             </span>
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-6 tracking-tight">
-              {pageData?.collectionSection?.title || 'Our Dream Temple Collection'}
+              <TranslatedText>{pageData?.collectionSection?.title || 'Our Dream Temple Collection'}</TranslatedText>
             </h2>
             <div className="w-20 h-1 bg-[#8B7355]/30 mx-auto mb-8"></div>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
-              {pageData?.collectionSection?.description || 'Transform your sacred space with our meticulously crafted marble temples, designed to bring peace and divinity into your home.'}
+              <TranslatedText>{pageData?.collectionSection?.description || 'Transform your sacred space with our meticulously crafted marble temples, designed to bring peace and divinity into your home.'}</TranslatedText>
             </p>
           </div>
 
@@ -186,9 +189,9 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
 
                 {/* Info Container */}
                 <div className="p-4 md:p-6 bg-white text-center border-t border-gray-50 flex flex-col h-full">
-                  <p className="text-[#8B7355] text-[10px] font-bold uppercase tracking-[0.2em] mb-2">Starting at {temple.price}</p>
+                  <p className="text-[#8B7355] text-[10px] font-bold uppercase tracking-[0.2em] mb-2"><TranslatedText>Starting at</TranslatedText> {temple.price}</p>
                   <h3 className="text-lg md:text-xl font-serif text-gray-800 italic mb-4 group-hover:text-[#8B7355] transition-colors duration-300">
-                    {temple.description}
+                    <TranslatedText>{temple.description}</TranslatedText>
                   </h3>
                   <div className="flex gap-2 mt-auto">
                     <button
@@ -210,7 +213,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                       }}
                       className="flex-1 bg-[#8B7355] text-white text-xs font-bold py-2 rounded hover:opacity-90 transition-opacity"
                     >
-                      BUY NOW
+                      <TranslatedText>BUY NOW</TranslatedText>
                     </button>
                     <button
                       onClick={(e) => {
@@ -220,7 +223,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                       }}
                       className="flex-1 border border-[#8B7355] text-[#8B7355] text-xs font-bold py-2 rounded hover:bg-[#8B7355] hover:text-white transition-all"
                     >
-                      DETAILS
+                      <TranslatedText>DETAILS</TranslatedText>
                     </button>
                   </div>
                 </div>
@@ -236,10 +239,10 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
           {/* Title */}
           <div className="text-center mb-10 md:mb-14">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-4 md:mb-5 tracking-wide">
-              The AMS Difference
+              <TranslatedText>The AMS Difference</TranslatedText>
             </h2>
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover why thousands choose us for their sacred space design
+              <TranslatedText>Discover why thousands choose us for their sacred space design</TranslatedText>
             </p>
             <div className="w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -255,16 +258,16 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
               <thead>
                 <tr>
                   <th className="px-2 py-3 md:px-3 md:py-3 text-left text-xs md:text-sm font-bold text-gray-800 uppercase border border-gray-200 bg-gray-50">
-                    Feature
+                    <TranslatedText>Feature</TranslatedText>
                   </th>
                   <th
                     className="px-2 py-3 md:px-3 md:py-3 text-center text-xs md:text-sm font-bold text-white uppercase border border-gray-200"
                     style={{ backgroundColor: '#8B7355' }}
                   >
-                    Aslam Marble Suppliers
+                    <TranslatedText>Aslam Marble Suppliers</TranslatedText>
                   </th>
                   <th className="px-2 py-3 md:px-3 md:py-3 text-center text-xs md:text-sm font-bold text-gray-800 uppercase border border-gray-200 bg-gray-50">
-                    Local Vendors
+                    <TranslatedText>Local Vendors</TranslatedText>
                   </th>
                 </tr>
               </thead>
@@ -272,14 +275,14 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 1: Artisanal Expertise */}
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Artisanal Expertise
+                    <TranslatedText>Artisanal Expertise</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: '#8B7355' }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>25+ Years Experience</span>
+                      <span><TranslatedText>25+ Years Experience</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -287,7 +290,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>May Vary</span>
+                      <span><TranslatedText>May Vary</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -295,14 +298,14 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 2: Customized Design */}
                 <tr className="hover:bg-gray-50 transition-colors" style={{ backgroundColor: '#f9f9f9' }}>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Customized Design
+                    <TranslatedText>Customized Design</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: '#8B7355' }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Tradition & Modernity</span>
+                      <span><TranslatedText>Tradition & Modernity</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -310,7 +313,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Limited Options</span>
+                      <span><TranslatedText>Limited Options</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -318,14 +321,14 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 3: Durability and Quality */}
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Durability and Quality
+                    <TranslatedText>Durability and Quality</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: '#8B7355' }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Assured</span>
+                      <span><TranslatedText>Assured</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -333,7 +336,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Questionable</span>
+                      <span><TranslatedText>Questionable</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -341,14 +344,14 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 4: Established Trust */}
                 <tr className="hover:bg-gray-50 transition-colors" style={{ backgroundColor: '#f9f9f9' }}>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Established Trust
+                    <TranslatedText>Established Trust</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: '#8B7355' }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Proven Reliability</span>
+                      <span><TranslatedText>Proven Reliability</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -356,7 +359,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Uncertain</span>
+                      <span><TranslatedText>Uncertain</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -364,14 +367,14 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 5: End to End Support */}
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    End to End Support
+                    <TranslatedText>End to End Support</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: '#8B7355' }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>From Design to Installation</span>
+                      <span><TranslatedText>From Design to Installation</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -379,7 +382,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Limited</span>
+                      <span><TranslatedText>Limited</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -387,14 +390,14 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 6: Marble Expertise */}
                 <tr className="hover:bg-gray-50 transition-colors" style={{ backgroundColor: '#f9f9f9' }}>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Marble Expertise
+                    <TranslatedText>Marble Expertise</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: '#8B7355' }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Specialized Knowledge</span>
+                      <span><TranslatedText>Specialized Knowledge</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -402,7 +405,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>General Know-how</span>
+                      <span><TranslatedText>General Know-how</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -410,14 +413,14 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                 {/* Row 7: Global Standards Compliance */}
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-800 border border-gray-200 font-medium">
-                    Global Standards Compliance
+                    <TranslatedText>Global Standards Compliance</TranslatedText>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
                     <div className="flex items-center justify-center gap-1.5">
                       <svg className="w-4 h-4 flex-shrink-0" style={{ color: '#8B7355' }} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>International Quality</span>
+                      <span><TranslatedText>International Quality</TranslatedText></span>
                     </div>
                   </td>
                   <td className="px-2 py-3 md:px-3 md:py-3 text-xs md:text-sm text-gray-700 border border-gray-200">
@@ -425,7 +428,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                       <svg className="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                       </svg>
-                      <span>Unverified</span>
+                      <span><TranslatedText>Unverified</TranslatedText></span>
                     </div>
                   </td>
                 </tr>
@@ -442,7 +445,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
       <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-8 md:mb-12 font-bold">
-            Frequently Asked Questions
+            <TranslatedText>Frequently Asked Questions</TranslatedText>
           </h2>
 
           <div className="space-y-4">
@@ -450,7 +453,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
               <div className="text-center py-12">
                 <div className="inline-flex items-center gap-3">
                   <div className="w-5 h-5 border-2 border-[#8B7355] border-t-transparent rounded-full animate-spin"></div>
-                  <p className="text-gray-600 text-base md:text-lg">Loading FAQs...</p>
+                  <p className="text-gray-600 text-base md:text-lg"><TranslatedText>Loading FAQs...</TranslatedText></p>
                 </div>
               </div>
             ) : faqs.length === 0 ? (
@@ -458,7 +461,7 @@ const DreamTemplePage = ({ onShowCart, onShowLikes }) => {
                 <svg className="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p className="text-gray-500 text-base md:text-lg">No FAQs available at the moment.</p>
+                <p className="text-gray-500 text-base md:text-lg"><TranslatedText>No FAQs available at the moment.</TranslatedText></p>
               </div>
             ) : (
               faqs.map((faq, index) => {
@@ -578,20 +581,20 @@ const ProcessStepsSection = ({ selectedStep, onStepChange, dynamicSteps }) => {
     <section className="w-full py-8 md:py-16 lg:py-32 px-4 md:px-8 bg-white relative overflow-hidden">
       {/* Decorative Background Text */}
       <div className="absolute top-10 left-10 text-[10rem] font-serif font-black text-gray-50 opacity-40 select-none pointer-events-none hidden lg:block uppercase tracking-tighter">
-        Process
+        <TranslatedText>Process</TranslatedText>
       </div>
       <div className="absolute bottom-10 right-10 text-[10rem] font-serif font-black text-gray-50 opacity-40 select-none pointer-events-none hidden lg:block uppercase tracking-tighter">
-        Journey
+        <TranslatedText>Journey</TranslatedText>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16 md:mb-24">
-          <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Our Method</span>
+          <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-xs mb-4 block"><TranslatedText>Our Method</TranslatedText></span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 mb-6 relative inline-block">
-            Design Your Pooja Room <span className="italic text-[#8B7355]">In 5 Steps</span>
+            <TranslatedText>Design Your Pooja Room</TranslatedText> <span className="italic text-[#8B7355]"><TranslatedText>In 5 Steps</TranslatedText></span>
           </h2>
           <p className="text-gray-500 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            A masterfully curated journey from initial configuration to final installation, ensuring every detail reflects your spiritual essence.
+            <TranslatedText>A masterfully curated journey from initial configuration to final installation, ensuring every detail reflects your spiritual essence.</TranslatedText>
           </p>
           <div className="flex justify-center gap-2 mt-8">
             <div className="w-12 h-[1px] bg-[#8B7355]/40 mt-3"></div>
@@ -629,11 +632,11 @@ const ProcessStepsSection = ({ selectedStep, onStepChange, dynamicSteps }) => {
                   <div className="flex-1">
                     <h3 className={`text-sm md:text-base font-bold tracking-widest uppercase transition-colors duration-300 ${selectedStep === step.id ? 'text-[#8B7355]' : 'text-gray-400 font-medium'
                       }`}>
-                      {step.title}
+                      <TranslatedText>{step.title}</TranslatedText>
                     </h3>
                     <p className={`text-xs mt-1 transition-opacity duration-500 overflow-hidden ${selectedStep === step.id ? 'opacity-100 max-h-20' : 'opacity-0 max-h-0'
                       } text-gray-500 leading-relaxed italic`}>
-                      Click to visualize the design transformation
+                      <TranslatedText>Click to visualize the design transformation</TranslatedText>
 
                     </p>
                   </div>
@@ -660,10 +663,10 @@ const ProcessStepsSection = ({ selectedStep, onStepChange, dynamicSteps }) => {
                     <div className="h-px flex-1 bg-gradient-to-r from-[#8B7355]/40 to-transparent"></div>
                   </div>
                   <h3 className="text-2xl md:text-3xl font-serif text-gray-900 italic font-bold leading-tight">
-                    {steps.find(s => s.id === selectedStep)?.title}
+                    <TranslatedText>{steps.find(s => s.id === selectedStep)?.title}</TranslatedText>
                   </h3>
                   <p className="text-gray-600 text-lg leading-relaxed font-medium">
-                    {steps.find(s => s.id === selectedStep)?.description}
+                    <TranslatedText>{steps.find(s => s.id === selectedStep)?.description}</TranslatedText>
                   </p>
                 </div>
 
@@ -678,7 +681,7 @@ const ProcessStepsSection = ({ selectedStep, onStepChange, dynamicSteps }) => {
                       </div>
                     </div>
                     <p className="text-sm text-gray-700 italic leading-relaxed">
-                      "Our team of master artisans ensures this stage is executed with absolute precision, honoring both traditional Vastu and modern ergonomics."
+                      "<TranslatedText>Our team of master artisans ensures this stage is executed with absolute precision, honoring both traditional Vastu and modern ergonomics.</TranslatedText>"
                     </p>
                   </div>
                 </div>
@@ -697,7 +700,7 @@ const ProcessStepsSection = ({ selectedStep, onStepChange, dynamicSteps }) => {
                     {/* Control Overlay */}
                     <div className="absolute bottom-4 left-6 right-6 z-20 flex items-center justify-between pointer-events-none opacity-0 group-hover/canvas:opacity-100 translate-y-4 group-hover/canvas:translate-y-0 transition-all duration-500">
                       <div className="bg-white/95 backdrop-blur px-4 py-2 rounded-lg shadow-lg">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-[#8B7355]">Step {selectedStep} Interactive Walkthrough</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-[#8B7355]"><TranslatedText>Step</TranslatedText> {selectedStep} <TranslatedText>Interactive Walkthrough</TranslatedText></span>
                       </div>
                       <div className="flex gap-2">
                         <div className="w-2 h-2 rounded-full bg-white/50"></div>

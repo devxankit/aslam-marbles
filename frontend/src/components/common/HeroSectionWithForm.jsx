@@ -1,3 +1,4 @@
+import TranslatedText from '../TranslatedText'
 import ExpertFormOverlay from './ExpertFormOverlay'
 import LazyImage from './LazyImage'
 
@@ -33,14 +34,14 @@ const HeroSectionWithForm = ({
       {/* Hero Text Overlay - Left Side */}
       <div className="absolute top-16 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-xl md:max-w-2xl">
         <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 md:mb-4 leading-tight uppercase tracking-wide drop-shadow-lg">
-          {title}
+          <TranslatedText>{title}</TranslatedText>
         </h1>
         <p className="text-sm md:text-base lg:text-lg text-white font-light mb-2 drop-shadow-md">
-          {subtitle}
+          <TranslatedText>{subtitle}</TranslatedText>
         </p>
         {description && (
           <p className="text-xs md:text-sm text-white/90 font-light leading-relaxed drop-shadow-md">
-            {description}
+            <TranslatedText>{description}</TranslatedText>
           </p>
         )}
 
@@ -50,7 +51,7 @@ const HeroSectionWithForm = ({
             onClick={onMobileButtonClick}
             className="md:hidden mt-4 px-5 py-2 text-xs bg-[#8B7355] text-white font-bold uppercase tracking-wider rounded shadow-lg hover:bg-[#725E45] transition-colors"
           >
-            Talk to Our Expert
+            <TranslatedText>Talk to Our Expert</TranslatedText>
           </button>
         )}
       </div>

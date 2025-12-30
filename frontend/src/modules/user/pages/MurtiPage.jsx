@@ -7,6 +7,8 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import TrustedBySection from '../../../components/common/TrustedBySection'
 import { fetchFAQs } from '../../../utils/faqUtils'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 import { murtiCollections } from '../../../data/murtiCollections'
 import { ganeshaProducts } from '../../../data/ganeshaProducts'
 import { hanumanProducts } from '../../../data/hanumanProducts'
@@ -216,10 +218,10 @@ const MurtiPage = ({
         <div className="absolute inset-0 flex flex-col items-center justify-center px-4 bg-white/10">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-serif text-gray-900 mb-4 tracking-tight">
-              {pageData?.heroSection?.title || 'Heritage Murti Collection'}
+              <TranslatedText>{pageData?.heroSection?.title || 'Heritage Murti Collection'}</TranslatedText>
             </h1>
             <p className="text-gray-600 text-sm md:text-lg font-light tracking-widest uppercase">
-              {pageData?.heroSection?.subtitle || 'Sacred Marble Artistry'}
+              <TranslatedText>{pageData?.heroSection?.subtitle || 'Sacred Marble Artistry'}</TranslatedText>
             </p>
             <div className="w-12 h-[1px] bg-gray-300 mx-auto mt-8"></div>
           </div>
@@ -256,7 +258,7 @@ const MurtiPage = ({
               {/* Simple Heading */}
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-serif text-gray-900 italic font-normal mb-2">
-                  {group.title}
+                  <TranslatedText>{group.title}</TranslatedText>
                 </h2>
                 <div className="w-8 h-[1px] bg-[#8B7355] mx-auto opacity-30"></div>
               </div>
@@ -274,7 +276,7 @@ const MurtiPage = ({
                       onClick={() => matchingCategory && handleCategoryClick(matchingCategory)}
                       className="text-xs font-medium text-gray-500 hover:text-gray-900 transition-colors uppercase tracking-widest"
                     >
-                      {itemName}
+                      <TranslatedText>{itemName}</TranslatedText>
                     </button>
                   );
                 })}
@@ -301,7 +303,7 @@ const MurtiPage = ({
                           />
                         </div>
                         <p className="mt-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest text-center group-hover:text-gray-900 transition-colors">
-                          {category.name}
+                          <TranslatedText>{category.name}</TranslatedText>
                         </p>
                       </div>
                     ))}
@@ -315,7 +317,7 @@ const MurtiPage = ({
       {/* Simple Transition Banner */}
       <div id="shop-home-decor-banner" className="w-full h-[300px] flex items-center justify-center bg-gray-50 border-y border-gray-100">
         <div className="text-center px-6">
-          <h3 className="text-3xl md:text-4xl font-serif text-gray-900 mb-6">Home Decor & Accents</h3>
+          <h3 className="text-3xl md:text-4xl font-serif text-gray-900 mb-6"><TranslatedText>Home Decor & Accents</TranslatedText></h3>
           <button
             onClick={() => {
               const decorSection = document.getElementById('shop-home-decor-section')
@@ -325,7 +327,7 @@ const MurtiPage = ({
             }}
             className="px-10 py-3 border border-gray-900 text-gray-900 text-[10px] font-bold uppercase tracking-widest hover:bg-gray-900 hover:text-white transition-all duration-300"
           >
-            Explore Decor
+            <TranslatedText>Explore Decor</TranslatedText>
           </button>
         </div>
       </div>
@@ -335,7 +337,7 @@ const MurtiPage = ({
         {/* Furniture Section */}
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif text-gray-900 mb-4">Furniture</h2>
+            <h2 className="text-4xl font-serif text-gray-900 mb-4"><TranslatedText>Furniture</TranslatedText></h2>
             <div className="w-8 h-[1px] bg-gray-300 mx-auto"></div>
           </div>
 
@@ -353,7 +355,7 @@ const MurtiPage = ({
                       width={300}
                     />
                   </div>
-                  <h4 className="text-gray-900 text-sm font-medium uppercase tracking-widest text-center">{category}</h4>
+                  <h4 className="text-gray-900 text-sm font-medium uppercase tracking-widest text-center"><TranslatedText>{category}</TranslatedText></h4>
                 </div>
               )
             })}
@@ -363,7 +365,7 @@ const MurtiPage = ({
         {/* Home Decor Section */}
         <div id="shop-home-decor-section" className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif text-gray-900 mb-4">Home Decor</h2>
+            <h2 className="text-4xl font-serif text-gray-900 mb-4"><TranslatedText>Home Decor</TranslatedText></h2>
             <div className="w-8 h-[1px] bg-gray-300 mx-auto"></div>
           </div>
 
@@ -381,7 +383,7 @@ const MurtiPage = ({
                       width={400}
                     />
                   </div>
-                  <h4 className="text-gray-900 text-[10px] font-bold uppercase tracking-widest text-center">{category}</h4>
+                  <h4 className="text-gray-900 text-[10px] font-bold uppercase tracking-widest text-center"><TranslatedText>{category}</TranslatedText></h4>
                 </div>
               )
             })}
@@ -393,7 +395,7 @@ const MurtiPage = ({
       <section className="w-full py-20 md:py-24 px-4 md:px-8 bg-white border-t border-gray-100">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-serif text-gray-900 mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-5xl font-serif text-gray-900 mb-4"><TranslatedText>Frequently Asked Questions</TranslatedText></h2>
             <div className="w-12 h-[1px] bg-[#8B7355] mx-auto opacity-30"></div>
           </div>
 
@@ -402,12 +404,12 @@ const MurtiPage = ({
               <div className="text-center py-12">
                 <div className="inline-flex items-center gap-3">
                   <div className="w-5 h-5 border-2 border-[#8B7355] border-t-transparent rounded-full animate-spin"></div>
-                  <p className="text-gray-600 text-sm md:text-base">Loading FAQs...</p>
+                  <p className="text-gray-600 text-sm md:text-base"><TranslatedText>Loading FAQs...</TranslatedText></p>
                 </div>
               </div>
             ) : faqs.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-500 text-sm md:text-base">No FAQs available at the moment.</p>
+                <p className="text-gray-500 text-sm md:text-base"><TranslatedText>No FAQs available at the moment.</TranslatedText></p>
               </div>
             ) : (
               faqs.map((faq, index) => {

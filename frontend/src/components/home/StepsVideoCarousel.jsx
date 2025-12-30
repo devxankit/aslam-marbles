@@ -7,6 +7,7 @@ import gif2 from '../../assets/how it work/5stepvideo/image2.gif'
 import gif3 from '../../assets/how it work/5stepvideo/image3.gif'
 import gif4 from '../../assets/how it work/5stepvideo/image4.gif'
 import gif5 from '../../assets/how it work/5stepvideo/image5.gif'
+import TranslatedText from '../TranslatedText'
 
 const StepsVideoCarousel = () => {
     const navigate = useNavigate()
@@ -22,14 +23,14 @@ const StepsVideoCarousel = () => {
             content: (
                 <div className="space-y-4">
                     <StepInfoItem
-                        title="It all Begins with a Form"
-                        description="Let's get acquainted. The more we learn about you, the better we can design your home."
-                        buttonText="Fill Form Link"
+                        title={<TranslatedText>It all Begins with a Form</TranslatedText>}
+                        description={<TranslatedText>Let's get acquainted. The more we learn about you, the better we can design your home.</TranslatedText>}
+                        buttonText={<TranslatedText>Fill Form Link</TranslatedText>}
                         onButtonClick={() => navigate('/book-appointment')}
                     />
                     <StepInfoItem
-                        title="Connect over a Meet"
-                        description="Let's get acquainted. The more we learn about you, the better we can design your home."
+                        title={<TranslatedText>Connect over a Meet</TranslatedText>}
+                        description={<TranslatedText>Let's get acquainted. The more we learn about you, the better we can design your home.</TranslatedText>}
                     />
                 </div>
             )
@@ -42,11 +43,11 @@ const StepsVideoCarousel = () => {
             bgColor: THEME_COLORS.secondary,
             content: (
                 <div className="space-y-4">
-                    <h4 className="text-base md:text-xl font-bold text-[#8B7355] uppercase mb-4">Start With Your Design</h4>
+                    <h4 className="text-base md:text-xl font-bold text-[#8B7355] uppercase mb-4"><TranslatedText>Start With Your Design</TranslatedText></h4>
                     <StepInfoItem
-                        title="Pay the Design Fee"
-                        description="Once we understand your requirements and we feel we can help you, start with your design by choosing one of the design plans."
-                        buttonText="Pay Design Fee"
+                        title={<TranslatedText>Pay the Design Fee</TranslatedText>}
+                        description={<TranslatedText>Once we understand your requirements and we feel we can help you, start with your design by choosing one of the design plans.</TranslatedText>}
+                        buttonText={<TranslatedText>Pay Design Fee</TranslatedText>}
                         onButtonClick={() => navigate('/checkout', {
                             state: {
                                 items: [{
@@ -60,8 +61,8 @@ const StepsVideoCarousel = () => {
                         })}
                     />
                     <StepInfoItem
-                        title="Finalise your Design"
-                        description="Once we agree on a Design we will finalise it to start the production."
+                        title={<TranslatedText>Finalise your Design</TranslatedText>}
+                        description={<TranslatedText>Once we agree on a Design we will finalise it to start the production.</TranslatedText>}
                     />
                 </div>
             )
@@ -74,14 +75,14 @@ const StepsVideoCarousel = () => {
             bgColor: 'transparent',
             content: (
                 <div className="space-y-4">
-                    <h4 className="text-base md:text-xl font-bold text-[#8B7355] uppercase mb-4">Place The Order</h4>
+                    <h4 className="text-base md:text-xl font-bold text-[#8B7355] uppercase mb-4"><TranslatedText>Place The Order</TranslatedText></h4>
                     <StepInfoItem
-                        title="Start the Order Process"
-                        description="Once you're happy with what we've proposed, pay 50% of the final quote."
+                        title={<TranslatedText>Start the Order Process</TranslatedText>}
+                        description={<TranslatedText>Once you're happy with what we've proposed, pay 50% of the final quote.</TranslatedText>}
                     />
                     <StepInfoItem
-                        title="The Work Commences"
-                        description="Keep a tab on your project status on the portal provided."
+                        title={<TranslatedText>The Work Commences</TranslatedText>}
+                        description={<TranslatedText>Keep a tab on your project status on the portal provided.</TranslatedText>}
                     />
                 </div>
             )
@@ -94,14 +95,14 @@ const StepsVideoCarousel = () => {
             bgColor: THEME_COLORS.accent,
             content: (
                 <div className="space-y-4">
-                    <h4 className="text-base md:text-xl font-bold text-[#8B7355] uppercase mb-4">Approval</h4>
+                    <h4 className="text-base md:text-xl font-bold text-[#8B7355] uppercase mb-4"><TranslatedText>Approval</TranslatedText></h4>
                     <StepInfoItem
-                        title="Give your Approval"
-                        description="Once the Order reaches the approval stage, you will be asked to provide your feedback and approve"
+                        title={<TranslatedText>Give your Approval</TranslatedText>}
+                        description={<TranslatedText>Once the Order reaches the approval stage, you will be asked to provide your feedback and approve</TranslatedText>}
                     />
                     <StepInfoItem
-                        title="Pay 100% at Execution Milestone"
-                        description="Once the Order is fully set according to your requirements pay the 100% and the next stage begins."
+                        title={<TranslatedText>Pay 100% at Execution Milestone</TranslatedText>}
+                        description={<TranslatedText>Once the Order is fully set according to your requirements pay the 100% and the next stage begins.</TranslatedText>}
                     />
                 </div>
             )
@@ -114,14 +115,14 @@ const StepsVideoCarousel = () => {
             bgColor: 'transparent',
             content: (
                 <div className="space-y-4">
-                    <h4 className="text-base md:text-xl font-bold text-[#8B7355] uppercase mb-4">Delivery And Installation</h4>
+                    <h4 className="text-base md:text-xl font-bold text-[#8B7355] uppercase mb-4"><TranslatedText>Delivery And Installation</TranslatedText></h4>
                     <StepInfoItem
-                        title="Prepare for Delivery"
-                        description="Once the 100% of the order value is received we prepare for the Delivery and Installation of the Order"
+                        title={<TranslatedText>Prepare for Delivery</TranslatedText>}
+                        description={<TranslatedText>Once the 100% of the order value is received we prepare for the Delivery and Installation of the Order</TranslatedText>}
                     />
                     <StepInfoItem
-                        title="Installation"
-                        description="Our Team reaches your Home and Install it at your space"
+                        title={<TranslatedText>Installation</TranslatedText>}
+                        description={<TranslatedText>Our Team reaches your Home and Install it at your space</TranslatedText>}
                     />
                 </div>
             )
@@ -138,10 +139,10 @@ const StepsVideoCarousel = () => {
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-4 md:mb-10">
                     <h2 className="text-lg md:text-4xl font-serif text-[#8B7355] italic mb-1 md:mb-2 uppercase tracking-wide leading-tight">
-                        GET STARTED WITH OUR 5 STEP EASY PROCESS
+                        <TranslatedText>GET STARTED WITH OUR 5 STEP EASY PROCESS</TranslatedText>
                     </h2>
                     <h3 className="text-xs md:text-2xl font-serif text-[#8B7355] italic uppercase tracking-wider">
-                        {currentStepData.title}
+                        <TranslatedText>{currentStepData.title}</TranslatedText>
                     </h3>
                 </div>
 

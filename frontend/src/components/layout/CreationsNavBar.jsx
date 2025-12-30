@@ -6,6 +6,7 @@ import ShopByDropdown from './ShopByDropdown'
 
 import { useCartAndLikes } from '../../contexts/CartAndLikesContext'
 import logoImage from '../../assets/logo/download.png'
+import TranslatedText from '../TranslatedText'
 
 const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
   const { getCartCount, likes } = useCartAndLikes()
@@ -207,7 +208,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                           text-gray-700 hover:text-[#8B7355]
                         `}
                           >
-                            {item.name}
+                            <TranslatedText>{item.name}</TranslatedText>
                             <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B7355] transition-all duration-300 group-hover:w-full"></span>
                           </span>
                         ) : (
@@ -226,7 +227,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                               }
                         `}
                           >
-                            {item.name}
+                            <TranslatedText>{item.name}</TranslatedText>
                             {isActive && (
                               <span className="absolute left-0 bottom-0 w-full h-[2px] bg-[#8B7355] transition-all duration-300"></span>
                             )}
@@ -266,7 +267,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                           }
                       `}
                       >
-                        {item.name}
+                        <TranslatedText>{item.name}</TranslatedText>
                         {isActive && (
                           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-[#8B7355] transition-all duration-300"></span>
                         )}
@@ -447,7 +448,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                             className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium uppercase tracking-wide transition-colors ${isActive ? 'text-[#8B7355] bg-gray-50' : 'text-gray-700 hover:bg-gray-50'
                               }`}
                           >
-                            <span>{item.name}</span>
+                            <span><TranslatedText>{item.name}</TranslatedText></span>
                             <svg
                               className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                               fill="none"
@@ -464,7 +465,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                                   {murtiHierarchy.length > 0 ? (
                                     murtiHierarchy.map((group) => (
                                       <div key={group._id}>
-                                        <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{group.name}</h4>
+                                        <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2"><TranslatedText>{group.name}</TranslatedText></h4>
                                         <div className="flex flex-col gap-2 pl-2">
                                           {group.categories.map((category) => (
                                             <Link
@@ -473,25 +474,25 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                                               onClick={() => setMobileMenuOpen(false)}
                                               className="text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded px-2 py-1"
                                             >
-                                              {category.name}
+                                              <TranslatedText>{category.name}</TranslatedText>
                                             </Link>
                                           ))}
                                         </div>
                                       </div>
                                     ))
                                   ) : (
-                                    <div className="text-sm text-gray-400 p-2">Loading categories...</div>
+                                    <div className="text-sm text-gray-400 p-2"><TranslatedText>Loading categories...</TranslatedText></div>
                                   )}
                                 </div>
                               )}
                               {item.dropdownKey === 'home-decor' && (
                                 <div className="flex flex-col gap-4 py-2">
                                   <Link to="/murti#shop-home-decor" onClick={() => setMobileMenuOpen(false)} className="font-bold text-sm text-[#8B7355] hover:underline mb-2 block">
-                                    View All Home Decor
+                                    <TranslatedText>View All Home Decor</TranslatedText>
                                   </Link>
                                   {homeDecorCategories.map((group, idx) => (
                                     <div key={idx}>
-                                      <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{group.title}</h4>
+                                      <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2"><TranslatedText>{group.title}</TranslatedText></h4>
                                       <div className="flex flex-col gap-2 pl-2">
                                         {group.items.map((subItem) => (
                                           <Link
@@ -500,7 +501,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                                             onClick={() => setMobileMenuOpen(false)}
                                             className="text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded px-2 py-1"
                                           >
-                                            {subItem.name}
+                                            <TranslatedText>{subItem.name}</TranslatedText>
                                           </Link>
                                         ))}
                                       </div>
@@ -511,7 +512,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                               {item.dropdownKey === 'shop-by' && (
                                 <div className="flex flex-col gap-4 py-2">
                                   <div>
-                                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Rooms</h4>
+                                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2"><TranslatedText>Rooms</TranslatedText></h4>
                                     <div className="flex flex-col gap-2 pl-2">
                                       {shopByCategories.rooms.map((room) => (
                                         <Link
@@ -520,13 +521,13 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                                           onClick={() => setMobileMenuOpen(false)}
                                           className="text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded px-2 py-1"
                                         >
-                                          {room}
+                                          <TranslatedText>{room}</TranslatedText>
                                         </Link>
                                       ))}
                                     </div>
                                   </div>
                                   <div>
-                                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Occasions</h4>
+                                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2"><TranslatedText>Occasions</TranslatedText></h4>
                                     <div className="flex flex-col gap-2 pl-2">
                                       {shopByCategories.occasions.map((occasion) => (
                                         <Link
@@ -535,7 +536,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                                           onClick={() => setMobileMenuOpen(false)}
                                           className="text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded px-2 py-1"
                                         >
-                                          {occasion}
+                                          <TranslatedText>{occasion}</TranslatedText>
                                         </Link>
                                       ))}
                                     </div>
@@ -557,7 +558,7 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                         className={`px-4 py-3 text-sm font-medium uppercase tracking-wide transition-colors border-b border-gray-100 ${isActive ? 'text-[#8B7355] bg-gray-50' : 'text-gray-700 hover:bg-gray-50'
                           }`}
                       >
-                        {item.name}
+                        <TranslatedText>{item.name}</TranslatedText>
                       </Link>
                     )
                   })}

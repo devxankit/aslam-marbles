@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { ourCreations as defaultCreations } from '../../data/creations'
 import { buildImageUrl, fetchNavItems } from '../../utils/aslamHouseUtils'
+import TranslatedText from '../TranslatedText'
 
 const GROUP = 'our-creations-nav'
 
@@ -59,14 +60,14 @@ const OurCreationsDropdown = () => {
                 to={route}
                 className="block w-full text-left px-3 py-2 text-xs md:text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 rounded transition-all duration-200 font-medium"
               >
-                {item.name}
+                <TranslatedText>{item.name}</TranslatedText>
               </Link>
             ) : (
               <button
                 key={item.id}
                 className="w-full text-left px-3 py-2 text-xs md:text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 rounded transition-all duration-200 font-medium"
               >
-                {item.name}
+                <TranslatedText>{item.name}</TranslatedText>
               </button>
             )
           })}
@@ -87,7 +88,7 @@ const OurCreationsDropdown = () => {
                 />
               </div>
               <h3 className="text-xs md:text-sm font-semibold text-black text-center mt-1.5 group-hover:text-[#8B7355] transition-colors whitespace-nowrap">
-                {item.name}
+                <TranslatedText>{item.name}</TranslatedText>
               </h3>
             </div>
           )

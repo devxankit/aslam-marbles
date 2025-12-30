@@ -2,6 +2,7 @@ import Header from '../../../components/layout/Header'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import footerBackgroundImage from '../../../assets/footer page background/Beige Pink Elegant Watercolor Background Notes Planner.png'
+import TranslatedText from '../../../components/TranslatedText'
 
 const TermsAndConditionsPage = ({
   onShowSidebar,
@@ -42,7 +43,7 @@ const TermsAndConditionsPage = ({
           {/* Page Header */}
           <div className="text-center mb-6 md:mb-12">
             <h1 className="text-xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-3 md:mb-4 tracking-wide font-bold">
-              Terms and Conditions
+              <TranslatedText>Terms and Conditions</TranslatedText>
             </h1>
             <div className="w-16 md:w-24 h-0.5 md:h-1 rounded-full mx-auto" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -57,7 +58,7 @@ const TermsAndConditionsPage = ({
           {/* Section 1 */}
           <div className="mb-6 md:mb-10 text-left">
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-2 md:mb-3 font-bold">
-              1. General Information
+              <TranslatedText>1. General Information</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed text-justify">
               Aslam Marble Suppliers specializes in providing marble temples, pooja room setups, marble murtis, stone artifacts, home décor items, and wall art.
@@ -67,7 +68,7 @@ const TermsAndConditionsPage = ({
           {/* Section 2 */}
           <div className="mb-6 md:mb-10 text-left">
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-2 md:mb-3 font-bold">
-              2. Collection of Personal Information
+              <TranslatedText>2. Collection of Personal Information</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed mb-2 md:mb-3 text-justify">
               When you use our website to inquire about our products or services, we may collect personal information, including but not limited to:
@@ -123,7 +124,7 @@ const TermsAndConditionsPage = ({
           {/* Section 3 */}
           <div className="mb-6 md:mb-10 text-left">
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-2 md:mb-3 font-bold">
-              3. Data Usage and Privacy
+              <TranslatedText>3. Data Usage and Privacy</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed mb-2 md:mb-3 text-justify">
               Your privacy is extremely important to us. The information we collect is used only for:
@@ -158,7 +159,7 @@ const TermsAndConditionsPage = ({
           {/* Section 4 */}
           <div className="mb-6 md:mb-10 text-left">
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-2 md:mb-3 font-bold">
-              4. Intellectual Property
+              <TranslatedText>4. Intellectual Property</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed mb-2 md:mb-3 text-justify">
               All content, images, product designs, graphics, and text displayed on our website are the intellectual property of Aslam Marble Suppliers.
@@ -171,7 +172,7 @@ const TermsAndConditionsPage = ({
           {/* Section 5 */}
           <div className="mb-6 md:mb-10 text-left">
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-2 md:mb-3 font-bold">
-              5. Product Information and Availability
+              <TranslatedText>5. Product Information and Availability</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed mb-2 md:mb-3 text-justify">
               We make every effort to provide accurate product details and availability. However:
@@ -191,7 +192,7 @@ const TermsAndConditionsPage = ({
           {/* Section 6 */}
           <div className="mb-6 md:mb-10 text-left">
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-2 md:mb-3 font-bold">
-              6. Orders and Shipping
+              <TranslatedText>6. Orders and Shipping</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed mb-2 md:mb-3 text-justify">
               All orders or inquiries made through our website or contact forms are subject to confirmation.
@@ -221,7 +222,7 @@ const TermsAndConditionsPage = ({
           {/* Section 7 */}
           <div className="mb-6 md:mb-10 text-left">
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-2 md:mb-3 font-bold">
-              7. Collaboration with Architects / Designers
+              <TranslatedText>7. Collaboration with Architects / Designers</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed mb-2 md:mb-3 text-justify">
               Architects or designers who wish to collaborate with us must submit accurate information.
@@ -244,7 +245,7 @@ const TermsAndConditionsPage = ({
           {/* Section 8 */}
           <div className="mb-6 md:mb-10 text-left">
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-2 md:mb-3 font-bold">
-              8. Limitation of Liability
+              <TranslatedText>8. Limitation of Liability</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed mb-2 md:mb-3 text-justify">
               Aslam Marble Suppliers is not responsible for any damages arising from the use of our website, including but not limited to:
@@ -272,7 +273,7 @@ const TermsAndConditionsPage = ({
           {/* Section 9 */}
           <div className="mb-6 md:mb-10 text-left">
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-2 md:mb-3 font-bold">
-              9. Changes to Terms and Conditions
+              <TranslatedText>9. Changes to Terms and Conditions</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed mb-2 md:mb-3 text-justify">
               We may update or modify these terms at any time.
@@ -285,7 +286,7 @@ const TermsAndConditionsPage = ({
           {/* Section 10 - Contact Us */}
           <div className="mb-6 md:mb-10 bg-gray-50 p-4 md:p-6 rounded-lg border-l-2 md:border-l-4" style={{ borderColor: '#8B7355' }}>
             <h2 className="text-lg md:text-2xl font-serif text-[#8B7355] italic mb-3 md:mb-4 font-bold">
-              10. Contact Us
+              <TranslatedText>10. Contact Us</TranslatedText>
             </h2>
             <p className="text-xs md:text-base text-gray-700 leading-relaxed mb-2 md:mb-3 text-justify">
               For questions or concerns regarding these terms, you may contact us at:

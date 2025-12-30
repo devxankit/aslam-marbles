@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const ShippingPage = ({ onShowCart, onShowLikes }) => {
+  const { getTranslatedText } = usePageTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const [loading, setLoading] = useState(false)
@@ -79,7 +82,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
     }
 
     if (!userId) {
-      alert('Please login to continue')
+      alert(getTranslatedText('Please login to continue'))
       navigate('/login', {
         state: { from: '/checkout/shipping', checkoutData: { formData, items: checkoutItems, subtotal, shippingCost, total } }
       })
@@ -88,12 +91,12 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
 
     // Validate form data before proceeding
     if (!formData.email && !formData.phone) {
-      alert('Please provide email or phone number')
+      alert(getTranslatedText('Please provide email or phone number'))
       return
     }
 
     if (!formData.address || !formData.city || !formData.state || !formData.pinCode) {
-      alert('Please provide complete shipping address')
+      alert(getTranslatedText('Please provide complete shipping address'))
       return
     }
 
@@ -174,7 +177,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
             const verifyData = await verifyRes.json()
 
             if (verifyRes.ok && verifyData.success) {
-              alert('Payment successful! Your order has been placed.')
+              alert(getTranslatedText('Payment successful! Your order has been placed.'))
               navigate('/order-success', {
                 state: {
                   order: verifyData.order
@@ -185,7 +188,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
             }
           } catch (err) {
             console.error('Payment verification error:', err)
-            alert('Payment verification failed. Please contact support.')
+            alert(getTranslatedText('Payment verification failed. Please contact support.'))
           }
         },
         prefill: {
@@ -215,7 +218,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
 
       // Handle Unauthorized error specifically
       if (error.message && error.message.toLowerCase().includes('unauthorized')) {
-        alert('Your session has expired. Please login again.')
+        alert(getTranslatedText('Your session has expired. Please login again.'))
         localStorage.removeItem('authToken')
         localStorage.removeItem('user')
         navigate('/login', {
@@ -249,7 +252,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
           {/* Contact */}
           <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-200">
             <div className="flex-1">
-              <p className="text-sm text-gray-500 mb-1">Contact</p>
+              <p className="text-sm text-gray-500 mb-1"><TranslatedText>Contact</TranslatedText></p>
               <p className="text-base font-medium text-gray-900">{formData.email || formData.phone}</p>
             </div>
             <button
@@ -263,7 +266,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
           {/* Ship to */}
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-sm text-gray-500 mb-1">Ship to</p>
+              <p className="text-sm text-gray-500 mb-1"><TranslatedText>Ship to</TranslatedText></p>
               <p className="text-base font-medium text-gray-900">{fullAddress}</p>
             </div>
             <button
@@ -277,7 +280,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
 
         {/* Shipping Method */}
         <div className="mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">Shipping method</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4"><TranslatedText>Shipping method</TranslatedText></h2>
           <div className="bg-[#F5F0E8] rounded-lg p-6 border-2 border-[#8B7355] relative">
             <div className="flex items-start justify-between">
               <div className="flex-1">
@@ -287,7 +290,7 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
                 </p>
               </div>
               <div className="ml-4">
-                <span className="text-lg font-bold text-gray-900">FREE</span>
+                <span className="text-lg font-bold text-gray-900"><TranslatedText>FREE</TranslatedText></span>
               </div>
             </div>
           </div>
@@ -299,14 +302,14 @@ const ShippingPage = ({ onShowCart, onShowLikes }) => {
             onClick={handleReturnToInfo}
             className="text-[#8B7355] hover:underline font-medium"
           >
-            ← Return to information
+            ← <TranslatedText>Return to information</TranslatedText>
           </button>
           <button
             onClick={handleContinueToPayment}
             disabled={loading}
             className="px-8 py-3 bg-[#8B7355] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Processing...' : 'Continue to payment'}
+            {loading ? <TranslatedText>Processing...</TranslatedText> : <TranslatedText>Continue to payment</TranslatedText>}
           </button>
         </div>
       </div>

@@ -1,12 +1,15 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { usePageTranslation } from '../../contexts/PageTranslationContext'
 import dreamTemple1 from '../../assets/locationicons/templecardimages/dreams1.jpeg'
 import dreamTemple2 from '../../assets/locationicons/templecardimages/dreams2.jpeg'
 import dreamTemple3 from '../../assets/locationicons/templecardimages/dreams3.jpeg'
 import dreamTemple4 from '../../assets/locationicons/templecardimages/dreams4.jpeg'
+import TranslatedText from '../TranslatedText'
 
 const DreamTempleSection = ({ onOpenPricing }) => {
     const navigate = useNavigate()
+    const { getTranslatedText } = usePageTranslation()
     const temples = [
         {
             id: 1,
@@ -48,10 +51,10 @@ const DreamTempleSection = ({ onOpenPricing }) => {
                 {/* Section Header */}
                 <div className="text-center mb-10 md:mb-14 lg:mb-16">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic mb-4 md:mb-5">
-                        OUR DREAM TEMPLE COLLECTION
+                        <TranslatedText>OUR DREAM TEMPLE COLLECTION</TranslatedText>
                     </h2>
                     <p className="text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        Transform your sacred space with our meticulously crafted marble temples, designed to bring peace and divinity into your home.
+                        <TranslatedText>Transform your sacred space with our meticulously crafted marble temples, designed to bring peace and divinity into your home.</TranslatedText>
                     </p>
                     <div className="w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
                 </div>
@@ -66,7 +69,7 @@ const DreamTempleSection = ({ onOpenPricing }) => {
                             <div className="relative w-full aspect-[4/5] overflow-hidden bg-gray-100">
                                 <img
                                     src={temple.image}
-                                    alt={temple.description}
+                                    alt={getTranslatedText(temple.description)}
                                     className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                                 />
                                 {/* Overlay for Buy Now on Mobile or hover */}
@@ -89,7 +92,7 @@ const DreamTempleSection = ({ onOpenPricing }) => {
                                         }}
                                         className="bg-white text-[#8B7355] px-6 py-2 rounded-full font-bold text-sm shadow-lg hover:scale-105 transition-transform"
                                     >
-                                        BUY NOW
+                                        <TranslatedText>BUY NOW</TranslatedText>
                                     </button>
                                 </div>
                             </div>
@@ -97,13 +100,13 @@ const DreamTempleSection = ({ onOpenPricing }) => {
                             {/* Info Container */}
                             <div className="p-4 md:p-6 bg-white text-center flex-1 flex flex-col justify-center">
                                 <p className="text-[10px] md:text-xs font-bold text-[#8B7355] mb-1 uppercase tracking-widest leading-none">
-                                    Starts at
+                                    <TranslatedText>Starts at</TranslatedText>
                                 </p>
                                 <p className="text-lg md:text-2xl font-bold text-gray-900 mb-1 leading-none">
                                     ₹{temple.price}
                                 </p>
                                 <p className="text-sm md:text-lg font-serif italic text-gray-600 truncate">
-                                    {temple.size} Wide
+                                    <TranslatedText>{temple.size}</TranslatedText>
                                 </p>
                             </div>
                         </div>
@@ -116,7 +119,7 @@ const DreamTempleSection = ({ onOpenPricing }) => {
                         onClick={onOpenPricing}
                         className="group relative px-8 py-4 bg-[#8B7355] text-white text-lg font-bold uppercase tracking-widest rounded-full overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
                     >
-                        <span className="relative z-10 group-hover:text-[#8B7355] transition-colors duration-300">Understand Pricing</span>
+                        <span className="relative z-10 group-hover:text-[#8B7355] transition-colors duration-300"><TranslatedText>View Pricing</TranslatedText></span>
                         <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                     </button>
                 </div>

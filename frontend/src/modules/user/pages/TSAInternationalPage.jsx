@@ -7,6 +7,7 @@ import TrustedBySection from '../../../components/common/TrustedBySection'
 import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
 import { fetchFAQs } from '../../../utils/faqUtils'
 import { internationalLocations } from '../../../data/locations'
+import TranslatedText from '../../../components/TranslatedText'
 
 // Import hero image
 import tsaInternationalHeroImage from '../../../assets/services/TSA international/heading/howitwork_bannerimg.jpeg'
@@ -183,7 +184,7 @@ const TSAInternationalPage = ({
             {/* Right Side - Caption */}
             <div className="order-2 md:order-2">
               <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-3 sm:mb-6 md:mb-8 leading-tight font-bold">
-                What Sets AMS International Apart – Short Version
+                <TranslatedText>What Sets AMS International Apart – Short Version</TranslatedText>
               </h2>
               <div className="space-y-2 sm:space-y-4 md:space-y-5">
                 <div className="flex items-start gap-2 sm:gap-3">
@@ -234,7 +235,7 @@ const TSAInternationalPage = ({
         <div className="w-full">
           <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 mb-6 md:mb-8">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center tracking-wide font-bold">
-              Our International Presence
+              <TranslatedText>Our International Presence</TranslatedText>
             </h2>
           </div>
 
@@ -431,17 +432,17 @@ const TSAInternationalPage = ({
       <section className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-8 md:mb-12 font-bold">
-            Frequently Asked Questions
+            <TranslatedText>Frequently Asked Questions</TranslatedText>
           </h2>
 
           <div className="space-y-4">
             {loadingFAQs ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg">Loading FAQs...</p>
+                <p className="text-gray-600 text-base md:text-lg"><TranslatedText>Loading FAQs...</TranslatedText></p>
               </div>
             ) : faqs.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-base md:text-lg">No FAQs available at the moment.</p>
+                <p className="text-gray-600 text-base md:text-lg"><TranslatedText>No FAQs available at the moment.</TranslatedText></p>
               </div>
             ) : (
               faqs.map((faq, index) => {
@@ -532,7 +533,7 @@ const ProcessStepsSection = ({ selectedStep, onStepChange }) => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-6 md:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic text-center tracking-wide font-bold">
-            Our 5-Step Process
+            <TranslatedText>Our 5-Step Process</TranslatedText>
           </h2>
         </div>
         <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:gap-8">

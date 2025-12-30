@@ -5,6 +5,7 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import { products } from '../../../data/products'
 import { useCartAndLikes } from '../../../contexts/CartAndLikesContext'
+import TranslatedText from '../../../components/TranslatedText'
 
 const IndividualProductDetailPage = ({
   onShowSidebar,
@@ -58,12 +59,12 @@ const IndividualProductDetailPage = ({
     return (
       <div className="w-full min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Product Not Found</h1>
+          <h1 className="text-2xl font-bold text-gray-800 mb-4"><TranslatedText>Product Not Found</TranslatedText></h1>
           <button
             onClick={() => navigate(-1)}
             className="px-6 py-2 bg-[#8B7355] text-white rounded-lg hover:opacity-90"
           >
-            Go Back
+            <TranslatedText>Go Back</TranslatedText>
           </button>
         </div>
       </div>
@@ -148,14 +149,14 @@ const IndividualProductDetailPage = ({
 
             {product.description && (
               <div>
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">Description</h2>
+                <h2 className="text-xl font-semibold text-gray-800 mb-2"><TranslatedText>Description</TranslatedText></h2>
                 <p className="text-gray-600 leading-relaxed">{product.description}</p>
               </div>
             )}
 
             {/* Size Selection */}
             <div className="relative" ref={sizeDropdownRef}>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Size</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2"><TranslatedText>Size</TranslatedText></label>
               <button
                 onClick={() => setShowSizeDropdown(!showSizeDropdown)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg text-left flex items-center justify-between"
@@ -185,7 +186,7 @@ const IndividualProductDetailPage = ({
 
             {/* Quantity */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2"><TranslatedText>Quantity</TranslatedText></label>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -209,13 +210,13 @@ const IndividualProductDetailPage = ({
                 onClick={handleAddToCart}
                 className="flex-1 py-3 px-6 bg-[#8B7355] text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
               >
-                Add to Cart
+                <TranslatedText>Add to Cart</TranslatedText>
               </button>
               <button
                 onClick={handleBuyNow}
                 className="flex-1 py-3 px-6 bg-[#8B7355] text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
               >
-                Buy Now
+                <TranslatedText>Buy Now</TranslatedText>
               </button>
               <button
                 onClick={handleAddToLikes}
@@ -234,7 +235,7 @@ const IndividualProductDetailPage = ({
                 onClick={() => setShowTechnicalSpecs(!showTechnicalSpecs)}
                 className="w-full text-left flex items-center justify-between"
               >
-                <span className="font-semibold">Technical Specifications</span>
+                <span className="font-semibold"><TranslatedText>Technical Specifications</TranslatedText></span>
                 <svg
                   className={`w-5 h-5 transition-transform ${showTechnicalSpecs ? 'rotate-180' : ''}`}
                   fill="none"
@@ -256,7 +257,7 @@ const IndividualProductDetailPage = ({
                 onClick={() => setShowShipping(!showShipping)}
                 className="w-full text-left flex items-center justify-between"
               >
-                <span className="font-semibold">Shipping & Returns</span>
+                <span className="font-semibold"><TranslatedText>Shipping & Returns</TranslatedText></span>
                 <svg
                   className={`w-5 h-5 transition-transform ${showShipping ? 'rotate-180' : ''}`}
                   fill="none"
@@ -268,9 +269,9 @@ const IndividualProductDetailPage = ({
               </button>
               {showShipping && (
                 <div className="text-gray-600">
-                  <p>Free shipping on orders above ₹10,000</p>
-                  <p>Delivery within 7-14 business days</p>
-                  <p>30-day return policy</p>
+                  <p><TranslatedText>Free shipping on orders above ₹10,000</TranslatedText></p>
+                  <p><TranslatedText>Delivery within 7-14 business days</TranslatedText></p>
+                  <p><TranslatedText>30-day return policy</TranslatedText></p>
                 </div>
               )}
             </div>
@@ -280,7 +281,7 @@ const IndividualProductDetailPage = ({
               onClick={() => setShowContactModal(true)}
               className="w-full mt-6 bg-[#8B7355] text-white py-4 rounded-lg text-lg font-bold tracking-wide hover:bg-[#725E45] transition-all shadow-lg hover:shadow-xl uppercase transform hover:-translate-y-1"
             >
-              Connect for more details
+              <TranslatedText>Connect for more details</TranslatedText>
             </button>
           </div>
         </div>
@@ -298,7 +299,7 @@ const IndividualProductDetailPage = ({
           >
             {/* Header */}
             <div className="bg-[#8B7355] px-6 py-4 flex justify-between items-center">
-              <h2 className="text-xl md:text-2xl font-serif text-white tracking-wider uppercase">Contact Us</h2>
+              <h2 className="text-xl md:text-2xl font-serif text-white tracking-wider uppercase"><TranslatedText>Contact Us</TranslatedText></h2>
               <button
                 onClick={() => setShowContactModal(false)}
                 className="text-white hover:text-gray-200 transition-colors"
@@ -312,7 +313,7 @@ const IndividualProductDetailPage = ({
             {/* Content */}
             <div className="p-8 md:p-12">
               <div className="text-center mb-10">
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">Get in Touch</h3>
+                <h3 className="text-2xl font-bold text-gray-800 mb-2"><TranslatedText>Get in Touch</TranslatedText></h3>
                 <p className="text-gray-500">We'd love to hear from you. Reach out to us for any queries.</p>
               </div>
 
@@ -325,7 +326,7 @@ const IndividualProductDetailPage = ({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
-                  <h4 className="text-lg font-bold text-gray-800 mb-2">Location</h4>
+                  <h4 className="text-lg font-bold text-gray-800 mb-2"><TranslatedText>Location</TranslatedText></h4>
                   <p className="text-gray-600 leading-relaxed text-sm">
                     Borawar Byepass Road<br />Makrana, Rajasthan, India
                   </p>
@@ -338,7 +339,7 @@ const IndividualProductDetailPage = ({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h4 className="text-lg font-bold text-gray-800 mb-2">Email</h4>
+                  <h4 className="text-lg font-bold text-gray-800 mb-2"><TranslatedText>Email</TranslatedText></h4>
                   <a href="mailto:aslammarble40@gmail.com" className="text-gray-600 hover:text-[#8B7355] transition-colors text-sm font-medium">
                     aslammarble40@gmail.com
                   </a>
@@ -351,7 +352,7 @@ const IndividualProductDetailPage = ({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
-                  <h4 className="text-lg font-bold text-gray-800 mb-2">Call Us</h4>
+                  <h4 className="text-lg font-bold text-gray-800 mb-2"><TranslatedText>Call Us</TranslatedText></h4>
                   <a href="tel:+917877639699" className="text-gray-600 hover:text-[#8B7355] transition-colors text-sm font-medium">
                     +91 7877639699
                   </a>
@@ -364,7 +365,7 @@ const IndividualProductDetailPage = ({
                   href="tel:+917877639699"
                   className="inline-block px-8 py-3 bg-[#8B7355] text-white rounded-full font-bold hover:bg-[#725E45] transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
-                  Call Now
+                  <TranslatedText>Call Now</TranslatedText>
                 </a>
               </div>
             </div>

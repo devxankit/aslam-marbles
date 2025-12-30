@@ -12,6 +12,8 @@ import { useIntersectionObserver } from '../../../hooks/useIntersectionObserver'
 import { THEME_COLORS } from '../../../utils/theme'
 import { BUDGET_OPTIONS, TIMELINE_OPTIONS } from '../../../utils/constants'
 import { fetchFAQs } from '../../../utils/faqUtils'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 import howItWorksBg from '../../../assets/how it work/voice of devotion.jpeg'
 import icon1 from '../../../assets/how it work/icons/icon1.png'
 import icon2 from '../../../assets/how it work/icons/icon2.png'
@@ -32,6 +34,7 @@ const HowItWorksPage = ({
   onShowLocation,
   onShowBooking
 }) => {
+  const { getTranslatedText } = usePageTranslation()
   const navigate = useNavigate()
   const [expandedFaq, setExpandedFaq] = useState(null)
   const [formStep, setFormStep] = useState(1)
@@ -84,7 +87,7 @@ const HowItWorksPage = ({
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Form submitted:', formData)
-    alert('Thank you! Your form has been submitted.')
+    alert(getTranslatedText('Thank you! Your form has been submitted.'))
     setFormStep(1)
     setFormData({
       type: 'DOMESTIC',
@@ -155,10 +158,10 @@ const HowItWorksPage = ({
           {/* Heading */}
           <div className="text-center mb-4">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic font-bold mb-3">
-              Build Your Dream Temple in Just 5 Steps
+              <TranslatedText>Build Your Dream Temple in Just 5 Steps</TranslatedText>
             </h2>
             <p className="text-sm md:text-base lg:text-lg text-gray-600">
-              Ready to design your Dream Temple? Here's how you can get started.
+              <TranslatedText>Ready to design your Dream Temple? Here's how you can get started.</TranslatedText>
             </p>
           </div>
 
@@ -174,7 +177,7 @@ const HowItWorksPage = ({
                 />
               </div>
               <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
-                Let's Connect
+                <TranslatedText>Let's Connect</TranslatedText>
               </p>
             </div>
 
@@ -195,7 +198,7 @@ const HowItWorksPage = ({
                 />
               </div>
               <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
-                Explore Catalog
+                <TranslatedText>Explore Catalog</TranslatedText>
               </p>
             </div>
 
@@ -216,7 +219,7 @@ const HowItWorksPage = ({
                 />
               </div>
               <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
-                Place Order
+                <TranslatedText>Place Order</TranslatedText>
               </p>
             </div>
 
@@ -237,7 +240,7 @@ const HowItWorksPage = ({
                 />
               </div>
               <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
-                Approval
+                <TranslatedText>Approval</TranslatedText>
               </p>
             </div>
 
@@ -258,7 +261,7 @@ const HowItWorksPage = ({
                 />
               </div>
               <p className="text-[8px] sm:text-xs md:text-sm text-gray-700 font-medium leading-tight">
-                Delivery & Install
+                <TranslatedText>Delivery & Install</TranslatedText>
               </p>
             </div>
           </div>
@@ -272,7 +275,7 @@ const HowItWorksPage = ({
               onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
               onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
             >
-              Start Your Project Now
+              <TranslatedText>Start Your Project Now</TranslatedText>
             </button>
           </div>
         </div>
@@ -356,7 +359,7 @@ const HowItWorksPage = ({
               </svg>
             </div>
             <p className="text-white text-sm md:text-base lg:text-lg font-bold uppercase">
-              YOU ARE HALF WAY THERE ! YOUR ORDER IS IN PROCESS
+              <TranslatedText>YOU ARE HALF WAY THERE ! YOUR ORDER IS IN PROCESS</TranslatedText>
             </p>
           </div>
         </div>
@@ -395,7 +398,7 @@ const HowItWorksPage = ({
               </svg>
             </div>
             <p className="text-white text-sm md:text-base lg:text-lg font-bold uppercase">
-              HURRAH! COMPLETE PAYMENT HAS BEEN MADE!
+              <TranslatedText>HURRAH! COMPLETE PAYMENT HAS BEEN MADE!</TranslatedText>
             </p>
           </div>
         </div>
@@ -435,19 +438,19 @@ const HowItWorksPage = ({
               <thead>
                 <tr style={{ backgroundColor: THEME_COLORS.primary }}>
                   <th className="px-3 py-2 md:px-4 md:py-3 text-left text-xs font-bold text-white uppercase border border-white/20">
-                    Order Type
+                    <TranslatedText>Order Type</TranslatedText>
                   </th>
                   <th className="px-3 py-2 md:px-4 md:py-3 text-left text-xs font-bold text-white uppercase border border-white/20">
-                    Category
+                    <TranslatedText>Category</TranslatedText>
                   </th>
                   <th className="px-3 py-2 md:px-4 md:py-3 text-left text-xs font-bold text-white uppercase border border-white/20">
-                    Work Involved
+                    <TranslatedText>Work Involved</TranslatedText>
                   </th>
                   <th className="px-3 py-2 md:px-4 md:py-3 text-left text-xs font-bold text-white uppercase border border-white/20">
-                    Execution Milestone<br />(Make 100% payment)
+                    <TranslatedText>Execution Milestone</TranslatedText><br /><TranslatedText>(Make 100% payment)</TranslatedText>
                   </th>
                   <th className="px-3 py-2 md:px-4 md:py-3 text-left text-xs font-bold text-white uppercase border border-white/20">
-                    Handover
+                    <TranslatedText>Handover</TranslatedText>
                   </th>
                 </tr>
               </thead>
@@ -531,10 +534,10 @@ const HowItWorksPage = ({
           {/* Section Header */}
           <div className="text-center mb-10 md:mb-14">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic text-center mb-4 md:mb-6 font-bold">
-              Frequently Asked Questions
+              <TranslatedText>Frequently Asked Questions</TranslatedText>
             </h2>
             <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
-              Everything you need to know about our process and services.
+              <TranslatedText>Everything you need to know about our process and services.</TranslatedText>
             </p>
           </div>
 
@@ -543,7 +546,7 @@ const HowItWorksPage = ({
               <div className="text-center py-12">
                 <div className="inline-flex items-center gap-3">
                   <div className="w-5 h-5 border-2 border-[#8B7355] border-t-transparent rounded-full animate-spin"></div>
-                  <p className="text-gray-600 text-base md:text-lg">Loading FAQs...</p>
+                  <p className="text-gray-600 text-base md:text-lg"><TranslatedText>Loading FAQs...</TranslatedText></p>
                 </div>
               </div>
             ) : faqs.length === 0 ? (
@@ -551,7 +554,7 @@ const HowItWorksPage = ({
                 <svg className="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p className="text-gray-500 text-base md:text-lg">No FAQs available at the moment.</p>
+                <p className="text-gray-500 text-base md:text-lg"><TranslatedText>No FAQs available at the moment.</TranslatedText></p>
               </div>
             ) : (
               faqs.map((faq, index) => {

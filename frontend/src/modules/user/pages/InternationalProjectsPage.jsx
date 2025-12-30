@@ -5,6 +5,7 @@ import Footer from '../../../components/layout/Footer';
 import FloatingButtons from '../../../components/common/FloatingButtons';
 import { fetchInternationalProjectsData } from '../../../utils/internationalProjectsUtils';
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay';
+import TranslatedText from '../../../components/TranslatedText';
 
 const InternationalProjectsPage = ({
   onShowSidebar,
@@ -68,7 +69,7 @@ const InternationalProjectsPage = ({
       <div className="relative w-full overflow-hidden h-[40vh] min-h-[300px] md:h-[60vh] md:min-h-[500px] lg:h-[75vh] lg:min-h-[600px]">
         {loading ? (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-            <p className="text-gray-600">Loading...</p>
+            <p className="text-gray-600"><TranslatedText>Loading...</TranslatedText></p>
           </div>
         ) : internationalData?.heroImage?.url ? (
           <img
@@ -79,7 +80,7 @@ const InternationalProjectsPage = ({
           />
         ) : (
           <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-            <p className="text-gray-600">No hero image available</p>
+            <p className="text-gray-600"><TranslatedText>No hero image available</TranslatedText></p>
           </div>
         )}
 
@@ -98,7 +99,7 @@ const InternationalProjectsPage = ({
             onClick={() => setShowMobileForm(true)}
             className="md:hidden mt-4 bg-[#8B7355] text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wide shadow-lg border border-[#8B7355]/50 animate-pulse hover:animate-none"
           >
-            Talk to Our Expert
+            <TranslatedText>Talk to Our Expert</TranslatedText>
           </button>
         </div>
 
@@ -120,9 +121,9 @@ const InternationalProjectsPage = ({
           </div>
 
           {loading ? (
-            <div className="text-center py-12"><p className="text-gray-600 text-lg">Loading gallery...</p></div>
+            <div className="text-center py-12"><p className="text-gray-600 text-lg"><TranslatedText>Loading gallery...</TranslatedText></p></div>
           ) : internationalImages.length === 0 ? (
-            <div className="text-center py-12"><p className="text-gray-600 text-lg">No projects available at the moment.</p></div>
+            <div className="text-center py-12"><p className="text-gray-600 text-lg"><TranslatedText>No projects available at the moment.</TranslatedText></p></div>
           ) : (
             <div className="grid grid-cols-3 gap-2 md:gap-8">
               {internationalImages.map((image, index) => (
@@ -163,7 +164,7 @@ const InternationalProjectsPage = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm md:hidden">
           <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-in fade-in zoom-in duration-200">
             <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/50">
-              <h3 className="text-sm font-bold uppercase tracking-wide text-[#8B7355]">Talk to Expert</h3>
+              <h3 className="text-sm font-bold uppercase tracking-wide text-[#8B7355]"><TranslatedText>Talk to Expert</TranslatedText></h3>
               <button onClick={() => setShowMobileForm(false)} className="p-1 rounded-full hover:bg-gray-200 transition-colors" aria-label="Close modal">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

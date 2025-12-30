@@ -7,6 +7,8 @@ import FloatingButtons from '../../../components/common/FloatingButtons'
 import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
 import LazyImage from '../../../components/common/LazyImage'
+import { usePageTranslation } from '../../../hooks/usePageTranslation'
+import TranslatedText from '../../../components/TranslatedText'
 
 const LiveInventoryPage = ({
     onShowSidebar,
@@ -24,6 +26,7 @@ const LiveInventoryPage = ({
     const [loading, setLoading] = useState(true)
     const [showMobileForm, setShowMobileForm] = useState(false)
     const [filterCategory, setFilterCategory] = useState('All')
+    const { getTranslatedText } = usePageTranslation()
     const navigate = useNavigate()
 
     const handleBuyNow = (item) => {
@@ -84,9 +87,9 @@ const LiveInventoryPage = ({
             <HeroSectionWithForm
                 source="live-inventory-page"
                 heroImage={defaultHeroImage} // Plan to replace this with generated image later
-                title="Live Inventory"
-                subtitle="Exclusive Marble Collection"
-                description="Explore our real-time stock of premium natural stones. From rare Italian marble to exquisite Indian granite, find the perfect slab for your dream project."
+                title={getTranslatedText("Live Inventory")}
+                subtitle={getTranslatedText("Exclusive Marble Collection")}
+                description={getTranslatedText("Explore our real-time stock of premium natural stones. From rare Italian marble to exquisite Indian granite, find the perfect slab for your dream project.")}
                 enableMobileModal={true}
                 onMobileButtonClick={() => setShowMobileForm(true)}
             />
@@ -120,10 +123,10 @@ const LiveInventoryPage = ({
                     {/* Section Header */}
                     <div className="text-center mb-12">
                         <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-[10px] md:text-xs mb-2 md:mb-4 block">
-                            Real-Time Stock
+                            <TranslatedText>Real-Time Stock</TranslatedText>
                         </span>
                         <h2 className="text-3xl md:text-5xl font-serif text-[#8B7355] italic mb-4 md:mb-6 tracking-tight">
-                            Available Slabs & Blocks
+                            <TranslatedText>Available Slabs & Blocks</TranslatedText>
                         </h2>
                         <div className="w-12 h-[1px] bg-[#8B7355] mx-auto opacity-30"></div>
                     </div>
@@ -141,7 +144,7 @@ const LiveInventoryPage = ({
                                             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
-                                    {cat}
+                                    <TranslatedText>{cat}</TranslatedText>
                                 </button>
                             ))}
                         </div>
@@ -154,7 +157,7 @@ const LiveInventoryPage = ({
                         </div>
                     ) : filteredInventory.length === 0 ? (
                         <div className="text-center py-16 bg-gray-50 rounded-2xl">
-                            <p className="text-gray-500 text-lg">No inventory items found matching your criteria.</p>
+                            <p className="text-gray-500 text-lg"><TranslatedText>No inventory items found matching your criteria.</TranslatedText></p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -171,7 +174,7 @@ const LiveInventoryPage = ({
                                         />
                                         {item.status !== 'Available' && (
                                             <div className="absolute top-4 right-4 bg-black/70 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest backdrop-blur-md z-10">
-                                                {item.status}
+                                                <TranslatedText>{item.status}</TranslatedText>
                                             </div>
                                         )}
                                     </div>
@@ -180,31 +183,31 @@ const LiveInventoryPage = ({
                                     <div className="p-6">
                                         <div className="mb-4">
                                             <h3 className="text-xl font-serif text-gray-900 mb-1 line-clamp-1">{item.name}</h3>
-                                            <p className="text-[#8B7355] text-xs font-bold uppercase tracking-widest">{item.category}</p>
+                                            <p className="text-[#8B7355] text-xs font-bold uppercase tracking-widest"><TranslatedText>{item.category}</TranslatedText></p>
                                         </div>
 
                                         <div className="space-y-2 border-t border-gray-100 pt-4">
                                             {item.specifications?.dimensions && (
                                                 <div className="flex justify-between text-sm">
-                                                    <span className="text-gray-500">Dimensions</span>
-                                                    <span className="font-medium text-gray-800">{item.specifications.dimensions}</span>
+                                                    <span className="text-gray-500"><TranslatedText>Dimensions</TranslatedText></span>
+                                                    <span className="font-medium text-gray-800"><TranslatedText>{item.specifications.dimensions}</TranslatedText></span>
                                                 </div>
                                             )}
                                             {item.specifications?.origin && (
                                                 <div className="flex justify-between text-sm">
-                                                    <span className="text-gray-500">Origin</span>
-                                                    <span className="font-medium text-gray-800">{item.specifications.origin}</span>
+                                                    <span className="text-gray-500"><TranslatedText>Origin</TranslatedText></span>
+                                                    <span className="font-medium text-gray-800"><TranslatedText>{item.specifications.origin}</TranslatedText></span>
                                                 </div>
                                             )}
                                             {item.specifications?.finish && (
                                                 <div className="flex justify-between text-sm">
-                                                    <span className="text-gray-500">Finish</span>
-                                                    <span className="font-medium text-gray-800">{item.specifications.finish}</span>
+                                                    <span className="text-gray-500"><TranslatedText>Finish</TranslatedText></span>
+                                                    <span className="font-medium text-gray-800"><TranslatedText>{item.specifications.finish}</TranslatedText></span>
                                                 </div>
                                             )}
                                             {item.price && (
                                                 <div className="flex justify-between text-sm">
-                                                    <span className="text-gray-500">Price</span>
+                                                    <span className="text-gray-500"><TranslatedText>Price</TranslatedText></span>
                                                     <span className="font-bold text-[#8B7355]">₹{item.price.toLocaleString('en-IN')}</span>
                                                 </div>
                                             )}
@@ -215,13 +218,13 @@ const LiveInventoryPage = ({
                                                 onClick={() => handleBuyNow(item)}
                                                 className="flex-1 bg-[#8B7355] text-white py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors duration-300"
                                             >
-                                                Buy Now
+                                                <TranslatedText>Buy Now</TranslatedText>
                                             </button>
                                             <button
                                                 onClick={() => setShowMobileForm(true)}
                                                 className="flex-1 border border-gray-300 text-gray-900 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-50 transition-colors duration-300"
                                             >
-                                                Enquire
+                                                <TranslatedText>Enquire</TranslatedText>
                                             </button>
                                         </div>
                                     </div>

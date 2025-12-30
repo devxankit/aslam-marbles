@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import TranslatedText from '../TranslatedText'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -92,14 +93,14 @@ const ImageGallery = ({
       <section className="py-16 md:py-24 px-4 overflow-hidden" ref={headerRef}>
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black tracking-[0.3em] text-[#8B7355] uppercase bg-[#8B7355]/5 rounded-full">
-            Premium Selection
+            <TranslatedText>Premium Selection</TranslatedText>
           </span>
           <h2 className="text-4xl md:text-6xl font-serif text-gray-900 italic mb-8 tracking-tight">
-            {title}
+            <TranslatedText>{title}</TranslatedText>
           </h2>
           {description && (
             <p className="text-lg md:text-xl text-gray-500 font-light leading-relaxed">
-              {description}
+              <TranslatedText>{description}</TranslatedText>
             </p>
           )}
           <div className="w-40 h-[1px] bg-gradient-to-r from-transparent via-[#8B7355] to-transparent mx-auto mt-12 opacity-40"></div>
@@ -155,16 +156,16 @@ const ImageGallery = ({
                   <div className={`absolute bottom-0 left-0 right-0 p-1 md:p-3 bg-white border-t border-gray-100 transform transition-transform duration-500 ${isUniform ? 'translate-y-0 group-hover:bg-[#fafafa]' : 'translate-y-1 group-hover:translate-y-0'}`}>
                     <div className="flex flex-col gap-0.5">
                       <span className="text-black font-black text-[6px] md:text-[9px] tracking-[0.2em] uppercase leading-none mb-0.5">
-                        Origin: {item.origin || origin}
+                        <TranslatedText>Origin</TranslatedText>: <TranslatedText>{item.origin || origin}</TranslatedText>
                       </span>
                       <h3 className="text-gray-900 font-serif text-[8px] md:text-base italic leading-tight truncate">
-                        {item.name}
+                        <TranslatedText>{item.name}</TranslatedText>
                       </h3>
                       {!isUniform && (
                         <div className="flex items-center gap-1 mt-1">
                           <span className="h-[1px] w-4 bg-[#8B7355]"></span>
                           <span className="text-[#8B7355] text-[8px] font-bold uppercase tracking-[0.2em]">
-                            View Details
+                            <TranslatedText>View Details</TranslatedText>
                           </span>
                         </div>
                       )}
@@ -192,10 +193,10 @@ const ImageGallery = ({
           </div>
           <div className="relative text-center z-10">
             <h3 className="text-2xl md:text-3xl font-serif italic text-gray-800 mb-6 font-light">
-              "Crafting legacies, one stone at a time."
+              <TranslatedText>"Crafting legacies, one stone at a time."</TranslatedText>
             </h3>
             <p className="text-[#8B7355] font-black tracking-[0.5em] text-[10px] uppercase">
-              Aslam Marble Suppliers
+              <TranslatedText>Aslam Marble Suppliers</TranslatedText>
             </p>
           </div>
         </div>

@@ -5,6 +5,7 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import { useCartAndLikes } from '../../../contexts/CartAndLikesContext'
 import LazyImage from '../../../components/common/LazyImage'
+import TranslatedText from '../../../components/TranslatedText'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
@@ -39,11 +40,11 @@ const OnSalePage = ({ onShowCart, onShowLikes }) => {
             <div className="w-full py-12 md:py-16 px-4 md:px-6 lg:px-8 bg-[#FDFBF7]">
                 <div className="max-w-7xl mx-auto text-center">
                     <h1 className="text-3xl md:text-5xl font-serif text-[#8B7355] italic mb-4 font-bold tracking-tight">
-                        On Sale
+                        <TranslatedText>On Sale</TranslatedText>
                     </h1>
                     <div className="w-24 h-1 bg-[#8B7355] mx-auto rounded-full mb-6"></div>
                     <p className="text-gray-600 max-w-2xl mx-auto text-base md:text-lg">
-                        Premium quality marble and stone products at exceptional values. Discover our exclusive offers on select pieces.
+                        <TranslatedText>Premium quality marble and stone products at exceptional values. Discover our exclusive offers on select pieces.</TranslatedText>
                     </p>
                 </div>
             </div>
@@ -59,7 +60,7 @@ const OnSalePage = ({ onShowCart, onShowLikes }) => {
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
                             {products.length === 0 ? (
                                 <div className="col-span-full text-center text-gray-500 py-10">
-                                    No products currently on sale.
+                                    <TranslatedText>No products currently on sale.</TranslatedText>
                                 </div>
                             ) : products.map((product) => (
                                 <div
@@ -86,7 +87,7 @@ const OnSalePage = ({ onShowCart, onShowLikes }) => {
                                         )}
                                         {/* Sale Tag */}
                                         <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                                            Sale
+                                            <TranslatedText>Sale</TranslatedText>
                                         </div>
                                         {/* Like Button */}
                                         <button
@@ -140,13 +141,13 @@ const OnSalePage = ({ onShowCart, onShowLikes }) => {
                                                     }}
                                                     className="flex-1 px-4 py-2 bg-[#8B7355] text-white font-semibold rounded hover:opacity-90 transition-all text-xs"
                                                 >
-                                                    Buy Now
+                                                    <TranslatedText>Buy Now</TranslatedText>
                                                 </button>
                                                 <button
                                                     onClick={() => navigate(`/on-sale/exclusive-offers/${product._id || product.id}`)}
                                                     className="flex-1 px-4 py-2 border border-[#8B7355] text-[#8B7355] font-semibold rounded hover:bg-[#8B7355] hover:text-white transition-all text-xs"
                                                 >
-                                                    Details
+                                                    <TranslatedText>Details</TranslatedText>
                                                 </button>
                                             </div>
                                         </div>

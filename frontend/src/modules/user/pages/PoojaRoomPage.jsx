@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { usePageTranslation } from '../../../hooks/usePageTranslation'
 import { useNavigate } from 'react-router-dom'
 import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
@@ -28,9 +29,11 @@ import TrustedBySection from '../../../components/common/TrustedBySection'
 import BeforeAfterSlider from '../../../components/common/BeforeAfterSlider'
 import afterImage from '../../../assets/ourcreation/pooja room/before&after/compare1.png'
 import beforeImage from '../../../assets/ourcreation/pooja room/before&after/compare2.jpg'
+import TranslatedText from '../../../components/TranslatedText'
 
 
 const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
+  const { getTranslatedText } = usePageTranslation()
   const navigate = useNavigate()
   const [formStep, setFormStep] = useState(1)
   const [showAllLocations, setShowAllLocations] = useState(false)
@@ -56,7 +59,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   className="w-3 h-3 accent-amber-600"
                 />
-                <span className="text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
+                <span className="text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}><TranslatedText>DOMESTIC</TranslatedText></span>
               </label>
               <label className="flex items-center gap-1.5 cursor-pointer">
                 <input
@@ -67,13 +70,13 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   className="w-3 h-3 accent-amber-600"
                 />
-                <span className="text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
+                <span className="text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}><TranslatedText>INTERNATIONAL</TranslatedText></span>
               </label>
             </div>
 
             <input
               type="text"
-              placeholder="Full Name *"
+              placeholder={getTranslatedText("Full Name *")}
               value={formData.fullName}
               onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
               className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -82,7 +85,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
 
             <input
               type="email"
-              placeholder="Email Address *"
+              placeholder={getTranslatedText("Email Address *")}
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -90,7 +93,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
             />
 
             <div>
-              <label className="block text-xs font-medium mb-1">Phone number</label>
+              <label className="block text-xs font-medium mb-1"><TranslatedText>Phone number</TranslatedText></label>
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                 <div className="flex items-center gap-1 px-2 bg-gray-50 border-r">
                   <span className="text-sm">🇮🇳</span>
@@ -98,7 +101,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                 </div>
                 <input
                   type="tel"
-                  placeholder="Phone number *"
+                  placeholder={getTranslatedText("Phone number *")}
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="flex-1 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -108,7 +111,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
 
             <input
               type="text"
-              placeholder="City *"
+              placeholder={getTranslatedText("City *")}
               value={formData.city}
               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
               className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -116,7 +119,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
             />
 
             <div>
-              <label className="block text-xs font-medium mb-1.5">Tell us about yourself *</label>
+              <label className="block text-xs font-medium mb-1.5"><TranslatedText>Tell us about yourself *</TranslatedText></label>
               <div className="space-y-1.5">
                 <label className="flex items-start gap-1.5 cursor-pointer">
                   <input
@@ -128,7 +131,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                     className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                     required
                   />
-                  <span className="text-xs leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
+                  <span className="text-xs leading-relaxed"><TranslatedText>I am a homeowner looking for a pooja unit or pooja room</TranslatedText></span>
                 </label>
                 <label className="flex items-start gap-1.5 cursor-pointer">
                   <input
@@ -140,7 +143,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                     className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                     required
                   />
-                  <span className="text-xs leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
+                  <span className="text-xs leading-relaxed"><TranslatedText>I am an interior designer/consultant seeking solutions for my client</TranslatedText></span>
                 </label>
               </div>
             </div>
@@ -152,13 +155,13 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
               onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
               onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
             >
-              NEXT →
+              <TranslatedText>NEXT</TranslatedText> →
             </button>
           </form>
         ) : (
           <form className="space-y-2.5" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-xs font-bold mb-1.5">What are you looking for? *</label>
+              <label className="block text-xs font-bold mb-1.5"><TranslatedText>What are you looking for? *</TranslatedText></label>
               <div className="space-y-1.5">
                 <label className="flex items-center gap-1.5 cursor-pointer">
                   <input
@@ -170,7 +173,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                     className="w-3 h-3 accent-amber-600"
                     required
                   />
-                  <span className="text-xs">Singular Marble Mandir Unit</span>
+                  <span className="text-xs"><TranslatedText>Singular Marble Mandir Unit</TranslatedText></span>
                 </label>
                 <label className="flex items-center gap-1.5 cursor-pointer">
                   <input
@@ -182,13 +185,13 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                     className="w-3 h-3 accent-amber-600"
                     required
                   />
-                  <span className="text-xs">Complete Pooja Room Solution</span>
+                  <span className="text-xs"><TranslatedText>Complete Pooja Room Solution</TranslatedText></span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold mb-1.5">What is your estimated budget? *</label>
+              <label className="block text-xs font-bold mb-1.5"><TranslatedText>What is your estimated budget? *</TranslatedText></label>
               <div className="space-y-1.5">
                 {BUDGET_OPTIONS.map((budget) => (
                   <label key={budget} className="flex items-center gap-1.5 cursor-pointer">
@@ -208,7 +211,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
             </div>
 
             <div>
-              <label className="block text-xs font-bold mb-1.5">What is your timeline for the project? *</label>
+              <label className="block text-xs font-bold mb-1.5"><TranslatedText>What is your timeline for the project? *</TranslatedText></label>
               <div className="space-y-1.5">
                 {TIMELINE_OPTIONS.map((timeline) => (
                   <label key={timeline} className="flex items-center gap-1.5 cursor-pointer">
@@ -228,7 +231,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
             </div>
 
             <textarea
-              placeholder="Please share a bit more about your needs"
+              placeholder={getTranslatedText("Please share a bit more about your needs")}
               value={formData.additionalInfo}
               onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
               rows={3}
@@ -251,7 +254,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                 onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
               >
-                UPLOAD DESIGN REFERENCES
+                <TranslatedText>UPLOAD DESIGN REFERENCES</TranslatedText>
               </label>
               {formData.designReferences && formData.designReferences.length > 0 && (
                 <p className="text-xs text-gray-600 mt-1">
@@ -273,7 +276,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                   e.target.style.backgroundColor = 'white'
                 }}
               >
-                BACK
+                <TranslatedText>BACK</TranslatedText>
               </button>
               <button
                 type="submit"
@@ -282,7 +285,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                 onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
               >
-                SUBMIT
+                <TranslatedText>SUBMIT</TranslatedText>
               </button>
             </div>
           </form>
@@ -347,32 +350,32 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
   })) : [
     {
       id: 1,
-      name: 'Small Pooja Room',
-      size: 'upto 50 Sqft',
+      name: getTranslatedText('Small Pooja Room'),
+      size: getTranslatedText('upto 50 Sqft'),
       price: '12L',
       fullPrice: 1200000,
       image: poojaRoom1
     },
     {
       id: 2,
-      name: 'Medium Pooja Room',
-      size: 'upto 80 Sqft',
+      name: getTranslatedText('Medium Pooja Room'),
+      size: getTranslatedText('upto 80 Sqft'),
       price: '20L',
       fullPrice: 2000000,
       image: poojaRoom2
     },
     {
       id: 3,
-      name: 'Large Pooja Room',
-      size: 'Above 80 Sqft',
+      name: getTranslatedText('Large Pooja Room'),
+      size: getTranslatedText('Above 80 Sqft'),
       price: '25.75L',
       fullPrice: 2575000,
       image: poojaRoom3
     },
     {
       id: 4,
-      name: 'Grand Pooja Room',
-      size: 'Custom Size',
+      name: getTranslatedText('Grand Pooja Room'),
+      size: getTranslatedText('Custom Size'),
       price: '35L',
       fullPrice: 3500000,
       image: poojaRoom4
@@ -405,32 +408,32 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
   const services = [
     {
       id: 1,
-      name: 'Wall Cladding',
+      name: getTranslatedText('Wall Cladding'),
       icon: wallIcon
     },
     {
       id: 2,
-      name: 'Floor Inlay',
+      name: getTranslatedText('Floor Inlay'),
       icon: floorIcon
     },
     {
       id: 3,
-      name: 'Virtual Tour',
+      name: getTranslatedText('Virtual Tour'),
       icon: virtualIcon
     },
     {
       id: 4,
-      name: 'Custom Design',
+      name: getTranslatedText('Custom Design'),
       icon: customDesignIcon
     },
     {
       id: 5,
-      name: '3D visualisation',
+      name: getTranslatedText('3D visualisation'),
       icon: visualisationIcon
     },
     {
       id: 6,
-      name: 'Project Tracking',
+      name: getTranslatedText('Project Tracking'),
       icon: projectTrackingIcon
     }
   ]
@@ -452,10 +455,10 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
         {/* Overlay Text */}
         <div className="absolute top-20 md:top-1/2 md:-translate-y-1/2 left-4 md:left-12 lg:left-20 w-[90%] max-w-lg lg:max-w-2xl z-10 flex flex-col items-start text-left animate-fadeInUp">
           <h1 className="text-xl md:text-5xl lg:text-6xl font-serif text-white italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mb-1 leading-tight">
-            {pageData?.heroSection?.title || 'Welcome to Our Pooja Room Collection'}
+            <TranslatedText>{pageData?.heroSection?.title || 'Welcome to Our Pooja Room Collection'}</TranslatedText>
           </h1>
           <p className="text-[10px] md:text-2xl text-white/95 font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-wide mb-3">
-            <span className="border-b border-[#8B7355] pb-0.5">{pageData?.heroSection?.subtitle || 'Aslam Marble Suppliers'}</span>
+            <span className="border-b border-[#8B7355] pb-0.5"><TranslatedText>{pageData?.heroSection?.subtitle || 'Aslam Marble Suppliers'}</TranslatedText></span>
           </p>
 
           {/* Mobile Button */}
@@ -463,7 +466,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
             onClick={() => setShowMobileForm(true)}
             className="md:hidden px-3 py-1.5 bg-[#8B7355] text-white font-bold text-[10px] uppercase tracking-wider rounded shadow-xl hover:bg-[#725E45] transition-colors"
           >
-            Talk to Our Expert
+            <TranslatedText>Talk to Our Expert</TranslatedText>
           </button>
         </div>
 
@@ -471,7 +474,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
         <div id="expert-form-container-desktop" className="hidden md:flex absolute lg:left-auto lg:translate-x-0 lg:right-4 md:lg:right-6 xl:right-8 top-1/2 -translate-y-1/2 w-[340px] lg:w-[340px] bg-white rounded-xl md:rounded-2xl shadow-2xl z-20 flex-col backdrop-blur-sm bg-white/95 max-h-[90%]">
           {/* Desktop Form Content */}
           <div className="flex items-center justify-between p-3 md:p-4 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0 rounded-t-xl md:rounded-t-2xl">
-            <h3 className="text-base md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>
+            <h3 className="text-base md:text-lg font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}><TranslatedText>Talk to Our Expert</TranslatedText></h3>
             <div className="flex items-center gap-2">
               <span className="text-xs font-semibold px-2 py-1 rounded-full bg-[#8B7355]/10" style={{ color: '#8B7355' }}>{formStep}/2</span>
             </div>
@@ -491,7 +494,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-4 border-b-2 border-gray-200 bg-gradient-to-r from-[#8B7355]/10 to-transparent flex-shrink-0">
-              <h3 className="text-base font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}>Talk to Our Expert</h3>
+              <h3 className="text-base font-bold uppercase tracking-wide" style={{ color: '#8B7355' }}><TranslatedText>Talk to Our Expert</TranslatedText></h3>
               <button
                 onClick={() => setShowMobileForm(false)}
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200"
@@ -514,13 +517,13 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-6 md:mb-20 pt-0 md:pt-0">
-            <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-xs mb-2 md:mb-4 block">Exquisite Craftsmanship</span>
+            <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-xs mb-2 md:mb-4 block"><TranslatedText>Exquisite Craftsmanship</TranslatedText></span>
             <h2 className="text-2xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-4 md:mb-6 tracking-tight">
-              Our Pooja Room Collection
+              <TranslatedText>Our Pooja Room Collection</TranslatedText>
             </h2>
             <div className="w-16 md:w-20 h-1 bg-[#8B7355]/30 mx-auto mb-6 md:mb-8"></div>
             <p className="text-sm md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
-              Transform your sacred space with our meticulously crafted pooja rooms, designed to bring peace and divinity into your home.
+              <TranslatedText>Transform your sacred space with our meticulously crafted pooja rooms, designed to bring peace and divinity into your home.</TranslatedText>
             </p>
           </div>
 
@@ -554,13 +557,13 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
 
                 {/* Info Container */}
                 <div className="p-6 bg-white text-center border-t border-gray-50 flex flex-col h-full">
-                  <p className="text-[#8B7355] text-[10px] font-bold uppercase tracking-[0.2em] mb-2">Starting at {room.price}</p>
+                  <p className="text-[#8B7355] text-[10px] font-bold uppercase tracking-[0.2em] mb-2"><TranslatedText>Starting at</TranslatedText> {room.price}</p>
                   <h3 className="text-xl font-serif text-gray-800 italic mb-2 group-hover:text-[#8B7355] transition-colors duration-300">
-                    {room.name}
+                    <TranslatedText>{room.name}</TranslatedText>
                   </h3>
                   <div className="flex items-center justify-center gap-2 text-gray-400 mb-4">
                     <div className="w-8 h-[1px] bg-gray-200"></div>
-                    <span className="text-xs font-medium tracking-wide italic">{room.size}</span>
+                    <span className="text-xs font-medium tracking-wide italic"><TranslatedText>{room.size}</TranslatedText></span>
                     <div className="w-8 h-[1px] bg-gray-200"></div>
                   </div>
 
@@ -583,7 +586,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                       }}
                       className="flex-1 bg-[#8B7355] text-white text-xs font-bold py-2 rounded hover:opacity-90 transition-opacity"
                     >
-                      BUY NOW
+                      <TranslatedText>BUY NOW</TranslatedText>
                     </button>
                     <button
                       onClick={(e) => {
@@ -592,7 +595,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                       }}
                       className="flex-1 border border-[#8B7355] text-[#8B7355] text-xs font-bold py-2 rounded hover:bg-[#8B7355] hover:text-white transition-all"
                     >
-                      DETAILS
+                      <TranslatedText>DETAILS</TranslatedText>
                     </button>
                   </div>
                 </div>
@@ -609,20 +612,20 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
             {/* Left Side - Text Content */}
             <div className="w-full md:w-3/5 order-2 md:order-1">
               <div className="max-w-xl">
-                <p className="text-[#8B7355] font-bold tracking-[0.2em] uppercase text-sm mb-4">Consultation</p>
+                <p className="text-[#8B7355] font-bold tracking-[0.2em] uppercase text-sm mb-4"><TranslatedText>Consultation</TranslatedText></p>
                 <h2 className="text-3xl md:text-5xl font-serif text-gray-800 italic mb-6 leading-[1.2]">
-                  {pageData?.consultation?.section1?.title || 'All We Need Is Your Space Dimensions And Pictures'}
+                  <TranslatedText>{pageData?.consultation?.section1?.title || 'All We Need Is Your Space Dimensions And Pictures'}</TranslatedText>
                 </h2>
                 <div className="w-16 h-1 bg-[#8B7355]/40 mb-8"></div>
                 <p className="text-lg text-gray-600 leading-relaxed mb-10">
-                  {pageData?.consultation?.section1?.description || "We understand that every space is unique. Share your space's dimensions and pictures, and let our experts help you visualize the perfect marble solution tailored to your environment."}
+                  <TranslatedText>{pageData?.consultation?.section1?.description || "We understand that every space is unique. Share your space's dimensions and pictures, and let our experts help you visualize the perfect marble solution tailored to your environment."}</TranslatedText>
                 </p>
                 <button
                   onClick={() => setShowConsultationModal(true)}
                   className="group relative px-8 py-4 bg-[#8B7355] text-white font-bold rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_10px_20px_rgba(139,115,85,0.3)] hover:-translate-y-1 active:scale-95"
                 >
                   <span className="relative z-10 flex items-center gap-2">
-                    Get Free Consultation
+                    <TranslatedText>Get Free Consultation</TranslatedText>
                     <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -651,7 +654,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
           {/* Section Header */}
           <div className="text-center mb-10 md:mb-14 lg:mb-16">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-4 md:mb-5 tracking-wide">
-              We Offer Unparalleled Services
+              <TranslatedText>We Offer Unparalleled Services</TranslatedText>
             </h2>
             <div className="w-24 h-1 mx-auto mt-6 rounded-full" style={{ backgroundColor: '#8B7355' }}></div>
           </div>
@@ -672,7 +675,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                     />
                   </div>
                   <h3 className="text-sm md:text-base font-semibold text-gray-800 group-hover:text-[#8B7355] transition-colors duration-300">
-                    {service.name}
+                    <TranslatedText>{service.name}</TranslatedText>
                   </h3>
                 </div>
               </div>
@@ -684,9 +687,9 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
       {/* Premium 3D Cinematic Gallery Section */}
       <section className="w-full pt-12 md:pt-16 pb-12 md:pb-20 bg-white overflow-hidden" style={{ perspective: '2000px' }}>
         <div className="max-w-7xl mx-auto text-center mb-12 md:mb-20">
-          <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">New Arrivals</span>
+          <span className="text-[#8B7355] font-bold tracking-[0.3em] uppercase text-xs mb-4 block"><TranslatedText>New Arrivals</TranslatedText></span>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-2 tracking-tight">
-            Recent Collection
+            <TranslatedText>Recent Collection</TranslatedText>
           </h2>
           <div className="w-20 h-1 bg-[#8B7355]/30 mx-auto"></div>
         </div>
@@ -782,11 +785,11 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
               ))}
             </div>
             <div className="flex items-center gap-4 text-[#8B7355] font-serif italic text-sm md:text-base">
-              <span className="opacity-40">Previous Exhibit</span>
+              <span className="opacity-40"><TranslatedText>Previous Exhibit</TranslatedText></span>
               <div className="w-12 h-[1px] bg-[#8B7355]/30"></div>
               <span className="font-bold tracking-widest">{String(galleryIndex + 1).padStart(2, '0')} / {String(galleryImages.length).padStart(2, '0')}</span>
               <div className="w-12 h-[1px] bg-[#8B7355]/30"></div>
-              <span className="opacity-40">Next Masterpiece</span>
+              <span className="opacity-40"><TranslatedText>Next Masterpiece</TranslatedText></span>
             </div>
           </div>
         </div>
@@ -799,17 +802,17 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
             {/* Left Side - Text Content */}
             <div className="space-y-6">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic leading-tight">
-                {pageData?.consultation?.section2?.title || 'Customised Solutions'}
+                <TranslatedText>{pageData?.consultation?.section2?.title || 'Customised Solutions'}</TranslatedText>
               </h2>
               <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                {pageData?.consultation?.section2?.description || "Let us bring your vision to life with a custom-designed space that reflects your unique taste and lifestyle. Whether it's a traditional pooja room or a modern sanctuary, we'll work with you to create the perfect fit. Ready to make your dream a reality?"}
+                <TranslatedText>{pageData?.consultation?.section2?.description || "Let us bring your vision to life with a custom-designed space that reflects your unique taste and lifestyle. Whether it's a traditional pooja room or a modern sanctuary, we'll work with you to create the perfect fit. Ready to make your dream a reality?"}</TranslatedText>
               </p>
               <button
                 onClick={() => setShowConsultationModal(true)}
                 className="group relative px-8 py-4 bg-[#8B7355] text-white font-bold rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_10px_20px_rgba(139,115,85,0.3)] hover:-translate-y-1 active:scale-95"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  Get Free Consultation
+                  <TranslatedText>Get Free Consultation</TranslatedText>
                   <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -836,7 +839,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 md:mb-14">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-8 md:mb-10 tracking-wide">
-              Explore Our Projects
+              <TranslatedText>Explore Our Projects</TranslatedText>
             </h2>
 
             {/* Three Option Buttons */}
@@ -852,7 +855,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                   }`}
                 style={selectedProjectType === 'Communal' ? { backgroundColor: '#8B7355' } : {}}
               >
-                Communal
+                <TranslatedText>Communal</TranslatedText>
               </button>
               <button
                 onClick={() => {
@@ -865,7 +868,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                   }`}
                 style={selectedProjectType === 'Residential' ? { backgroundColor: '#8B7355' } : {}}
               >
-                Residential
+                <TranslatedText>Residential</TranslatedText>
               </button>
               <button
                 onClick={() => {
@@ -878,7 +881,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
                   }`}
                 style={selectedProjectType === 'International' ? { backgroundColor: '#8B7355' } : {}}
               >
-                International
+                <TranslatedText>International</TranslatedText>
               </button>
             </div>
           </div>
@@ -897,10 +900,10 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
             {/* Left Side - Text */}
             <div className="space-y-6 order-2 lg:order-1">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic">
-                Before and After
+                <TranslatedText>Before and After</TranslatedText>
               </h2>
               <p className="text-base md:text-lg text-gray-700 leading-relaxed text-justify">
-                Witness the transformation from a blank canvas to a serene sanctuary with Tilak Stone Arts India. Our skilled artisans turn raw spaces into exquisite pooja rooms, reflecting spirituality and elegance. See the remarkable difference quality and craftsmanship can make.
+                <TranslatedText>Witness the transformation from a blank canvas to a serene sanctuary with Tilak Stone Arts India. Our skilled artisans turn raw spaces into exquisite pooja rooms, reflecting spirituality and elegance. See the remarkable difference quality and craftsmanship can make.</TranslatedText>
               </p>
             </div>
 
@@ -909,8 +912,8 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
               <BeforeAfterSlider
                 beforeImage={pageData?.beforeAfter?.beforeImage?.url || afterImage}
                 afterImage={pageData?.beforeAfter?.afterImage?.url || beforeImage}
-                beforeLabel="Before"
-                afterLabel="After"
+                beforeLabel={getTranslatedText("Before")}
+                afterLabel={getTranslatedText("After")}
               />
             </div>
           </div>
@@ -923,14 +926,14 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
           <div className="flex flex-col md:flex-row justify-between items-end mb-8 md:mb-12">
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black text-left">
-                {showAllLocations ? 'OUR GLOBAL PRESENCE' : 'INTERNATIONAL LOCATIONS'}
+                {showAllLocations ? <TranslatedText>OUR GLOBAL PRESENCE</TranslatedText> : <TranslatedText>INTERNATIONAL LOCATIONS</TranslatedText>}
               </h2>
             </div>
             <button
               onClick={() => setShowAllLocations(!showAllLocations)}
               className="text-[#8B7355] font-semibold flex items-center gap-2 hover:gap-3 transition-all duration-300 mt-4 md:mt-0"
             >
-              {showAllLocations ? 'View Less' : 'View More'}
+              {showAllLocations ? <TranslatedText>View Less</TranslatedText> : <TranslatedText>View More</TranslatedText>}
               <svg
                 className={`w-5 h-5 transform transition-transform duration-300 ${showAllLocations ? 'rotate-180' : ''}`}
                 fill="none"
@@ -989,6 +992,7 @@ const PoojaRoomPage = ({ onShowCart, onShowLikes }) => {
 
 // Consultation Modal Component
 const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handleSubmit, onClose }) => {
+  const { getTranslatedText } = usePageTranslation()
   return (
     <>
       <div
@@ -1027,7 +1031,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                       onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-3 h-3 accent-amber-600"
                     />
-                    <span className="text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}>DOMESTIC</span>
+                    <span className="text-xs font-medium" style={{ color: formData.type === 'DOMESTIC' ? '#8B7355' : '#333' }}><TranslatedText>DOMESTIC</TranslatedText></span>
                   </label>
                   <label className="flex items-center gap-1.5 cursor-pointer">
                     <input
@@ -1038,13 +1042,13 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                       onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-3 h-3 accent-amber-600"
                     />
-                    <span className="text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}>INTERNATIONAL</span>
+                    <span className="text-xs font-medium" style={{ color: formData.type === 'INTERNATIONAL' ? '#8B7355' : '#333' }}><TranslatedText>INTERNATIONAL</TranslatedText></span>
                   </label>
                 </div>
 
                 <input
                   type="text"
-                  placeholder="Full Name *"
+                  placeholder={getTranslatedText("Full Name *")}
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -1053,7 +1057,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
 
                 <input
                   type="email"
-                  placeholder="Email Address *"
+                  placeholder={getTranslatedText("Email Address *")}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -1061,7 +1065,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                 />
 
                 <div>
-                  <label className="block text-xs font-medium mb-1">Phone number</label>
+                  <label className="block text-xs font-medium mb-1"><TranslatedText>Phone number</TranslatedText></label>
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                     <div className="flex items-center gap-1 px-2 bg-gray-50 border-r">
                       <span className="text-sm">🇮🇳</span>
@@ -1069,7 +1073,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                     </div>
                     <input
                       type="tel"
-                      placeholder="Phone number *"
+                      placeholder={getTranslatedText("Phone number *")}
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="flex-1 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -1079,7 +1083,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
 
                 <input
                   type="text"
-                  placeholder="City *"
+                  placeholder={getTranslatedText("City *")}
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                   className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
@@ -1087,7 +1091,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                 />
 
                 <div>
-                  <label className="block text-xs font-medium mb-1.5">Tell us about yourself *</label>
+                  <label className="block text-xs font-medium mb-1.5"><TranslatedText>Tell us about yourself *</TranslatedText></label>
                   <div className="space-y-1.5">
                     <label className="flex items-start gap-1.5 cursor-pointer">
                       <input
@@ -1099,7 +1103,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                         className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                         required
                       />
-                      <span className="text-xs leading-relaxed">I am a homeowner looking for a pooja unit or pooja room</span>
+                      <span className="text-xs leading-relaxed"><TranslatedText>I am a homeowner looking for a pooja unit or pooja room</TranslatedText></span>
                     </label>
                     <label className="flex items-start gap-1.5 cursor-pointer">
                       <input
@@ -1111,7 +1115,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                         className="mt-0.5 w-3 h-3 accent-amber-600 flex-shrink-0"
                         required
                       />
-                      <span className="text-xs leading-relaxed">I am an interior designer/consultant seeking solutions for my client</span>
+                      <span className="text-xs leading-relaxed"><TranslatedText>I am an interior designer/consultant seeking solutions for my client</TranslatedText></span>
                     </label>
                   </div>
                 </div>
@@ -1123,7 +1127,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                   onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                   onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
                 >
-                  NEXT →
+                  <TranslatedText>NEXT</TranslatedText> →
                 </button>
               </form>
             ) : (
@@ -1199,7 +1203,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                 </div>
 
                 <textarea
-                  placeholder="Please share a bit more about your needs"
+                  placeholder={getTranslatedText("Please share a bit more about your needs")}
                   value={formData.additionalInfo}
                   onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
                   rows={3}
@@ -1244,7 +1248,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                       e.target.style.backgroundColor = 'white'
                     }}
                   >
-                    BACK
+                    <TranslatedText>BACK</TranslatedText>
                   </button>
                   <button
                     type="submit"
@@ -1253,7 +1257,7 @@ const ConsultationModal = ({ formStep, setFormStep, formData, setFormData, handl
                     onMouseEnter={(e) => e.target.style.backgroundColor = '#7a6349'}
                     onMouseLeave={(e) => e.target.style.backgroundColor = '#8B7355'}
                   >
-                    SUBMIT
+                    <TranslatedText>SUBMIT</TranslatedText>
                   </button>
                 </div>
               </form>

@@ -1,158 +1,5 @@
-// import { Link, useLocation } from "react-router-dom";
-// import logoImage from "../../assets/logo/download.png";
-// import { useState } from "react";
-
-// const Header = ({
-//   variant = "default",
-//   onShowSidebar,
-//   onShowProjects,
-//   onShowCreations,
-//   onShowServices,
-// }) => {
-//   const location = useLocation();
-//   const [open, setOpen] = useState(false);
-
-//   const isLocationPage =
-//     variant === "location" || location.pathname === "/location";
-
-//   const linkClass = `
-//     relative pb-[3px] 
-//     text-[12px] md:text-[13px] lg:text-[14px] 
-//     tracking-wide uppercase text-black 
-//     hover:text-[#8B8B5C] transition group
-//   `;
-
-//   return (
-//     <header
-//       className={`sticky top-0 z-[200] w-full ${
-//         isLocationPage ? "bg-[#fffbf0]" : "bg-white"
-//       } shadow`}
-//     >
-//       <div className="w-full flex justify-center px-3 md:px-6">
-//         <nav className="w-full max-w-[1500px]">
-//           {/* Desktop Navbar */}
-//           <ul className="hidden lg:flex items-center justify-between py-3">
-//             {/* LEFT LINKS */}
-//             <li>
-//               <div className="flex items-center gap-6">
-//                 <button onClick={onShowSidebar} className={linkClass}>
-//                   HOUSE OF TILAK
-//                   <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B8B5C] transition-all duration-300 group-hover:w-full"></span>
-//                 </button>
-
-//                 <button onClick={onShowProjects} className={linkClass}>
-//                   PROJECTS
-//                   <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B8B5C] transition-all duration-300 group-hover:w-full"></span>
-//                 </button>
-
-//                 <button onClick={onShowCreations} className={linkClass}>
-//                   OUR CREATIONS
-//                   <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B8B5C] transition-all duration-300 group-hover:w-full"></span>
-//                 </button>
-
-//                 <button onClick={onShowServices} className={linkClass}>
-//                   OUR SERVICES
-//                   <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B8B5C] transition-all duration-300 group-hover:w-full"></span>
-//                 </button>
-//               </div>
-//             </li>
-
-//             {/* LOGO */}
-//             <li className="flex-shrink-0 px-4">
-//               <Link to="/" className="block hover:opacity-80">
-//                 <img
-//                   src={logoImage}
-//                   alt="Logo"
-//                   className="h-24 md:h-28 lg:h-32 xl:h-36 object-contain"
-//                 />
-//               </Link>
-//             </li>
-
-//             {/* RIGHT LINKS */}
-//             <li>
-//               <div className="flex items-center gap-6">
-//                 <Link to="/how-it-works" className={linkClass}>
-//                   HOW IT WORKS
-//                   <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B8B5C] transition-all duration-300 group-hover:w-full"></span>
-//                 </Link>
-
-//                 <Link to="/location" className={linkClass}>
-//                   LOCATION
-//                   <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B8B5C] transition-all duration-300 group-hover:w-full"></span>
-//                 </Link>
-
-//                 <Link to="/blog" className={linkClass}>
-//                   BLOG
-//                   <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B8B5C] transition-all duration-300 group-hover:w-full"></span>
-//                 </Link>
-
-//                 <Link to="/book-appointment" className={linkClass}>
-//                   BOOK APPOINTMENT
-//                   <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B8B5C] transition-all duration-300 group-hover:w-full"></span>
-//                 </Link>
-
-//                 <Link to="/testimonials" className={linkClass}>
-//                   TESTIMONIALS
-//                   <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-[#8B8B5C] transition-all duration-300 group-hover:w-full"></span>
-//                 </Link>
-//               </div>
-//             </li>
-//           </ul>
-
-//           {/* Mobile Nav Button */}
-//           <div className="flex lg:hidden items-center justify-between py-3">
-//             <Link to="/">
-//               <img src={logoImage} alt="Logo" className="h-16 object-contain" />
-//             </Link>
-
-//             <button onClick={() => setOpen(!open)} className="text-3xl">
-//               ☰
-//             </button>
-//           </div>
-
-//           {/* Mobile Menu */}
-//           {open && (
-//             <div className="lg:hidden flex flex-col gap-4 pb-4">
-//               <button onClick={onShowSidebar} className={linkClass}>
-//                 HOUSE OF TILAK
-//               </button>
-//               <button onClick={onShowProjects} className={linkClass}>
-//                 PROJECTS
-//               </button>
-//               <button onClick={onShowCreations} className={linkClass}>
-//                 OUR CREATIONS
-//               </button>
-//               <button onClick={onShowServices} className={linkClass}>
-//                 OUR SERVICES
-//               </button>
-
-//               <Link to="/how-it-works" className={linkClass}>
-//                 HOW IT WORKS
-//               </Link>
-//               <Link to="/location" className={linkClass}>
-//                 LOCATION
-//               </Link>
-//               <Link to="/blog" className={linkClass}>
-//                 BLOG
-//               </Link>
-//               <Link to="/book-appointment" className={linkClass}>
-//                 BOOK APPOINTMENT
-//               </Link>
-//               <Link to="/testimonials" className={linkClass}>
-//                 TESTIMONIALS
-//               </Link>
-//             </div>
-//           )}
-//         </nav>
-//       </div>
-//     </header>
-//   );
-// };
-
-// export default Header;
-
-
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import TranslatedText from "../TranslatedText";
 import logoImage from "../../assets/logo/download.png";
 import { useState, useRef, useEffect } from "react";
 import HouseOfTilakDropdown from "./HouseOfTilakDropdown";
@@ -161,6 +8,7 @@ import OurCreationsDropdown from "./OurCreationsDropdown";
 import OurProductsDropdown from "./OurProductsDropdown";
 import OurServicesDropdown from "./OurServicesDropdown";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { usePageTranslation } from "../../hooks/usePageTranslation";
 
 const Header = ({
   variant = "default",
@@ -177,6 +25,41 @@ const Header = ({
   const [mobileExpandedMenu, setMobileExpandedMenu] = useState(null);
   const timeoutRef = useRef(null);
   const { language, languages, changeLanguage, isChangingLanguage } = useLanguage();
+
+  // Header/nav labels: translate in a single batch (same approach as the homepage popup)
+  // This avoids relying on per-string translation and ensures these always translate.
+  const HEADER_TEXTS = [
+    "ASLAM MARBLE SUPPLIERS",
+    "PROJECTS",
+    "OUR CREATIONS",
+    "OUR PRODUCTS",
+    "OUR SERVICES",
+    "HOW IT WORKS",
+    "LOCATION",
+    "BLOG",
+    "BOOK APPOINTMENT",
+    "TESTIMONIALS",
+  ];
+  const { getTranslatedText } = usePageTranslation(HEADER_TEXTS, "en");
+
+  // Some translation providers return HTML entities like "&#10;" for newlines.
+  // Header labels should always be clean single-line text.
+  const normalizeHeaderLabel = (value) => {
+    if (typeof value !== "string") return value;
+
+    // Decode common HTML entities (including numeric ones like &#10;).
+    let decoded = value;
+    if (typeof document !== "undefined") {
+      const textarea = document.createElement("textarea");
+      textarea.innerHTML = decoded;
+      decoded = textarea.value;
+    }
+
+    // Collapse newlines/tabs/multiple spaces to a single space.
+    return decoded.replace(/\s+/g, " ").trim();
+  };
+
+  const tHeader = (key) => normalizeHeaderLabel(getTranslatedText(key));
 
   // Handle dropdown change with fade animation
   const handleDropdownChange = (newDropdown) => {
@@ -271,7 +154,7 @@ const Header = ({
                   onMouseEnter={() => handleDropdownChange('house-of-tilak')}
                 >
                   <button className={`${linkClass} py-2`}>
-                    ASLAM MARBLE SUPPLIERS
+                    {tHeader("ASLAM MARBLE SUPPLIERS")}
                     <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                   </button>
                 </div>
@@ -281,7 +164,7 @@ const Header = ({
                   onMouseEnter={() => handleDropdownChange('projects')}
                 >
                   <button className={`${linkClass} py-2`}>
-                    PROJECTS
+                    {tHeader("PROJECTS")}
                     <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                   </button>
                 </div>
@@ -291,7 +174,7 @@ const Header = ({
                   onMouseEnter={() => handleDropdownChange('our-creations')}
                 >
                   <button className={`${linkClass} py-2`}>
-                    OUR CREATIONS
+                    {tHeader("OUR CREATIONS")}
                     <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                   </button>
                 </div>
@@ -301,7 +184,7 @@ const Header = ({
                   onMouseEnter={() => handleDropdownChange('our-products')}
                 >
                   <button className={`${linkClass} py-2`}>
-                    OUR PRODUCTS
+                    {tHeader("OUR PRODUCTS")}
                     <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                   </button>
                 </div>
@@ -311,7 +194,7 @@ const Header = ({
                   onMouseEnter={() => handleDropdownChange('our-services')}
                 >
                   <button className={`${linkClass} py-2`}>
-                    OUR SERVICES
+                    {tHeader("OUR SERVICES")}
                     <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                   </button>
                 </div>
@@ -331,27 +214,27 @@ const Header = ({
               {/* RIGHT LINKS */}
               <div className="flex items-center gap-4 md:gap-5 lg:gap-6 xl:gap-7 justify-end pl-4 xl:pl-6">
                 <Link to="/how-it-works" className={`${linkClass} py-2`}>
-                  HOW IT WORKS
+                  {tHeader("HOW IT WORKS")}
                   <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                 </Link>
 
                 <Link to="/location" className={`${linkClass} py-2`}>
-                  LOCATION
+                  {tHeader("LOCATION")}
                   <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                 </Link>
 
                 <Link to="/blog" className={`${linkClass} py-2`}>
-                  BLOG
+                  {tHeader("BLOG")}
                   <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                 </Link>
 
                 <Link to="/book-appointment" className={`${linkClass} py-2`}>
-                  BOOK APPOINTMENT
+                  {tHeader("BOOK APPOINTMENT")}
                   <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                 </Link>
 
                 <Link to="/testimonials" className={`${linkClass} py-2`}>
-                  TESTIMONIALS
+                  {tHeader("TESTIMONIALS")}
                   <span className={`absolute left-0 bottom-0 h-[2px] w-0 ${underlineColor} transition-all duration-300 group-hover:w-full`}></span>
                 </Link>
 
@@ -379,7 +262,7 @@ const Header = ({
                   </div>
                   {isChangingLanguage && (
                     <div className="absolute top-full text-[9px] text-[#8B8B5C] w-full text-center mt-1">
-                      Translating...
+                      <TranslatedText>Translating...</TranslatedText>
                     </div>
                   )}
                 </div>
@@ -477,7 +360,7 @@ const Header = ({
                           onClick={() => setMobileExpandedMenu(mobileExpandedMenu === 'house-of-tilak' ? null : 'house-of-tilak')}
                           className="w-full flex items-center justify-between px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                         >
-                          <span>ASLAM MARBLE SUPPLIERS</span>
+                          {tHeader("ASLAM MARBLE SUPPLIERS")}
                           <svg
                             className={`w-5 h-5 transition-transform ${mobileExpandedMenu === 'house-of-tilak' ? 'rotate-180' : ''}`}
                             fill="none"
@@ -489,12 +372,12 @@ const Header = ({
                         </button>
                         {mobileExpandedMenu === 'house-of-tilak' && (
                           <div className="bg-gray-50 px-4 py-2">
-                            <Link to="/about-us" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">About Us</Link>
-                            <Link to="/experience-centre" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Experience Centre</Link>
-                            <Link to="/the-team" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">The Team</Link>
-                            <Link to="/careers" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Careers</Link>
-                            <Link to="/artist" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Our Artist</Link>
-                            <Link to="/our-clients" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Our Clients</Link>
+                            <Link to="/about-us" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>About Us</TranslatedText></Link>
+                            <Link to="/experience-centre" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Experience Centre</TranslatedText></Link>
+                            <Link to="/the-team" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>The Team</TranslatedText></Link>
+                            <Link to="/careers" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Careers</TranslatedText></Link>
+                            <Link to="/artist" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Our Artist</TranslatedText></Link>
+                            <Link to="/our-clients" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Our Clients</TranslatedText></Link>
                           </div>
                         )}
                       </div>
@@ -505,7 +388,7 @@ const Header = ({
                           onClick={() => setMobileExpandedMenu(mobileExpandedMenu === 'projects' ? null : 'projects')}
                           className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                         >
-                          <span>PROJECTS</span>
+                          {tHeader("PROJECTS")}
                           <svg
                             className={`w-5 h-5 transition-transform ${mobileExpandedMenu === 'projects' ? 'rotate-180' : ''}`}
                             fill="none"
@@ -517,9 +400,9 @@ const Header = ({
                         </button>
                         {mobileExpandedMenu === 'projects' && (
                           <div className="bg-gray-50 px-4 py-2">
-                            <Link to="/communal-projects" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Communal</Link>
-                            <Link to="/residential-projects" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Residential</Link>
-                            <Link to="/international-projects" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">International</Link>
+                            <Link to="/communal-projects" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Communal</TranslatedText></Link>
+                            <Link to="/residential-projects" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Residential</TranslatedText></Link>
+                            <Link to="/international-projects" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>International</TranslatedText></Link>
                           </div>
                         )}
                       </div>
@@ -530,7 +413,7 @@ const Header = ({
                           onClick={() => setMobileExpandedMenu(mobileExpandedMenu === 'our-creations' ? null : 'our-creations')}
                           className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                         >
-                          <span>OUR CREATIONS</span>
+                          {tHeader("OUR CREATIONS")}
                           <svg
                             className={`w-5 h-5 transition-transform ${mobileExpandedMenu === 'our-creations' ? 'rotate-180' : ''}`}
                             fill="none"
@@ -542,12 +425,12 @@ const Header = ({
                         </button>
                         {mobileExpandedMenu === 'our-creations' && (
                           <div className="bg-gray-50 px-4 py-2">
-                            <Link to="/pooja-room" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Pooja Rooms</Link>
-                            <Link to="/dream-temple" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Dream Temples</Link>
-                            <Link to="/murti" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Murti</Link>
-                            <Link to="/murti#shop-home-decor" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Home Decor</Link>
-                            <Link to="/communal-temples" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Communal Temples</Link>
-                            <Link to="/jain-temples" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Jain Temples</Link>
+                            <Link to="/pooja-room" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Pooja Rooms</TranslatedText></Link>
+                            <Link to="/dream-temple" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Dream Temples</TranslatedText></Link>
+                            <Link to="/murti" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Murti</TranslatedText></Link>
+                            <Link to="/murti#shop-home-decor" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Home Decor</TranslatedText></Link>
+                            <Link to="/communal-temples" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Communal Temples</TranslatedText></Link>
+                            <Link to="/jain-temples" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Jain Temples</TranslatedText></Link>
                           </div>
                         )}
                       </div>
@@ -558,7 +441,7 @@ const Header = ({
                           onClick={() => setMobileExpandedMenu(mobileExpandedMenu === 'our-products' ? null : 'our-products')}
                           className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                         >
-                          <span>OUR PRODUCTS</span>
+                          {tHeader("OUR PRODUCTS")}
                           <svg
                             className={`w-5 h-5 transition-transform ${mobileExpandedMenu === 'our-products' ? 'rotate-180' : ''}`}
                             fill="none"
@@ -570,16 +453,16 @@ const Header = ({
                         </button>
                         {mobileExpandedMenu === 'our-products' && (
                           <div className="bg-gray-50 px-4 py-2 max-h-64 overflow-y-auto">
-                            <Link to="/products/sandstone" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Sandstone</Link>
-                            <Link to="/products/limestone" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Limestone</Link>
-                            <Link to="/products/marble" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Marble</Link>
-                            <Link to="/products/granite" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Granite</Link>
-                            <Link to="/products/slate" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Slate</Link>
-                            <Link to="/products/quartzite" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Quartzite</Link>
-                            <Link to="/products/pebble-stones" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Pebble Stones</Link>
-                            <Link to="/products/cobble-stones" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Cobble Stones</Link>
-                            <Link to="/products/stone-chips" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Stone Chips</Link>
-                            <Link to="/products/natural-indian-stones" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">Natural Indian Stone</Link>
+                            <Link to="/products/sandstone" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Sandstone</TranslatedText></Link>
+                            <Link to="/products/limestone" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Limestone</TranslatedText></Link>
+                            <Link to="/products/marble" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Marble</TranslatedText></Link>
+                            <Link to="/products/granite" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Granite</TranslatedText></Link>
+                            <Link to="/products/slate" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Slate</TranslatedText></Link>
+                            <Link to="/products/quartzite" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Quartzite</TranslatedText></Link>
+                            <Link to="/products/pebble-stones" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Pebble Stones</TranslatedText></Link>
+                            <Link to="/products/cobble-stones" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Cobble Stones</TranslatedText></Link>
+                            <Link to="/products/stone-chips" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Stone Chips</TranslatedText></Link>
+                            <Link to="/products/natural-indian-stones" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>Natural Indian Stone</TranslatedText></Link>
                           </div>
                         )}
                       </div>
@@ -590,7 +473,7 @@ const Header = ({
                           onClick={() => setMobileExpandedMenu(mobileExpandedMenu === 'our-services' ? null : 'our-services')}
                           className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                         >
-                          <span>OUR SERVICES</span>
+                          {tHeader("OUR SERVICES")}
                           <svg
                             className={`w-5 h-5 transition-transform ${mobileExpandedMenu === 'our-services' ? 'rotate-180' : ''}`}
                             fill="none"
@@ -602,8 +485,8 @@ const Header = ({
                         </button>
                         {mobileExpandedMenu === 'our-services' && (
                           <div className="bg-gray-50 px-4 py-2">
-                            <Link to="/services/ams-international" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">AMS International</Link>
-                            <Link to="/services/ams-design-hub" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded">AMS Design Hub</Link>
+                            <Link to="/services/ams-international" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>AMS International</TranslatedText></Link>
+                            <Link to="/services/ams-design-hub" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-white rounded"><TranslatedText>AMS Design Hub</TranslatedText></Link>
                           </div>
                         )}
                       </div>
@@ -613,35 +496,35 @@ const Header = ({
                         onClick={() => setOpen(false)}
                         className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
-                        HOW IT WORKS
+                        {tHeader("HOW IT WORKS")}
                       </Link>
                       <Link
                         to="/location"
                         onClick={() => setOpen(false)}
                         className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
-                        LOCATION
+                        {tHeader("LOCATION")}
                       </Link>
                       <Link
                         to="/blog"
                         onClick={() => setOpen(false)}
                         className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
-                        BLOG
+                        {tHeader("BLOG")}
                       </Link>
                       <Link
                         to="/book-appointment"
                         onClick={() => setOpen(false)}
                         className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
-                        BOOK APPOINTMENT
+                        {tHeader("BOOK APPOINTMENT")}
                       </Link>
                       <Link
                         to="/testimonials"
                         onClick={() => setOpen(false)}
                         className="text-left px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-wide text-gray-700 hover:bg-gray-100 hover:text-[#8B7355] rounded transition-colors"
                       >
-                        TESTIMONIALS
+                        {tHeader("TESTIMONIALS")}
                       </Link>
 
                       {/* Mobile Language Selector */}

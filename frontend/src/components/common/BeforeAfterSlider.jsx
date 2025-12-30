@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
-
+import TranslatedText from '../TranslatedText';
 const BeforeAfterSlider = ({ beforeImage, afterImage }) => {
     const [sliderPosition, setSliderPosition] = useState(50);
     const [isResizing, setIsResizing] = useState(false);
@@ -89,10 +89,10 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }) => {
 
             {/* Labels */}
             <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-md text-sm font-bold backdrop-blur-sm pointer-events-none z-20">
-                BEFORE
+                <TranslatedText>BEFORE</TranslatedText>
             </div>
             <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-md text-sm font-bold backdrop-blur-sm pointer-events-none z-20">
-                AFTER
+                <TranslatedText>AFTER</TranslatedText>
             </div>
         </div>
     );

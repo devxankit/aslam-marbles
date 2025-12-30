@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import TranslatedText from '../TranslatedText'
 
 const ShopByDropdown = () => {
   const rooms = [
@@ -24,7 +25,7 @@ const ShopByDropdown = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 lg:gap-20">
           {/* Rooms Column */}
           <div>
-            <h3 className="font-semibold text-black mb-3 text-sm md:text-base uppercase tracking-wide">Rooms</h3>
+            <h3 className="font-semibold text-black mb-3 text-sm md:text-base uppercase tracking-wide"><TranslatedText>Rooms</TranslatedText></h3>
             <ul className="space-y-2">
               {rooms.map((room, index) => (
                 <li key={index}>
@@ -32,7 +33,7 @@ const ShopByDropdown = () => {
                     to={`/shop-by/rooms/${room.toLowerCase().replace(/\s+/g, '-')}`}
                     className="text-gray-700 hover:text-[#8B7355] transition-colors text-xs md:text-sm"
                   >
-                    {room}
+                    <TranslatedText>{room}</TranslatedText>
                   </Link>
                 </li>
               ))}
@@ -41,7 +42,7 @@ const ShopByDropdown = () => {
 
           {/* Occasions Column */}
           <div>
-            <h3 className="font-semibold text-black mb-3 text-sm md:text-base uppercase tracking-wide">Occasions</h3>
+            <h3 className="font-semibold text-black mb-3 text-sm md:text-base uppercase tracking-wide"><TranslatedText>Occasions</TranslatedText></h3>
             <ul className="space-y-2">
               {occasions.map((occasion, index) => (
                 <li key={index}>
@@ -49,7 +50,7 @@ const ShopByDropdown = () => {
                     to={`/shop-by/occasions/${occasion.toLowerCase().replace(/\s+/g, '-')}`}
                     className="text-gray-700 hover:text-[#8B7355] transition-colors text-xs md:text-sm"
                   >
-                    {occasion}
+                    <TranslatedText>{occasion}</TranslatedText>
                   </Link>
                 </li>
               ))}

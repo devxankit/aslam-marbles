@@ -5,6 +5,7 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import TrustedBySection from '../../../components/common/TrustedBySection'
 import ExpertFormSection from '../../../components/common/ExpertFormSection'
+import TranslatedText from '../../../components/TranslatedText'
 
 // Fallback images and data
 import headingImageDefault from '../../../assets/house of marble/team/heading/Gemini_Generated_Image_ipme0eipme0eipme (1).png'
@@ -111,10 +112,7 @@ const TheTeamPage = ({
             <section className="w-full py-6 md:py-12 px-4 md:px-6 lg:px-8 bg-white">
                 <div className="max-w-4xl mx-auto text-center">
                     <p className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed" style={{ color: '#8B7355' }}>
-                        At Aslam Marble Suppliers, our team is the heart of our craft. Each member brings decades of expertise,
-                        passion for traditional stone artistry, and a commitment to excellence. Together, we transform visions
-                        into timeless marble masterpieces, blending heritage craftsmanship with modern innovation to create
-                        spiritual spaces that inspire devotion and tranquility.
+                        <TranslatedText>At Aslam Marble Suppliers, our team is the heart of our craft. Each member brings decades of expertise, passion for traditional stone artistry, and a commitment to excellence. Together, we transform visions into timeless marble masterpieces, blending heritage craftsmanship with modern innovation to create spiritual spaces that inspire devotion and tranquility.</TranslatedText>
                     </p>
                 </div>
             </section>
@@ -225,12 +223,12 @@ const TheTeamPage = ({
             <section className="w-full py-12 px-4 md:px-6 lg:px-8 bg-white text-center">
                 <div className="max-w-4xl mx-auto">
                     <p className="text-xl md:text-2xl font-serif text-[#8B7355] italic">
-                        Interested in being part of our team? Apply here to {' '}
+                        <TranslatedText>Interested in being part of our team? Apply here to</TranslatedText>{' '}
                         <Link
                             to="/careers#join-the-team"
                             className="font-bold underline decoration-2 underline-offset-4 hover:text-[#6D5A43] transition-all duration-300"
                         >
-                            join us
+                            <TranslatedText>join us</TranslatedText>
                         </Link>
                         !
                     </p>

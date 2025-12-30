@@ -3,7 +3,9 @@ require('dotenv').config();
 
 // Initialize the Google Cloud Translate client
 const translate = new Translate({
-    apiKey: process.env.GOOGLE_CLOUD_TRANSLATE_API_KEY,
+    // NOTE: @google-cloud/translate v2 expects `key` (NOT `apiKey`).
+    // If this is wrong, requests will be treated as "unregistered callers".
+    key: process.env.GOOGLE_CLOUD_TRANSLATE_API_KEY,
 });
 
 // Map of app language codes to Google Cloud Translate API codes

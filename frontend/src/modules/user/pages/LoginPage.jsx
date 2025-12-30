@@ -3,8 +3,11 @@ import { useNavigate, useLocation, Link } from 'react-router-dom'
 import Header from '../../../components/layout/Header'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const LoginPage = () => {
+  const { getTranslatedText } = usePageTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const [isSignIn, setIsSignIn] = useState(true)
@@ -31,15 +34,15 @@ const LoginPage = () => {
   // Sign In Form Validation
   const validateSignIn = () => {
     if (!signInForm.emailOrPhone.trim()) {
-      setError('Email or phone number is required')
+      setError(getTranslatedText('Email or phone number is required'))
       return false
     }
     if (!signInForm.password) {
-      setError('Password is required')
+      setError(getTranslatedText('Password is required'))
       return false
     }
     if (signInForm.password.length < 6) {
-      setError('Password must be at least 6 characters')
+      setError(getTranslatedText('Password must be at least 6 characters'))
       return false
     }
     return true
@@ -48,35 +51,35 @@ const LoginPage = () => {
   // Sign Up Form Validation
   const validateSignUp = () => {
     if (!signUpForm.fullName.trim()) {
-      setError('Full name is required')
+      setError(getTranslatedText('Full name is required'))
       return false
     }
     if (!signUpForm.email.trim()) {
-      setError('Email is required')
+      setError(getTranslatedText('Email is required'))
       return false
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(signUpForm.email)) {
-      setError('Please enter a valid email address')
+      setError(getTranslatedText('Please enter a valid email address'))
       return false
     }
     if (!signUpForm.phone.trim()) {
-      setError('Phone number is required')
+      setError(getTranslatedText('Phone number is required'))
       return false
     }
     if (!/^\d{10}$/.test(signUpForm.phone)) {
-      setError('Phone number must be exactly 10 digits')
+      setError(getTranslatedText('Phone number must be exactly 10 digits'))
       return false
     }
     if (!signUpForm.password) {
-      setError('Password is required')
+      setError(getTranslatedText('Password is required'))
       return false
     }
     if (signUpForm.password.length < 6) {
-      setError('Password must be at least 6 characters')
+      setError(getTranslatedText('Password must be at least 6 characters'))
       return false
     }
     if (signUpForm.password !== signUpForm.confirmPassword) {
-      setError('Passwords do not match')
+      setError(getTranslatedText('Passwords do not match'))
       return false
     }
     return true
@@ -134,7 +137,7 @@ const LoginPage = () => {
         }
       }
 
-      setSuccess('Login successful! Redirecting...')
+      setSuccess(getTranslatedText('Login successful! Redirecting...'))
 
       // Redirect to intended page or home
       const from = location.state?.from || '/'
@@ -205,7 +208,7 @@ const LoginPage = () => {
         }
       }
 
-      setSuccess('Registration Complete! Sign Up Successful!')
+      setSuccess(getTranslatedText('Registration Complete! Sign Up Successful!'))
 
       // Redirect to profile after successful registration
       setTimeout(() => {
@@ -263,10 +266,10 @@ const LoginPage = () => {
             {/* Logo and Title Section */}
             <div className="bg-gradient-to-r from-[#8B7355] to-[#7a6349] py-6 px-6 text-center">
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                Welcome to Aslam Marble Suppliers
+                <TranslatedText>Welcome to Aslam Marble Suppliers</TranslatedText>
               </h1>
               <p className="text-white/90 text-sm">
-                {isSignIn ? 'Sign in to continue' : 'Create your account'}
+                {isSignIn ? <TranslatedText>Sign in to continue</TranslatedText> : <TranslatedText>Create your account</TranslatedText>}
               </p>
             </div>
 
@@ -276,21 +279,21 @@ const LoginPage = () => {
                 type="button"
                 onClick={() => switchTab('signin')}
                 className={`flex-1 py-4 text-center text-base font-semibold transition-all duration-300 ${isSignIn
-                    ? 'text-[#8B7355] border-b-2 border-[#8B7355] bg-gray-50'
-                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+                  ? 'text-[#8B7355] border-b-2 border-[#8B7355] bg-gray-50'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
                   }`}
               >
-                Sign In
+                <TranslatedText>Sign In</TranslatedText>
               </button>
               <button
                 type="button"
                 onClick={() => switchTab('signup')}
                 className={`flex-1 py-4 text-center text-base font-semibold transition-all duration-300 ${!isSignIn
-                    ? 'text-[#8B7355] border-b-2 border-[#8B7355] bg-gray-50'
-                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+                  ? 'text-[#8B7355] border-b-2 border-[#8B7355] bg-gray-50'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
                   }`}
               >
-                Sign Up
+                <TranslatedText>Sign Up</TranslatedText>
               </button>
             </div>
 
@@ -355,14 +358,14 @@ const LoginPage = () => {
                         disabled={loading}
                       />
                       <label htmlFor="rememberMe" className="ml-2 text-sm text-gray-700">
-                        Remember me
+                        <TranslatedText>Remember me</TranslatedText>
                       </label>
                     </div>
                     <Link
                       to="/forgot-password"
                       className="text-sm text-[#8B7355] hover:underline font-medium"
                     >
-                      Forgot password?
+                      <TranslatedText>Forgot password?</TranslatedText>
                     </Link>
                   </div>
 
@@ -377,10 +380,10 @@ const LoginPage = () => {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Signing in...
+                        <TranslatedText>Signing in...</TranslatedText>
                       </span>
                     ) : (
-                      'Sign In'
+                      <TranslatedText>Sign In</TranslatedText>
                     )}
                   </button>
                 </form>
@@ -459,10 +462,10 @@ const LoginPage = () => {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Creating account...
+                        <TranslatedText>Creating account...</TranslatedText>
                       </span>
                     ) : (
-                      'Sign Up'
+                      <TranslatedText>Sign Up</TranslatedText>
                     )}
                   </button>
                 </form>
@@ -475,7 +478,7 @@ const LoginPage = () => {
                     <div className="w-full border-t border-gray-300"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                    <span className="px-2 bg-white text-gray-500"><TranslatedText>Or continue with</TranslatedText></span>
                   </div>
                 </div>
 
@@ -505,13 +508,13 @@ const LoginPage = () => {
               {/* Terms and Privacy */}
               {!isSignIn && (
                 <p className="mt-4 text-xs text-center text-gray-500">
-                  By signing up, you agree to our{' '}
+                  <TranslatedText>By signing up, you agree to our</TranslatedText>{' '}
                   <Link to="/terms-and-conditions" className="text-[#8B7355] hover:underline">
-                    Terms & Conditions
+                    <TranslatedText>Terms & Conditions</TranslatedText>
                   </Link>{' '}
-                  and{' '}
+                  <TranslatedText>and</TranslatedText>{' '}
                   <Link to="/privacy-policy" className="text-[#8B7355] hover:underline">
-                    Privacy Policy
+                    <TranslatedText>Privacy Policy</TranslatedText>
                   </Link>
                 </p>
               )}
@@ -524,7 +527,7 @@ const LoginPage = () => {
               to="/"
               className="text-sm text-[#8B7355] hover:underline font-medium"
             >
-              ← Back to Home
+              ← <TranslatedText>Back to Home</TranslatedText>
             </Link>
           </div>
         </div>

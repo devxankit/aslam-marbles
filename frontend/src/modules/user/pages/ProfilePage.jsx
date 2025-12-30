@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../../../components/layout/Header'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
+import TranslatedText from '../../../components/TranslatedText'
 
 const ProfilePage = () => {
   const navigate = useNavigate()
@@ -62,7 +63,7 @@ const ProfilePage = () => {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8B7355] mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading profile...</p>
+          <p className="text-gray-600"><TranslatedText>Loading profile...</TranslatedText></p>
         </div>
       </div>
     )
@@ -77,7 +78,7 @@ const ProfilePage = () => {
             onClick={() => navigate('/login')}
             className="px-6 py-2 bg-[#8B7355] text-white rounded-lg hover:opacity-90"
           >
-            Go to Login
+            <TranslatedText>Go to Login</TranslatedText>
           </button>
         </div>
       </div>
@@ -88,11 +89,11 @@ const ProfilePage = () => {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header
         variant="default"
-        onShowSidebar={() => {}}
-        onShowProjects={() => {}}
-        onShowCreations={() => {}}
-        onShowServices={() => {}}
-        onShowProducts={() => {}}
+        onShowSidebar={() => { }}
+        onShowProjects={() => { }}
+        onShowCreations={() => { }}
+        onShowServices={() => { }}
+        onShowProducts={() => { }}
       />
 
       <main className="flex-1 py-8 px-4 md:px-6 lg:px-8">
@@ -103,8 +104,8 @@ const ProfilePage = () => {
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
             <div>
-              <p className="text-green-800 font-semibold">Registration Complete!</p>
-              <p className="text-green-700 text-sm">Sign Up Successful! Welcome to Aslam Marble Suppliers.</p>
+              <p className="text-green-800 font-semibold"><TranslatedText>Registration Complete!</TranslatedText></p>
+              <p className="text-green-700 text-sm"><TranslatedText>Sign Up Successful! Welcome to Aslam Marble Suppliers.</TranslatedText></p>
             </div>
           </div>
 
@@ -123,23 +124,23 @@ const ProfilePage = () => {
             <div className="p-6 md:p-8">
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800 mb-4">Profile Information</h2>
+                  <h2 className="text-xl font-bold text-gray-800 mb-4"><TranslatedText>Profile Information</TranslatedText></h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-600 mb-2">Full Name</label>
+                      <label className="block text-sm font-semibold text-gray-600 mb-2"><TranslatedText>Full Name</TranslatedText></label>
                       <p className="text-gray-800 text-lg">{user?.name || 'N/A'}</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-600 mb-2">Email</label>
+                      <label className="block text-sm font-semibold text-gray-600 mb-2"><TranslatedText>Email</TranslatedText></label>
                       <p className="text-gray-800 text-lg">{user?.email || 'N/A'}</p>
                       {user?.isEmailVerified ? (
-                        <span className="inline-block mt-1 px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Verified</span>
+                        <span className="inline-block mt-1 px-2 py-1 bg-green-100 text-green-800 text-xs rounded"><TranslatedText>Verified</TranslatedText></span>
                       ) : (
-                        <span className="inline-block mt-1 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">Not Verified</span>
+                        <span className="inline-block mt-1 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded"><TranslatedText>Not Verified</TranslatedText></span>
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-600 mb-2">Phone Number</label>
+                      <label className="block text-sm font-semibold text-gray-600 mb-2"><TranslatedText>Phone Number</TranslatedText></label>
                       <p className="text-gray-800 text-lg">{user?.phone || 'N/A'}</p>
                       {user?.isPhoneVerified ? (
                         <span className="inline-block mt-1 px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Verified</span>
@@ -148,7 +149,7 @@ const ProfilePage = () => {
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-600 mb-2">Member Since</label>
+                      <label className="block text-sm font-semibold text-gray-600 mb-2"><TranslatedText>Member Since</TranslatedText></label>
                       <p className="text-gray-800 text-lg">
                         {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-IN', {
                           year: 'numeric',
@@ -162,17 +163,17 @@ const ProfilePage = () => {
 
                 {/* Account Status */}
                 <div className="border-t border-gray-200 pt-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Status</h3>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4"><TranslatedText>Account Status</TranslatedText></h3>
                   <div className="flex items-center gap-2">
                     {user?.isActive ? (
                       <>
                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <span className="text-gray-800">Active Account</span>
+                        <span className="text-gray-800"><TranslatedText>Active Account</TranslatedText></span>
                       </>
                     ) : (
                       <>
                         <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                        <span className="text-gray-800">Inactive Account</span>
+                        <span className="text-gray-800"><TranslatedText>Inactive Account</TranslatedText></span>
                       </>
                     )}
                   </div>
@@ -184,13 +185,13 @@ const ProfilePage = () => {
                     onClick={() => navigate('/')}
                     className="flex-1 px-6 py-3 bg-[#8B7355] text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
                   >
-                    Continue Shopping
+                    <TranslatedText>Continue Shopping</TranslatedText>
                   </button>
                   <button
                     onClick={handleLogout}
                     className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
                   >
-                    Logout
+                    <TranslatedText>Logout</TranslatedText>
                   </button>
                 </div>
               </div>

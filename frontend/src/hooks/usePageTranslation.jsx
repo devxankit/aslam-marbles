@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { translateText } from '../services/translationService';
+import { translateBatch } from '../services/translationService';
 
 export const usePageTranslation = (staticTexts = [], sourceLang = 'en') => {
     const { language: targetLang } = useLanguage();
@@ -21,23 +21,26 @@ export const usePageTranslation = (staticTexts = [], sourceLang = 'en') => {
             setIsTranslating(true);
 
             try {
-                // Collect requests
-                const promises = staticTexts.map(text =>
-                    translateText(text, targetLang, sourceLang)
-                        .then(res => ({ original: text, translated: res }))
-                );
-
-                const results = await Promise.all(promises);
+                // Use batch API for efficient translation (single API call instead of N calls)
+                const translations = await translateBatch(staticTexts, targetLang, sourceLang, true); // true = isStatic
 
                 if (isMounted) {
                     const newMap = {};
-                    results.forEach(({ original, translated }) => {
-                        newMap[original] = translated;
+                    staticTexts.forEach((original, idx) => {
+                        newMap[original] = translations[idx] || original;
                     });
                     setTranslatedMap(newMap);
                 }
             } catch (error) {
                 console.error('Page translation error:', error);
+                // Fallback: use original texts
+                if (isMounted) {
+                    const fallbackMap = {};
+                    staticTexts.forEach(text => {
+                        fallbackMap[text] = text;
+                    });
+                    setTranslatedMap(fallbackMap);
+                }
             } finally {
                 if (isMounted) setIsTranslating(false);
             }

@@ -3,11 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
 import { useCartAndLikes } from '../../../contexts/CartAndLikesContext'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 const CheckoutPage = ({ onShowCart, onShowLikes }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const { cart, getCartTotal, clearCart } = useCartAndLikes()
+  const { getTranslatedText } = usePageTranslation()
 
   // Form state
   const [formData, setFormData] = useState({
@@ -61,11 +64,11 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
 
     // Basic validation
     if (!formData.email && !formData.phone) {
-      alert('Please enter email or phone number')
+      alert(getTranslatedText('Please enter email or phone number'))
       return
     }
     if (!formData.lastName || !formData.address || !formData.city || !formData.state || !formData.pinCode) {
-      alert('Please fill all required shipping fields')
+      alert(getTranslatedText('Please fill all required shipping fields'))
       return
     }
 
@@ -97,13 +100,13 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
               {/* Contact Section */}
               <div className="bg-white rounded-lg p-6 md:p-8 mb-6 shadow-sm">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Contact</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900"><TranslatedText>Contact</TranslatedText></h2>
                   <button
                     type="button"
                     onClick={() => navigate('/login')}
                     className="text-[#8B7355] hover:underline font-medium"
                   >
-                    Sign in
+                    <TranslatedText>Sign in</TranslatedText>
                   </button>
                 </div>
 
@@ -113,7 +116,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="Email or mobile phone number"
+                    placeholder={getTranslatedText("Email or mobile phone number")}
                     className="w-full px-4 py-3 border-2 border-[#8B7355] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:ring-offset-2 transition-all"
                   />
                 </div>
@@ -128,14 +131,14 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     className="w-4 h-4 text-[#8B7355] border-gray-300 rounded focus:ring-[#8B7355]"
                   />
                   <label htmlFor="emailNews" className="ml-2 text-sm text-gray-700">
-                    Email me with news and offers
+                    <TranslatedText>Email me with news and offers</TranslatedText>
                   </label>
                 </div>
               </div>
 
               {/* Shipping Address Section */}
               <div className="bg-white rounded-lg p-6 md:p-8 shadow-sm">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Shipping address</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6"><TranslatedText>Shipping address</TranslatedText></h2>
 
                 {/* Country/Region */}
                 <div className="mb-4">
@@ -145,11 +148,11 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:border-[#8B7355] transition-all"
                   >
-                    <option value="India">India</option>
-                    <option value="United States">United States</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="Canada">Canada</option>
-                    <option value="Australia">Australia</option>
+                    <option value="India">{getTranslatedText("India")}</option>
+                    <option value="United States">{getTranslatedText("United States")}</option>
+                    <option value="United Kingdom">{getTranslatedText("United Kingdom")}</option>
+                    <option value="Canada">{getTranslatedText("Canada")}</option>
+                    <option value="Australia">{getTranslatedText("Australia")}</option>
                   </select>
                 </div>
 
@@ -161,7 +164,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      placeholder="First name (optional)"
+                      placeholder={getTranslatedText("First name (optional)")}
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:border-[#8B7355] transition-all"
                     />
                   </div>
@@ -171,7 +174,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      placeholder="Last name"
+                      placeholder={getTranslatedText("Last name")}
                       required
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:border-[#8B7355] transition-all"
                     />
@@ -185,7 +188,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     name="address"
                     value={formData.address}
                     onChange={handleInputChange}
-                    placeholder="Address"
+                    placeholder={getTranslatedText("Address")}
                     required
                     className="w-full px-4 py-3 pr-10 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:border-[#8B7355] transition-all"
                   />
@@ -201,7 +204,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     name="apartment"
                     value={formData.apartment}
                     onChange={handleInputChange}
-                    placeholder="Apartment, suite, etc. (optional)"
+                    placeholder={getTranslatedText("Apartment, suite, etc. (optional)")}
                     className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:border-[#8B7355] transition-all"
                   />
                 </div>
@@ -214,7 +217,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                       name="city"
                       value={formData.city}
                       onChange={handleInputChange}
-                      placeholder="City"
+                      placeholder={getTranslatedText("City")}
                       required
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:border-[#8B7355] transition-all"
                     />
@@ -225,7 +228,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                       name="state"
                       value={formData.state}
                       onChange={handleInputChange}
-                      placeholder="State/Province/Region"
+                      placeholder={getTranslatedText("State/Province/Region")}
                       required
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:border-[#8B7355] transition-all"
                     />
@@ -236,7 +239,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                       name="pinCode"
                       value={formData.pinCode}
                       onChange={handleInputChange}
-                      placeholder="PIN code/Zip/Postal Code"
+                      placeholder={getTranslatedText("PIN code/Zip/Postal Code")}
                       required
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] focus:border-[#8B7355] transition-all"
                     />
@@ -254,7 +257,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     className="w-4 h-4 text-[#8B7355] border-gray-300 rounded focus:ring-[#8B7355]"
                   />
                   <label htmlFor="saveInfo" className="ml-2 text-sm text-gray-700">
-                    Save this information for next time
+                    <TranslatedText>Save this information for next time</TranslatedText>
                   </label>
                 </div>
 
@@ -264,7 +267,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     type="submit"
                     className="px-8 py-4 bg-[#8B7355] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-lg"
                   >
-                    Continue to shipping
+                    <TranslatedText>Continue to shipping</TranslatedText>
                   </button>
                 </div>
               </div>
@@ -274,7 +277,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
           {/* Right Section - Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-gray-50 rounded-lg p-6 md:p-8 sticky top-24">
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-6"><TranslatedText>Order Summary</TranslatedText></h3>
 
               {/* Product Items */}
               <div className="space-y-4 mb-6">
@@ -283,7 +286,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-200">
                       <img
                         src={item.image}
-                        alt={item.name}
+                        alt={getTranslatedText(item.name)}
                         className="w-full h-full object-cover"
                       />
                       {item.quantity > 1 && (
@@ -294,7 +297,7 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                        {item.name}
+                        <TranslatedText>{item.name}</TranslatedText>
                       </h4>
                       {item.size && (
                         <p className="text-xs text-gray-600 mb-1">{item.size}</p>
@@ -310,21 +313,21 @@ const CheckoutPage = ({ onShowCart, onShowLikes }) => {
               {/* Cost Breakdown */}
               <div className="border-t border-gray-300 pt-4 space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-700">Subtotal</span>
+                  <span className="text-gray-700"><TranslatedText>Subtotal</TranslatedText></span>
                   <span className="font-semibold text-gray-900">₹{subtotal.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <div className="flex items-center gap-1">
-                    <span className="text-gray-700">Shipping</span>
+                    <span className="text-gray-700"><TranslatedText>Shipping</TranslatedText></span>
                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <span className="text-gray-600">Calculated at next step</span>
+                  <span className="text-gray-600"><TranslatedText>Calculated at next step</TranslatedText></span>
                 </div>
                 <div className="flex justify-between text-lg font-bold pt-2 border-t border-gray-300">
-                  <span className="text-gray-900">Total</span>
-                  <span className="text-[#8B7355]">INR ₹{total.toLocaleString('en-IN')}</span>
+                  <span className="text-gray-900"><TranslatedText>Total</TranslatedText></span>
+                  <span className="text-[#8B7355]"><TranslatedText>INR</TranslatedText> ₹{total.toLocaleString('en-IN')}</span>
                 </div>
               </div>
             </div>

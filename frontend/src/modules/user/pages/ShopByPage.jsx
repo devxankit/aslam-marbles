@@ -6,6 +6,7 @@ import FloatingButtons from '../../../components/common/FloatingButtons'
 import TrustedBySection from '../../../components/common/TrustedBySection'
 import LazyImage from '../../../components/common/LazyImage'
 import { fetchFAQs } from '../../../utils/faqUtils'
+import TranslatedText from '../../../components/TranslatedText'
 
 const ShopByPage = ({
     onShowCart,
@@ -72,10 +73,10 @@ const ShopByPage = ({
                 <div className="absolute inset-0 flex flex-col items-center justify-center px-4 bg-white/10">
                     <div className="text-center">
                         <h1 className="text-4xl md:text-6xl font-serif text-gray-900 mb-4 tracking-tight">
-                            Shop By Collection
+                            <TranslatedText>Shop By Collection</TranslatedText>
                         </h1>
                         <p className="text-gray-600 text-sm md:text-lg font-light tracking-widest uppercase">
-                            Find Perfect Pieces for Your Space & Occasion
+                            <TranslatedText>Find Perfect Pieces for Your Space & Occasion</TranslatedText>
                         </p>
                         <div className="w-12 h-[1px] bg-gray-300 mx-auto mt-8"></div>
                     </div>
@@ -90,10 +91,10 @@ const ShopByPage = ({
                     <div className="scroll-mt-28">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl md:text-4xl font-serif text-gray-900 italic font-normal mb-2">
-                                Shop by Room
+                                <TranslatedText>Shop by Room</TranslatedText>
                             </h2>
                             <p className="text-gray-500 text-sm md:text-base font-light mt-4 max-w-2xl mx-auto">
-                                Discover curated collections for every space in your home
+                                <TranslatedText>Discover curated collections for every space in your home</TranslatedText>
                             </p>
                             <div className="w-8 h-[1px] bg-[#8B7355] mx-auto opacity-30 mt-6"></div>
                         </div>
@@ -127,10 +128,10 @@ const ShopByPage = ({
                     <div className="scroll-mt-28">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl md:text-4xl font-serif text-gray-900 italic font-normal mb-2">
-                                Shop by Occasion
+                                <TranslatedText>Shop by Occasion</TranslatedText>
                             </h2>
                             <p className="text-gray-500 text-sm md:text-base font-light mt-4 max-w-2xl mx-auto">
-                                Perfect gifts and decor for life's special moments
+                                <TranslatedText>Perfect gifts and decor for life's special moments</TranslatedText>
                             </p>
                             <div className="w-8 h-[1px] bg-[#8B7355] mx-auto opacity-30 mt-6"></div>
                         </div>
@@ -166,7 +167,7 @@ const ShopByPage = ({
             <section className="w-full py-20 md:py-24 px-4 md:px-8 bg-white border-t border-gray-100">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-serif text-gray-900 mb-4">Frequently Asked Questions</h2>
+                        <h2 className="text-3xl md:text-5xl font-serif text-gray-900 mb-4"><TranslatedText>Frequently Asked Questions</TranslatedText></h2>
                         <div className="w-12 h-[1px] bg-[#8B7355] mx-auto opacity-30"></div>
                     </div>
 
@@ -175,12 +176,12 @@ const ShopByPage = ({
                             <div className="text-center py-12">
                                 <div className="inline-flex items-center gap-3">
                                     <div className="w-5 h-5 border-2 border-[#8B7355] border-t-transparent rounded-full animate-spin"></div>
-                                    <p className="text-gray- text-sm md:text-base">Loading FAQs...</p>
+                                    <p className="text-gray- text-sm md:text-base"><TranslatedText>Loading FAQs...</TranslatedText></p>
                                 </div>
                             </div>
                         ) : faqs.length === 0 ? (
                             <div className="text-center py-12">
-                                <p className="text-gray-500 text-sm md:text-base">No FAQs available at the moment.</p>
+                                <p className="text-gray-500 text-sm md:text-base"><TranslatedText>No FAQs available at the moment.</TranslatedText></p>
                             </div>
                         ) : (
                             faqs.map((faq, index) => {

@@ -4,6 +4,8 @@ import { useCartAndLikes } from '../../../contexts/CartAndLikesContext'
 import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
+import TranslatedText from '../../../components/TranslatedText'
+import { usePageTranslation } from '../../../contexts/PageTranslationContext'
 
 // Import local data fallbacks
 import { ganeshaProducts } from '../../../data/ganeshaProducts'
@@ -37,6 +39,7 @@ const MurtiCategoryTemplate = ({
     onShowLikes
 }) => {
     const navigate = useNavigate()
+    const { getTranslatedText } = usePageTranslation()
     const { addToCart, toggleLike, isLiked } = useCartAndLikes()
     const [products, setProducts] = useState([])
     const [categoryInfo, setCategoryInfo] = useState(null)
@@ -154,11 +157,11 @@ const MurtiCategoryTemplate = ({
                         />
                         <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center z-10 px-4 text-white">
                             <h1 className="text-3xl md:text-5xl font-serif italic mb-4 font-bold drop-shadow-lg text-center">
-                                {categoryInfo?.heroSection?.title || categoryInfo?.name || title || categoryId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                                <TranslatedText>{categoryInfo?.heroSection?.title || categoryInfo?.name || title || categoryId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</TranslatedText>
                             </h1>
                             {(categoryInfo?.heroSection?.subtitle || subtitle) && (
                                 <p className="text-white/90 text-center max-w-2xl mx-auto text-lg md:text-xl drop-shadow-md">
-                                    {categoryInfo?.heroSection?.subtitle || subtitle}
+                                    <TranslatedText>{categoryInfo?.heroSection?.subtitle || subtitle}</TranslatedText>
                                 </p>
                             )}
                         </div>
@@ -166,12 +169,16 @@ const MurtiCategoryTemplate = ({
                 ) : (
                     <div className="max-w-7xl mx-auto px-4 md:px-8 text-center bg-white">
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] italic mb-6 font-bold">
-                            {title || (categoryInfo?.name ? `${categoryInfo.name} Collection` : `${categoryId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} Collection`)}
+                            {title ? <TranslatedText>{title}</TranslatedText> : (
+                                <>
+                                    <TranslatedText>{categoryInfo?.name || categoryId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</TranslatedText> <TranslatedText>Collection</TranslatedText>
+                                </>
+                            )}
                         </h1>
                         <div className="w-24 h-1 bg-[#8B7355] mx-auto rounded-full mb-8"></div>
                         {(subtitle || categoryInfo?.heroSection?.subtitle) && (
                             <p className="text-gray-500 text-center max-w-2xl mx-auto text-lg">
-                                {subtitle || categoryInfo?.heroSection?.subtitle}
+                                <TranslatedText>{subtitle || categoryInfo?.heroSection?.subtitle}</TranslatedText>
                             </p>
                         )}
                     </div>
@@ -186,8 +193,8 @@ const MurtiCategoryTemplate = ({
                             <svg className="w-16 h-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            <h3 className="text-xl font-medium text-gray-900">No products found</h3>
-                            <p className="text-gray-500 mt-2">New collection coming soon.</p>
+                            <h3 className="text-xl font-medium text-gray-900"><TranslatedText>No products found</TranslatedText></h3>
+                            <p className="text-gray-500 mt-2"><TranslatedText>New collection coming soon.</TranslatedText></p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8">
@@ -203,7 +210,7 @@ const MurtiCategoryTemplate = ({
                                 const handleAddToCart = (e) => {
                                     e.stopPropagation();
                                     addToCart(product, 1, product.size || 'Standard');
-                                    alert('Added to cart!');
+                                    alert(getTranslatedText('Added to cart!'));
                                 };
 
                                 const handleBuyNow = (e) => {
@@ -234,7 +241,7 @@ const MurtiCategoryTemplate = ({
                                         <div className="relative w-full aspect-[4/5] overflow-hidden bg-gray-100">
                                             {product.isPreOrder && (
                                                 <div className="absolute top-3 left-3 z-10 bg-black rounded-full px-3 py-1">
-                                                    <span className="text-white text-xs font-semibold uppercase">Pre Order</span>
+                                                    <span className="text-white text-xs font-semibold uppercase"><TranslatedText>Pre Order</TranslatedText></span>
                                                 </div>
                                             )}
                                             <LazyImage
@@ -249,7 +256,7 @@ const MurtiCategoryTemplate = ({
                                                 <button
                                                     onClick={handleAddToCart}
                                                     className="bg-white text-gray-900 p-3 rounded-full hover:bg-[#8B7355] hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300"
-                                                    title="Add to Cart"
+                                                    title={getTranslatedText("Add to Cart")}
                                                 >
                                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -259,7 +266,7 @@ const MurtiCategoryTemplate = ({
                                                     onClick={handleBuyNow}
                                                     className="bg-[#8B7355] text-white px-6 py-2 rounded-full font-bold hover:bg-white hover:text-[#8B7355] transition-all transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
                                                 >
-                                                    Buy Now
+                                                    <TranslatedText>Buy Now</TranslatedText>
                                                 </button>
                                                 <button
                                                     onClick={(e) => {
@@ -267,7 +274,7 @@ const MurtiCategoryTemplate = ({
                                                         navigate(`/murti/${categoryId}/${product._id || product.id}`);
                                                     }}
                                                     className="bg-white text-gray-900 p-3 rounded-full hover:bg-[#8B7355] hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300"
-                                                    title="View Details"
+                                                    title={getTranslatedText("View Details")}
                                                 >
                                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

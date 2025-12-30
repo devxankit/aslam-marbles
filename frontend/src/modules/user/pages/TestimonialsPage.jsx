@@ -5,6 +5,7 @@ import TrustedBySection from '../../../components/common/TrustedBySection'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import { useNavigate } from 'react-router-dom'
 import { fetchTestimonials } from '../../../utils/testimonialUtils'
+import TranslatedText from '../../../components/TranslatedText'
 
 const TestimonialsPage = ({
   onShowSidebar,
@@ -92,14 +93,14 @@ const TestimonialsPage = ({
         <div className="relative h-full flex flex-col items-center justify-center text-center px-4 z-10">
           <div className="mb-4">
             <span className="inline-block px-6 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white/90 text-sm md:text-base font-medium tracking-wider uppercase">
-              ★ Trusted by 500+ Families ★
+              <TranslatedText>★ Trusted by 500+ Families ★</TranslatedText>
             </span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif italic font-bold text-white mb-6 tracking-wide drop-shadow-2xl">
-            Client Testimonials
+            <TranslatedText>Client Testimonials</TranslatedText>
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed font-light">
-            Real stories from families who trusted us to create their sacred spaces
+            <TranslatedText>Real stories from families who trusted us to create their sacred spaces</TranslatedText>
           </p>
 
         </div>
@@ -113,7 +114,7 @@ const TestimonialsPage = ({
           {/* Section Header */}
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif italic text-[#8B7355] mb-4">
-              What They Say About Us
+              <TranslatedText>What They Say About Us</TranslatedText>
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#8B7355] to-transparent mx-auto"></div>
           </div>
@@ -125,11 +126,11 @@ const TestimonialsPage = ({
                 <div className="w-3 h-3 bg-[#8B7355] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                 <div className="w-3 h-3 bg-[#8B7355] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
               </div>
-              <p className="text-gray-600 text-base md:text-lg mt-4">Loading testimonials...</p>
+              <p className="text-gray-600 text-base md:text-lg mt-4"><TranslatedText>Loading testimonials...</TranslatedText></p>
             </div>
           ) : testimonials.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-gray-600 text-base md:text-lg">No testimonials available at the moment.</p>
+              <p className="text-gray-600 text-base md:text-lg"><TranslatedText>No testimonials available at the moment.</TranslatedText></p>
             </div>
           ) : (
             <div className="grid grid-cols-3 gap-3 md:gap-6">
@@ -217,7 +218,7 @@ const TestimonialsPage = ({
                           </svg>
                         ))}
                       </div>
-                      <span className="text-[6px] md:text-[8px] text-gray-400 uppercase tracking-wider font-medium">Verified</span>
+                      <span className="text-[6px] md:text-[8px] text-gray-400 uppercase tracking-wider font-medium"><TranslatedText>Verified</TranslatedText></span>
                     </div>
                   </div>
                 </div>
@@ -239,16 +240,16 @@ const TestimonialsPage = ({
 
         <div className="relative max-w-4xl mx-auto text-center px-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif italic text-white mb-6">
-            Ready to Create Your Sacred Space?
+            <TranslatedText>Ready to Create Your Sacred Space?</TranslatedText>
           </h2>
           <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-            Join hundreds of satisfied families who trusted us with their divine vision.
+            <TranslatedText>Join hundreds of satisfied families who trusted us with their divine vision.</TranslatedText>
           </p>
           <button
             onClick={handleBookingClick}
             className="group inline-flex items-center gap-3 bg-white text-[#8B7355] px-8 py-4 rounded-full font-bold text-lg uppercase tracking-wider shadow-2xl hover:shadow-white/20 transform hover:scale-105 transition-all duration-300"
           >
-            Book Your Consultation
+            <TranslatedText>Book Your Consultation</TranslatedText>
             <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
@@ -339,7 +340,7 @@ const TestimonialsPage = ({
                     </svg>
                   ))}
                 </div>
-                <span className="text-xs text-gray-400 uppercase tracking-wider font-medium">Verified Purchase</span>
+                <span className="text-xs text-gray-400 uppercase tracking-wider font-medium"><TranslatedText>Verified Purchase</TranslatedText></span>
               </div>
             </div>
           </div>

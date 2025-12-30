@@ -3,6 +3,7 @@ import icon2 from '../../assets/how it work/icons/icon2.png'
 import icon3 from '../../assets/how it work/icons/icon3.png'
 import icon4 from '../../assets/how it work/icons/icon4.png'
 import icon5 from '../../assets/how it work/icons/icon5.png'
+import TranslatedText from '../TranslatedText'
 
 const StepsSection = () => {
   return (
@@ -11,10 +12,10 @@ const StepsSection = () => {
         {/* Heading */}
         <div className="text-center mb-6">
           <h2 className="text-xl md:text-3xl lg:text-4xl font-serif text-[#8B7355] italic mb-2 uppercase tracking-tight md:tracking-normal">
-            Your Dream Temple in 5 Steps
+            <TranslatedText>Your Dream Temple in 5 Steps</TranslatedText>
           </h2>
           <p className="text-[10px] md:text-lg text-gray-500">
-            From vision to reality - our seamless process.
+            <TranslatedText>From vision to reality - our seamless process.</TranslatedText>
           </p>
         </div>
 
@@ -38,7 +39,7 @@ const StepsSection = () => {
                 </div>
               </div>
               <p className="text-[8px] xs:text-[10px] sm:text-xs md:text-sm text-gray-800 font-bold uppercase tracking-tight md:tracking-widest leading-tight group-hover:text-[#8B7355] transition-colors whitespace-pre-line">
-                {item.title}
+                <TranslatedText>{item.title}</TranslatedText>
               </p>
             </div>
           ))}

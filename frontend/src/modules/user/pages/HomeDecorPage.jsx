@@ -4,6 +4,7 @@ import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import homeDecorImg from '../../../assets/ourcreation/homedecor.jpeg'
+import TranslatedText from '../../../components/TranslatedText'
 
 const HomeDecorPage = ({ onShowCart, onShowLikes }) => {
   const navigate = useNavigate()
@@ -58,11 +59,11 @@ const HomeDecorPage = ({ onShowCart, onShowLikes }) => {
         />
         <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-center text-center px-4">
           <h1 className="text-4xl md:text-6xl font-serif text-white italic mb-4 font-bold drop-shadow-lg">
-            Home Decor & Furniture
+            <TranslatedText>Home Decor & Furniture</TranslatedText>
           </h1>
           <div className="w-24 h-1 bg-white mx-auto rounded-full mb-6"></div>
           <p className="text-white text-lg md:text-xl max-w-2xl drop-shadow-md">
-            Elevate your living space with our handcrafted collection of premium marble furniture and decorative accents.
+            <TranslatedText>Elevate your living space with our handcrafted collection of premium marble furniture and decorative accents.</TranslatedText>
           </p>
         </div>
       </div>
@@ -78,7 +79,7 @@ const HomeDecorPage = ({ onShowCart, onShowLikes }) => {
             <div className="w-full py-16 px-4 md:px-6 lg:px-8 bg-white">
               <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-serif text-[#8B7355] italic mb-4 font-bold">Shop Furniture</h2>
+                  <h2 className="text-3xl md:text-4xl font-serif text-[#8B7355] italic mb-4 font-bold"><TranslatedText>Shop Furniture</TranslatedText></h2>
                   <div className="w-20 h-1 bg-[#8B7355]/20 mx-auto"></div>
                 </div>
 
@@ -109,7 +110,7 @@ const HomeDecorPage = ({ onShowCart, onShowLikes }) => {
             <div className="w-full py-16 px-4 md:px-6 lg:px-8 bg-gray-50">
               <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-serif text-[#8B7355] italic mb-4 font-bold">Home Accents</h2>
+                  <h2 className="text-3xl md:text-4xl font-serif text-[#8B7355] italic mb-4 font-bold"><TranslatedText>Home Accents</TranslatedText></h2>
                   <div className="w-20 h-1 bg-[#8B7355]/20 mx-auto"></div>
                 </div>
 

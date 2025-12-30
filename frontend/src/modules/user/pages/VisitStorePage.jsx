@@ -4,6 +4,7 @@ import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import TrustedBySection from '../../../components/common/TrustedBySection'
 import visitStoreImg from '../../../assets/home/visit store/poojaroomm.jpeg'
+import TranslatedText from '../../../components/TranslatedText'
 
 const ScrollSlideIn = ({ children, direction = 'left', delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -137,7 +138,7 @@ const VisitStorePage = ({
             style={{ objectPosition: 'center center' }}
           />
           <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#8B7355] text-white px-6 py-3 md:px-8 md:py-4 text-sm md:text-base lg:text-lg font-semibold uppercase tracking-wide rounded hover:bg-[#6B5A42] transition-all duration-300 shadow-lg hover:shadow-xl z-10">
-            Visit Store
+            <TranslatedText>Visit Store</TranslatedText>
           </button>
         </div>
       </section>
@@ -155,24 +156,24 @@ const VisitStorePage = ({
               <div className="space-y-6">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-serif text-[#8B7355] italic font-bold mb-6">
-                    Visit Our Store
+                    <TranslatedText>Visit Our Store</TranslatedText>
                   </h2>
                   <div className="space-y-4 text-gray-700">
                     <div>
-                      <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-800">Address:</h3>
+                      <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-800"><TranslatedText>Address:</TranslatedText></h3>
                       <p className="text-sm md:text-base leading-relaxed">
                         Borawar Byepass Road Makrana
                       </p>
                     </div>
                     <div>
-                      <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-800">Contact:</h3>
+                      <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-800"><TranslatedText>Contact:</TranslatedText></h3>
                       <p className="text-sm md:text-base leading-relaxed">
                         Phone: +917877639699<br />
                         Email: aslammarble40@gmail.com
                       </p>
                     </div>
                     <div>
-                      <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-800">Timings:</h3>
+                      <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-800"><TranslatedText>Timings:</TranslatedText></h3>
                       <p className="text-sm md:text-base leading-relaxed">
                         Monday - Saturday: 10:00 AM - 8:00 PM<br />
                         Sunday: 11:00 AM - 7:00 PM
@@ -206,11 +207,11 @@ const VisitStorePage = ({
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 md:mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] italic font-bold mb-4">
-              Customer Reviews
+              <TranslatedText>Customer Reviews</TranslatedText>
             </h2>
             <div className="w-24 h-1 bg-[#8B7355] mx-auto rounded-full mb-4"></div>
             <p className="text-base md:text-lg text-gray-600 font-light">
-              See what our customers have to say about their experience
+              <TranslatedText>See what our customers have to say about their experience</TranslatedText>
             </p>
           </div>
 
