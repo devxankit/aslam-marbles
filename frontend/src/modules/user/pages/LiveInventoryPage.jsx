@@ -104,13 +104,9 @@ const LiveInventoryPage = ({
             <HeroSectionWithForm
                 source="live-inventory-page"
                 heroImage={pageSettings?.headSection?.heroImage?.url || heroImage}
-                title={pageSettings?.headSection?.title || "Live Inventory"}
-                subtitle={pageSettings?.headSection?.subtitle || "Exclusive Marble Collection"}
-                description={pageSettings?.headSection?.description || "Explore our real-time stock of premium natural stones. From rare Italian marble to exquisite Indian granite, find the perfect slab for your dream project."}
-                heroImage={defaultHeroImage} // Plan to replace this with generated image later
-                title={getTranslatedText("Live Inventory")}
-                subtitle={getTranslatedText("Exclusive Marble Collection")}
-                description={getTranslatedText("Explore our real-time stock of premium natural stones. From rare Italian marble to exquisite Indian granite, find the perfect slab for your dream project.")}
+                title={getTranslatedText(pageSettings?.headSection?.title || "Live Inventory")}
+                subtitle={getTranslatedText(pageSettings?.headSection?.subtitle || "Exclusive Marble Collection")}
+                description={getTranslatedText(pageSettings?.headSection?.description || "Explore our real-time stock of premium natural stones. From rare Italian marble to exquisite Indian granite, find the perfect slab for your dream project.")}
                 enableMobileModal={true}
                 onMobileButtonClick={() => setShowMobileForm(true)}
             />
@@ -204,105 +200,103 @@ const LiveInventoryPage = ({
                             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[#8B7355]"></div>
                         </div>
                     ) : filteredInventory.length === 0 ? (
-                        <div className="text-center py-16 bg-white rounded-2xl shadow-sm border border-gray-100">
-                            <p className="text-gray-500 text-lg">No inventory items found matching your criteria.</p>
-                            <div className="text-center py-16 bg-gray-50 rounded-2xl">
-                                <p className="text-gray-500 text-lg"><TranslatedText>No inventory items found matching your criteria.</TranslatedText></p>
-                            </div>
-                            ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {filteredInventory.map((item) => (
-                                    <div key={item._id} className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col">
-                                        {/* Image Container */}
-                                        <div className="aspect-[4/3] overflow-hidden bg-gray-100 relative">
-                                            <LazyImage
-                                                src={item.image?.url || 'https://via.placeholder.com/600x400?text=Stone+Image'}
-                                                alt={item.name}
-                                                className="w-full h-full"
-                                                imageClassName="transition-transform duration-700 group-hover:scale-110"
-                                                width={600}
-                                            />
-                                            {item.status !== 'Available' && (
-                                                <div className="absolute top-4 right-4 bg-black/70 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest backdrop-blur-md z-10">
-                                                    <TranslatedText>{item.status}</TranslatedText>
+                        <div className="text-center py-16 bg-gray-50 rounded-2xl border border-gray-100">
+                            <p className="text-gray-500 text-lg"><TranslatedText>No inventory items found matching your criteria.</TranslatedText></p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {filteredInventory.map((item) => (
+                                <div key={item._id} className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col">
+                                    {/* Image Container */}
+                                    <div className="aspect-[4/3] overflow-hidden bg-gray-100 relative">
+                                        <LazyImage
+                                            src={item.image?.url || 'https://via.placeholder.com/600x400?text=Stone+Image'}
+                                            alt={item.name}
+                                            className="w-full h-full"
+                                            imageClassName="transition-transform duration-700 group-hover:scale-110"
+                                            width={600}
+                                        />
+                                        {item.status !== 'Available' && (
+                                            <div className="absolute top-4 right-4 bg-black/70 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest backdrop-blur-md z-10">
+                                                <TranslatedText>{item.status}</TranslatedText>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="p-6 flex flex-col flex-1">
+                                        <div className="mb-4">
+                                            <h3 className="text-xl font-serif text-gray-900 mb-1 line-clamp-1">{item.name}</h3>
+                                            <p className="text-[#8B7355] text-xs font-bold uppercase tracking-widest"><TranslatedText>{item.category}</TranslatedText></p>
+                                        </div>
+
+                                        <div className="space-y-2 border-t border-gray-100 pt-4 mb-6 flex-1">
+                                            {item.specifications?.dimensions && (
+                                                <div className="flex justify-between text-sm">
+                                                    <span className="text-gray-500"><TranslatedText>Dimensions</TranslatedText></span>
+                                                    <span className="font-medium text-gray-800"><TranslatedText>{item.specifications.dimensions}</TranslatedText></span>
+                                                </div>
+                                            )}
+                                            {item.specifications?.origin && (
+                                                <div className="flex justify-between text-sm">
+                                                    <span className="text-gray-500"><TranslatedText>Origin</TranslatedText></span>
+                                                    <span className="font-medium text-gray-800"><TranslatedText>{item.specifications.origin}</TranslatedText></span>
+                                                </div>
+                                            )}
+                                            {item.specifications?.finish && (
+                                                <div className="flex justify-between text-sm">
+                                                    <span className="text-gray-500"><TranslatedText>Finish</TranslatedText></span>
+                                                    <span className="font-medium text-gray-800"><TranslatedText>{item.specifications.finish}</TranslatedText></span>
+                                                </div>
+                                            )}
+                                            {item.price && (
+                                                <div className="flex justify-between text-sm">
+                                                    <span className="text-gray-500"><TranslatedText>Price</TranslatedText></span>
+                                                    <span className="font-bold text-[#8B7355]">₹{item.price.toLocaleString('en-IN')}</span>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Content */}
-                                        <div className="p-6 flex flex-col flex-1">
-                                            <div className="mb-4">
-                                                <h3 className="text-xl font-serif text-gray-900 mb-1 line-clamp-1">{item.name}</h3>
-                                                <p className="text-[#8B7355] text-xs font-bold uppercase tracking-widest"><TranslatedText>{item.category}</TranslatedText></p>
-                                            </div>
-
-                                            <div className="space-y-2 border-t border-gray-100 pt-4 mb-6 flex-1">
-                                                {item.specifications?.dimensions && (
-                                                    <div className="flex justify-between text-sm">
-                                                        <span className="text-gray-500"><TranslatedText>Dimensions</TranslatedText></span>
-                                                        <span className="font-medium text-gray-800"><TranslatedText>{item.specifications.dimensions}</TranslatedText></span>
-                                                    </div>
-                                                )}
-                                                {item.specifications?.origin && (
-                                                    <div className="flex justify-between text-sm">
-                                                        <span className="text-gray-500"><TranslatedText>Origin</TranslatedText></span>
-                                                        <span className="font-medium text-gray-800"><TranslatedText>{item.specifications.origin}</TranslatedText></span>
-                                                    </div>
-                                                )}
-                                                {item.specifications?.finish && (
-                                                    <div className="flex justify-between text-sm">
-                                                        <span className="text-gray-500"><TranslatedText>Finish</TranslatedText></span>
-                                                        <span className="font-medium text-gray-800"><TranslatedText>{item.specifications.finish}</TranslatedText></span>
-                                                    </div>
-                                                )}
-                                                {item.price && (
-                                                    <div className="flex justify-between text-sm">
-                                                        <span className="text-gray-500"><TranslatedText>Price</TranslatedText></span>
-                                                        <span className="font-bold text-[#8B7355]">₹{item.price.toLocaleString('en-IN')}</span>
-                                                    </div>
-                                                )}
-                                            </div>
-
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() => handleBuyNow(item)}
-                                                    className="flex-1 bg-[#8B7355] text-white py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors duration-300"
-                                                >
-                                                    <TranslatedText>Buy Now</TranslatedText>
-                                                </button>
-                                                <button
-                                                    onClick={() => setShowMobileForm(true)}
-                                                    className="flex-1 border border-gray-300 text-gray-900 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-50 transition-colors duration-300"
-                                                >
-                                                    <TranslatedText>Enquire</TranslatedText>
-                                                </button>
-                                            </div>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => handleBuyNow(item)}
+                                                className="flex-1 bg-[#8B7355] text-white py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors duration-300"
+                                            >
+                                                <TranslatedText>Buy Now</TranslatedText>
+                                            </button>
+                                            <button
+                                                onClick={() => setShowMobileForm(true)}
+                                                className="flex-1 border border-gray-300 text-gray-900 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-gray-50 transition-colors duration-300"
+                                            >
+                                                <TranslatedText>Enquire</TranslatedText>
+                                            </button>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
+                        </div>
                     )}
 
-                        </div>
+                </div>
             </div>
 
-                {/* Horizontal Image Section */}
-                <section className="w-full">
-                    <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px]">
-                        <LazyImage
-                            src={pageSettings?.horizontalSection?.image?.url || horizontalImage}
-                            alt="Natural Stone Collection"
-                            className="w-full h-full"
-                            imageClassName="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black/20"></div>
-                    </div>
-                </section>
+            {/* Horizontal Image Section */}
+            <section className="w-full">
+                <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px]">
+                    <LazyImage
+                        src={pageSettings?.horizontalSection?.image?.url || horizontalImage}
+                        alt="Natural Stone Collection"
+                        className="w-full h-full"
+                        imageClassName="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/20"></div>
+                </div>
+            </section>
 
-                <Footer />
-                <FloatingButtons />
-            </div>
-            )
+            <Footer />
+            <FloatingButtons />
+        </div>
+    )
 }
 
-            export default LiveInventoryPage
+export default LiveInventoryPage
