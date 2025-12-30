@@ -12,19 +12,43 @@ const OurServicesDropdown = () => {
   useEffect(() => {
     let isMounted = true
     const load = async () => {
-      const data = await fetchNavItems(GROUP, true)
-      if (!isMounted || !Array.isArray(data) || data.length === 0) return
-      const normalized = data.map((item) => ({
-        ...item,
-        id: item.key || item.id,
-        name: item.name,
-        path: (item.name === 'AMS International' ? '/services/ams-international' :
-          item.name === 'AMS Design Hub' ? '/services/ams-design-hub' :
-            item.path) || '#',
-        image: buildImageUrl(item.imagePath || item.image),
-        displayOrder: item.displayOrder ?? 0
-      }))
-      setItems(normalized)
+      try {
+        const data = await fetchNavItems(GROUP, true)
+        if (!isMounted) return
+
+        let normalized = []
+        if (Array.isArray(data) && data.length > 0) {
+          normalized = data.map((item) => ({
+            ...item,
+            id: item.key || item.id,
+            name: item.name,
+            path: (item.name === 'AMS International' ? '/services/ams-international' :
+              item.name === 'AMS Design Hub' ? '/services/ams-design-hub' :
+                item.path) || '#',
+            image: buildImageUrl(item.imagePath || item.image),
+            displayOrder: item.displayOrder ?? 0
+          }))
+        }
+
+        // Fallback: Add Live Inventory if missing
+        const liveInventory = defaultServices.find(s => s.id === 'live-inventory')
+        if (liveInventory && !normalized.find(item => item.name === 'Live Inventory')) {
+          normalized.push({
+            ...liveInventory,
+            displayOrder: 3
+          })
+        }
+
+        // If fetch completely failed, use defaultServices
+        if (normalized.length === 0) {
+          if (isMounted) setItems(defaultServices)
+        } else {
+          if (isMounted) setItems(normalized)
+        }
+      } catch (error) {
+        console.error('Error in OurServicesDropdown:', error)
+        if (isMounted) setItems(defaultServices)
+      }
     }
     load()
     return () => { isMounted = false }
@@ -105,4 +129,3 @@ const OurServicesDropdown = () => {
 }
 
 export default OurServicesDropdown
-

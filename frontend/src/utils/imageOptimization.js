@@ -73,7 +73,7 @@ export const getOptimizedImageProps = (url, alt = '') => {
     return {
         src: optimizeCloudinaryImage(url),
         srcSet: generateSrcSet(url),
-        sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+        sizes: '(max-width: 640px)  (max-width: 1024px) 50vw, 33vw',
         alt,
         loading: 'lazy',
         decoding: 'async'

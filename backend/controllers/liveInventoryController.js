@@ -1,4 +1,5 @@
 const LiveInventory = require('../models/LiveInventory');
+const LiveInventoryPage = require('../models/LiveInventoryPage');
 const asyncHandler = require('express-async-handler');
 const cloudinary = require('cloudinary').v2;
 
@@ -17,7 +18,10 @@ const uploadBase64ToCloudinary = async (base64String, folder) => {
             folder: `stone-art/inventory/${folder}`,
             resource_type: 'image'
         });
-        return result.secure_url;
+        return {
+            url: result.secure_url,
+            publicId: result.public_id
+        };
     } catch (error) {
         console.error('Cloudinary Upload Error:', error);
         throw new Error('Image upload failed');
@@ -33,6 +37,54 @@ const getLiveInventory = asyncHandler(async (req, res) => {
     res.json(inventory);
 });
 
+// @desc    Get live inventory page settings
+// @route   GET /api/live-inventory/settings
+// @access  Public
+const getPageSettings = asyncHandler(async (req, res) => {
+    let settings = await LiveInventoryPage.findOne();
+    if (!settings) {
+        settings = await LiveInventoryPage.create({});
+    }
+    res.json(settings);
+});
+
+// @desc    Update live inventory page settings
+// @route   PUT /api/live-inventory/settings
+// @access  Private/Admin
+const updatePageSettings = asyncHandler(async (req, res) => {
+    let settings = await LiveInventoryPage.findOne();
+    if (!settings) {
+        settings = await LiveInventoryPage.create({});
+    }
+
+    const { headSection, horizontalSection } = req.body;
+
+    if (headSection) {
+        settings.headSection.title = headSection.title || settings.headSection.title;
+        settings.headSection.subtitle = headSection.subtitle || settings.headSection.subtitle;
+        settings.headSection.description = headSection.description || settings.headSection.description;
+
+        if (headSection.heroImage?.url && headSection.heroImage.url.startsWith('data:image')) {
+            const uploaded = await uploadBase64ToCloudinary(headSection.heroImage.url, 'page-assets');
+            if (uploaded) {
+                settings.headSection.heroImage = uploaded;
+            }
+        }
+    }
+
+    if (horizontalSection) {
+        if (horizontalSection.image?.url && horizontalSection.image.url.startsWith('data:image')) {
+            const uploaded = await uploadBase64ToCloudinary(horizontalSection.image.url, 'page-assets');
+            if (uploaded) {
+                settings.horizontalSection.image = uploaded;
+            }
+        }
+    }
+
+    const updatedSettings = await settings.save();
+    res.json(updatedSettings);
+});
+
 // @desc    Create live inventory item
 // @route   POST /api/live-inventory
 // @access  Private/Admin
@@ -40,9 +92,9 @@ const createInventoryItem = asyncHandler(async (req, res) => {
     const itemData = req.body;
 
     if (itemData.image?.url && itemData.image.url.startsWith('data:image')) {
-        const uploadedUrl = await uploadBase64ToCloudinary(itemData.image.url, itemData.category || 'misc');
-        if (uploadedUrl) {
-            itemData.image.url = uploadedUrl;
+        const uploaded = await uploadBase64ToCloudinary(itemData.image.url, itemData.category || 'misc');
+        if (uploaded) {
+            itemData.image.url = uploaded.url;
         }
     }
 
@@ -58,9 +110,9 @@ const updateInventoryItem = asyncHandler(async (req, res) => {
 
     if (item) {
         if (req.body.image?.url && req.body.image.url.startsWith('data:image')) {
-            const uploadedUrl = await uploadBase64ToCloudinary(req.body.image.url, req.body.category || 'misc');
-            if (uploadedUrl) {
-                req.body.image.url = uploadedUrl;
+            const uploaded = await uploadBase64ToCloudinary(req.body.image.url, req.body.category || 'misc');
+            if (uploaded) {
+                req.body.image.url = uploaded.url;
             }
         }
 
@@ -71,6 +123,7 @@ const updateInventoryItem = asyncHandler(async (req, res) => {
         item.status = req.body.status || item.status;
         item.displayOrder = req.body.displayOrder !== undefined ? req.body.displayOrder : item.displayOrder;
         item.isPublic = req.body.isPublic !== undefined ? req.body.isPublic : item.isPublic;
+        item.price = req.body.price !== undefined ? req.body.price : item.price;
 
         const updatedItem = await item.save();
         res.json(updatedItem);
@@ -99,5 +152,7 @@ module.exports = {
     getLiveInventory,
     createInventoryItem,
     updateInventoryItem,
-    deleteInventoryItem
+    deleteInventoryItem,
+    getPageSettings,
+    updatePageSettings
 };

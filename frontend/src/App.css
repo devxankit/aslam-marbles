@@ -8,7 +8,13 @@ body {
   margin: 0;
   font-family: system-ui, -apple-system, sans-serif;
 }
-
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
 /* Logo styling for intricate design */
 header .logo-container {
   position: relative;
