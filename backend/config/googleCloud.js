@@ -25,6 +25,7 @@ const languageCodeMap = {
     he: 'he',
     ur: 'ur',
     fa: 'fa',
+    sw: 'sw', // Swahili
     // Add other languages as needed
 };
 

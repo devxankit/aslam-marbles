@@ -1,19 +1,20 @@
 // Language configurations
 export const LANGUAGES = {
     en: { code: 'en', label: 'English', dir: 'ltr', flag: '🇬🇧' },
-    hi: { code: 'hi', label: 'हिंदी', dir: 'ltr', flag: '🇮🇳' },
-    gu: { code: 'gu', label: 'ગુજરાતી', dir: 'ltr', flag: '🇮🇳' },
-    mr: { code: 'mr', label: 'मराठी', dir: 'ltr', flag: '🇮🇳' },
-    bn: { code: 'bn', label: 'বাংলা', dir: 'ltr', flag: '🇮🇳' },
-    te: { code: 'te', label: 'తెలుగు', dir: 'ltr', flag: '🇮🇳' },
-    ta: { code: 'ta', label: 'தமிழ்', dir: 'ltr', flag: '🇮🇳' },
-    kn: { code: 'kn', label: 'ಕನ್ನಡ', dir: 'ltr', flag: '🇮🇳' },
-    ml: { code: 'ml', label: 'മലയാളം', dir: 'ltr', flag: '🇮🇳' },
-    pa: { code: 'pa', label: 'ਪੰਜਾਬੀ', dir: 'ltr', flag: '🇮🇳' },
-    ar: { code: 'ar', label: 'العربية', dir: 'rtl', flag: '🇸🇦' },
-    he: { code: 'he', label: 'עברית', dir: 'rtl', flag: '🇮🇱' },
-    ur: { code: 'ur', label: 'اردو', dir: 'rtl', flag: '🇵🇰' },
-    fa: { code: 'fa', label: 'فارسی', dir: 'rtl', flag: '🇮🇷' },
+    hi: { code: 'hi', label: 'Hindi', dir: 'ltr', flag: '🇮🇳' },
+    gu: { code: 'gu', label: 'Gujarati', dir: 'ltr', flag: '🇮🇳' },
+    mr: { code: 'mr', label: 'Marathi', dir: 'ltr', flag: '🇮🇳' },
+    bn: { code: 'bn', label: 'Bengali', dir: 'ltr', flag: '🇮🇳' },
+    te: { code: 'te', label: 'Telugu', dir: 'ltr', flag: '🇮🇳' },
+    ta: { code: 'ta', label: 'Tamil', dir: 'ltr', flag: '🇮🇳' },
+    kn: { code: 'kn', label: 'Kannada', dir: 'ltr', flag: '🇮🇳' },
+    ml: { code: 'ml', label: 'Malayalam', dir: 'ltr', flag: '🇮🇳' },
+    pa: { code: 'pa', label: 'Punjabi', dir: 'ltr', flag: '🇮🇳' },
+    ar: { code: 'ar', label: 'Arabic', dir: 'rtl', flag: '🇸🇦' },
+    he: { code: 'he', label: 'Hebrew', dir: 'rtl', flag: '🇮🇱' },
+    ur: { code: 'ur', label: 'Urdu', dir: 'rtl', flag: '🇵🇰' },
+    fa: { code: 'fa', label: 'Persian', dir: 'rtl', flag: '🇮🇷' },
+    sw: { code: 'sw', label: 'Swahili', dir: 'ltr', flag: '🇰🇪' },
 };
 
 export const DEFAULT_LANGUAGE = 'en';
