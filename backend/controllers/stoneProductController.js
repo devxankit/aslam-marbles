@@ -31,13 +31,31 @@ const uploadBase64ToCloudinary = async (base64String, folder) => {
 const getCategories = asyncHandler(async (req, res) => {
     // Ensure default stone categories exist
     const defaultIds = [
-        'monument', 'agate',
+        'sandstone', 'limestone', 'marble', 'granite', 'slate', 'quartzite',
+        'pebble-stones', 'cobble-stones', 'stone-chips', 'basalt-stones',
+        'soap-stones', 'travertine-stones', 'natural-indian-stones',
+        'modern-art', 'imported', 'monument', 'agate',
         'packaging-slab', 'packaging-tiles', 'packaging-artifacts', 'packaging-other'
     ];
     const existingDefault = await StoneCategory.find({ id: { $in: defaultIds } });
 
     if (existingDefault.length < defaultIds.length) {
         const stoneDefaults = [
+            { id: 'sandstone', name: 'Sandstone', title: 'SANDSTONE', subtitle: 'Timeless Beauty of Natural Sandstone', origin: 'Rajasthan, India' },
+            { id: 'limestone', name: 'Limestone', title: 'LIMESTONE', subtitle: 'Natural Elegance in Every Slab', origin: 'India' },
+            { id: 'marble', name: 'Marble', title: 'MARBLE', subtitle: 'The Pinnacle of Luxury', origin: 'Makrana/Global' },
+            { id: 'granite', name: 'Granite', title: 'GRANITE', subtitle: 'Strength Meets Sophistication', origin: 'India' },
+            { id: 'slate', name: 'Slate', title: 'SLATE', subtitle: 'Rustic Charm and Durability', origin: 'India' },
+            { id: 'quartzite', name: 'Quartzite', title: 'QUARTZITE', subtitle: 'The Perfect Blend of Beauty and Hardness', origin: 'India' },
+            { id: 'pebble-stones', name: 'Pebble Stones', title: 'PEBBLE STONES', subtitle: 'Natural Textures for Your Space', origin: 'India' },
+            { id: 'cobble-stones', name: 'Cobble Stones', title: 'COBBLE STONES', subtitle: 'Traditional Style, Modern Durability', origin: 'India' },
+            { id: 'stone-chips', name: 'Stone Chips', title: 'STONE CHIPS', subtitle: 'Perfect Accents for Landscapes', origin: 'India' },
+            { id: 'basalt-stones', name: 'Basalt', title: 'BASALT', subtitle: 'Modern Volcanic Sophistication', origin: 'India' },
+            { id: 'soap-stones', name: 'Soap Stone', title: 'SOAP STONE', subtitle: 'Smooth Texture and Heat Resistance', origin: 'India' },
+            { id: 'travertine-stones', name: 'Travertine', title: 'TRAVERTINE', subtitle: 'Classic Mediterranean Appeal', origin: 'India' },
+            { id: 'natural-indian-stones', name: 'Natural Indian Stone', title: 'NATURAL INDIAN STONES', subtitle: 'Heritage Captured in Stone', origin: 'India' },
+            { id: 'modern-art', name: 'Modern Art', title: 'MODERN ART', subtitle: 'Contemporary Expressions in Stone', origin: 'India' },
+            { id: 'imported', name: 'Imported', title: 'IMPORTED', subtitle: 'Exquisite Stones from Around the World', origin: 'Global' },
             { id: 'monument', name: 'Monument', title: 'MONUMENT', subtitle: 'Timeless Tributes in Stone', description: 'Honor and celebrate legacies with our expertly crafted stone monuments.', origin: 'India' },
             { id: 'agate', name: 'Agate', title: 'AGATE', subtitle: 'Exotic Elegance and Natural patterns', description: 'Discover the mesmerizing beauty of agate, featuring unique colors and patterns.', origin: 'India' }
         ];

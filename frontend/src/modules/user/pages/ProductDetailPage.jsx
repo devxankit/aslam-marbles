@@ -45,13 +45,31 @@ const ProductDetailPage = ({
   const [showShipping, setShowShipping] = useState(false)
   const [backendProduct, setBackendProduct] = useState(null)
   const [showContactModal, setShowContactModal] = useState(false)
+  const [loading, setLoading] = useState(true)
   const sizeDropdownRef = useRef(null)
   const shareDropdownRef = useRef(null)
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5100/api'
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
   useEffect(() => {
     const fetchProduct = async () => {
+      setLoading(true)
       try {
+        // 1. Check Session Storage first (for stone products)
+        const pathParts = location.pathname.split('/')
+        const type = pathParts[2] // /art/[category]/[productId]
+        const storedProduct = sessionStorage.getItem(`stoneProduct_${type}_${productId}`)
+
+        if (storedProduct) {
+          try {
+            const parsed = JSON.parse(storedProduct)
+            setBackendProduct(parsed)
+            setLoading(false)
+            // Still fetch from API to get latest data
+          } catch (e) {
+            console.error('Error parsing stored product:', e)
+          }
+        }
+
         let url = `${API_URL}/stone-products/${productId}`
 
         // Determine correct endpoint based on URL
@@ -65,20 +83,22 @@ const ProductDetailPage = ({
         if (res.ok) {
           const data = await res.json()
           // Handle different response structures
-          if (data.success && data.data) {
-            setBackendProduct(data.data)
-          } else {
-            setBackendProduct(data)
-          }
+          const finalData = (data.success && data.data) ? data.data : data;
+          setBackendProduct(finalData)
         }
       } catch (e) {
         console.log('Not a backend product or fetch failed')
+      } finally {
+        setLoading(false)
       }
     }
     if (productId && productId.length === 24) {
       fetchProduct()
+    } else {
+      setLoading(false)
     }
-  }, [productId, location.pathname])
+    window.scrollTo(0, 0)
+  }, [productId, location.pathname, API_URL])
 
   // Available sizes
   const availableSizes = ['5', '6', '7', '9', '11', '12', '14', '15', '18', '19', '24', '30', '33']
@@ -135,19 +155,62 @@ const ProductDetailPage = ({
     allProducts = vishnuLaxmiProducts
   }
 
-  let product = backendProduct || allProducts.find(p => p.id === productId)
+  const product = backendProduct || allProducts.find(p => p.id === productId) || getProductById(productId)
 
-  // If not found in murti products, check generated products (Furniture/Decor)
-  if (!product) {
-    product = getProductById(productId)
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen bg-white">
+        <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
+        <div className="flex-1 flex items-center justify-center min-h-[60vh]">
+          <div className="w-12 h-12 border-4 border-[#8B7355] border-t-transparent rounded-full animate-spin"></div>
+        </div>
+        <Footer />
+      </div>
+    )
   }
 
   if (!product) {
     return (
-      <div className="w-full min-h-screen bg-white flex items-center justify-center">
-        <h1 className="text-2xl font-bold text-gray-800"><TranslatedText>Product not found</TranslatedText></h1>
+      <div className="w-full min-h-screen bg-white">
+        <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
+        <div className="flex-1 flex items-center justify-center min-h-[60vh]">
+          <h1 className="text-2xl font-bold text-gray-800"><TranslatedText>Product not found</TranslatedText></h1>
+        </div>
+        <Footer />
       </div>
     )
+  }
+
+  // Normalize all fields for the found product
+  if (product) {
+    // 1. Normalize ID
+    if (!product.id) product.id = product._id;
+
+    // 2. Normalize images
+    if (!product.images) {
+      const singleImage = product.image?.url || product.image
+      product.images = singleImage ? [singleImage] : []
+    }
+    if (product.images.length === 0 && (product.image?.url || product.image)) {
+      product.images = [product.image?.url || product.image]
+    }
+
+    // 3. Normalize price
+    if (product.price === undefined || product.price === null) {
+      const specPrice = product.specifications?.price;
+      if (typeof specPrice === 'number') {
+        product.price = specPrice;
+      } else if (typeof specPrice === 'string') {
+        const numericMatch = specPrice.match(/\d+/);
+        product.price = numericMatch ? parseInt(numericMatch[0]) : 0;
+      } else {
+        product.price = 0;
+      }
+    }
+
+    // 4. Normalize basic fields
+    if (!product.description) product.description = product.specifications?.description || '';
+    if (!product.name) product.name = product.name || 'Stone Masterpiece';
   }
 
   const handleQuantityChange = (delta) => {
@@ -193,7 +256,7 @@ const ProductDetailPage = ({
 
   // Get current page URL and share text
   const currentUrl = window.location.href
-  const shareText = `${product.name} - ₹${product.price.toLocaleString('en-IN')} - ${product.description}`
+  const shareText = `${product.name || ''} - ₹${(product.price || 0).toLocaleString('en-IN')} - ${product.description || ''}`
 
   // Share functions
   const handleShare = (platform) => {

@@ -98,38 +98,16 @@ const LiveInventoryPage = ({
                 onShowBooking={onShowBooking}
             />
 
-            {/* Hero Section with Talk to Expert Form */}
+            {/* Hero Section - Direct Button and Modal integration */}
             <HeroSectionWithForm
                 source="live-inventory-page"
                 heroImage={pageSettings?.headSection?.heroImage?.url || heroImage}
                 title={getTranslatedText(pageSettings?.headSection?.title || "Live Inventory")}
                 subtitle={getTranslatedText(pageSettings?.headSection?.subtitle || "Exclusive Marble Collection")}
                 description={getTranslatedText(pageSettings?.headSection?.description || "Explore our real-time stock of premium natural stones. From rare Italian marble to exquisite Indian granite, find the perfect slab for your dream project.")}
-                enableMobileModal={true}
-                onMobileButtonClick={() => setShowMobileForm(true)}
             />
 
-            {/* Mobile Form Modal */}
-            {showMobileForm && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn md:hidden">
-                    <div
-                        className="relative w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-scaleIn bg-white"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <button
-                            onClick={() => setShowMobileForm(false)}
-                            className="absolute top-3 right-3 z-30 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100/80 text-gray-500 hover:bg-gray-200 transition-colors backdrop-blur-sm"
-                        >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                        <div className="max-h-[85vh] overflow-y-auto">
-                            <ExpertFormOverlay source="live-inventory-page" className="w-full flex flex-col shadow-none" />
-                        </div>
-                    </div>
-                </div>
-            )}
+
 
             {/* Introduction Section */}
             <section className="w-full py-12 md:py-20 px-3 md:px-6 lg:px-8 bg-white">
@@ -148,12 +126,12 @@ const LiveInventoryPage = ({
                                 </p>
                                 <div className="w-24 h-1 bg-[#8B7355]"></div>
                             </div>
-                            <div className="order-1 lg:order-2">
-                                <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] group">
+                            <div className="order-1 lg:order-2 h-full">
+                                <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video lg:aspect-[4/3] group h-full">
                                     <img
                                         src={sideImage}
                                         alt={getTranslatedText("Marble Stock")}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
                                     />
                                     <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl"></div>
                                 </div>

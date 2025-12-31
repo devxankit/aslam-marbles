@@ -253,8 +253,8 @@ exports.changePassword = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Current and new passwords are required' });
     }
 
-    // req.user is populated by auth middleware
-    const user = await User.findById(req.user.id).select('+password');
+    // req.user is populated by auth middleware. Use _id as lean() in middleware might strip virtual .id
+    const user = await User.findById(req.user._id || req.user.id).select('+password');
 
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });

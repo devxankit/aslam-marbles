@@ -89,7 +89,7 @@ const AdminLoginPage = () => {
             <p className="text-xs text-gray-600 text-center">
               <strong>Default Credentials:</strong><br />
               Email: aslammarble@gmail.com<br />
-              Password: aslam123
+              Password: {localStorage.getItem('adminDemoPassword') || 'aslam1234'}
             </p>
           </div>
         </div>

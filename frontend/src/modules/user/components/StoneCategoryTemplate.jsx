@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../../../components/layout/Header'
+import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
 import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
@@ -22,7 +23,11 @@ const StoneCategoryTemplate = ({
     onShowHowItWorks,
     onShowLocation,
     onShowBooking,
-    galleryLayout
+    galleryLayout,
+    basePath: customBasePath,
+    navVariant = 'default',
+    onShowCart,
+    onShowLikes
 }) => {
     const { getTranslatedText } = usePageTranslation()
     const [products, setProducts] = useState([])
@@ -84,17 +89,21 @@ const StoneCategoryTemplate = ({
 
     return (
         <div className="w-full min-h-screen bg-white">
-            <Header
-                variant="default"
-                onShowSidebar={onShowSidebar}
-                onShowProjects={onShowProjects}
-                onShowCreations={onShowCreations}
-                onShowProducts={onShowProducts}
-                onShowServices={onShowServices}
-                onShowHowItWorks={onShowHowItWorks}
-                onShowLocation={onShowLocation}
-                onShowBooking={onShowBooking}
-            />
+            {navVariant === 'creations' ? (
+                <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
+            ) : (
+                <Header
+                    variant="default"
+                    onShowSidebar={onShowSidebar}
+                    onShowProjects={onShowProjects}
+                    onShowCreations={onShowCreations}
+                    onShowProducts={onShowProducts}
+                    onShowServices={onShowServices}
+                    onShowHowItWorks={onShowHowItWorks}
+                    onShowLocation={onShowLocation}
+                    onShowBooking={onShowBooking}
+                />
+            )}
 
             <HeroSectionWithForm
                 source={`stone-category-${categoryId}`}
@@ -120,7 +129,7 @@ const StoneCategoryTemplate = ({
                     stoneType={categoryId} // used for navigation path
                     origin="India"
                     layout={galleryLayout}
-                    basePath={categoryId.startsWith('packaging-') ? '/art/packaging' : '/products'}
+                    basePath={customBasePath || (categoryId.startsWith('packaging-') ? '/art/packaging' : '/products')}
                 />
             ) : (
                 <div className="py-24 text-center text-gray-500">

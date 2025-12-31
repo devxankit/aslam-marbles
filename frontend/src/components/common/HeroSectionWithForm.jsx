@@ -8,17 +8,15 @@ const HeroSectionWithForm = ({
   title,
   subtitle,
   description,
-  enableMobileModal = false,
   onMobileButtonClick,
   disableGradient = false,
   source = "hero-section"
 }) => {
-  const [showHeroForm, setShowHeroForm] = useState(true)
+  const [showHeroForm, setShowHeroForm] = useState(false)
 
   return (
     <div
-      className={`relative w-full overflow-hidden ${enableMobileModal ? 'h-[40vh] min-h-[300px] md:h-[75vh] md:min-h-[600px]' : ''}`}
-      style={!enableMobileModal ? { height: '75vh', minHeight: '600px' } : {}}
+      className="relative w-full overflow-hidden h-[60vh] md:h-[85vh] min-h-[500px] md:min-h-[750px]"
     >
       {/* Background Image */}
       <LazyImage
@@ -35,39 +33,49 @@ const HeroSectionWithForm = ({
       )}
 
       {/* Hero Text Overlay - Left Side */}
-      <div className="absolute top-16 md:top-24 lg:top-32 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-xl md:max-w-2xl">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 md:mb-4 leading-tight uppercase tracking-wide drop-shadow-lg">
+      <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-6 lg:left-8 xl:left-12 z-10 max-w-xl md:max-w-2xl px-4 py-8 rounded-2xl">
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight uppercase tracking-wider drop-shadow-2xl">
           <TranslatedText>{title}</TranslatedText>
         </h1>
-        <p className="text-sm md:text-base lg:text-lg text-white font-light mb-2 drop-shadow-md">
+        <p className="text-sm md:text-lg lg:text-xl text-white font-medium mb-4 drop-shadow-xl opacity-90">
           <TranslatedText>{subtitle}</TranslatedText>
         </p>
         {description && (
-          <p className="text-xs md:text-sm text-white/90 font-light leading-relaxed drop-shadow-md">
+          <p className="text-xs md:text-base text-white/80 font-normal leading-relaxed drop-shadow-lg max-w-lg mb-8">
             <TranslatedText>{description}</TranslatedText>
           </p>
         )}
 
-        {/* Mobile "Talk to Our Expert" Button */}
-        {(enableMobileModal || !showHeroForm) && (
-          <div className="flex gap-4">
-            <button
-              onClick={onMobileButtonClick || (() => setShowHeroForm(true))}
-              className="mt-4 px-5 py-2 text-xs bg-[#8B7355] text-white font-bold uppercase tracking-wider rounded shadow-lg hover:bg-[#725E45] transition-colors"
-            >
-              <TranslatedText>Talk to Our Expert</TranslatedText>
-            </button>
-          </div>
-        )}
+        {/* Talk to Our Expert Button (Always visible now, triggers modal) */}
+        <div className="flex gap-4">
+          <button
+            onClick={onMobileButtonClick || (() => setShowHeroForm(true))}
+            className="px-8 py-3.5 text-xs md:text-sm bg-[#8B7355] text-white font-black uppercase tracking-[0.2em] rounded-xl shadow-2xl hover:bg-[#725E45] transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center gap-3 group"
+          >
+            <TranslatedText>Talk to Our Expert</TranslatedText>
+            <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* Form Overlay */}
+      {/* Form Overlay Modal (Triggers on click) */}
       {showHeroForm && (
-        <div className={enableMobileModal ? "hidden md:block" : ""}>
-          <ExpertFormOverlay
-            source={source}
-            onClose={() => setShowHeroForm(false)}
-          />
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-fadeIn"
+          onClick={() => setShowHeroForm(false)}
+        >
+          <div
+            className="relative w-full max-w-md animate-scaleIn"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ExpertFormOverlay
+              source={source}
+              onClose={() => setShowHeroForm(false)}
+              className="w-full bg-white rounded-3xl shadow-2xl overflow-hidden animate-slideUp"
+            />
+          </div>
         </div>
       )}
     </div>

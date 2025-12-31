@@ -74,6 +74,9 @@ const SettingsPage = () => {
 
       const data = await res.json()
       if (res.ok) {
+        // Store for demo purposes on login page
+        localStorage.setItem('adminDemoPassword', passwordData.newPassword)
+
         setPasswordStatus({ type: 'success', message: 'Password changed successfully!' })
         setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' })
         setTimeout(() => {

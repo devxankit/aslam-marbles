@@ -1055,6 +1055,13 @@ function App() {
             />
           } />
 
+          <Route path="/art/modern-art/:productId" element={
+            <ProductDetailPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+            />
+          } />
+
           <Route path="/art/modern-art" element={
             <ModernArtPage
               onShowSidebar={() => setShowSidebar(true)}
@@ -1065,6 +1072,15 @@ function App() {
               onShowHowItWorks={() => setShowModal(true)}
               onShowLocation={() => { }}
               onShowBooking={() => { }}
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
+            />
+          } />
+
+          <Route path="/art/imported/:productId" element={
+            <ProductDetailPage
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
             />
           } />
 
@@ -1078,6 +1094,8 @@ function App() {
               onShowHowItWorks={() => setShowModal(true)}
               onShowLocation={() => { }}
               onShowBooking={() => { }}
+              onShowCart={() => setShowCart(true)}
+              onShowLikes={() => setShowLikes(true)}
             />
           } />
 

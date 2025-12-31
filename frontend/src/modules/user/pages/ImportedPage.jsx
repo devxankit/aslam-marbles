@@ -11,6 +11,8 @@ const ImportedPage = (props) => {
             description="Discover our premium selection of imported stones, sourced from the finest quarries globally."
             defaultHeroImage={heroImg}
             galleryLayout="uniform-5"
+            basePath="/art"
+            navVariant="creations"
             {...props}
         />
     )
