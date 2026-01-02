@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Admin = require('../models/Admin');
 
 // Simple in-memory cache for user lookups (TTL: 5 minutes)
 const userCache = new Map();
@@ -23,8 +24,19 @@ const auth = async (req, res, next) => {
       return next();
     }
 
-    // Fetch from database
-    const user = await User.findById(decoded.id).select('-password').lean();
+    // Fetch from database - Check User first, then Admin
+    // Optimization: Check role in token if available to decide which model to query
+    let user = null;
+
+    if (decoded.role === 'admin') {
+      user = await Admin.findById(decoded.id).select('-password').lean();
+      // Fallback for migration or mixed usage: check User if not found in Admin
+      if (!user) {
+        user = await User.findById(decoded.id).select('-password').lean();
+      }
+    } else {
+      user = await User.findById(decoded.id).select('-password').lean();
+    }
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'User not found for token' });

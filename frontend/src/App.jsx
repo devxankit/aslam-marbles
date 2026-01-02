@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, useParams, useLocation } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 // User Pages
 import HomePage from './modules/user/pages/HomePage'
 import LocationPage from './modules/user/pages/LocationPage'
@@ -118,6 +119,7 @@ import HomeDecorManagementPage from './modules/admin/pages/HomeDecorManagementPa
 import SpecialCollectionManagementPage from './modules/admin/pages/SpecialCollectionManagementPage'
 import ShopByManagementPage from './modules/admin/pages/ShopByManagementPage'
 import LiveInventoryManagementPage from './modules/admin/pages/LiveInventoryManagementPage'
+import WalletPage from './modules/admin/pages/WalletPage'
 
 import OurServicesManagementPage from './modules/admin/pages/OurServicesManagementPage'
 import TSADesignHubManagementPage from './modules/admin/pages/TSADesignHubManagementPage'
@@ -1513,6 +1515,11 @@ function App() {
               <SettingsPage />
             </ProtectedRoute>
           } />
+          <Route path="/admin/wallet" element={
+            <ProtectedRoute>
+              <WalletPage />
+            </ProtectedRoute>
+          } />
           <Route path="/admin/category/communal-temples" element={
             <ProtectedRoute>
               <CommunalTemplesManagementPage />
@@ -1564,6 +1571,7 @@ function App() {
           onClose={() => setShowOurProducts(false)}
         />
       </div>
+      <Toaster position="top-right" />
     </CartAndLikesProvider>
   )
 }

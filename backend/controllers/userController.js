@@ -105,6 +105,8 @@ exports.getProfile = async (req, res, next) => {
 
 
 
+const Admin = require('../models/Admin');
+
 exports.adminLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -112,7 +114,14 @@ exports.adminLogin = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Email and password are required' });
     }
 
-    const user = await User.findOne({ email: email.trim().toLowerCase(), role: 'admin' });
+    // Check Admin collection first
+    let user = await Admin.findOne({ email: email.trim().toLowerCase() });
+
+    // Fallback: Check User collection for legacy admins
+    if (!user) {
+      user = await User.findOne({ email: email.trim().toLowerCase(), role: 'admin' });
+    }
+
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
@@ -122,11 +131,17 @@ exports.adminLogin = async (req, res, next) => {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
-    const token = signToken(user._id, user.role);
+    // Force role to admin just in case
+    const token = signToken(user._id, 'admin');
     return res.json({
       success: true,
       token,
-      admin: sanitizeUser(user),
+      admin: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: 'admin'
+      },
       message: 'Admin login successful'
     });
   } catch (err) {
@@ -253,8 +268,20 @@ exports.changePassword = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Current and new passwords are required' });
     }
 
-    // req.user is populated by auth middleware. Use _id as lean() in middleware might strip virtual .id
-    const user = await User.findById(req.user._id || req.user.id).select('+password');
+    // req.user is populated by auth middleware. 
+    // We need to check both Admin and User models because req.user doesn't tell us which model it came from (it's lean object)
+    // But we know role.
+
+    let user;
+    if (req.user.role === 'admin') {
+      user = await Admin.findById(req.user._id || req.user.id);
+      if (!user) {
+        // Fallback for legacy admins in User collection
+        user = await User.findById(req.user._id || req.user.id).select('+password');
+      }
+    } else {
+      user = await User.findById(req.user._id || req.user.id).select('+password');
+    }
 
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });
@@ -273,6 +300,48 @@ exports.changePassword = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'Password changed successfully'
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.createAdmin = async (req, res, next) => {
+  try {
+    const { name, email, password, phone } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ success: false, message: 'Name, email, and password are required' });
+    }
+
+    const normalizedEmail = email.toLowerCase();
+
+    // Check both collections to ensure uniqueness across the system (optional but good practice)
+    const existingAdmin = await Admin.findOne({ $or: [{ email: normalizedEmail }, { phone }] });
+    const existingUser = await User.findOne({ $or: [{ email: normalizedEmail }, { phone }] });
+
+    if (existingAdmin || existingUser) {
+      return res.status(400).json({ success: false, message: 'User or Admin with this email or phone already exists' });
+    }
+
+    const newAdmin = await Admin.create({
+      name,
+      email: normalizedEmail,
+      phone,
+      password,
+      role: 'admin',
+      isActive: true
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: 'New admin created successfully',
+      admin: {
+        id: newAdmin._id,
+        name: newAdmin.name,
+        email: newAdmin.email,
+        role: newAdmin.role
+      }
     });
   } catch (err) {
     next(err);

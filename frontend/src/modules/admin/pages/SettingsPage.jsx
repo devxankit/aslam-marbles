@@ -43,6 +43,72 @@ const SettingsPage = () => {
   })
   const [passwordStatus, setPasswordStatus] = useState({ type: '', message: '' })
 
+  // Add Admin State
+  const [showAddAdminForm, setShowAddAdminForm] = useState(false)
+  const [newAdminData, setNewAdminData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: ''
+  })
+  const [addAdminStatus, setAddAdminStatus] = useState({ type: '', message: '' })
+
+  const handleCreateAdmin = async (e) => {
+    e.preventDefault()
+    setAddAdminStatus({ type: '', message: '' })
+
+    if (newAdminData.password !== newAdminData.confirmPassword) {
+      setAddAdminStatus({ type: 'error', message: 'Passwords do not match' })
+      return
+    }
+
+    if (newAdminData.password.length < 6) {
+      setAddAdminStatus({ type: 'error', message: 'Password must be at least 6 characters' })
+      return
+    }
+
+    try {
+      const token = localStorage.getItem('adminToken')
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
+      const res = await fetch(`${API_URL}/admin/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          name: newAdminData.name,
+          email: newAdminData.email,
+          phone: newAdminData.phone,
+          password: newAdminData.password
+        })
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        setAddAdminStatus({ type: 'success', message: 'New admin created successfully!' })
+        setNewAdminData({
+          name: '',
+          email: '',
+          phone: '',
+          password: '',
+          confirmPassword: ''
+        })
+        setTimeout(() => {
+          setShowAddAdminForm(false)
+          setAddAdminStatus({ type: '', message: '' })
+        }, 2000)
+      } else {
+        setAddAdminStatus({ type: 'error', message: data.message || 'Error creating admin' })
+      }
+    } catch (error) {
+      setAddAdminStatus({ type: 'error', message: 'Connection error. Please try again.' })
+    }
+  }
+
   const handleChangePassword = async (e) => {
     e.preventDefault()
     setPasswordStatus({ type: '', message: '' })
@@ -446,14 +512,108 @@ const SettingsPage = () => {
                   )}
                 </div>
 
-                <div className="flex items-center justify-between p-6 bg-gray-50 rounded-xl border border-gray-100 opacity-60">
-                  <div>
-                    <h3 className="text-lg font-bold text-gray-800">Add New Admin</h3>
-                    <p className="text-sm text-gray-500">Functionality coming soon</p>
+                <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-800">Add New Admin</h3>
+                      <p className="text-sm text-gray-500">Create a new administrative user</p>
+                    </div>
+                    {!showAddAdminForm && (
+                      <button
+                        onClick={() => setShowAddAdminForm(true)}
+                        className="px-6 py-2 text-sm font-bold text-white rounded-lg transition-transform active:scale-95 shadow-md"
+                        style={{ backgroundColor: '#8B7355' }}
+                      >
+                        Add Admin
+                      </button>
+                    )}
                   </div>
-                  <button disabled className="px-6 py-2 text-sm font-bold text-white rounded-lg bg-gray-300 cursor-not-allowed">
-                    Add Admin
-                  </button>
+
+                  {showAddAdminForm && (
+                    <form onSubmit={handleCreateAdmin} className="space-y-4 max-w-md animate-fadeIn">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 text-left">Full Name</label>
+                        <input
+                          type="text"
+                          value={newAdminData.name}
+                          onChange={(e) => setNewAdminData({ ...newAdminData, name: e.target.value })}
+                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#8B7355] outline-none transition-all placeholder:text-gray-300"
+                          placeholder="My Name"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 text-left">Email Address</label>
+                        <input
+                          type="email"
+                          value={newAdminData.email}
+                          onChange={(e) => setNewAdminData({ ...newAdminData, email: e.target.value })}
+                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#8B7355] outline-none transition-all placeholder:text-gray-300"
+                          placeholder="admin@example.com"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 text-left">Phone Number</label>
+                        <input
+                          type="tel"
+                          value={newAdminData.phone}
+                          onChange={(e) => setNewAdminData({ ...newAdminData, phone: e.target.value })}
+                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#8B7355] outline-none transition-all placeholder:text-gray-300"
+                          placeholder="+91..."
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 text-left">Password</label>
+                        <input
+                          type="password"
+                          value={newAdminData.password}
+                          onChange={(e) => setNewAdminData({ ...newAdminData, password: e.target.value })}
+                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#8B7355] outline-none transition-all placeholder:text-gray-300"
+                          placeholder="••••••••"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 text-left">Confirm Password</label>
+                        <input
+                          type="password"
+                          value={newAdminData.confirmPassword}
+                          onChange={(e) => setNewAdminData({ ...newAdminData, confirmPassword: e.target.value })}
+                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#8B7355] outline-none transition-all placeholder:text-gray-300"
+                          placeholder="••••••••"
+                          required
+                        />
+                      </div>
+
+                      {addAdminStatus.message && (
+                        <div className={`p-4 rounded-xl text-sm font-medium ${addAdminStatus.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+                          }`}>
+                          {addAdminStatus.message}
+                        </div>
+                      )}
+
+                      <div className="flex gap-3 pt-2">
+                        <button
+                          type="submit"
+                          className="flex-1 bg-[#8B7355] text-white py-3 rounded-xl font-bold uppercase tracking-widest text-xs transition-all hover:opacity-90 active:scale-95 shadow-lg"
+                        >
+                          Create Admin
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowAddAdminForm(false)
+                            setAddAdminStatus({ type: '', message: '' })
+                            setNewAdminData({ name: '', email: '', phone: '', password: '', confirmPassword: '' })
+                          }}
+                          className="px-6 py-3 border-2 border-gray-200 text-gray-500 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-gray-50 transition-all"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  )}
                 </div>
               </div>
             )}

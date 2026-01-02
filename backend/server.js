@@ -131,6 +131,7 @@ app.use('/api/special-products', require('./routes/specialProductRoutes'));
 app.use('/api/shop-by-products', require('./routes/shopByProductRoutes'));
 app.use('/api/settings', require('./routes/settingsRoutes'));
 app.use('/api/page-content', require('./routes/pageContentRoutes'));
+app.use('/api/wallet', require('./routes/walletRoutes'));
 
 // Errors
 app.use(notFound);
