@@ -1,6 +1,8 @@
 const crypto = require('crypto');
 const Order = require('../models/Order');
 const User = require('../models/User');
+const LiveInventory = require('../models/LiveInventory');
+
 
 // Initialize Razorpay
 let Razorpay;
@@ -15,15 +17,15 @@ const getRazorpayInstance = () => {
   if (!Razorpay) {
     return null;
   }
-  
+
   const keyId = process.env.RAZORPAY_KEY_ID;
   const keySecret = process.env.RAZORPAY_KEY_SECRET;
-  
+
   if (!keyId || !keySecret) {
     console.warn('Razorpay keys not configured in .env file');
     return null;
   }
-  
+
   try {
     return new Razorpay({
       key_id: keyId,
@@ -57,12 +59,12 @@ exports.createOrder = async (req, res, next) => {
     if (!customerDetails) {
       return res.status(400).json({ success: false, message: 'Customer details are required' });
     }
-    
+
     // Email or phone is required
     if (!customerDetails.email && !customerDetails.phone) {
       return res.status(400).json({ success: false, message: 'Email or phone number is required' });
     }
-    
+
     // Required shipping fields
     if (!customerDetails.address || !customerDetails.city || !customerDetails.state || !customerDetails.pinCode) {
       return res.status(400).json({ success: false, message: 'Complete shipping address is required' });
@@ -79,9 +81,9 @@ exports.createOrder = async (req, res, next) => {
 
     const razorpayInstance = getRazorpayInstance();
     if (!razorpayInstance) {
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Razorpay not configured. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in .env file.' 
+      return res.status(500).json({
+        success: false,
+        message: 'Razorpay not configured. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in .env file.'
       });
     }
 
@@ -166,9 +168,9 @@ exports.verifyPayment = async (req, res, next) => {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderData } = req.body;
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Payment verification data is required' 
+      return res.status(400).json({
+        success: false,
+        message: 'Payment verification data is required'
       });
     }
 
@@ -180,18 +182,18 @@ exports.verifyPayment = async (req, res, next) => {
       .digest('hex');
 
     if (generatedSignature !== razorpay_signature) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Payment verification failed: Invalid signature' 
+      return res.status(400).json({
+        success: false,
+        message: 'Payment verification failed: Invalid signature'
       });
     }
 
     // Find and update order
     const order = await Order.findOne({ razorpayOrderId: razorpay_order_id });
     if (!order) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Order not found' 
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
       });
     }
 
@@ -202,7 +204,26 @@ exports.verifyPayment = async (req, res, next) => {
     order.status = 'confirmed';
     await order.save();
 
+    // Live Inventory Stock Sync: Mark items as Sold
+    try {
+      if (order.items && order.items.length > 0) {
+        for (const item of order.items) {
+          // If the item has a productId and it's from the live inventory collection
+          // Items in the cart should carry their collection 'type' or we can check identifying fields
+          if (item.type === 'inventory' || item.isInventory) {
+            await LiveInventory.findByIdAndUpdate(item.productId, { status: 'Sold' });
+            console.log(`Live Inventory Item ${item.productId} marked as Sold`);
+          }
+        }
+      }
+    } catch (stockError) {
+      console.error('Error syncing Live Inventory stock:', stockError);
+      // We don't fail the payment verification just because of stock sync failure, 
+      // but we log it for manual intervention.
+    }
+
     return res.json({
+
       success: true,
       message: 'Payment verified successfully',
       order: {

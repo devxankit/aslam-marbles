@@ -30,18 +30,16 @@ const orderSchema = new mongoose.Schema({
   total: { type: Number, required: true },
   finalTotal: { type: Number, required: true },
   currency: { type: String, default: 'INR' },
-  paymentMethod: { type: String, default: 'Razorpay' },
-  paymentStatus: {
-    type: String,
-    enum: ['pending', 'processing', 'completed', 'failed', 'refunded'],
-    default: 'pending'
-  },
+  // Payment Info
+  paymentMethod: { type: String, required: true },
+  paymentStatus: { type: String, enum: ['pending', 'completed', 'failed', 'refunded'], default: 'pending' },
+  fulfillmentStatus: { type: String, enum: ['pending', 'processing', 'completed', 'cancelled', 'refunded', 'failed'], default: 'pending' }, // Fulfillment status
   razorpayOrderId: { type: String },
   razorpayPaymentId: { type: String },
   razorpaySignature: { type: String },
   status: {
     type: String,
-    enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
+    enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled', 'completed', 'refunded', 'failed'],
     default: 'pending'
   },
   notes: { type: String }
@@ -54,7 +52,7 @@ orderSchema.index({ paymentStatus: 1 });
 orderSchema.index({ status: 1 });
 
 // Custom validation: Either email or phone must be provided
-orderSchema.pre('validate', async function() {
+orderSchema.pre('validate', async function () {
   if (this.customerDetails) {
     const hasEmail = this.customerDetails.email && String(this.customerDetails.email).trim() !== '';
     const hasPhone = this.customerDetails.phone && String(this.customerDetails.phone).trim() !== '';

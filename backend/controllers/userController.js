@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Admin = require('../models/Admin');
 const sendEmail = require('../utils/sendEmail');
 
 const signToken = (id, role = 'user') => {
@@ -102,10 +103,6 @@ exports.getProfile = async (req, res, next) => {
     next(err);
   }
 };
-
-
-
-const Admin = require('../models/Admin');
 
 exports.adminLogin = async (req, res, next) => {
   try {
@@ -343,6 +340,154 @@ exports.createAdmin = async (req, res, next) => {
         role: newAdmin.role
       }
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.adminForgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Please provide an email address' });
+    }
+
+    const normalizedEmail = email.toLowerCase();
+
+    // Check Admin collection first
+    let admin = await Admin.findOne({ email: normalizedEmail });
+    let isLegacy = false;
+
+    // Fallback: Check User collection for legacy admins
+    if (!admin) {
+      admin = await User.findOne({ email: normalizedEmail, role: 'admin' });
+      isLegacy = true;
+    }
+
+    if (!admin) {
+      return res.status(404).json({ success: false, message: 'Admin not found with this email' });
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    if (isLegacy) {
+      // Legacy admins (Users) use otpCode/otpExpiresAt
+      admin.otpCode = otp;
+      admin.otpExpiresAt = Date.now() + 10 * 60 * 1000;
+    } else {
+      // Modern Admins use resetToken/resetExpiresAt
+      admin.resetToken = otp;
+      admin.resetExpiresAt = Date.now() + 10 * 60 * 1000;
+    }
+
+    await admin.save({ validateBeforeSave: false });
+
+    try {
+      await sendEmail({
+        email: admin.email,
+        subject: 'Admin Password Reset OTP',
+        message: `Your admin password reset OTP is: ${otp}\n\nValid for 10 minutes.`
+      });
+
+      res.status(200).json({ success: true, message: 'OTP sent to admin email' });
+    } catch (error) {
+      console.error('Email send error:', error);
+      if (isLegacy) {
+        admin.otpCode = undefined;
+        admin.otpExpiresAt = undefined;
+      } else {
+        admin.resetToken = undefined;
+        admin.resetExpiresAt = undefined;
+      }
+      await admin.save({ validateBeforeSave: false });
+      return res.status(500).json({ success: false, message: 'Email could not be sent' });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.adminResetPassword = async (req, res, next) => {
+  try {
+    const { email, otp, password } = req.body;
+
+    if (!email || !otp || !password) {
+      return res.status(400).json({ success: false, message: 'Please provide all fields' });
+    }
+
+    const normalizedEmail = email.toLowerCase();
+
+    // Check Admin Collection
+    let admin = await Admin.findOne({
+      email: normalizedEmail,
+      resetToken: otp,
+      resetExpiresAt: { $gt: Date.now() }
+    });
+
+    let isLegacy = false;
+
+    // Check User Collection if not found in Admin (legacy admin fallback)
+    if (!admin) {
+      admin = await User.findOne({
+        email: normalizedEmail,
+        otpCode: otp,
+        otpExpiresAt: { $gt: Date.now() },
+        role: 'admin'
+      });
+      isLegacy = true;
+    }
+
+    if (!admin) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
+    }
+
+    admin.password = password;
+
+    if (isLegacy) {
+      admin.otpCode = undefined;
+      admin.otpExpiresAt = undefined;
+    } else {
+      admin.resetToken = undefined;
+      admin.resetExpiresAt = undefined;
+    }
+
+    await admin.save();
+
+    res.status(200).json({ success: true, message: 'Admin password reset successful' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getWishlist = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+    res.status(200).json({ success: true, wishlist: user.wishlist || [] });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.toggleWishlist = async (req, res, next) => {
+  try {
+    const { productId, type, name, image, price } = req.body;
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
+    const existingIndex = user.wishlist.findIndex(item => item.productId === productId);
+
+    if (existingIndex > -1) {
+      // Remove
+      user.wishlist.splice(existingIndex, 1);
+      await user.save();
+      return res.status(200).json({ success: true, message: 'Removed from wishlist', wishlist: user.wishlist });
+    } else {
+      // Add
+      user.wishlist.push({ productId, type, name, image, price });
+      await user.save();
+      return res.status(200).json({ success: true, message: 'Added to wishlist', wishlist: user.wishlist });
+    }
   } catch (err) {
     next(err);
   }

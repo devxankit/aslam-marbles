@@ -10,7 +10,9 @@ const {
   verifyResetOtp,
   resetPassword,
   adminLogin,
-  changePassword
+  changePassword,
+  getWishlist,
+  toggleWishlist
 } = require('../controllers/userController');
 
 // Public
@@ -29,6 +31,10 @@ router.post('/reset-password', resetPassword);
 router.get('/me', auth, getProfile);
 router.post('/change-password', auth, changePassword);
 router.get('/', auth, adminOnly, listUsers);
+
+// Wishlist
+router.get('/wishlist', auth, getWishlist);
+router.post('/wishlist/toggle', auth, toggleWishlist);
 
 module.exports = router;
 

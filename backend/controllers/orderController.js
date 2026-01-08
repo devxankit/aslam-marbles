@@ -1,133 +1,173 @@
 const Order = require('../models/Order');
 
-// GET /api/orders/all - Get all orders (Admin only)
-exports.getAllOrders = async (req, res, next) => {
+// @desc    Get all orders (Admin)
+// @route   GET /api/admin/orders
+// @access  Private (Admin)
+exports.getAllOrders = async (req, res) => {
   try {
-    const { status, startDate, endDate, search } = req.query;
-    
-    let query = {};
-    
-    // Filter by status
-    if (status && status !== 'all') {
-      query.status = status;
-    }
-    
-    // Filter by date range
-    if (startDate || endDate) {
-      query.createdAt = {};
-      if (startDate) {
-        query.createdAt.$gte = new Date(startDate);
-      }
-      if (endDate) {
-        query.createdAt.$lte = new Date(endDate);
-      }
-    }
-    
-    // Search by order ID, customer name, or email
-    if (search) {
-      query.$or = [
-        { orderId: { $regex: search, $options: 'i' } },
-        { razorpayOrderId: { $regex: search, $options: 'i' } },
-        { 'customerDetails.firstName': { $regex: search, $options: 'i' } },
-        { 'customerDetails.lastName': { $regex: search, $options: 'i' } },
-        { 'customerDetails.email': { $regex: search, $options: 'i' } }
-      ];
-    }
-    
-    const orders = await Order.find(query)
-      .populate('userId', 'name email phone')
-      .sort({ createdAt: -1 })
-      .limit(500);
+    const orders = await Order.find({})
+      .sort({ createdAt: -1 }); // Newest first
 
-    return res.json({
+    res.status(200).json({
       success: true,
+      count: orders.length,
       orders
     });
-  } catch (err) {
-    next(err);
-  }
-};
-
-// GET /api/orders/:id - Get single order
-exports.getOrderById = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    
-    const order = await Order.findById(id)
-      .populate('userId', 'name email phone');
-    
-    if (!order) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Order not found' 
-      });
-    }
-
-    return res.json({
-      success: true,
-      order
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server Error fetching orders',
+      error: error.message
     });
-  } catch (err) {
-    next(err);
   }
 };
 
-// PUT /api/orders/:id/status - Update order status
-exports.updateOrderStatus = async (req, res, next) => {
+// @desc    Update order status
+// @route   PUT /api/admin/orders/:id/status
+// @access  Private (Admin)
+exports.updateOrderStatus = async (req, res) => {
   try {
-    const { id } = req.params;
     const { status } = req.body;
-    
-    const validStatuses = ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'];
-    if (!validStatuses.includes(status)) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Invalid status' 
-      });
-    }
-    
-    const order = await Order.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true }
-    ).populate('userId', 'name email phone');
-    
-    if (!order) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Order not found' 
-      });
+    const orderId = req.params.id;
+
+    // Validation for allowed statuses can be added here
+    const allowedStatuses = ['pending', 'processing', 'completed', 'cancelled', 'refunded', 'failed'];
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ success: false, message: 'Invalid status' });
     }
 
-    return res.json({
+    const order = await Order.findOne({ orderId: orderId });
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    order.status = status; // Assuming you have a general 'status' field or use 'paymentStatus' if that acts as both
+    // If your schema only has 'paymentStatus', you might want to add a separate 'fulfillmentStatus' or just use one.
+    // For now, I'll update 'paymentStatus' if 'status' field doesn't exist, OR strictly follow schema.
+    // Let's assume we want to track fulfillment separate from payment, but usually simple apps mix them.
+    // Given previous code used 'paymentStatus', let's stick to updating that or adding a new field.
+    // Ideally, paymentStatus should be 'paid', 'unpaid'. Fulfillment is 'shipped', 'processing'.
+
+    // Strategy: Update both if simple, or just one. checking schema...
+    // Schema check: Order.js has paymentStatus. Let's add 'status' (fulfillment status) if missing or just use one for now.
+    // Simplest: Update 'paymentStatus' but that is confusing if it is 'shipped'.
+    // Better: Update a 'status' field for order flow.
+
+    // Fix: I will update the Order model to include a 'status' field for fulfillment if it doesn't exist,
+    // OR just use it dynamically.
+
+    // Update fulfillment status
+    order.status = status;
+
+    // Sync payment status if needed (optional but helpful)
+    if (status === 'completed' || status === 'refunded') {
+      order.paymentStatus = status;
+    }
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Order status updated',
+      order
+    });
+  } catch (error) {
+    console.error('Error updating order:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server Error updating order',
+      error: error.message
+    });
+  }
+};
+
+// @desc    Get order by ID
+// @route   GET /api/orders/:id
+// @access  Private (Admin)
+exports.getOrderById = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    // Search by both _id and orderId for flexibility
+    let order;
+    if (orderId.match(/^[0-9a-fA-F]{24}$/)) {
+      order = await Order.findById(orderId);
+    } else {
+      order = await Order.findOne({ orderId: orderId });
+    }
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    res.status(200).json({
       success: true,
       order
     });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error('Error fetching order:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server Error fetching order',
+      error: error.message
+    });
   }
 };
 
-// DELETE /api/orders/:id - Delete order
-exports.deleteOrder = async (req, res, next) => {
+// @desc    Delete order
+// @route   DELETE /api/orders/:id
+// @access  Private (Admin)
+exports.deleteOrder = async (req, res) => {
   try {
-    const { id } = req.params;
-    
-    const order = await Order.findByIdAndDelete(id);
-    
-    if (!order) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Order not found' 
-      });
+    const orderId = req.params.id;
+    let order;
+
+    if (orderId.match(/^[0-9a-fA-F]{24}$/)) {
+      order = await Order.findById(orderId);
+    } else {
+      order = await Order.findOne({ orderId: orderId });
     }
 
-    return res.json({
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    await order.deleteOne();
+
+    res.status(200).json({
       success: true,
-      message: 'Order deleted successfully'
+      message: 'Order removed'
     });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error('Error deleting order:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server Error deleting order',
+      error: error.message
+    });
   }
 };
 
+// @desc    Get logged in user orders
+// @route   GET /api/orders/my-orders
+// @access  Private
+exports.getUserOrders = async (req, res) => {
+  try {
+    const userId = req.user.id || req.user._id;
+    const orders = await Order.find({ userId }).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: orders.length,
+      orders
+    });
+  } catch (error) {
+    console.error('Error fetching user orders:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server Error fetching user orders',
+      error: error.message
+    });
+  }
+};

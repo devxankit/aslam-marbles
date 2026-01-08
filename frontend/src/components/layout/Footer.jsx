@@ -1,12 +1,61 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import { COMPANY_INFO, FOOTER_LINKS, INDIAN_CITIES, INTERNATIONAL_CITIES } from '../../utils/constants'
 import TranslatedText from '../TranslatedText'
 import Logo from './Logo'
 
 const Footer = () => {
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
+
+  const handleSubscribe = (e) => {
+    e.preventDefault()
+    if (email) {
+      setSubscribed(true)
+      setEmail('')
+      // In production, send to API
+    }
+  }
+
   return (
     <footer className="w-full bg-gradient-to-b from-black via-gray-900 to-black text-white mt-auto">
+      {/* Newsletter Section */}
+      <div className="w-full border-b border-white/10 py-12 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h3 className="text-xl md:text-2xl font-serif text-[#8B7355] italic mb-4">
+            <TranslatedText>Join Our Newsletter</TranslatedText>
+          </h3>
+          <p className="text-gray-400 text-sm md:text-base mb-8">
+            <TranslatedText>Subscribe to receive updates on our latest collections and spiritual insights.</TranslatedText>
+          </p>
+          {subscribed ? (
+            <div className="text-green-500 font-medium animate-fadeIn">
+              <TranslatedText>Thank you for subscribing!</TranslatedText>
+            </div>
+          ) : (
+            <form onSubmit={handleSubscribe} className="flex flex-col md:flex-row gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:outline-none focus:border-[#8B7355] text-white transition-colors"
+                required
+              />
+              <button
+                type="submit"
+                className="px-8 py-3 bg-[#8B7355] text-white font-bold rounded-lg hover:bg-[#725E45] transition-all"
+              >
+                <TranslatedText>Subscribe</TranslatedText>
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+
       {/* Upper Section */}
+
       <div className="w-full px-4 md:px-8 lg:px-12 py-8 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-6 lg:gap-12">

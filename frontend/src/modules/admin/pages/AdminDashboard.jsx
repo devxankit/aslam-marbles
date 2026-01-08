@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import AdminLayout from '../components/AdminLayout'
+import baseClient from '../../../services/api/baseClient'
+
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -9,23 +11,43 @@ const AdminDashboard = () => {
     pendingAppointments: 0,
     totalProducts: 0,
     totalBlogs: 0,
-    totalTestimonials: 0
+    totalTestimonials: 0,
+    revenue: 0,
+    totalOrders: 0
   })
+  const [loading, setLoading] = useState(true)
+
 
   useEffect(() => {
-    // In production, fetch from API
-    // For now, using dummy data
-    setStats({
-      totalLeads: 156,
-      newLeads: 12,
-      pendingAppointments: 8,
-      totalProducts: 45,
-      totalBlogs: 24,
-      totalTestimonials: 12
-    })
+    const fetchStats = async () => {
+      try {
+        setLoading(true)
+        const response = await baseClient.get('/admin/dashboard/stats')
+        if (response.success) {
+          setStats(response.stats)
+        }
+      } catch (error) {
+        console.error('Error fetching dashboard stats:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchStats()
   }, [])
 
+
   const statCards = [
+    {
+      title: 'Total Revenue',
+      value: `₹${stats.revenue.toLocaleString('en-IN')}`,
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      link: '/admin/leads/orders',
+      color: 'bg-indigo-500'
+    },
     {
       title: 'Total Leads',
       value: stats.totalLeads,
@@ -38,7 +60,7 @@ const AdminDashboard = () => {
       color: 'bg-blue-500'
     },
     {
-      title: 'New Leads',
+      title: 'New Leads (24h)',
       value: stats.newLeads,
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,7 +71,7 @@ const AdminDashboard = () => {
       color: 'bg-green-500'
     },
     {
-      title: 'Pending Appointments',
+      title: 'Pending Appts',
       value: stats.pendingAppointments,
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,6 +92,7 @@ const AdminDashboard = () => {
       link: '/admin/products/murti',
       color: 'bg-purple-500'
     }
+
   ]
 
   const quickActions = [

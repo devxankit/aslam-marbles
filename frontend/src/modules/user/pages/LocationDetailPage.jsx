@@ -5,6 +5,8 @@ import FloatingButtons from '../../../components/common/FloatingButtons'
 import HeroSectionWithForm from '../../../components/common/HeroSectionWithForm'
 import ExpertFormOverlay from '../../../components/common/ExpertFormOverlay'
 import TranslatedText from '../../../components/TranslatedText'
+import Breadcrumbs from '../../../components/common/Breadcrumbs'
+
 
 import { formatLocationName, indianLocations } from '../../../data/locations'
 import { fetchFAQs } from '../../../utils/faqUtils'
@@ -72,6 +74,8 @@ const LocationDetailPage = ({
         onShowServices={onShowServices}
         onShowHowItWorks={onShowHowItWorks}
       />
+      <Breadcrumbs />
+
 
       {/* Hero Section with Form */}
       <HeroSectionWithForm

@@ -5,7 +5,7 @@ import logoImage from '../../../assets/logo/download.png'
 const AdminSidebar = ({ isOpen, onClose }) => {
   const location = useLocation()
   const [expandedMenus, setExpandedMenus] = useState({
-    leads: location.pathname.startsWith('/admin/leads'),
+    leads: location.pathname.startsWith('/admin/leads') || location.pathname.startsWith('/admin/leads/orders'),
     products: location.pathname.startsWith('/admin/products'),
     content: location.pathname.startsWith('/admin/content'),
     pages: location.pathname.startsWith('/admin/pages') || location.pathname.startsWith('/admin/products/stone') || location.pathname.startsWith('/admin/products/stone-pages'),

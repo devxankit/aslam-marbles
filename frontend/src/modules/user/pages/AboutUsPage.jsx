@@ -11,6 +11,8 @@ import aboutImage1 from '../../../assets/house of marble/about us/Screenshot 202
 import aboutImage2 from '../../../assets/house of marble/about us/Screenshot 2025-12-10 131414.png'
 import { teamMembers } from '../../../data/teamMembers'
 import TranslatedText from '../../../components/TranslatedText'
+import Breadcrumbs from '../../../components/common/Breadcrumbs'
+
 
 // CSS to hide scrollbar
 const scrollbarHideStyle = `
@@ -92,6 +94,7 @@ const AboutUsPage = ({
           onShowLocation={onShowLocation}
           onShowBooking={onShowBooking}
         />
+        <Breadcrumbs />
 
         {/* Hero Section - Title Over Background */}
         <section className="relative w-full h-[80vh] md:h-screen flex items-center justify-center overflow-hidden">

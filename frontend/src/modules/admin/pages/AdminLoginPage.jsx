@@ -74,7 +74,18 @@ const AdminLoginPage = () => {
               />
             </div>
 
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={() => navigate('/admin/forgot-password')}
+                className="text-sm font-medium text-[#8B7355] hover:underline"
+              >
+                Forgot Password?
+              </button>
+            </div>
+
             <button
+
               type="submit"
               disabled={loading}
               className="w-full py-3 rounded-lg font-semibold text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"

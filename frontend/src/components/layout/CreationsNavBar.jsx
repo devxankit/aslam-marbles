@@ -18,7 +18,19 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
   const [isFading, setIsFading] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mobileExpandedMenu, setMobileExpandedMenu] = useState(null)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [showSearch, setShowSearch] = useState(false)
   const timeoutRef = useRef(null)
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+      setShowSearch(false)
+      setSearchQuery("")
+      setMobileMenuOpen(false) // Close mobile menu if open
+    }
+  }
 
   const navItems = [
     { name: 'DREAM TEMPLE', path: '/dream-temple', hasDropdown: false },
@@ -278,8 +290,41 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                 })}
               </div>
 
+
+
               {/* Right Side Icons */}
               <div className="flex items-center gap-4 md:gap-6 flex-shrink-0">
+                {/* Search Icon & Toggle */}
+                <div className="relative flex items-center">
+                  {showSearch ? (
+                    <form onSubmit={handleSearch} className="flex items-center absolute right-0 bg-white border border-gray-200 rounded-full px-3 py-1 shadow-sm w-40 z-10 transition-all duration-300">
+                      <input
+                        type="text"
+                        autoFocus
+                        placeholder="Search products..."
+                        className="bg-transparent border-none outline-none text-xs w-full text-black"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onBlur={() => !searchQuery && setShowSearch(false)}
+                      />
+                      <button type="submit" className="text-gray-400 hover:text-[#8B7355]">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </button>
+                    </form>
+                  ) : (
+                    <button
+                      onClick={() => setShowSearch(true)}
+                      className="p-2 text-black hover:text-[#8B7355] transition-colors duration-300"
+                      aria-label="Search"
+                    >
+                      <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
                 {/* Like Icon */}
                 <button
                   onClick={() => onShowLikes && onShowLikes()}
@@ -430,6 +475,25 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
                   </svg>
                 </button>
               </div>
+            </div>
+
+
+            {/* Mobile Search Bar */}
+            <div className="lg:hidden px-4 pb-2">
+              <form onSubmit={handleSearch} className="relative">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  className="w-full bg-gray-100 border-none rounded-full px-4 py-2 text-sm text-black focus:ring-1 focus:ring-[#8B7355] outline-none"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+              </form>
             </div>
 
             {/* Mobile Menu Dropdown */}
@@ -596,8 +660,8 @@ const CreationsNavBar = ({ onShowCart, onShowLikes }) => {
             </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </div >
+    </nav >
   )
 }
 

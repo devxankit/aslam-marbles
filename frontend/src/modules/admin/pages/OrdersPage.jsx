@@ -1,454 +1,346 @@
 import { useState, useEffect } from 'react'
 import AdminLayout from '../components/AdminLayout'
+import baseClient from '../../../services/api/baseClient'
+import { Toaster, toast } from 'react-hot-toast'
+import { exportToCSV } from '../../../utils/exportUtils'
+
+
+// Utility function for formatting currency
+const formatCurrency = (amount) => {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0
+  }).format(amount)
+}
+
+// Utility function for updating status - can be moved to API service
+const updateOrderStatus = async (orderId, status) => {
+  try {
+    const response = await baseClient.put(`/admin/orders/${orderId}/status`, { status })
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [selectedOrder, setSelectedOrder] = useState(null)
-  const [showDetailsModal, setShowDetailsModal] = useState(false)
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
-  const [orderToDelete, setOrderToDelete] = useState(null)
-  const [actionMenuOpen, setActionMenuOpen] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [selectedOrder, setSelectedOrder] = useState(null) // For modal
+  const [filterStatus, setFilterStatus] = useState('all')
 
-  // Filters
-  const [searchTerm, setSearchTerm] = useState('')
-  const [statusFilter, setStatusFilter] = useState('all')
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-
-  useEffect(() => {
-    fetchOrders()
-  }, [statusFilter, startDate, endDate])
-
+  // Fetch Orders
   const fetchOrders = async () => {
     setLoading(true)
     try {
-      const adminToken = localStorage.getItem('adminToken')
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-
-      const params = new URLSearchParams()
-      if (statusFilter !== 'all') params.append('status', statusFilter)
-      if (startDate) params.append('startDate', startDate)
-      if (endDate) params.append('endDate', endDate)
-      if (searchTerm) params.append('search', searchTerm)
-
-      const res = await fetch(`${API_URL}/orders/all?${params.toString()}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${adminToken}`
-        }
-      })
-      const data = await res.json()
-      if (res.ok && data.success) {
-        setOrders(data.orders || [])
+      // Updated to use the correct API endpoint
+      const response = await baseClient.get('/admin/orders')
+      if (response && response.success) {
+        setOrders(response.orders)
       } else {
-        console.error('Failed to fetch orders:', data.message)
-        setOrders([])
+        toast.error('Failed to load orders')
       }
-    } catch (err) {
-      console.error('Failed to fetch orders:', err)
-      setOrders([])
+    } catch (error) {
+      console.error('Error fetching orders:', error)
+      toast.error('Error loading orders')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleSearch = () => {
+  useEffect(() => {
     fetchOrders()
-  }
+  }, [])
 
-  const handleViewDetails = (order) => {
-    setSelectedOrder(order)
-    setShowDetailsModal(true)
-    setActionMenuOpen(null)
-  }
-
-  const handleDelete = (order) => {
-    setOrderToDelete(order)
-    setShowDeleteConfirm(true)
-    setActionMenuOpen(null)
-  }
-
-  const confirmDelete = async () => {
-    if (!orderToDelete) return
-
+  // Handle Status Change
+  const handleStatusChange = async (orderId, newStatus) => {
     try {
-      const adminToken = localStorage.getItem('adminToken')
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-      const res = await fetch(`${API_URL}/orders/${orderToDelete._id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${adminToken}`
-        }
+      const promise = updateOrderStatus(orderId, newStatus)
+
+      await toast.promise(promise, {
+        loading: 'Updating status...',
+        success: 'Order status updated!',
+        error: 'Failed to update status'
       })
 
-      if (res.ok) {
-        fetchOrders()
-        setShowDeleteConfirm(false)
-        setOrderToDelete(null)
+      // Refresh local state
+      setOrders(orders.map(order =>
+        order.orderId === orderId ? { ...order, status: newStatus } : order
+      ))
+
+      // If modal is open, update selected order too
+      if (selectedOrder && selectedOrder.orderId === orderId) {
+        setSelectedOrder(prev => ({ ...prev, status: newStatus }))
       }
-    } catch (err) {
-      console.error('Failed to delete order:', err)
+
+    } catch (error) {
+      console.error(error)
     }
   }
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A'
-    const date = new Date(dateString)
-    return date.toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
+  const filteredOrders = filterStatus === 'all'
+    ? orders
+    : orders.filter(order => order.status === filterStatus)
+
+  const handleExport = () => {
+    if (!orders.length) return toast.error('No data to export')
+
+    const exportData = orders.map(order => ({
+      'Order ID': order.orderId,
+      'Date': new Date(order.createdAt).toLocaleDateString(),
+      'Customer': order.customer?.name || 'N/A',
+      'Email': order.customer?.email || 'N/A',
+      'Phone': order.customer?.phone || 'N/A',
+      'Total Amount': order.total,
+      'Currency': order.currency,
+      'Status': order.status,
+      'Items Count': order.items?.length || 0,
+      'Payment ID': order.razorpayPaymentId || 'N/A'
+    }))
+
+    exportToCSV(exportData, `orders_export_${new Date().toISOString().split('T')[0]}`)
+    toast.success('Orders exported successfully!')
   }
 
-  const formatDateInput = (dateString) => {
-    if (!dateString) return ''
-    const date = new Date(dateString)
-    const day = String(date.getDate()).padStart(2, '0')
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const year = date.getFullYear()
-    return `${day}-${month}-${year}`
+
+  // Status Badge Helpers
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'completed': return 'bg-green-100 text-green-800'
+      case 'pending': return 'bg-yellow-100 text-yellow-800'
+      case 'processing': return 'bg-blue-100 text-blue-800'
+      case 'cancelled': return 'bg-red-100 text-red-800'
+      case 'refunded': return 'bg-purple-100 text-purple-800'
+      default: return 'bg-gray-100 text-gray-800'
+    }
   }
-
-  const exportToCSV = () => {
-    const headers = ['Order ID', 'Customer', 'Email', 'Phone', 'Items', 'Total', 'Final Total', 'Payment', 'Status', 'Date']
-    const rows = orders.map(order => {
-      const customerName = `${order.customerDetails?.firstName || ''} ${order.customerDetails?.lastName || ''}`.trim()
-      return [
-        order.razorpayOrderId || order.orderId || order._id,
-        customerName,
-        order.customerDetails?.email || '',
-        order.customerDetails?.phone || '',
-        order.items?.length || 0,
-        order.subtotal || 0,
-        order.finalTotal || order.total || 0,
-        order.paymentMethod || 'Razorpay',
-        order.status,
-        formatDate(order.createdAt)
-      ]
-    })
-
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-    ].join('\n')
-
-    const blob = new Blob([csvContent], { type: 'text/csv' })
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `orders_${new Date().toISOString().split('T')[0]}.csv`
-    a.click()
-    window.URL.revokeObjectURL(url)
-  }
-
-  const filteredOrders = orders.filter(order => {
-    if (!searchTerm) return true
-    const searchLower = searchTerm.toLowerCase()
-    const customerName = `${order.customerDetails?.firstName || ''} ${order.customerDetails?.lastName || ''}`.toLowerCase()
-    return (
-      (order.razorpayOrderId || order.orderId || order._id)?.toLowerCase().includes(searchLower) ||
-      customerName.includes(searchLower) ||
-      order.customerDetails?.email?.toLowerCase().includes(searchLower)
-    )
-  })
 
   return (
     <AdminLayout>
-      <div className="p-6">
-        {/* Header with Title and Export Button */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
-          <button
-            onClick={exportToCSV}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Export CSV
-          </button>
+      <Toaster position="top-right" />
+
+      <div className="space-y-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Order Management</h1>
+            <p className="text-gray-500 text-sm mt-1">Manage, process and track customer orders</p>
+          </div>
+
+          {/* Filter Controls */}
+          <div className="flex gap-2">
+            {['all', 'pending', 'processing', 'completed', 'cancelled'].map((status) => (
+              <button
+                key={status}
+                onClick={() => setFilterStatus(status)}
+                className={`px-4 py-2 text-sm rounded-lg capitalize transition-colors ${filterStatus === status
+                  ? 'bg-[#8B7355] text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
+                  }`}
+              >
+                {status}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Filters Bar */}
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-          <div className="flex flex-wrap gap-4 items-end">
-            {/* Search */}
-            <div className="flex-1 min-w-[250px]">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  placeholder="Search by ID, name, or email..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
-                />
-                <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        {/* Orders List / Table */}
+        <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+          {loading ? (
+            <div className="p-8 text-center text-gray-500">Loading orders...</div>
+          ) : filteredOrders.length === 0 ? (
+            <div className="p-12 text-center">
+              <div className="text-gray-300 mb-4">
+                <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
+              <h3 className="text-lg font-medium text-gray-900">No orders found</h3>
+              <p className="text-gray-500">No orders match the current filter.</p>
             </div>
-
-            {/* Status Filter */}
-            <div className="min-w-[150px]">
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355]"
-              >
-                <option value="all">All Status</option>
-                <option value="pending">Pending</option>
-                <option value="confirmed">Confirmed</option>
-                <option value="processing">Processing</option>
-                <option value="shipped">Shipped</option>
-                <option value="delivered">Delivered</option>
-                <option value="cancelled">Cancelled</option>
-              </select>
-            </div>
-
-            {/* Date Range */}
-            <div className="flex items-center gap-2 min-w-[280px]">
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="flex-1 min-w-[120px] px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] text-sm"
-              />
-              <span className="text-gray-500 whitespace-nowrap">to</span>
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="flex-1 min-w-[120px] px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B7355] text-sm"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Orders Table */}
-        {loading ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600">Loading orders...</p>
-          </div>
-        ) : filteredOrders.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow-sm">
-            <p className="text-gray-600">No orders found</p>
-          </div>
-        ) : (
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+          ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="w-full text-left">
+                <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ORDER ID</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CUSTOMER</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ITEMS</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL (₹)</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">FINAL TOTAL (₹)</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PAYMENT</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ORDER DATE</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ACTIONS</th>
+                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Order ID</th>
+                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Customer</th>
+                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Payment ID</th>
+                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Action</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredOrders.map((order) => {
-                    const customerName = `${order.customerDetails?.firstName || ''} ${order.customerDetails?.lastName || ''}`.trim() || 'N/A'
-                    const orderId = order.razorpayOrderId || order.orderId || `ORD-${order._id?.slice(-6).toUpperCase()}`
-                    return (
-                      <tr key={order._id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">{orderId}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{customerName}</div>
-                          <div className="text-sm text-gray-500">{order.customerDetails?.email}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{order.items?.length || 0} items</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">₹{order.subtotal?.toLocaleString('en-IN') || '0'}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">₹{(order.finalTotal || order.total)?.toLocaleString('en-IN') || '0'}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{order.paymentMethod || 'Razorpay'}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500">{formatDate(order.createdAt)}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium relative">
-                          <button
-                            onClick={() => setActionMenuOpen(actionMenuOpen === order._id ? null : order._id)}
-                            className="text-gray-400 hover:text-gray-600"
-                          >
-                            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                            </svg>
-                          </button>
-                          {actionMenuOpen === order._id && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
-                              <div className="py-1">
-                                <button
-                                  onClick={() => handleViewDetails(order)}
-                                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                                >
-                                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                  </svg>
-                                  Order Details
-                                </button>
-                                <button
-                                  onClick={() => {/* Generate Invoice */ }}
-                                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                                >
-                                  <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                  </svg>
-                                  Generate Invoice
-                                </button>
-                                <button
-                                  onClick={() => {/* Order Tracking */ }}
-                                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                                >
-                                  <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
-                                  Order Tracking
-                                </button>
-                                <button
-                                  onClick={() => handleDelete(order)}
-                                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
-                                >
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                  </svg>
-                                  Delete Order
-                                </button>
-                              </div>
-                            </div>
-                          )}
-                        </td>
-                      </tr>
-                    )
-                  })}
+                <tbody className="divide-y divide-gray-200">
+                  {filteredOrders.map((order) => (
+                    <tr key={order._id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        #{order.orderId ? order.orderId.substring(0, 8).toUpperCase() : 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        <div className="flex flex-col">
+                          <span className="font-medium text-gray-900">
+                            {order.customerDetails?.firstName || order.customerDetails?.lastName
+                              ? `${order.customerDetails.firstName || ''} ${order.customerDetails.lastName || ''}`.trim()
+                              : (order.customerDetails?.name || 'Guest')}
+                          </span>
+                          <span className="text-xs text-gray-500">{order.customerDetails?.email}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {new Date(order.createdAt).toLocaleDateString()}
+                        <div className="text-xs text-gray-400">{new Date(order.createdAt).toLocaleTimeString()}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                        {formatCurrency(order.finalTotal)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(order.status || order.paymentStatus)}`}>
+                          {order.status || order.paymentStatus}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-xs font-mono text-gray-500">
+                        {order.razorpayPaymentId || '-'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <button
+                          onClick={() => setSelectedOrder(order)}
+                          className="text-[#8B7355] hover:text-[#736044] font-medium"
+                        >
+                          View Details
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
-          </div>
-        )}
-
-        {/* Order Details Modal */}
-        {showDetailsModal && selectedOrder && (
-          <div className="fixed inset-0 backdrop-blur-sm bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDetailsModal(false)}>
-            <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-              <div className="p-6">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900">Order Details</h2>
-                  <button onClick={() => setShowDetailsModal(false)} className="text-gray-400 hover:text-gray-600">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Order ID</label>
-                      <p className="mt-1 text-sm text-gray-900">{selectedOrder.razorpayOrderId || selectedOrder.orderId || selectedOrder._id}</p>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Date</label>
-                      <p className="mt-1 text-sm text-gray-900">{formatDate(selectedOrder.createdAt)}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Customer Details</h3>
-                    <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-                      <p><span className="font-medium">Name:</span> {selectedOrder.customerDetails?.firstName} {selectedOrder.customerDetails?.lastName}</p>
-                      <p><span className="font-medium">Email:</span> {selectedOrder.customerDetails?.email}</p>
-                      <p><span className="font-medium">Phone:</span> {selectedOrder.customerDetails?.phone}</p>
-                      <p><span className="font-medium">Address:</span> {selectedOrder.customerDetails?.address}, {selectedOrder.customerDetails?.city}, {selectedOrder.customerDetails?.state} - {selectedOrder.customerDetails?.pinCode}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Order Items</h3>
-                    <div className="space-y-3">
-                      {selectedOrder.items?.map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-4 bg-gray-50 rounded-lg p-4">
-                          {item.image && <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded" />}
-                          <div className="flex-1">
-                            <h4 className="font-medium text-gray-900">{item.name}</h4>
-                            {item.size && <p className="text-sm text-gray-600">Size: {item.size}</p>}
-                            <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
-                            <p className="text-sm font-medium text-[#8B7355]">₹{item.price?.toLocaleString('en-IN')} each</p>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-medium text-gray-900">₹{(item.price * item.quantity)?.toLocaleString('en-IN')}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Order Summary</h3>
-                    <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Subtotal:</span>
-                        <span className="font-medium">₹{selectedOrder.subtotal?.toLocaleString('en-IN') || '0'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Shipping:</span>
-                        <span className="font-medium">₹{selectedOrder.shippingCost?.toLocaleString('en-IN') || '0'}</span>
-                      </div>
-                      <div className="flex justify-between border-t pt-2">
-                        <span className="font-semibold text-gray-900">Total:</span>
-                        <span className="font-bold text-[#8B7355]">₹{(selectedOrder.finalTotal || selectedOrder.total)?.toLocaleString('en-IN') || '0'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Delete Confirmation Modal */}
-        {showDeleteConfirm && (
-          <div className="fixed inset-0 backdrop-blur-sm bg-black/30 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Delete Order</h3>
-              <p className="text-gray-600 mb-6">Are you sure you want to delete this order? This action cannot be undone.</p>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => {
-                    setShowDeleteConfirm(false)
-                    setOrderToDelete(null)
-                  }}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={confirmDelete}
-                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+
+      {/* Order Details Modal */}
+      {selectedOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-xl">
+              <div>
+                <h2 className="text-xl font-bold text-gray-800">Order Details</h2>
+                <p className="text-sm text-gray-500">ID: #{selectedOrder.orderId}</p>
+              </div>
+              <button
+                onClick={() => setSelectedOrder(null)}
+                className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+              >
+                <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="p-6 space-y-8">
+
+              {/* Status Control */}
+              <div className="flex items-center justify-between bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <div>
+                  <p className="text-sm font-medium text-blue-900">Current Status</p>
+                  <div className={`mt-1 inline-block px-3 py-1 text-xs font-bold rounded-full ${getStatusColor(selectedOrder.status || selectedOrder.paymentStatus)} uppercase`}>
+                    {selectedOrder.status || selectedOrder.paymentStatus}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-gray-600 mr-2">Update Status:</p>
+                  <select
+                    value={selectedOrder.status || selectedOrder.paymentStatus}
+                    onChange={(e) => handleStatusChange(selectedOrder.orderId, e.target.value)}
+                    className="text-sm border-gray-300 rounded-md shadow-sm focus:border-[#8B7355] focus:ring focus:ring-[#8B7355] focus:ring-opacity-50 py-2 pl-3 pr-8 bg-white"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="refunded">Refunded</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Customer & Shipping Info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 border-b pb-2">Customer Info</h3>
+                  <div className="space-y-3 text-sm text-gray-600">
+                    <p>
+                      <span className="font-medium text-gray-900 w-20 inline-block">Name:</span>
+                      {selectedOrder.customerDetails?.firstName || selectedOrder.customerDetails?.lastName
+                        ? `${selectedOrder.customerDetails.firstName || ''} ${selectedOrder.customerDetails.lastName || ''}`.trim()
+                        : (selectedOrder.customerDetails?.name || 'N/A')}
+                    </p>
+                    <p><span className="font-medium text-gray-900 w-20 inline-block">Email:</span> {selectedOrder.customerDetails?.email}</p>
+                    <p><span className="font-medium text-gray-900 w-20 inline-block">Phone:</span> {selectedOrder.customerDetails?.phone}</p>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 border-b pb-2">Shipping Address</h3>
+                  <div className="space-y-1 text-sm text-gray-600">
+                    <p className="font-medium text-gray-900">{selectedOrder.customerDetails?.address}</p>
+                    {selectedOrder.customerDetails?.apartment && <p>{selectedOrder.customerDetails?.apartment}</p>}
+                    <p>
+                      {selectedOrder.customerDetails?.city}, {selectedOrder.customerDetails?.state} {selectedOrder.customerDetails?.pinCode}
+                    </p>
+                    <p>{selectedOrder.customerDetails?.country}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Order Items */}
+              <div>
+                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 border-b pb-2">Items Ordered</h3>
+                <div className="bg-gray-50 rounded-lg p-4 space-y-4">
+                  {selectedOrder.items?.map((item, idx) => (
+                    <div key={idx} className="flex gap-4 items-center bg-white p-3 rounded shadow-sm">
+                      {item.image ? (
+                        <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded border" />
+                      ) : (
+                        <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-500">No Image</div>
+                      )}
+                      <div className="flex-1">
+                        <h4 className="font-medium text-gray-900">{item.name}</h4>
+                        <div className="text-xs text-gray-500 mt-1 space-x-3">
+                          <span>Qty: {item.quantity}</span>
+                          <span>Price: {formatCurrency(item.price)}</span>
+                        </div>
+                      </div>
+                      <div className="font-bold text-gray-900">
+                        {formatCurrency(item.price * item.quantity)}
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="border-t border-gray-200 pt-4 flex justify-end">
+                    <div className="text-right">
+                      <p className="text-sm text-gray-600">Total Amount</p>
+                      <p className="text-2xl font-bold text-[#8B7355]">{formatCurrency(selectedOrder.finalTotal)}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-gray-100 bg-gray-50 rounded-b-xl flex justify-end">
+              <button
+                onClick={() => setSelectedOrder(null)}
+                className="px-6 py-2 bg-white border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   )
 }
 
 export default OrdersPage
-

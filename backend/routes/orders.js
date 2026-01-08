@@ -5,8 +5,13 @@ const {
   getAllOrders,
   getOrderById,
   updateOrderStatus,
-  deleteOrder
+  deleteOrder,
+  getUserOrders
 } = require('../controllers/orderController');
+
+// Get logged in user orders
+router.get('/my-orders', auth, getUserOrders);
+
 
 // Get all orders (admin only)
 router.get('/all', auth, adminOnly, getAllOrders);

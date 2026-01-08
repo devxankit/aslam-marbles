@@ -3,7 +3,9 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
+import Breadcrumbs from '../../../components/common/Breadcrumbs'
 import { useCartAndLikes } from '../../../contexts/CartAndLikesContext'
+
 import { durgaProducts } from '../../../data/durgaProducts'
 import { saraswatiProducts } from '../../../data/saraswatiProducts'
 import { shivParvatiProducts } from '../../../data/shivParvatiProducts'
@@ -302,8 +304,10 @@ const ProductDetailPage = ({
   return (
     <div className="w-full min-h-screen bg-white">
       <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
+      <Breadcrumbs />
 
       {/* Product Detail Section */}
+
       <div className="w-full py-8 md:py-12 px-4 md:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">

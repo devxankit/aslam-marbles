@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import TranslatedText from "../TranslatedText";
 import logoImage from "../../assets/logo/download.png";
 import { useState, useRef, useEffect } from "react";
@@ -24,8 +24,11 @@ const Header = ({
   const [isFading, setIsFading] = useState(false);
   const [pendingDropdown, setPendingDropdown] = useState(null);
   const [mobileExpandedMenu, setMobileExpandedMenu] = useState(null);
+  const navigate = useNavigate();
   const timeoutRef = useRef(null);
   const { language, languages, changeLanguage, isChangingLanguage } = useLanguage();
+
+
 
   // Header/nav labels: translate in a single batch (same approach as the homepage popup)
   // This avoids relying on per-string translation and ensures these always translate.
@@ -241,6 +244,8 @@ const Header = ({
 
                 {/* Language Selector */}
                 <LanguageSelector variant={variant} />
+
+
               </div>
             </div>
 
@@ -298,6 +303,8 @@ const Header = ({
                 </svg>
               </button>
             </div>
+
+
 
             {/* Mobile Sidebar Menu */}
             {open && (

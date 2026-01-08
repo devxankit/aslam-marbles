@@ -5,7 +5,9 @@ import Header from '../../../components/layout/Header'
 import CreationsNavBar from '../../../components/layout/CreationsNavBar'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
+import Breadcrumbs from '../../../components/common/Breadcrumbs'
 import TrustedBySection from '../../../components/common/TrustedBySection'
+
 import { fetchFAQs } from '../../../utils/faqUtils'
 import TranslatedText from '../../../components/TranslatedText'
 import { usePageTranslation } from '../../../contexts/PageTranslationContext'
@@ -205,8 +207,10 @@ const MurtiPage = ({
     <div className="w-full min-h-screen bg-white">
 
       <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
+      <Breadcrumbs />
 
       {/* Hero Section - Simple & Elegant */}
+
       <div className="relative w-full h-[40vh] md:h-[50vh] overflow-hidden bg-white">
         <LazyImage
           src={pageData?.heroSection?.image?.url || 'https://images.unsplash.com/photo-1544006659-f0b21f04cb1b?auto=format&fit=crop&q=80&w=2000'}

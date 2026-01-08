@@ -132,6 +132,10 @@ app.use('/api/shop-by-products', require('./routes/shopByProductRoutes'));
 app.use('/api/settings', require('./routes/settingsRoutes'));
 app.use('/api/page-content', require('./routes/pageContentRoutes'));
 app.use('/api/wallet', require('./routes/walletRoutes'));
+app.use('/api/admin/orders', require('./routes/adminOrderRoutes'));
+app.use('/api/search', require('./routes/searchRoutes'));
+app.use('/api/admin/dashboard', require('./routes/dashboardRoutes'));
+
 
 // Errors
 app.use(notFound);

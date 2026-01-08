@@ -77,6 +77,8 @@ import PackagingPage from './modules/user/pages/PackagingPage'
 import PackagingCategoryPage from './modules/user/pages/PackagingCategoryPage'
 import MurtiCategoryTemplate from './modules/user/components/MurtiCategoryTemplate'
 import LiveInventoryPage from './modules/user/pages/LiveInventoryPage'
+import SearchResultsPage from './modules/user/pages/SearchResultsPage'
+
 
 
 import LimitedEditionPage from './modules/user/pages/LimitedEditionPage'
@@ -88,7 +90,9 @@ import ForgotPasswordPage from './modules/user/pages/ForgotPasswordPage'
 import ProfilePage from './modules/user/pages/ProfilePage'
 // Admin Pages
 import AdminLoginPage from './modules/admin/pages/AdminLoginPage'
+import AdminForgotPasswordPage from './modules/admin/pages/AdminForgotPasswordPage'
 import AdminDashboard from './modules/admin/pages/AdminDashboard'
+
 import LeadsManagementPage from './modules/admin/pages/LeadsManagementPage'
 import OrdersPage from './modules/admin/pages/OrdersPage'
 import ProductsManagementPage from './modules/admin/pages/ProductsManagementPage'
@@ -120,6 +124,7 @@ import SpecialCollectionManagementPage from './modules/admin/pages/SpecialCollec
 import ShopByManagementPage from './modules/admin/pages/ShopByManagementPage'
 import LiveInventoryManagementPage from './modules/admin/pages/LiveInventoryManagementPage'
 import WalletPage from './modules/admin/pages/WalletPage'
+
 
 import OurServicesManagementPage from './modules/admin/pages/OurServicesManagementPage'
 import TSADesignHubManagementPage from './modules/admin/pages/TSADesignHubManagementPage'
@@ -303,10 +308,11 @@ function App() {
               onShowLikes={() => setShowLikes(true)}
             />
           } />
-
+          <Route path="leads/orders" element={<OrdersPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/search" element={<SearchResultsPage />} />
 
           <Route path="/careers" element={
             <CareersPage
@@ -1323,6 +1329,8 @@ function App() {
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin/forgot-password" element={<AdminForgotPasswordPage />} />
+
           <Route path="/admin/dashboard" element={
             <ProtectedRoute>
               <AdminDashboard />

@@ -342,33 +342,55 @@ const LeadsManagementPage = () => {
     setSelectedLead(null)
   }
 
-  const exportToCSV = () => {
-    const headers = ['ID', 'Name', 'Email', 'Phone', 'City', 'Status', 'Date', 'Budget', 'Looking For']
-    const csvContent = [
-      headers.join(','),
-      ...filteredLeads.map(lead => [
-        lead.id,
-        `"${lead.name}"`,
-        lead.email,
-        lead.phone,
-        lead.city,
-        lead.status,
-        lead.date,
-        lead.budget || '',
-        `"${lead.lookingFor || ''}"`
-      ].join(','))
-    ].join('\n')
+  const handleExportCSV = () => {
+    if (activeTab === 'users') {
+      if (!filteredUsers.length) return
+      const headers = ['ID', 'Name', 'Email', 'Phone', 'Status', 'Registered Date']
+      const csvContent = [
+        headers.join(','),
+        ...filteredUsers.map(user => [
+          user._id || user.id,
+          `"${user.name}"`,
+          user.email,
+          user.phone,
+          user.isActive ? 'Active' : 'Inactive',
+          user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'
+        ].join(','))
+      ].join('\n')
+      downloadCSV(csvContent, 'Users_Export')
+    } else {
+      if (!filteredLeads.length) return
+      const headers = ['ID', 'Name', 'Email', 'Phone', 'City', 'Status', 'Date', 'Budget', 'Looking For']
+      const csvContent = [
+        headers.join(','),
+        ...filteredLeads.map(lead => [
+          lead.id,
+          `"${lead.name}"`,
+          lead.email,
+          lead.phone,
+          lead.city,
+          lead.status,
+          lead.date,
+          lead.budget || '',
+          `"${lead.lookingFor || ''}"`
+        ].join(','))
+      ].join('\n')
+      downloadCSV(csvContent, `${getPageTitle().replace(/\s+/g, '_')}_Export`)
+    }
+  }
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+  const downloadCSV = (content, filename) => {
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' })
     const link = document.createElement('a')
     const url = URL.createObjectURL(blob)
     link.setAttribute('href', url)
-    link.setAttribute('download', `${getPageTitle().replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.csv`)
+    link.setAttribute('download', `${filename}_${new Date().toISOString().split('T')[0]}.csv`)
     link.style.visibility = 'hidden'
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
   }
+
 
   return (
     <AdminLayout>
@@ -377,7 +399,7 @@ const LeadsManagementPage = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-gray-800">{getPageTitle()}</h1>
           <button
-            onClick={exportToCSV}
+            onClick={handleExportCSV}
             className="px-4 py-2 text-white rounded-lg font-medium transition-colors hover:opacity-90"
             style={{ backgroundColor: '#8B7355' }}
           >

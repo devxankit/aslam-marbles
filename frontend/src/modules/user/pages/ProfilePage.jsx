@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Header from '../../../components/layout/Header'
 import Footer from '../../../components/layout/Footer'
 import FloatingButtons from '../../../components/common/FloatingButtons'
@@ -179,6 +179,12 @@ const ProfilePage = () => {
                   </div>
                 </div>
 
+                {/* Order History */}
+                <div className="border-t border-gray-200 pt-6">
+                  <OrderHistory />
+                </div>
+
+
                 {/* Actions */}
                 <div className="border-t border-gray-200 pt-6 flex flex-col sm:flex-row gap-4">
                   <button
@@ -206,5 +212,98 @@ const ProfilePage = () => {
   )
 }
 
-export default ProfilePage
+const OrderHistory = () => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        if (!token) return;
+
+        const response = await fetch(`${API_URL}/orders/my-orders`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = await response.json();
+        if (data.success) {
+          setOrders(data.orders);
+        } else {
+          setError(data.message);
+        }
+      } catch (err) {
+        setError('Failed to fetch orders');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  if (loading) return <div className="py-4 text-center text-gray-500"><TranslatedText>Loading your orders...</TranslatedText></div>;
+  if (error) return <div className="py-4 text-center text-red-500">{error}</div>;
+
+  return (
+    <div>
+      <h3 className="text-xl font-bold text-gray-800 mb-4"><TranslatedText>Your Order History</TranslatedText></h3>
+      {orders.length === 0 ? (
+        <div className="bg-gray-50 rounded-xl p-8 text-center border border-dashed border-gray-300">
+          <p className="text-gray-500 mb-4"><TranslatedText>You haven't placed any orders yet.</TranslatedText></p>
+          <Link to="/" className="text-[#8B7355] font-semibold hover:underline">
+            <TranslatedText>Start Shopping</TranslatedText>
+          </Link>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {orders.map((order) => (
+            <div key={order._id} className="border border-gray-200 rounded-xl p-4 hover:border-[#8B7355] transition-colors bg-white shadow-sm">
+              <div className="flex flex-wrap justify-between items-start mb-4 gap-2">
+                <div>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-tighter"><TranslatedText>Order ID</TranslatedText></p>
+                  <p className="font-mono text-sm text-gray-700">{order.orderId}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-tighter"><TranslatedText>Date</TranslatedText></p>
+                  <p className="text-sm text-gray-700">{new Date(order.createdAt).toLocaleDateString()}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-tighter"><TranslatedText>Amount</TranslatedText></p>
+                  <p className="font-bold text-[#8B7355]">₹{order.total?.toLocaleString('en-IN')}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-tighter"><TranslatedText>Status</TranslatedText></p>
+                  <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${order.status === 'completed' ? 'bg-green-100 text-green-700' :
+                    order.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                      'bg-blue-100 text-blue-700'
+                    }`}>
+                    {order.status || 'pending'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-100 pt-4">
+                <p className="text-xs font-bold text-gray-400 uppercase mb-2"><TranslatedText>Items</TranslatedText></p>
+                <div className="flex flex-wrap gap-2">
+                  {order.items?.map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-2 bg-gray-50 p-2 rounded-lg border border-gray-100">
+                      {item.image && <img src={item.image} alt="" className="w-8 h-8 rounded object-cover" />}
+                      <span className="text-sm font-medium text-gray-800">{item.name} <span className="text-gray-400">x{item.quantity}</span></span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ProfilePage;
