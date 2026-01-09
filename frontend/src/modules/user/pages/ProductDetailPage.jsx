@@ -23,6 +23,7 @@ import { balajiProducts } from '../../../data/balajiProducts'
 import { getProductById } from '../../../data/generatedProducts'
 import LazyImage from '../../../components/common/LazyImage'
 import TranslatedText from '../../../components/TranslatedText'
+import Seo from '../../../components/common/Seo'
 
 const ProductDetailPage = ({
   onShowSidebar,
@@ -174,6 +175,7 @@ const ProductDetailPage = ({
   if (!product) {
     return (
       <div className="w-full min-h-screen bg-white">
+        <Seo title="Product Not Found" />
         <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
         <div className="flex-1 flex items-center justify-center min-h-[60vh]">
           <h1 className="text-2xl font-bold text-gray-800"><TranslatedText>Product not found</TranslatedText></h1>
@@ -303,6 +305,12 @@ const ProductDetailPage = ({
 
   return (
     <div className="w-full min-h-screen bg-white">
+      <Seo
+        title={product.name}
+        description={`${product.name} - ${product.description ? product.description.substring(0, 150) : 'Premium stone product'}...`}
+        image={product.images?.[0]?.url || product.images?.[0]}
+        type="product"
+      />
       <CreationsNavBar onShowCart={onShowCart} onShowLikes={onShowLikes} />
       <Breadcrumbs />
 

@@ -22,6 +22,7 @@ import completedProjectsFallback from '../../../assets/residential/large.jpeg'
 import beforeImage from '../../../assets/ourcreation/pooja room/before&after/compare2.jpg'
 import LazyImage from '../../../components/common/LazyImage'
 import TranslatedText from '../../../components/TranslatedText'
+import Seo from '../../../components/common/Seo'
 
 
 const HomePage = ({
@@ -96,6 +97,11 @@ const HomePage = ({
 
   return (
     <>
+      <Seo
+        title="Home"
+        description="Welcome to The Stone Art (Aslam Marble Suppliers), your premier destination for exquisite marble, sandstone, and temple architecture."
+        keywords="marble, stone art, temple, home decor, sandstone, limestone, jaipur stone"
+      />
       {/* Form Popup Modal - Shows 2 seconds after page load */}
       {showFormPopup && <HomePageFormPopup onClose={() => setShowFormPopup(false)} />}
 

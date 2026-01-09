@@ -33,7 +33,7 @@ export const AdminAuthProvider = ({ children }) => {
 
     const validateToken = async () => {
       try {
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api'
         const res = await fetch(`${API_URL}/admin/me`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -64,7 +64,7 @@ export const AdminAuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api'
       const res = await fetch(`${API_URL}/admin/login`, {
         method: 'POST',
         headers: {

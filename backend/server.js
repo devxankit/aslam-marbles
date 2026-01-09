@@ -1,6 +1,6 @@
 const express = require('express');
-// server update 9 - Force Restart & Verify
-console.log('--- BACKEND SERVER RESTARTING (Update 9) ---');
+// server update 10 - Env Update & Restart
+console.log('--- BACKEND SERVER RESTARTING (Update 10) ---');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
@@ -141,7 +141,7 @@ app.use('/api/admin/dashboard', require('./routes/dashboardRoutes'));
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);

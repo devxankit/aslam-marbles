@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import { AdminAuthProvider } from './modules/admin/context/AdminAuthContext'
 import './index.css'
 import App from './App.jsx'
@@ -11,14 +12,16 @@ import { PageTranslationProvider } from './contexts/PageTranslationContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <AdminAuthProvider>
-        <LanguageProvider>
-          <PageTranslationProvider>
-            <App />
-          </PageTranslationProvider>
-        </LanguageProvider>
-      </AdminAuthProvider>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <AdminAuthProvider>
+          <LanguageProvider>
+            <PageTranslationProvider>
+              <App />
+            </PageTranslationProvider>
+          </LanguageProvider>
+        </AdminAuthProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   </StrictMode>,
 )
